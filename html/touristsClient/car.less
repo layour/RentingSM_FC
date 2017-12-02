@@ -1,0 +1,145 @@
+out:car.min.css,sourcemap:false,compress:true;
+/*less模块*/
+/*@import "header.less";*/
+/*重定义通用*/
+@borderColor: #999999;
+@aaa:#aaaaaa;
+@white:#ffffff;
+@black:#000000;
+@grayBlue:#34aadc;
+@bgColor:#EFEFF4;
+
+.addCar{
+  table{
+
+    width:100%;
+    background:@white;
+    tr{
+      border-bottom:2px solid @bgColor;
+      td{
+        height:.8rem;
+        line-height:.8rem;
+        padding-left:.44rem;
+        &:last-child{
+          text-align:right;
+          padding-left: 0;
+          padding-right: .44rem;
+          color:@aaa;
+          span{
+            padding-right: .1rem;
+          }
+          >i{
+            vertical-align: middle;
+          }
+        }
+        input{
+          border:none;
+          border-bottom: 1px solid @borderColor;
+          height:.6rem;
+          text-align: right;
+          outline:none;
+        }
+        input::-webkit-input-placeholder {
+            color: @aaa;
+            font-size: 14px;
+        }
+        // input::-webkit-outer-spin-button,
+        // input::-webkit-inner-spin-button {
+        //     -webkit-appearance: none !important;
+        //     margin: 0;
+        // }
+        button{
+          color:@black;
+          border:1px solid @black;
+          &.active{
+            color:@white;
+            border-color:@grayBlue;
+            background:@grayBlue;
+          }
+        }
+      }
+    }
+  }
+  .pickerColor{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    z-index: 10;
+    background: @white;
+    >p{
+      padding:.24rem .44rem;
+      span{
+        color:@grayBlue;
+        &:last-child{float:right;}
+      }
+    }
+  }
+}
+#pickerDealer{
+  .um-input-group{
+    padding:.3rem .8rem;
+    height:1.2rem;
+    line-height:.6rem;
+    background:@grayBlue;
+    *{
+      height:.6rem;
+      line-height:.6rem;
+    }
+    input{
+      background: @white;
+      border-radius: .6rem;
+      // text-indent: .4rem;
+      padding:0 1.2rem 0 .6rem;
+    }
+    .ti-search{
+        left:1rem;
+        position: absolute;
+        top:.32rem;
+        z-index: 1;
+    }
+    button{
+      position:absolute;
+      padding:0;
+      right:.6rem;
+      width:1.2rem;
+      border-top-right-radius: .3rem;
+      border-bottom-right-radius: .3rem;
+    }
+  }
+  .dealerList{
+    background: @white;
+    padding:.22rem 0;
+    li{
+      height:.8rem;
+      line-height: .8rem;
+      padding:0 .44rem;
+      border-bottom:1px solid @aaa;
+    }
+  }
+  .mint-popup{
+    width:100%;
+    >p{
+      text-align: center;
+      line-height: .6rem;
+    }
+    ul{
+      padding-bottom:.44rem;
+      li{
+        border-top:1px solid @aaa;
+        padding:.2rem .44rem;
+
+        p{
+          color:@aaa;
+          &:first-child{color:@black;}
+        }
+        i{
+          position: absolute;
+          top:1rem;
+          right:.44rem;
+          color:@aaa;
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@
 		<script src="js/summer.js" ></script>
 		<script src="js/jquery.min.js" ></script>
 		<script src="js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script src="js/index.js" ></script>
+		<!-- <script src="js/index.js" ></script> -->
 	</head>
 	<body>
 		<div id="win" class="um-win" >
@@ -20,7 +20,9 @@
 			</div>
 
 			<div id="content" class="um-content p15">
-	
+				<div class="addCar" onclick="open()">
+					添加车辆
+				</div>
 			</div>
 
 			<div id="footer" class="um-footer">
@@ -29,9 +31,9 @@
 						<i class="ti-comments f20"></i>
 						<div class="f12 lh1">消息</div>
 					</a>
-					<a id="item1" href="#" class="um-footerbar-item"> 
+					<a id="item1" href="#" class="um-footerbar-item">
 						<i class="ti-notepad f20"></i>
-						<div class="f12 lh1">日程</div> 
+						<div class="f12 lh1">日程</div>
 					</a>
 					<a id="item2" href="#" class="um-footerbar-item active">
 						<i class="ti-agenda f20"></i>
@@ -44,5 +46,26 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			$('.addCar').click(function(){
+				summer.openWin({
+					id:'addCar',
+					url:'html/touristsClient/addCar.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "添加车辆",
+						titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#34aadc",
+						leftItem:{
+								image: "img/back.png",
+								method:"function()",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				})
+			})
+		</script>
 	</body>
 </html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title>添加车辆</title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="./car.min.css">
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="addCar">
+			<div class="um-header" >
+				<button @click="goBack" class="um-back f15">返回</button>
+				<h3>添加车辆</h3>
+			</div>
+
+			<div class="um-content addCar">
+        <table>
+          <tr>
+            <td>经销商</td>
+            <td>
+							<span v-if='dealer'>{{dealer}}</span><span v-else>请选择</span>
+							<i @click="pickerDealer" class="ti-angle-right"></i>
+						</td>
+          </tr>
+					<tr>
+						<td>车辆状况</td>
+						<td>
+							<button @click="changCarStatus($event,'new')" class='btn btn-inline btn-sm active'>新车</button>
+							<button @click="changCarStatus($event,'old')" class="btn btn-inline btn-sm">二手车</button>
+						</td>
+					</tr>
+					<tr>
+            <td>选择车型</td>
+            <td>
+							<span v-if='dealer'>{{carModels}}</span><span v-else>请选择</span>
+							<i class="ti-angle-right"></i>
+						</td>
+          </tr>
+					<tr>
+            <td>车身颜色</td>
+            <td>
+							<span v-if='color'>{{color}}</span><span v-else>请选择</span>
+							<i  @click="surePickerColor" class="ti-angle-right"></i>
+						</td>
+          </tr>
+					<tr>
+            <td>新车指导价</td>
+            <td>
+							<input type="text" name="price" placeholder="请输入指导价" v-model="guidePrice">
+						</td>
+					</tr>
+					<tr>
+            <td>留购价</td>
+            <td>
+							{{holdPrice}}
+						</td>
+					</tr>
+        </table>
+				<section v-if="pickerColorStatus" class="pickerColor">
+					<p><span @click="surePickerColor">取消</span><span  @click="surePickerColor('confirm')">确定</span></p>
+					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+				</section>
+
+			</div>
+
+			<div class="um-footer">
+				<button type="button" class='btn btn-inline um-btn-primary'>保存</button>
+			</div>
+		</div>
+		<script>
+			$(function(){
+				var addCar=new Vue({
+					el:'#addCar',
+					data(){
+						return{
+							dealer:'',
+							carStatus:'new',
+							carModels:'',
+							color:'',
+							guidePrice:'20000',
+							holdPrice:100,
+							pickerColorStatus:false,
+							pickedColor:'',
+							slots: [
+								{
+									flex: 1,
+									values: ['白色', '黑色', '蓝色', '红色', '玫瑰金', '紫色'],
+									defaultIndex:2,
+									className: 'slot1',
+									textAlign: 'center'
+								}
+							]
+						}
+					},
+					created(){
+
+					},
+					methods:{
+						goBack(){
+							summer.closeWin();
+						},
+						pickerDealer(){
+							summer.openWin({
+								id:'pickerDealer',
+								url:'html/touristsClient/pickerDealer.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+						      title: "选择经销商",
+						      titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						      backgroundColor: "#34aadc",
+						      leftItem:{
+						          image: "img/back.png",
+						          method:"function()",//返回按钮自定义事件
+						          text:"取消",
+						          textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						      }
+								}
+							})
+						},
+						changCarStatus(e,status){
+							$(e.currentTarget).addClass('active').siblings('.active').removeClass('active');
+							this.carStatus=status;
+						},
+						onValuesChange(picker,values) {
+							this.pickedColor=values[0];
+				    },
+						surePickerColor(param){
+							this.pickerColorStatus=!this.pickerColorStatus;
+							if(param=='confirm'){
+								this.color=this.pickedColor;
+							}
+						},
+					}
+				});
+				var getDealer=function(){
+					var dealer=summer.getStorage('pickerDealer');
+					if(dealer){
+						addCar.dealer=JSON.parse(dealer).name;
+						alert(addCar.dealer)
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

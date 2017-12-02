@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title>添加车辆</title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="./car.min.css">
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="pickerDealer">
+			<div class="um-content addCar">
+        <div class="um-input-group pr">
+          <i class="ti-search"></i>
+          <input type="search" class="form-control"  placeholder="search">
+          <!-- <i class="um-input-clear ti-close"></i> -->
+          <button class='btn btn-inline btn-sm'>搜索</button>
+        </div>
+        <ul class="dealerList">
+          <li @click="pickerAcc" v-for="(item,index) in dealerList" :key="index">{{item}}</li>
+        </ul>
+        <mt-popup v-model="popupVisible" position="bottom">
+          <p>选择经销商收款账户</p>
+          <ul>
+            <li v-for="(it,i) in accList" @click="pickerDealer(it)" class="pr" :key="i">
+              <p>{{it.name}}</p>
+              <p>{{it.acc}}</p>
+              <p>{{it.addr}}</p>
+              <p>开户行号：{{it.number}}</p>
+              <i class="ti-angle-right"></i>
+            </li>
+          </ul>
+        </mt-popup>
+      </div>
+    </div>
+    <script>
+      $(function(){
+        new Vue({
+          el:'#pickerDealer',
+          data(){
+            return {
+              popupVisible:false,
+              dealerList:['石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店'],
+							accList:[
+								{name:"石家庄4S店裕华分店/对公",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213},
+								{name:"郑冬秋/对私",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213}
+							]
+            }
+          },
+					methods:{
+						pickerAcc(){
+							this.popupVisible=true;
+						},
+						pickerDealer(item){
+							this.popupVisible=false;
+							summer.setStorage('pickerDealer',JSON.stringify(item));
+							summer.execScript({
+							    winId: 'addCar',
+							    script: 'getDealer'
+							});
+							summer.closeWin();
+						}
+					}
+        })
+      })
+    </script>
+  </body>
+</html>
