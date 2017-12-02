@@ -17,10 +17,10 @@
 	</head>
 	<body>
 		<div class="um-win" id="addCar">
-			<div class="um-header" >
+			<!-- <div class="um-header" >
 				<button @click="goBack" class="um-back f15">返回</button>
 				<h3>添加车辆</h3>
-			</div>
+			</div> -->
 
 			<div class="um-content addCar">
         <table>
@@ -77,7 +77,6 @@
 			</div>
 		</div>
 		<script>
-			$(function(){
 				var addCar=new Vue({
 					el:'#addCar',
 					data(){
@@ -142,14 +141,12 @@
 						},
 					}
 				});
-				var getDealer=function(){
+				function getDealer(){
 					var dealer=summer.getStorage('pickerDealer');
 					if(dealer){
 						addCar.dealer=JSON.parse(dealer).name;
-						alert(addCar.dealer)
 					}
 				}
-			})
 		</script>
 	</body>
 </html>
