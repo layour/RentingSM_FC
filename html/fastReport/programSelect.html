@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">	
+		<script src="../../js/summer.js" ></script>		
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script src="../../js/font.js" ></script>
+	</head>
+	<style>
+		.headertitle {
+	background-color: white;
+	box-sizing: border-box;
+}
+.headertitle .tabbar {
+	position: relative;
+	line-height: 0.88rem;
+	color: #8A9BAC;
+}
+.headertitle .tabbar p {
+	display: inline-block;
+	height: 0.84rem;
+	line-height: 0.86rem;
+	font-size: 0.32rem;
+	padding: 0 0.1rem;
+	color: #8A9BAC;
+	position: relative;
+	top: 0.02rem;
+}
+.headertitle .tabbar {
+	width: 20%;
+}
+.headertitle .tabbar.active p {
+	color: #333;
+	border-bottom: 2.5px solid #007aff;
+	position: relative;
+	top: 0.02rem;
+}
+	</style>
+	<body>
+		<div class="um-win" id="index">
+			<div class="um-content">
+				 <div class=" headertitle  um-box" id="header">
+                    <div class="tabbar  active  tc" data-index="0"  >
+                        <p>
+                            全部
+                        </p>
+                    </div>
+                    <div class="tabbar   tc" data-index="1">
+                        <p class="tc">
+                            待提交
+                        </p>
+                    </div>
+                    <div class="tabbar  tc" data-index="2"  >
+                        <p>
+                            审核中
+                        </p>
+                    </div>
+                    <div class="tabbar  tc" data-index="3">
+                        <p class="tc">
+                            已驳回
+                        </p>
+                    </div>
+                    <div class="tabbar  tc" data-index="4">
+                        <p class="tc">
+                            评审结束
+                        </p>
+                    </div>
+                </div>
+			</div>
+ 			
+            <div class="um-footer"id="footer">
+                
+                <button class="btn">新建项目</button>
+
+            </div>
+
+		</div>
+		<script>
+			summerready=function(){
+				  var top = $summer.offset($summer.byId('header')).h;
+				  var bottom = $summer.offset($summer.byId('footer')).h;
+				  summer.openFrameGroup({
+				    id: 'group1',
+				    background: '#ffffff',
+				    scrollEnabled: false,
+				    position: {
+				        top: top,
+				        bottom: bottom,
+				        left: 0,
+				        right: 0
+				    },
+				    index: 0,	
+				    frames: [{
+				        id: 'fra_total',
+				        url: 'html/fastReport/fra_total.html',
+				        bgColor: '#ffffff',
+				        hidden: false
+				    }, {
+				        id: 'fra_toSubmit',
+				        url: 'html/fastReport/fra_toSubmit.html',
+				        bgColor: '#ffffff',
+				        hidden: true
+				    }, {
+				        id: 'fra_examine',
+				        url: 'html/fastReport/fra_examine.html',
+				        bgColor: '#ffffff',
+				        hidden: true
+				    },{
+				        id: 'fra_hasReject',
+				        url: 'html/fastReport/fra_hasReject.html',
+				        bgColor: '#ffffff',
+				        hidden: true
+				    },{
+				        id: 'fra_hasOver',
+				        url: 'html/fastReport/fra_hasOver.html',
+				        bgColor: '#ffffff',
+				        hidden: true
+				    }],
+				}, function(ret, err) {
+				    var index = ret.index;
+				});
+			}
+			$(function() {
+				$(".headertitle").on("click", '.tabbar', function(e) {
+					$(this).addClass("active").siblings().removeClass("active");
+					var tar = $(this).attr("data-index")
+					//mySwiper.slideTo(parseInt(tar), 200, false);
+					/*summer.setFrameGroupIndex({
+					    id: 'group1',
+					    index: tar,
+					    reload: false
+					});*/
+					summer.setFrameGroupAttr({    
+						id : 'group1',
+						index : tar
+					});
+				});
+				$(".um-back").click(function() {
+					summer.closeWin();
+				});
+		});
+		</script>
+	</body>
+</html>

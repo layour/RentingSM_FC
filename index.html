@@ -20,9 +20,13 @@
 			</div>
 
 			<div id="content" class="um-content p15">
-				<div class="addCar" onclick="open()">
+				<div class="addCar" onclick="openWin()">
 					添加车辆
 				</div>
+			 
+				
+                <button class="btn" onclick="openFastReport()">快捷报单</button>
+
 			</div>
 
 			<div id="footer" class="um-footer">
@@ -47,7 +51,7 @@
 			</div>
 		</div>
 		<script>
-			$('.addCar').click(function(){
+			function openWin(){
 				summer.openWin({
 					id:'addCar',
 					url:'html/touristsClient/addCar.html',
@@ -65,7 +69,26 @@
 						}
 					}
 				})
-			})
+		}
+			function openFastReport(){
+				summer.openWin({
+					id:'addCar',
+					url:'html/fastReport/programSelect.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "项目查询",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"function()",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			}
 		</script>
 	</body>
 </html>
