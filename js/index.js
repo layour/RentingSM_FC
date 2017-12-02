@@ -4,7 +4,8 @@ summerready = function(){
     // here is your code...
     var top = $summer.offset($summer.byId('header')).h;
 	var bottom = $summer.offset($summer.byId('footer')).h;
-    summer.openFrame({
+
+    /*summer.openFrame({
         id: 'main',
         url: 'html/main.html',
         bounces: true,
@@ -14,5 +15,5 @@ summerready = function(){
             left: 0,
             right: 0
         }
-    });
+    });*/
 }
