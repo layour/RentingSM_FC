@@ -4,7 +4,7 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" href="css/font-icons.css">
+		<link rel="stylesheet" href="css/fonts/iconfont.css">
 		<link rel="stylesheet" href="css/iuapmobile.um.css">
 		<link rel="stylesheet" href="css/swiper-3.4.2.min.css">
 		<link rel="stylesheet" href="css/index.css">
@@ -29,42 +29,42 @@
 						<div class="swiper-slide"><img src="img/test2.jpg"/></div>
 					</div>
 				</div>
-				<div class="userInfo" onclick="toLogin()">
-					<span class="userIcon ti-user"></span>
-					<span class="userName">张三</span>
-					<span class="setIcon ti-wand"></span>
+				<div class="userInfo">
+					<span class="userIcon iconfont icon-mine" onclick="toLogin()"></span>
+					<span class="userName" onclick="toLogin()">张三</span>
+					<span class="setIcon iconfont icon-install" onclick="showUserInfo()"></span>
 				</div>
 				<h2 class="crm">CRM</h2>
 				<div class="crm_con">
 					<ul class="crm_list">
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>销售线索</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>销售线索</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>销售线索</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>销售线索</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
-								<dd>销售线索</dd>
+								<dt class="iconfont icon-module"></dt>
+								<dd onclick="openAddCar()">添加车辆</dd>
 							</dl>
 						</li>
 					</ul>
@@ -74,37 +74,37 @@
 					<ul class="xmgl_list">
 						<li onclick="openFastReport()">
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>业务申请</dd>
 							</dl>
 						</li>
 						<li onclick="openPayList()">
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>付款申请</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>报价测算器</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>支付表查询</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>逾期罚息</dd>
 							</dl>
 						</li>
 						<li>
 							<dl>
-								<dt class="ti-volume"></dt>
+								<dt class="iconfont icon-module"></dt>
 								<dd>对账还款</dd>
 							</dl>
 						</li>
@@ -122,7 +122,7 @@
 					loop : true
 				})
 			});
-			/*function openAddCar(){
+			function openAddCar(){
 				summer.openWin({
 					id:'addCar',
 					url:'html/touristsClient/addCar.html',
@@ -134,13 +134,13 @@
 						backgroundColor: "#34aadc",
 						leftItem:{
 								image: "img/back.png",
-								method:"function()",//返回按钮自定义事件
+								method:"function(){summer.closeWin()}",//返回按钮自定义事件
 								text:"返回",
 								textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						}
 					}
 				})
-		}*/
+		}
 			function openFastReport(){
 				summer.openWin({
 					id:'addCar',
@@ -188,6 +188,26 @@
 					create:false
 				});
 			};
+			// 我的
+			function showUserInfo(){
+				summer.openWin({
+					id:'mine',
+					url:'html/mine/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "我的资料",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"function()",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			}
 		</script>
 	</body>
 </html>
