@@ -1,28 +1,77 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="./css/iuapmobile.um.css">
-		<link rel="stylesheet" href="./css/font-icons.css">	
-		<script src="./js/summer.js" ></script>		
-		<script src="./js/jquery.min.js" ></script>
-		<script src="./js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-	</head>
-	<body>
-		<div class="um-win" id="index">
-			<div class="um-header" >
-				<h3>导航栏</h3>
-			</div>
 
-			<div class="um-content">
-				在这编辑您的页面...
-			</div>
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="./css/iuapmobile.um.css">
+	<link rel="stylesheet" href="./css/fonts/iconfont.css">
+	<link rel="stylesheet" href="css/login.css">
+	<script src="./js/summer.js"></script>
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="js/font.js" charset="utf-8"></script>
+</head>
 
-			<div class="um-footer">
-				
-			</div>
+<body>
+	<div class="um-win" id="index">
+		<div class="um-content">
+
 		</div>
-	</body>
+		<div class="um-footer" id="footer">
+			<button class="btn">切换登陆</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		summerready = function() {
+			var bot = $('#footer').height();
+			console.log(bot);
+			summer.openFrameGroup({
+				id: 'login',
+				background: '#ffffff',
+				scrollEnabled: false,
+				position: {
+					top: 0,
+					bottom: bot,
+					left: 0,
+					right: 0
+				},
+				index: 0,
+				frames: [{
+					id: 'customer_login',
+					url: 'html/login/customer_login.html',
+					bgColor: '#ffffff',
+					hidden: false
+				}, {
+					id: 'saler_login',
+					url: 'html/login/saler_login.html',
+					bgColor: '#ffffff',
+					hidden: true
+				}],
+			}, function(ret, err) {
+				var index = ret.index;
+			});
+		}
+		$(function() {
+			var onOff = true;
+			$('.btn').on('click', function() {
+				if (onOff) {
+					onOff = false;
+					summer.setFrameGroupAttr({
+						id: 'login',
+						index: 1
+					});
+				} else {
+					onOff = true;
+					summer.setFrameGroupAttr({
+						id: 'login',
+						index: 0
+					});
+				}
+			});
+		});
+	</script>
+</body>
+
 </html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">	
+		<link rel="stylesheet" href="../../css/mint.css">
+		<script src="../../js/summer.js" ></script>		
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="app">
+			<div class="um-header-light" >
+				 <img src="img/choosePhoto.png" width="100%" alt="" />
+			</div>
+			<div class="um-content">
+                <mt-field label="姓名" placeholder="请输入姓名" v-model="message.username"> </mt-field>
+				<mt-field label="身份证" placeholder="请输入身份证号"   v-model="message.card"></mt-field>
+				<mt-field label="性别" placeholder="请选择性别"   v-model="message.sex"></mt-field>
+				<mt-field label="住址" placeholder="请输入住址"   v-model="message.address"></mt-field>
+				<mt-field label="手机号" placeholder="请输入手机号"  v-model="message.phone"></mt-field>
+				<mt-field label="通讯地址" placeholder="请输入通讯地址"   v-model="message.phoneAddress"></mt-field>
+			</div>
+			 <div class="um-footer"id="footer">
+                <button class="btn um-btn-primary" onclick="openSetProject()">保存</button>
+            </div>
+		</div>
+		<script>
+			new Vue({
+		      el: '#app',
+		      data:{
+		      	message:{
+		      		username:'',
+		      		card:'',
+		      		sex:'',
+		      		address:'',
+		      		phone:'',
+		      		phoneAddress:''
+		      	}
+		      },
+		      methods: {
+		        handleClick: function() {
+		          this.$toast('Hello world!')
+		        },
+		        openPicker() {
+			        this.$refs.picker.open();
+			      }
+		      }
+		    })	
+		    function openSetProject(){
+		    	summer.openWin({
+					id:'setProject',
+					url:'html/fastReport/setProject.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "快捷报单",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+		}
+	</script>
+		    }
+		</script>
+	</body>
+</html>
