@@ -29,10 +29,10 @@
 						<div class="swiper-slide"><img src="img/test2.jpg"/></div>
 					</div>
 				</div>
-				<div class="userInfo" onclick="toLogin()">
-					<span class="userIcon iconfont icon-mine"></span>
-					<span class="userName">张三</span>
-					<span class="setIcon iconfont icon-install"></span>
+				<div class="userInfo">
+					<span class="userIcon iconfont icon-mine" onclick="toLogin()"></span>
+					<span class="userName" onclick="toLogin()">张三</span>
+					<span class="setIcon iconfont icon-install" onclick="showUserInfo()"></span>
 				</div>
 				<h2 class="crm">CRM</h2>
 				<div class="crm_con">
@@ -188,6 +188,26 @@
 					create:false
 				});
 			};
+			// 我的
+			function showUserInfo(){
+				summer.openWin({
+					id:'mine',
+					url:'html/mine/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "我的资料",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"function()",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			}
 		</script>
 	</body>
 </html>
