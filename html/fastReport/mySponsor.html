@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">	
+		<script src="../../js/summer.js" ></script>		
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<style>
+			.customList{
+			 border-top:5px solid #007AFF;
+			 border-radius:5px;
+			 margin-top:0.2rem;
+		}
+		.customList p{
+			line-height:0.8rem;
+		}
+		.customList p.item{
+			padding-left:20%;
+			font-size:0.36rem;
+			color:#666;
+		}
+		.customList p.title{
+			font-size:0.40rem;
+			color:#333;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="um-win" id="index">
+			<div class="um-content">
+				  <div class="list customList um-bgc-white">
+			       <p class="pl10 title">吴猛</p>
+			       <p class="item   tl pr10"><span>手机号 </span>  <span>18810622176</span></p>
+			       <p class="item pl40 pr10 tl"><span>身份证：<span>413344198812263463</span></p>
+			   </div>
+			   <div class="list customList um-bgc-white">
+			       <p class="pl10 title">吴猛</p>
+			       <p class="item   tl pr10"><span>手机号 </span>  <span>18810622176</span></p>
+			       <p class="item pl40 pr10 tl"><span>身份证：<span>413344198812263463</span></p>
+			   </div>
+			   <div class="list customList um-bgc-white">
+			       <p class="pl10 title">吴猛</p>
+			       <p class="item   tl pr10"><span>手机号 </span>  <span>18810622176</span></p>
+			       <p class="item pl40 pr10 tl"><span>身份证：<span>413344198812263463</span></p>
+			   </div>
+			   
+			</div>
+
+			<div class="um-footer"id="footer">
+                <button class="btn um-btn-primary"   onclick="saveMessage()">保存</button>
+            </div>
+		</div>
+		<script>
+			function saveMessage(){
+				summer.closeWin();
+			}
+			function addSponsor(){
+				summer.openWin({
+					id:'sponsorList',
+					url:'html/fastReport/sponsorList.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "担保人列表",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			}
+			
+		</script>
+	</body>
+</html>

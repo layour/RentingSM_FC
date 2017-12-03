@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">	
+		<link rel="stylesheet" href="../../css/mint.css">
+		<script src="../../js/summer.js" ></script>		
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="app">
+			 <div class="um-header-light" >
+				 <img src="img/choosePhoto2.png" width="100%" alt="" />
+			</div>
+			<div class="um-content">
+			    <mt-field label="姓名" placeholder="请输入姓名" v-model="message.username"> </mt-field>
+				<mt-field label="身份证" placeholder="请输入身份证号"   v-model="message.card"></mt-field>
+				<mt-field label="手机号" placeholder="请输入手机号"  v-model="message.phone"></mt-field>
+			</div>
+
+			<div class="um-footer"id="footer">
+                <button class="btn um-btn-primary"   onclick="saveMessage()">保存</button>
+            </div>
+		</div>
+		<script>
+			function saveMessage(){
+				summer.closeWin();
+			}
+			new Vue({
+		      el: '#app',
+		      data:{
+		      	message:{
+		      		username:'',
+		      		card:'',
+		      		phone:'',
+		      	}
+		      },
+		      methods: {
+		        handleClick: function() {
+		          this.$toast('Hello world!')
+		        },
+		        openPicker() {
+			        this.$refs.picker.open();
+			      }
+		      }
+		    })	 
+			
+		</script>
+	</body>
+</html>
