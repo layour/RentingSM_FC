@@ -41,8 +41,8 @@
 					<tr>
             <td>选择车型</td>
             <td>
-							<span v-if='dealer'>{{carModels}}</span><span v-else>请选择</span>
-							<i class="ti-angle-right"></i>
+							<span v-if='carModels'>{{carModels}}</span><span v-else>请选择</span>
+							<i @click="pickerModels" class="ti-angle-right"></i>
 						</td>
           </tr>
 					<tr>
@@ -61,7 +61,7 @@
 					<tr>
             <td>留购价</td>
             <td>
-							{{holdPrice}}
+							<input type="text" name="holdPrice" placeholder="请输入留购价" v-model="holdPrice">
 						</td>
 					</tr>
         </table>
@@ -119,9 +119,28 @@
 						      backgroundColor: "#34aadc",
 						      leftItem:{
 						          image: "img/back.png",
-						          method:"function()",//返回按钮自定义事件
+						          method:function(){summer.closeWin()},//返回按钮自定义事件
 						          text:"取消",
 						          textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						      }
+								}
+							})
+						},
+						pickerModels(){
+							summer.openWin({
+								id:'pickerModels',
+								url:'html/touristsClient/pickerModels.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+						      title: "选择车型",
+						      titleColor: "#000000",
+						      backgroundColor: "#34aadc",
+						      leftItem:{
+						          image: "img/back.png",
+						          method:function(){summer.closeWin()},
+						          text:"返回",
+						          textColor:"#000000"
 						      }
 								}
 							})
@@ -145,6 +164,12 @@
 					var dealer=summer.getStorage('pickerDealer');
 					if(dealer){
 						addCar.dealer=JSON.parse(dealer).name;
+					}
+				}
+				function getModels(){
+					var models=summer.getStorage('pickerModels');
+					if(models){
+						addCar.carModels=models;
 					}
 				}
 		</script>

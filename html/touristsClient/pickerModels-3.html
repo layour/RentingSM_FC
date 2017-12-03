@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title>添加车辆</title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="./car.min.css">
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="pickerModels-3">
+			<div class="um-content pickerModels">
+        <ul class="modelsList">
+          <li v-for="(it,index) in modelsList" @click="pickerModels(it)" :key="index">
+						{{it}}
+					</li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      $(function(){
+        new Vue({
+          el:'#pickerModels-3',
+          data(){
+            return {
+							id:'',
+              modelsList:['2016款 君越 改款 28T精英型','2016款 君越 28T 豪华型','2016款 君越 30H 精英型', '2016款 君越 30H 豪华型']
+            }
+          },
+					mounted(){
+						var that=this
+						summerready=function(){
+							that.id=summer.pageParam.id
+							//	http
+						}
+					},
+					methods:{
+						pickerModels(it){
+							summer.setStorage('pickerModels',it);
+							summer.execScript({
+							    winId: 'addCar',
+							    script: 'getModels()'
+							});
+							summer.closeToWin({
+								id:'addCar'
+							})
+						}
+					}
+        })
+
+      })
+    </script>
+  </body>
+</html>
