@@ -16,7 +16,7 @@
 	<body>
 		<div class="um-win" id="app">
 			<div class="um-header-light" >
-				 <img src="img/choosePhoto.png" alt="" />
+				 <img src="img/choosePhoto.png" width="100%" alt="" />
 			</div>
 			<div class="um-content">
                 <mt-field label="姓名" placeholder="请输入姓名" v-model="message.username"> </mt-field>
@@ -27,7 +27,7 @@
 				<mt-field label="通讯地址" placeholder="请输入通讯地址"   v-model="message.phoneAddress"></mt-field>
 			</div>
 			 <div class="um-footer"id="footer">
-                <button class="btn" onclick="openSetProject()">保存</button>
+                <button class="btn um-btn-primary" onclick="openSetProject()">保存</button>
             </div>
 		</div>
 		<script>

@@ -78,7 +78,7 @@
 						 
 					</div></a>
 					<a href="javascript:void(0);" class="um-list-item border" id="version"
-					onclick="checkVersion()">  
+					onclick="openSponsor()">  
 					<div class="um-list-item-inner">
 						<div class="um-list-item-body">
 							担保人
@@ -140,8 +140,25 @@
 					}
 				});
 		}
-	</script>
-		    }
+		function openSponsor(){
+				summer.openWin({
+					id:'SponsorList',
+					url:'html/fastReport/SponsorList.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "我的担保人",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+		}
 		</script>
 	</body>
 </html>
