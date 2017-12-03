@@ -13,33 +13,33 @@
 	</head>
 	<style>
 		.headertitle {
-	background-color: white;
-	box-sizing: border-box;
-}
-.headertitle .tabbar {
-	position: relative;
-	line-height: 0.88rem;
-	color: #8A9BAC;
-}
-.headertitle .tabbar p {
-	display: inline-block;
-	height: 0.84rem;
-	line-height: 0.86rem;
-	font-size: 0.32rem;
-	padding: 0 0.1rem;
-	color: #8A9BAC;
-	position: relative;
-	top: 0.02rem;
-}
-.headertitle .tabbar {
-	width: 20%;
-}
-.headertitle .tabbar.active p {
-	color: #333;
-	border-bottom: 2.5px solid #007aff;
-	position: relative;
-	top: 0.02rem;
-}
+			background-color: white;
+			box-sizing: border-box;
+		}
+		.headertitle .tabbar {
+			position: relative;
+			line-height: 0.88rem;
+			color: #8A9BAC;
+		}
+		.headertitle .tabbar p {
+			display: inline-block;
+			height: 0.84rem;
+			line-height: 0.86rem;
+			font-size: 0.32rem;
+			padding: 0 0.1rem;
+			color: #8A9BAC;
+			position: relative;
+			top: 0.02rem;
+		}
+		.headertitle .tabbar {
+			width: 20%;
+		}
+		.headertitle .tabbar.active p {
+			color: #333;
+			border-bottom: 2.5px solid #007aff;
+			position: relative;
+			top: 0.02rem;
+		}
 	</style>
 	<body>
 		<div class="um-win" id="index">
@@ -75,7 +75,7 @@
  			
             <div class="um-footer"id="footer">
                 
-                <button class="btn">新建项目</button>
+                <button class="btn" onclick="newCustom()">新建项目</button>
 
             </div>
 
@@ -129,21 +129,31 @@
 				$(".headertitle").on("click", '.tabbar', function(e) {
 					$(this).addClass("active").siblings().removeClass("active");
 					var tar = $(this).attr("data-index")
-					//mySwiper.slideTo(parseInt(tar), 200, false);
-					/*summer.setFrameGroupIndex({
-					    id: 'group1',
-					    index: tar,
-					    reload: false
-					});*/
 					summer.setFrameGroupAttr({    
 						id : 'group1',
 						index : tar
 					});
 				});
-				$(".um-back").click(function() {
-					summer.closeWin();
-				});
 		});
+		function newCustom(){
+			summer.openWin({
+					id:'addCar',
+					url:'newCustom.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "新建客户",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+		}
 		</script>
 	</body>
 </html>
