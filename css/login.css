@@ -43,6 +43,8 @@ dl dd input{
    width: 4.6rem;
    background: none;
    color: #fff;
+   font-size: 0.28rem;
+   line-height: 0.8rem;
 }
 .getcode{
    position: absolute;
