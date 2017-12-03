@@ -1,0 +1,82 @@
+body,.um-frame{
+   background-color: #006a78;
+}
+.loginTitle{
+   width: 100%;
+   text-align: center;
+   margin: 0;
+   font-weight: bold;
+   color: #fff;
+   margin-top: 3rem;
+   font-size: 0.5rem;
+   margin-bottom: 2rem;
+}
+form{
+   width: 80%;
+   margin: 0 auto;
+   position: relative;
+   height: 5rem;
+}
+dl{
+   height: 0.8rem;
+   margin-bottom: 0.1rem;
+   border-bottom: 1px solid #fff;
+}
+dl dd,dl dt{
+   float: left;
+   height: 0.8rem;
+}
+dl dt{
+   margin-right: 0.5rem;
+   font-size: 0.28rem;
+   height: 0.8rem;
+   line-height: 0.8rem;
+   color: #fff;
+}
+dl dd{
+   width: 4.6rem;
+}
+dl dd input{
+   border: 0;
+   outline: none;
+   height: 0.8rem;
+   width: 4.6rem;
+   background: none;
+   color: #fff;
+}
+.getcode{
+   position: absolute;
+   right: 0;
+   bottom: 3.4rem;
+   width: 1rem;
+   height: 0.6rem;
+   background-color: #fff;
+   border-radius: 0.4rem;
+   color: #006a78;
+   line-height: 0.6rem;
+   text-align: center;
+   font-size: 0.28rem;
+}
+.notget{
+   position: absolute;
+   right: 0;
+   bottom: 2.6rem;
+   color: #fff;
+   font-size: 0.28rem;
+}
+.loginBtn{
+   width: 2rem;
+   height: 1rem;
+   background-color: #fff;
+   color: #006a78;
+   position: absolute;
+   left: 50%;
+   margin-left: -1rem;
+   bottom: 0;
+   border: 0;
+   outline: none;
+   border-radius: 0.5rem;
+   font-size: 0.4rem;
+   line-height: 1rem;
+   text-align: center;
+}

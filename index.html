@@ -29,7 +29,7 @@
 						<div class="swiper-slide"><img src="img/test2.jpg"/></div>
 					</div>
 				</div>
-				<div class="userInfo">
+				<div class="userInfo" onclick="toLogin()">
 					<span class="userIcon ti-user"></span>
 					<span class="userName">张三</span>
 					<span class="setIcon ti-wand"></span>
@@ -160,6 +160,7 @@
 					}
 				});
 			}
+			// 付款列表
 			function openPayList(){
 				summer.openWin({
 					id:'payList',
@@ -179,6 +180,14 @@
 					}
 				});
 			}
+			// 登陆
+			function toLogin(){
+				summer.openWin({
+					id:'login',
+					url:'login.html',
+					create:false
+				});
+			};
 		</script>
 	</body>
 </html>

@@ -1,8 +1,7 @@
 summerready = function() {
    var top = $('.um-header').height() + $('.navbar').height();
-   console.log(top);
    summer.openFrameGroup({
-      id: 'group1',
+      id: 'payList',
       background: '#ffffff',
       scrollEnabled: false,
       position: {
@@ -39,16 +38,16 @@ summerready = function() {
             bgColor: '#ffffff',
             hidden: true
          }
-      ]
+      ],
    }, function(ret, err) {
       var index = ret.index;
    });
 }
 $(function() {
    $('.pay_list li').on('click', function() {
-      var tar = $(this).index().toString();
+      var tar = $(this).index();
       $('.pay_list li').removeClass('active');
       $(this).addClass('active');
-      summer.setFrameGroupAttr({id: 'group1', index: tar});
+      summer.setFrameGroupAttr({id: 'payList', index: tar});
    });
 });
