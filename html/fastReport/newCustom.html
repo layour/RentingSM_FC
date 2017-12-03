@@ -35,6 +35,35 @@
 			color:rgba(136,153,170,1);
 			font-size:0.26rem;
 		}
+		.customList{
+			 border-top:5px solid #007AFF;
+			 border-radius:5px;
+			 margin-top:0.2rem;
+		}
+		.customList p.title{
+			font-size:0.36rem;
+			color:#333;
+			line-height:0.8rem;
+			border-bottom:1px solid #f7f7f7;
+		}
+		.customList p.type{
+			font-size:0.32rem;
+			color:#999;
+			line-height:0.8rem;
+		}
+		.customList p.time{
+			font-size:0.32rem;
+			color:#999;
+			line-height:0.8rem;
+			border-bottom:1px solid #f7f7f7;
+		}
+		.customList p.select{
+			line-height:0.8rem;
+			 
+		}
+		.customList p.time .manager{
+			font-size:0.36rem;
+		}
 		</style>
 	</head>
 	<body>
@@ -50,12 +79,28 @@
 					</div>
 			</div>
 			<div class="um-content">
+			   <div class="list customList um-bgc-white">
+			       <p class="pl10 title">吴猛</p>
+			       <p class="type pl10"><span>自然人 </span> | <span> 普通客户</span></p>
+			       <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span><span class="fr manager">客户经理:<span>张三</span></span></p>
+			       <p class="tr pr10 select"> <button class="btn btn-inline btn-sm um-btn-primary">选择</button></p>
+			   </div>
+			    <div class="list customList um-bgc-white">
+			       <p class="pl10 title">吴猛</p>
+			       <p class="type pl10"><span>自然人 </span> | <span> 普通客户</span></p>
+			       <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span><span class="fr manager">客户经理:<span>张三</span></span></p>
+			       <p class="tr pr10 select"> <button class="btn btn-inline btn-sm um-btn-primary">选择</button></p>
+			   </div>
 			   
+			    <div class="list customList um-bgc-white">
+			       <p class="pl10 title">吴猛</p>
+			       <p class="type pl10"><span>自然人 </span> | <span> 普通客户</span></p>
+			       <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span><span class="fr manager">客户经理:<span>张三</span></span></p>
+			       <p class="tr pr10 select"> <button class="btn btn-inline btn-sm um-btn-primary">选择</button></p>
+			   </div>
 			</div>
 			 <div class="um-footer"id="footer">
-                
-                <button class="btn" onclick="newCreateCustom()">新建客户</button>
-
+                <button class="btn um-btn-primary" style="padding:5px 12px" onclick="newCreateCustom()">新建客户</button>
             </div>
 		</div>
 	</body>
@@ -63,7 +108,7 @@
 		function newCreateCustom(){
 			summer.openWin({
 					id:'newCreateCustom',
-					url:'newCreateCustom.html',
+					url:'html/fastReport/newCreateCustom.html',
 					create:false,
 					type:'actionBar',
 					actionBar: {

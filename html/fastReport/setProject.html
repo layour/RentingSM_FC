@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">	
+		<link rel="stylesheet" href="../../css/mint.css">
+		<script src="../../js/summer.js" ></script>		
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<style>
+		.um-list .um-list-item-body {
+			    align-self: center;
+			    line-height: 1rem;
+			    height: 1rem;
+			    padding: 0;
+			    font-size: 0.32rem;
+			    color: #485358;
+			    padding-left:0.3rem;
+			}
+			
+		</style>
+		
+		
+	</head>
+	<body>
+		<div class="um-win" id="app">
+			<div class="um-content">
+                 <div class="um-list">
+					<a href="javascript:void(0);" class="um-list-item border"
+					onclick="openWin('setting')">  
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							客户信息
+						</div>
+					</div></a>
+					<a href="javascript:void(0);" class="um-list-item border"
+					onclick="openWin('userFeedback')">  
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							项目基础信息
+						</div>
+					</div> </a>
+					<a href="javascript:void(0);" class="um-list-item border"
+					onclick="openWin('aboutUs')"> 
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							添加车辆
+						</div>
+					</div></a>
+					<a href="javascript:void(0);" class="um-list-item border" id="version"
+					onclick="checkVersion()">  
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							报价方案
+						</div>
+						 
+					</div></a>
+					<a href="javascript:void(0);" class="um-list-item border" id="version"
+					onclick="checkVersion()">  
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							上传评审资料
+						</div>
+						 
+					</div></a>
+					<a href="javascript:void(0);" class="um-list-item border" id="version"
+					onclick="checkVersion()">  
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							紧急联系人
+						</div>
+						 
+					</div></a>
+					<a href="javascript:void(0);" class="um-list-item border" id="version"
+					onclick="checkVersion()">  
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							担保人
+						</div>
+						 
+					</div></a>
+					<a href="javascript:void(0);" class="um-list-item border" id="version"
+					onclick="checkVersion()">  
+					<div class="um-list-item-inner">
+						<div class="um-list-item-body">
+							备注留言
+						</div>
+						 
+					</div></a>
+			</div>
+			</div>
+			 <div class="um-footer"id="footer">
+                <button class="btn um-btn-primary" onclick="openSubmitSure()">下一步</button>
+            </div>
+		</div>
+		<script>
+			new Vue({
+		      el: '#app',
+		      data:{
+		      	message:{
+		      		username:'',
+		      		card:'',
+		      		sex:'',
+		      		address:'',
+		      		phone:'',
+		      		phoneAddress:''
+		      	}
+		      },
+		      methods: {
+		        handleClick: function() {
+		          this.$toast('Hello world!')
+		        },
+		        openPicker() {
+			        this.$refs.picker.open();
+			      }
+		      }
+		    })	
+		    function openSubmitSure(){
+		    	summer.openWin({
+					id:'submitSure',
+					url:'html/fastReport/submitSure.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "提交确认",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+		}
+	</script>
+		    }
+		</script>
+	</body>
+</html>

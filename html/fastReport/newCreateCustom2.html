@@ -27,7 +27,7 @@
 				<mt-field label="通讯地址" placeholder="请输入通讯地址"   v-model="message.phoneAddress"></mt-field>
 			</div>
 			 <div class="um-footer"id="footer">
-                <button class="btn" onclick="openSetProject()">保存</button>
+                <button class="btn" onclick="newCreateCustom()">下一步</button>
             </div>
 		</div>
 		<script>
@@ -52,27 +52,6 @@
 			      }
 		      }
 		    })	
-		    function openSetProject(){
-		    	summer.openWin({
-					id:'setProject',
-					url:'html/fastReport/setProject.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "快捷报单",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
-						leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
-					}
-				});
-		}
-	</script>
-		    }
 		</script>
 	</body>
 </html>

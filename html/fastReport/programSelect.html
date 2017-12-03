@@ -74,14 +74,7 @@
 			</div>
 
             <div class="um-footer"id="footer">
-<<<<<<< HEAD
-                
-                <button class="btn" onclick="newCustom()">新建项目</button>
-=======
-
-                <button class="btn">新建项目</button>
->>>>>>> 4169e87442e21eb993c55466172fca97558c0018
-
+                <button class="btn um-btn-primary" onclick="newCustom()">新建项目</button>
             </div>
 
 		</div>
@@ -134,17 +127,7 @@
 				$(".headertitle").on("click", '.tabbar', function(e) {
 					$(this).addClass("active").siblings().removeClass("active");
 					var tar = $(this).attr("data-index")
-<<<<<<< HEAD
 					summer.setFrameGroupAttr({    
-=======
-					//mySwiper.slideTo(parseInt(tar), 200, false);
-					/*summer.setFrameGroupIndex({
-					    id: 'group1',
-					    index: tar,
-					    reload: false
-					});*/
-					summer.setFrameGroupAttr({
->>>>>>> 4169e87442e21eb993c55466172fca97558c0018
 						id : 'group1',
 						index : tar
 					});
@@ -153,11 +136,11 @@
 		function newCustom(){
 			summer.openWin({
 					id:'addCar',
-					url:'newCustom.html',
+					url:'html/fastReport/newCustom.html',
 					create:false,
 					type:'actionBar',
 					actionBar: {
-						title: "新建客户",
+						title: "选择客户",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						backgroundColor: "#007aff",
 						leftItem:{
