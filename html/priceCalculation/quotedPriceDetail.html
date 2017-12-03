@@ -15,43 +15,22 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
-		<div class="um-win" id="pickerModels-3">
-			<div class="um-content pickerModels">
-        <ul class="modelsList">
-          <li v-for="(it,index) in modelsList" @click="pickerModels(it)" :key="index">
-						{{it}}
-					</li>
-        </ul>
+		<div class="um-win" id="quotedPrice">
+			<div class="um-content quotedPrice">
+
       </div>
     </div>
     <script>
       $(function(){
         new Vue({
-          el:'#pickerModels-3',
+          el:'quotedPrice',
           data(){
             return {
-							id:'',
-              modelsList:['2016款 君越 改款 28T精英型','2016款 君越 28T 豪华型','2016款 君越 30H 精英型', '2016款 君越 30H 豪华型']
+
             }
           },
-					mounted(){
-						var that=this
-						summerready=function(){
-							that.id=summer.pageParam.id
-							//	http
-						}
-					},
 					methods:{
-						pickerModels(it){
-							summer.setStorage('pickerModels',it);
-							summer.execScript({
-							    winId: 'addCar',
-							    script: 'getModels()'
-							});
-							summer.closeToWin({
-								id:'addCar'
-							})
-						}
+						
 					}
         })
 
