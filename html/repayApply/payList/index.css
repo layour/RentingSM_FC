@@ -1,5 +1,6 @@
 .navbar{
    height: 0.8rem;
+   background-color: #fff
 }
 .navbar .pay_list{
    height: 0.8rem;
@@ -14,4 +15,81 @@
 }
 .active{
    border-bottom: 0.05rem solid #0394d3;
+}
+
+.userList{
+   margin-top: 0.1rem;
+   width: 100%;
+   border-top: 4px solid #0394d3;
+   background-color: #fff;
+}
+.title{
+   width: 100%;
+   height: 0.8rem;
+   border-bottom: 1px solid #f3f3f3;
+}
+.title .name{
+   float: left;
+   height: 0.8rem;
+   color: #0394d3;
+   font-size: 0.32rem;
+   line-height: 0.8rem;
+   margin-left: 0.3rem;
+}
+.title .state{
+   float: right;
+   height: 0.8rem;
+   color: #999;
+   font-size: 0.32rem;
+   line-height: 0.8rem;
+   margin-right: 0.5rem;
+}
+.content{
+   padding: 0.1rem 0 0 0.2rem;
+   position: relative;
+}
+.content p{
+   height: 0.6rem;
+   line-height: 0.6rem;
+   color: #999;
+   font-size: 0.28rem;
+}
+.content .p1{
+   color: #000;
+}
+.content .p5{
+   position: absolute;
+   padding: 0;
+   right: 0.5rem;
+   bottom: 0rem;
+}
+.content span{
+   position: absolute;
+   width: 0.5rem;
+   height: 0.5rem;
+   right: 0.3rem;
+   top: 0.7rem;
+}
+.footer{
+   width: 100%;
+   height: 0.8rem;
+   border-top: 1px solid #f3f3f3;
+   border-bottom: 1px solid #f3f3f3;
+}
+.footerList{
+   width: 100%;
+   height: 100%;
+   padding-top: 0.08rem;
+}
+.footerList li{
+   float: right;
+   height: 0.6rem;
+   width: 1.4rem;
+   background-color: #0394d3;
+   border-radius: 0.1rem;
+   font-size: 0.28rem;
+   line-height: 0.6rem;
+   text-align: center;
+   color: #fff;
+   margin-right: 0.25rem;
 }
