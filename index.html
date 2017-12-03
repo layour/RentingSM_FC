@@ -6,52 +6,123 @@
 		<title></title>
 		<link rel="stylesheet" href="css/font-icons.css">
 		<link rel="stylesheet" href="css/iuapmobile.um.css">
+		<link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+		<link rel="stylesheet" href="css/index.css">
 		<script src="js/summer.js" ></script>
 		<script src="js/jquery.min.js" ></script>
 		<script src="js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script src="js/font.js" charset="utf-8"></script>
+		<script src="js/swiper-3.4.2.min.js" charset="utf-8"></script>
 		<!-- <script src="js/index.js" ></script> -->
 	</head>
 	<body>
 		<div id="win" class="um-win" >
-			<div id="header" class="um-header">
-				<a href="#" class="um-back">返回</a>
-				<h3>iuap mobile</h3>
-				<a href="#" class="um-header-right ti-plus f20"></a>
-			</div>
-
 			<div id="content" class="um-content p15">
-				<div class="addCar" onclick="openAddCar()">
-					添加车辆
+				<!--
+					<div class="addCar" onclick="openAddCar()">
+						添加车辆
+					</div>
+            -->
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide"><img src="img/test1.jpg"/></div>
+						<div class="swiper-slide"><img src="img/test2.jpg"/></div>
+					</div>
 				</div>
-			 
-				
-                <button class="btn" onclick="openFastReport()">快捷报单</button>
-
-			</div>
-
-			<div id="footer" class="um-footer">
-				<div class="um-footerbar">
-					<a id="item0" href="#" class="um-footerbar-item">
-						<i class="ti-comments f20"></i>
-						<div class="f12 lh1">消息</div>
-					</a>
-					<a id="item1" href="#" class="um-footerbar-item">
-						<i class="ti-notepad f20"></i>
-						<div class="f12 lh1">日程</div>
-					</a>
-					<a id="item2" href="#" class="um-footerbar-item active">
-						<i class="ti-agenda f20"></i>
-						<div class="f12 lh1">通讯录</div>
-					</a>
-					<a id="item3" href="#" class="um-footerbar-item">
-						<i class="ti-user f20"></i>
-						<div class="f12 lh1">我</div>
-					</a>
+				<div class="userInfo">
+					<span class="userIcon ti-user"></span>
+					<span class="userName">张三</span>
+					<span class="setIcon ti-wand"></span>
+				</div>
+				<h2 class="crm">CRM</h2>
+				<div class="crm_con">
+					<ul class="crm_list">
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>销售线索</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>销售线索</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>销售线索</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>销售线索</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>销售线索</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+				<h2 class="xmgl">项目管理</h2>
+				<div class="xmgl_con">
+					<ul class="xmgl_list">
+						<li onclick="openFastReport()">
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>业务申请</dd>
+							</dl>
+						</li>
+						<li onclick="openPayList()">
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>付款申请</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>报价测算器</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>支付表查询</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>逾期罚息</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt class="ti-volume"></dt>
+								<dd>对账还款</dd>
+							</dl>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
 		<script>
-			function openAddCar(){
+			$(function (){
+				var mySwiper=new Swiper('.swiper-container',{
+					autoplay:1000,
+					direction : 'horizontal',
+					speed:1000,
+					autoplayDisableOnInteraction : false,
+					loop : true
+				})
+			});
+			/*function openAddCar(){
 				summer.openWin({
 					id:'addCar',
 					url:'html/touristsClient/addCar.html',
@@ -69,7 +140,7 @@
 						}
 					}
 				})
-		}
+		}*/
 			function openFastReport(){
 				summer.openWin({
 					id:'addCar',
@@ -89,7 +160,25 @@
 					}
 				});
 			}
- 
+			function openPayList(){
+				summer.openWin({
+					id:'payList',
+					url:'html/repayApply/payList/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "付款申请",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"function()",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			}
 		</script>
 	</body>
 </html>

@@ -5,8 +5,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">	
-		<script src="../../js/summer.js" ></script>		
+		<link rel="stylesheet" href="../../css/font-icons.css">
+		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script src="../../js/font.js" ></script>
@@ -72,10 +72,15 @@
                     </div>
                 </div>
 			</div>
- 			
+
             <div class="um-footer"id="footer">
+<<<<<<< HEAD
                 
                 <button class="btn" onclick="newCustom()">新建项目</button>
+=======
+
+                <button class="btn">新建项目</button>
+>>>>>>> 4169e87442e21eb993c55466172fca97558c0018
 
             </div>
 
@@ -94,7 +99,7 @@
 				        left: 0,
 				        right: 0
 				    },
-				    index: 0,	
+				    index: 0,
 				    frames: [{
 				        id: 'fra_total',
 				        url: 'html/fastReport/fra_total.html',
@@ -129,7 +134,17 @@
 				$(".headertitle").on("click", '.tabbar', function(e) {
 					$(this).addClass("active").siblings().removeClass("active");
 					var tar = $(this).attr("data-index")
+<<<<<<< HEAD
 					summer.setFrameGroupAttr({    
+=======
+					//mySwiper.slideTo(parseInt(tar), 200, false);
+					/*summer.setFrameGroupIndex({
+					    id: 'group1',
+					    index: tar,
+					    reload: false
+					});*/
+					summer.setFrameGroupAttr({
+>>>>>>> 4169e87442e21eb993c55466172fca97558c0018
 						id : 'group1',
 						index : tar
 					});
