@@ -30,7 +30,7 @@
 					</div>
 				</div>
 				<div class="userInfo">
-					<span class="userIcon iconfont icon-mine" onclick="toLogin()"></span>
+					<span class="userIcon iconfont icon-mine"></span>
 					<span class="userName" onclick="toLogin()">张三</span>
 					<span class="setIcon iconfont icon-install" onclick="showUserInfo()"></span>
 				</div>
@@ -180,14 +180,6 @@
 					}
 				});
 			}
-			// 登陆
-			function toLogin(){
-				summer.openWin({
-					id:'login',
-					url:'login.html',
-					create:false
-				});
-			};
 			// 我的
 			function showUserInfo(){
 				summer.openWin({

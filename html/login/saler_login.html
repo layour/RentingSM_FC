@@ -16,23 +16,33 @@
 		<div class="um-frame" id="index">
 
 			<div class="um-content">
-            <p class="loginTitle">销售登陆</p>
+            <img src = "" class="loginTitle"></img>
             <form action="">
                <dl>
-                  <dt>工号</dt>
+                  <dt class="iconfont icon-login"></dt>
                   <dd>
-                     <input type="text">
+                     <input type="text" placeholder="工号">
                   </dd>
                </dl>
                <dl>
-                  <dt>密码</dt>
+                  <dt class="iconfont icon-key"></dt>
                   <dd>
-                     <input type="password">
+                     <input type="password" placeholder="密码">
                   </dd>
                </dl>
-               <button type="button" class="loginBtn">登陆</button>
+					<p class="forget">忘记密码？</p>
+               <button type="button" class="loginBtn" onclick="toLogin()">销售登陆</button>
             </form>
 			</div>
 		</div>
+		<script type="text/javascript">
+			function toLogin(){
+				summer.openWin({
+					id:'login',
+					url:'index.html',
+					create:false
+				});
+			};
+		</script>
 	</body>
 </html>

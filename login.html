@@ -20,13 +20,14 @@
 
 		</div>
 		<div class="um-footer" id="footer">
-			<button class="btn">切换登陆</button>
+			<span class = "taste">快速体验</span>
+			<span class = "shu">|</span>
+			<span class = "changeLog"></span>
 		</div>
 	</div>
 	<script type="text/javascript">
 		summerready = function() {
 			var bot = $('#footer').height();
-			console.log(bot);
 			summer.openFrameGroup({
 				id: 'login',
 				background: '#ffffff',
@@ -55,20 +56,30 @@
 		}
 		$(function() {
 			var onOff = true;
-			$('.btn').on('click', function() {
+			$('.changeLog').text('销售登录');
+			$('.changeLog').on('click', function() {
 				if (onOff) {
 					onOff = false;
+					$('.changeLog').text('客户登陆');
 					summer.setFrameGroupAttr({
 						id: 'login',
 						index: 1
 					});
 				} else {
 					onOff = true;
+					$('.changeLog').text('销售登录');
 					summer.setFrameGroupAttr({
 						id: 'login',
 						index: 0
 					});
 				}
+			});
+			$('.taste').on('click',function (){
+				summer.openWin({
+					id:'login',
+					url:'index.html',
+					create:false
+				});
 			});
 		});
 	</script>

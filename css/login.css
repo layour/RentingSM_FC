@@ -1,26 +1,46 @@
 body,.um-frame{
-   background-color: #006a78;
+   background-color: #fff;
+}
+#footer{
+   height: 1.2rem;
+   background-color: #fff;
+   border: 0;
+}
+#footer span{
+   display: inline-block;
+   height: 0.4rem;
+   font-size: 0.3rem;
+   line-height: 0.4rem;
+   color: #424242;
+}
+#footer .shu{
+   padding: 0 0.5rem;
 }
 .loginTitle{
-   width: 100%;
-   text-align: center;
-   margin: 0;
-   font-weight: bold;
-   color: #fff;
-   margin-top: 3rem;
-   font-size: 0.5rem;
-   margin-bottom: 2rem;
+   width: 1.8rem;
+   height: 1.8rem;
+   position: absolute;
+   border-radius: 0.9rem;
+   background-color: #d8d8d8;
+   left: 50%;
+   margin-left: -0.9rem;
+   top: 2.4rem;
+   overflow: hidden;
+   display: block;
+   border: 0;
 }
 form{
-   width: 80%;
-   margin: 0 auto;
-   position: relative;
+   width: 6.4rem;
+   position: absolute;
+   left: 50%;
+   margin-left: -3.2rem;
+   top: 5rem;
    height: 5rem;
 }
 dl{
    height: 0.8rem;
-   margin-bottom: 0.1rem;
-   border-bottom: 1px solid #fff;
+   margin-bottom: 0.4rem;
+   border-bottom: 1px solid #e0e0e0;
 }
 dl dd,dl dt{
    float: left;
@@ -31,7 +51,7 @@ dl dt{
    font-size: 0.28rem;
    height: 0.8rem;
    line-height: 0.8rem;
-   color: #fff;
+   color: #0277bd;
 }
 dl dd{
    width: 4.6rem;
@@ -42,43 +62,55 @@ dl dd input{
    height: 0.8rem;
    width: 4.6rem;
    background: none;
-   color: #fff;
+   color: #424242;
    font-size: 0.28rem;
    line-height: 0.8rem;
+}
+*::-webkit-input-placeholder {
+    color: #e0e0e0;
+}
+*:-moz-placeholder {
+    color: #e0e0e0;
+}
+*:-ms-input-placeholder {
+    color: #e0e0e0;
+}
+.forget{
+   position: absolute;
+   right: 0;
+   color: #999;
+   font-size: 0.28rem;
+   height: 0.28rem;
+   line-height: 0.28rem;
 }
 .getcode{
    position: absolute;
    right: 0;
-   bottom: 3.4rem;
-   width: 1rem;
-   height: 0.6rem;
+   bottom: 3.26rem;
+   width: 2.5rem;
+   height: 0.68rem;
    background-color: #fff;
-   border-radius: 0.4rem;
-   color: #006a78;
-   line-height: 0.6rem;
+   border-radius: 0.1rem;
+   border: 1px solid #039be5;
+   color: #039be5;
+   line-height: 0.68rem;
    text-align: center;
    font-size: 0.28rem;
 }
-.notget{
-   position: absolute;
-   right: 0;
-   bottom: 2.6rem;
-   color: #fff;
-   font-size: 0.28rem;
-}
 .loginBtn{
-   width: 2rem;
+   width: 6.4rem;
    height: 1rem;
-   background-color: #fff;
-   color: #006a78;
+   background-color: #039be5;
+   color: #fff;
    position: absolute;
    left: 50%;
-   margin-left: -1rem;
-   bottom: 0;
+   margin-left: -3.2rem;
+   bottom: 0.8rem;
    border: 0;
    outline: none;
-   border-radius: 0.5rem;
-   font-size: 0.4rem;
+   border-radius: 0.1rem;
+   font-size: 0.34rem;
+   letter-spacing: 0.05rem;
    line-height: 1rem;
    text-align: center;
 }
