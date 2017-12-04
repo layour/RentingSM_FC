@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application>
-	<app_start>index.html</app_start>
-	<app_name>RentingSM</app_name>
-	<project_name>RentingSM</project_name>
-	<package_name>com.lionbridge.rentingsm</package_name>
-	<frame_name>summer-um</frame_name>
-	<theme>blue</theme>
-	<icon relativePath="css/themes/default/app">app</icon>
-	<versionCode>1</versionCode>
-	<versionBuild>1</versionBuild>
-	<versionName>1</versionName>
-	<orientation>unspecified</orientation>
-	<permission id="android.permission.INTERNET"/>
-	<statusBarStyle>dark</statusBarStyle>
-	<fullScreen>false</fullScreen>
-	<windowSoftInputMode>stateHidden</windowSoftInputMode>
-	<import id="cordova-plugin-compat" type="web" ref="cordova"/> 
-	<import id="cordova-plugin-file" type="web" ref="cordova"/>  
-	<import id="cordova-plugin-http" type="web" ref="cordova"/>  
-	<import id="cordova-plugin-camera" type="web" ref="cordova"/>
-	<import id="cordova-plugin-summer-personscan" type="web" ref="cordova"/>  
-</application><!--
+
+<application> 
+  <app_start>login.html</app_start>  
+  <app_name>RentingSM</app_name>  
+  <project_name>RentingSM</project_name>  
+  <package_name>com.lionbridge.rentingsm</package_name>  
+  <frame_name>summer-um</frame_name>  
+  <theme>blue</theme>  
+  <icon relativePath="css/themes/default/app">app</icon>  
+  <versionCode>1</versionCode>  
+  <versionBuild>1</versionBuild>  
+  <versionName>1</versionName>  
+  <orientation>unspecified</orientation>  
+  <permission id="android.permission.INTERNET"></permission>  
+  <statusBarStyle>dark</statusBarStyle>  
+  <fullScreen>false</fullScreen>  
+  <windowSoftInputMode>stateHidden</windowSoftInputMode>  
+  <import id="cordova-plugin-compat" type="web" ref="cordova"></import>  
+  <import id="cordova-plugin-file" type="web" ref="cordova"/>  
+  <import id="cordova-plugin-http" type="web" ref="cordova"/>  
+  <import id="cordova-plugin-camera" type="web" ref="cordova"/>  
+  <import id="cordova-plugin-summer-personscan" type="web" ref="cordova"/> 
+</application>
+<!--
 【屏幕显示方向】
   orientation: 屏幕显示方向
     landscape: 横向
