@@ -18,7 +18,8 @@
 	<import id="cordova-plugin-compat" type="web" ref="cordova"/> 
 	<import id="cordova-plugin-file" type="web" ref="cordova"/>  
 	<import id="cordova-plugin-http" type="web" ref="cordova"/>  
-	<import id="cordova-plugin-camera" type="web" ref="cordova"/>  
+	<import id="cordova-plugin-camera" type="web" ref="cordova"/>
+	<import id="cordova-plugin-summer-personscan" type="web" ref="cordova"/>  
 </application><!--
 【屏幕显示方向】
   orientation: 屏幕显示方向
