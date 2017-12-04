@@ -6,6 +6,7 @@
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="./quotedPrice.min.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
@@ -18,51 +19,57 @@
 		<div class="um-win" id="quotedPriceDetail" v-cloak>
 			<div class="um-content quotedPriceDetail">
 				<ul>
-					<li class="spec"><b>合同金额</b><span>{{initData.allPrice}}&nbsp;元</span></li>
-					<li>
+					<li class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
+					<li @click="surePicker('term')">
 						<b>租赁期数</b>
 						<span>
-							<input type="text" v-model="quoted.term">
+							<b v-if="quoted.term">{{quoted.term}}</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
-					<li><b>合同周期</b><span>{{initData.contractTerm}}&nbsp;个月</span></li>
+					<li><b>合同周期</b><span>{{quoted.contractTerm}}&nbsp;个月</span></li>
 					<li>
 						<b>租赁年利率</b>
 						<span>
-							<input type="text" v-model="quoted.rate">&nbsp;%
+							<input type="text" v-model="quoted.rate" @input="rateCheck">&nbsp;%
 						</span>
 					</li>
-					<li class='spec'>
+					<li class='spec' @click="surePicker('payType')">
 						<b>支付方式</b>
 						<span>
-							{{quoted.payType}}
+							<b v-if="quoted.payType">{{quoted.payType}}</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
 					<li>
 						<b>首付比例</b>
 						<span>
-							<input type="text" name="firstPayRate" v-model="quoted.firstPayRate"> %
-							<b>{{initData.firstPay}}</b>&nbsp;元
+							<input type="text" maxlength='5' @input="changeFirstPay" name="firstPayRate" v-model="quoted.firstPayRate"> %
+							<input type="text" @blur="changeFirstPayRate" name="firstPay" v-model="quoted.firstPay">&nbsp;元
 						</span>
 					</li>
 					<li>
 						<b>保证金</b>
 						<span>
+							<button type="button" name="button" v-if="!quoted.bailType" @click="surePicker('bail')">点击选择基数</button>
+							<button type="button" name="button" v-else @click="surePicker('bail')">{{quoted.bailType}}</button>
 
-							<input type="text" name="bailRate" v-model="quoted.bailRate"> %
-							<b>{{initData.bail}}</b>&nbsp;元
+							<input type="text" name="bailRate" @input="changeBail" v-model="quoted.bailRate"> %
+							<input type="text" name="bail" @blur="changBailRate" v-model="quoted.bail">&nbsp;元
 						</span>
 					</li>
 					<li>
 						<b>咨询费</b>
 						<span>
-							<input type="text" name="consultingFee" v-model="quoted.consultingFee">&nbsp;元
+							<input type="text" @input="checkVal('fee')" name="consultingFee" v-model="quoted.consultingFee">&nbsp;元
 						</span>
 					</li>
 					<li class='spec'>
 						<b>保险保证金</b>
 						<span>
-							<input type="text" name="sureBail" v-model="quoted.sureBail">&nbsp;元
+							<input type="text" @input="checkVal('bail')"  name="sureBail" v-model="quoted.sureBail">&nbsp;元
 						</span>
 					</li>
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
@@ -71,7 +78,7 @@
 				</ul>
 				<section v-if="pickerStatus" class="pickerPrice">
 					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
-					<p><span @click="surePickerColor">取消</span><span  @click="surePickerColor('confirm')">确定</span></p>
+					<p><span @click="surePicker">取消</span><span  @click="surePicker('','confirm')">确定</span></p>
 				</section>
       </div>
 			<div class="um-footer" id="footer">
@@ -85,32 +92,24 @@
           el:'#quotedPriceDetail',
           data(){
             return {
-							initData:{
-								allPrice:20000,
-								termList:['年','月','季'],
-								contractTerm:25,
-								payTypeList:['期末等额本息','期末不等额'],
-								firstPay:'100000.00',
-								bail:'20000.00',
-								bailList:["融资额","首期款"],
-							},
-							pickerStatus:true,
-							slots: [
-								{
-									flex: 1,
-									values: ['白色', '黑色', '蓝色', '红色', '玫瑰金', '紫色'],
-									defaultIndex:2,
-									className: 'slot1',
-									textAlign: 'center'
-								}
-							],
+							termList:['一个月', '二个月', '三个月', '四个月', '五个月', '六个月','一年','二年','三年'],
+							// termType:['月'],
+							payTypeList:['期末等额本息','期末不等额'],
+							bailList:["融资额","首期款"],
+							pickerStatus:false,
+							pickerType:'payType',
+							pickerVal:'',
 							quoted:{
-								term:18,
+								allPrice:'20000.00',
+								term:'', //租赁期数
+								contractTerm:'',
 								rate:50,
 								payType:'',
-								firstPayRate:20,
-								bailRate:10,
-								bailType:'',
+								firstPayRate:10, //首付比例
+								firstPay:'2000.00',
+								bail:'20000.00', //保证金
+								bailRate:10,  //保证金比例
+								bailType:'',  //保证金类型
 								consultingFee:'200.00',
 								sureBail:'3000.00',
 							},
@@ -121,15 +120,123 @@
 							}
             }
           },
+					computed:{
+						slots(){
+							var pickerObj={
+								flex: 1,
+								values: [],
+								defaultIndex:0,
+								className: 'slot1',
+								textAlign: 'center'
+							},i='';
+							if(this.pickerType=='term'){
+								pickerObj.values=this.termList;
+								i=this.termList.indexOf(this.quoted.term);
+							}else if(this.pickerType=='payType'){
+								pickerObj.values=this.payTypeList;
+								i=this.payTypeList.indexOf(this.quoted.payType);
+							}else if(this.pickerType=='bail'){
+								pickerObj.values=this.bailList;
+								i=this.bailList.indexOf(this.quoted.bailType);
+							}
+							if(i>-1){pickerObj.defaultIndex=i}
+							return [pickerObj]
+						}
+					},
 					methods:{
 						onValuesChange(picker,values) {
-							this.pickedColor=values[0];
+							this.pickerVal=values[0];
+							console.log(this.pickerVal)
 				    },
-						surePickerColor(param){
+						surePicker(item,status){
 							this.pickerStatus=!this.pickerStatus;
-							if(param=='confirm'){
-								this.color=this.pickedColor;
+							if(status=='confirm'){
+								if(this.pickerType=='term'){
+									this.quoted.term=this.pickerVal
+									var num=this.quoted.term.substr(0,1),type=this.quoted.term.substr(this.quoted.term.length-1,1)
+									var i=['一','二','三','四','五','六','七','八','九'].indexOf(num)
+									console.log(i+1,type);
+									if(type=="年"){this.quoted.contractTerm=(i+1)*12}else{this.quoted.contractTerm=i+1}
+								}else if(this.pickerType=='payType'){
+									this.quoted.payType=this.pickerVal
+								}else if(this.pickerType=='bail') {
+									this.quoted.bailType=this.pickerVal
+									var number=this.bailTypeReset();
+									this.quoted.bail=this.quoted.bailRate*number*0.01
+								}
+							}else if(item){
+								this.pickerType=item;
 							}
+						},
+						rateCheck(){
+							var val=String(this.quoted.rate).trim();
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=100){
+								this.quoted.rate=''
+							}
+						},
+						changeFirstPay(){
+							var val=String(this.quoted.firstPayRate).trim();
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=100){
+								this.quoted.firstPayRate=''
+								this.quoted.firstPay=''
+							}else {
+								this.quoted.firstPay=this.quoted.firstPayRate*this.quoted.allPrice*0.01
+								if(!this.quoted.firstPay){this.quoted.firstPay=''}
+							}
+
+						},
+						changeFirstPayRate(){
+							var val=String(this.quoted.firstPay).trim();
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+								this.quoted.firstPay=''
+								this.quoted.firstPayRate=''
+							}else {
+								this.quoted.firstPayRate=parseFloat(100*this.quoted.firstPay/this.quoted.allPrice).toFixed(2);
+							}
+						},
+						changeBail(){
+							var val=String(this.quoted.bailRate).trim();
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=100){
+								this.quoted.bailRate=''
+								this.quoted.bail=''
+							}else {
+								if(!this.quoted.bailRate){this.quoted.bail='';return}
+								var number=this.bailTypeReset();
+								this.quoted.bail=this.quoted.bailRate*number*0.01
+							}
+						},
+						bailTypeReset(){
+							var number=0;
+							if(this.quoted.bailType=="融资额"){
+								number=this.quoted.allPrice;
+							}else if(this.quoted.bailType=="首期款"){
+								number=this.quoted.firstPay;
+							}
+							return number
+						},
+						changBailRate(){
+							var val=String(this.quoted.bail).trim(),number=this.bailTypeReset();;
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=number){
+								this.quoted.bail=''
+								this.quoted.bailRate=''
+							}else {
+								this.quoted.bailRate=parseFloat(100*this.quoted.bail/number).toFixed(2);
+							}
+						},
+						checkVal(value){
+							var val='';
+							if(value=='fee'){
+								val=this.quoted.consultingFee;
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+									this.quoted.consultingFee=''
+								}
+							}else if (value=='bail') {
+								val=this.quoted.sureBail;
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+									this.quoted.sureBail=''
+								}
+							}
+
 						}
 					}
         })
