@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title>添加车辆</title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<link rel="stylesheet" href="./car.min.css">
 		<script src="../../js/summer.js" ></script>
@@ -16,7 +16,7 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
-		<div class="um-win" id="addCar">
+		<div class="um-win" id="addCar" v-cloak>
 			<!-- <div class="um-header" >
 				<button @click="goBack" class="um-back f15">返回</button>
 				<h3>添加车辆</h3>
@@ -28,7 +28,7 @@
             <td>经销商</td>
             <td>
 							<span v-if='dealer'>{{dealer}}</span><span v-else>请选择</span>
-							<i @click="pickerDealer" class="ti-angle-right"></i>
+							<i @click="pickerDealer" class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr>
@@ -42,14 +42,14 @@
             <td>选择车型</td>
             <td>
 							<span v-if='carModels'>{{carModels}}</span><span v-else>请选择</span>
-							<i @click="pickerModels" class="ti-angle-right"></i>
+							<i @click="pickerModels" class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr>
             <td>车身颜色</td>
             <td>
 							<span v-if='color'>{{color}}</span><span v-else>请选择</span>
-							<i  @click="surePickerColor" class="ti-angle-right"></i>
+							<i  @click="surePickerColor" class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr>
@@ -115,13 +115,13 @@
 								type:'actionBar',
 								actionBar: {
 						      title: "选择经销商",
-						      titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						      titleColor: "#000000",
 						      backgroundColor: "#34aadc",
 						      leftItem:{
 						          image: "img/back.png",
-						          method:function(){summer.closeWin()},//返回按钮自定义事件
+						          method:function(){summer.closeWin()},
 						          text:"取消",
-						          textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						          textColor:"#000000"
 						      }
 								}
 							})

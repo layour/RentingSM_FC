@@ -5,9 +5,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">
-		<link rel="stylesheet" href="../../css/mint.css">
-		<link rel="stylesheet" href="./car.min.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="./quotedPrice.min.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
@@ -17,20 +16,89 @@
 	<body>
 		<div class="um-win" id="quotedPrice">
 			<div class="um-content quotedPrice">
+				<section>
+					<p>已选方案</p>
+					<table class="selectedPlan" @click="goDetail(selectedPlan.id)">
+						<tr><td><img src="../../img/test1.jpg" alt=""></td>
+							<td>
+								<p><span>快易融：</span>{{selectedPlan.carModels}}</p>
+								<p><span>期末等额本息：</span>{{selectedPlan.term}}</p>
+								<p><span>首付：</span>{{selectedPlan.firstPrice}}</p>
+								<p><span>总价：</span>{{selectedPlan.allPrice}}</p>
+							</td>
+							<td class="iconTd"><i class="icon iconfont icon-enter"></i></td>
+						</tr>
+					</table>
+				</section>
+				<section>
+					<p>可选方案</p>
+					<table v-for="(item,index) in quotedPriceList" :key='index'  @click="goDetail(item.id)">
+						<tr>
+							<td><img src="../../img/test1.jpg" alt=""></td>
+							<td>
+								<p><span>快易融：</span>{{item.carModels}}</p>
+								<p><span>期末等额本息：</span>{{item.term}}</p>
+								<p><span>首付：</span>{{item.firstPrice}}</p>
+								<p><span>总价：</span>{{item.allPrice}}</p>
+							</td>
+							<td class="iconTd"><i class="icon iconfont icon-enter"></i></td>
+						</tr>
+					</table>
+				</section>
 
       </div>
     </div>
     <script>
       $(function(){
         new Vue({
-          el:'quotedPrice',
+          el:'#quotedPrice',
           data(){
             return {
-
+							selectedPlan:{
+								carModels:'二手车',
+								id:1,
+								term:'24',
+								firstPrice:'1000.00',
+								allPrice:'360000.00'
+							},
+							quotedPriceList:[
+								{
+									carModels:'新车',
+									term:'36',
+									id:2,
+									firstPrice:'1000.00',
+									allPrice:'360000.00'
+								},
+								{
+									carModels:'二手车',
+									term:'24',
+									id:3,
+									firstPrice:'100.00',
+									allPrice:'360000.00'
+								}
+							]
             }
           },
 					methods:{
-						
+						goDetail(id){
+							summer.openWin({
+								id:'quotedPriceDetail',
+								url:'html/priceCalculation/quotedPriceDetail.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+						      title: "报价",
+						      titleColor: "#000000",
+						      backgroundColor: "#34aadc",
+						      leftItem:{
+						          image: "img/back.png",
+						          method:function(){summer.closeWin()},
+						          text:"返回",
+						          textColor:"#000000"
+						      }
+								}
+							})
+						}
 					}
         })
 

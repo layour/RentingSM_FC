@@ -810,7 +810,7 @@ a {
   opacity: .5;
 }
 
-/* scrollbar 
+/* scrollbar
 ::-webkit-scrollbar{height:11px;width:10px;background-color:#f0f0f0;}
 ::-webkit-scrollbar-thumb{padding-top:100px;-webkit-box-shadow:inset 1px 1px 0 rgba(0,0,0,0.1),inset -1px -1px 0 rgba(0,0,0,0.07);background-clip:padding-box;background-color:#dadada;min-height:28px;border-radius:4px;}
 ::-webkit-scrollbar-button{height:0;width:0;}
@@ -5244,3 +5244,6 @@ input[type=range]::-webkit-slider-thumb:before {
 }
 
 /*# sourceMappingURL=iuapmobile.um.css.map */
+[v-cloak] {
+    display: none;
+}

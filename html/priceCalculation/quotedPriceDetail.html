@@ -5,32 +5,110 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">
 		<link rel="stylesheet" href="../../css/mint.css">
-		<link rel="stylesheet" href="./car.min.css">
+		<link rel="stylesheet" href="./quotedPrice.min.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
-		<div class="um-win" id="quotedPrice">
-			<div class="um-content quotedPrice">
+		<div class="um-win" id="quotedPriceDetail" v-cloak>
+			<div class="um-content quotedPriceDetail">
+				<ul>
+					<li class="spec"><b>合同金额</b><span>{{initData.allPrice}}&nbsp;元</span></li>
+					<li>
+						<b>租赁期数</b>
+						<span>
+							<input type="text" v-model="quoted.term">
+						</span>
+					</li>
+					<li><b>合同周期</b><span>{{initData.contractTerm}}&nbsp;个月</span></li>
+					<li>
+						<b>租赁年利率</b>
+						<span>
+							<input type="text" v-model="quoted.rate">&nbsp;%
+						</span>
+					</li>
+					<li class='spec'>
+						<b>支付方式</b>
+						<span>
+							{{quoted.payType}}
+						</span>
+					</li>
+					<li>
+						<b>首付比例</b>
+						<span>
+							<input type="text" name="firstPayRate" v-model="quoted.firstPayRate"> %
+							<b>{{initData.firstPay}}</b>&nbsp;元
+						</span>
+					</li>
+					<li>
+						<b>保证金</b>
+						<span>
 
+							<input type="text" name="bailRate" v-model="quoted.bailRate"> %
+							<b>{{initData.bail}}</b>&nbsp;元
+						</span>
+					</li>
+					<li>
+						<b>咨询费</b>
+						<span>
+							<input type="text" name="consultingFee" v-model="quoted.consultingFee">&nbsp;元
+						</span>
+					</li>
+					<li class='spec'>
+						<b>保险保证金</b>
+						<span>
+							<input type="text" name="sureBail" v-model="quoted.sureBail">&nbsp;元
+						</span>
+					</li>
+					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
+					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
+					<li><b>期数</b><span>{{resultData.term}}</span></li>
+				</ul>
       </div>
+			<div class="um-footer" id="footer">
+				<button>测算</button>
+				<button class="red">保存</button>
+			</div>
     </div>
     <script>
       $(function(){
         new Vue({
-          el:'quotedPrice',
+          el:'#quotedPriceDetail',
           data(){
             return {
-
+							initData:{
+								allPrice:20000,
+								termList:['年','月','季'],
+								contractTerm:25,
+								payTypeList:['期末等额本息','期末不等额'],
+								firstPay:'100000.00',
+								bail:'20000.00',
+								bailList:["融资额","首期款"],
+							},
+							quoted:{
+								term:18,
+								rate:50,
+								payType:'',
+								firstPayRate:20,
+								bailRate:10,
+								bailType:'',
+								consultingFee:'200.00',
+								sureBail:'3000.00',
+							},
+							resultData:{
+								firstPrice:'134000.00',
+								termPrice:'4873.32',
+								term:23
+							}
             }
           },
 					methods:{
-						
+
 					}
         })
 

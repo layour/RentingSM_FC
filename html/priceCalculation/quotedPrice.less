@@ -1,0 +1,80 @@
+out:quotedPrice.min.css,sourcemap:false,compress:true;
+@import "../../css/comment.less";
+.quotedPrice{
+  padding: 0 .44rem;
+  section{
+    >p{
+      line-height: .8rem;
+    }
+    table{
+      overflow: hidden;
+      width: 100%;
+      margin-bottom: .4rem;
+      border-radius: .1rem;
+      background: @white;
+      &.selectedPlan{
+          background: @grayBlue;
+      }
+      td{
+        vertical-align: middle;
+        padding:0 .2rem;
+        font-size: 13px;
+        &.iconTd{
+          text-align: right;
+        }
+        img{
+          width:1rem;
+        }
+      }
+    }
+  }
+}
+
+.quotedPriceDetail{
+  padding-bottom: 1.2rem;
+  ul{
+    overflow: hidden;
+    li{
+      background: @white;
+      padding:0 .44rem;
+      height: .8rem;
+      line-height: .8rem;
+      margin-bottom: 2px;
+      &.spec{
+        margin-bottom: .2rem;
+      }
+      >b{color:@grayBlue;}
+      b{
+        font-weight: normal;
+      }
+      >span{
+        float: right;
+        input{
+          width:1.2rem;
+          height:.4rem;
+          outline: none;
+          border:none;
+          border-bottom: 1px solid @borderColor;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+#quotedPriceDetail {
+  .um-footer{
+
+    >button{
+      height: .8rem;
+      border:none;
+      outline: none;
+      width:1.6rem;
+      line-height: .8rem;
+      color:@white;
+      margin:.3rem .4rem;
+      border-radius: 5px;
+      background: @grayBlue;
+      &.red{background: @red;}
+    }
+  }
+}

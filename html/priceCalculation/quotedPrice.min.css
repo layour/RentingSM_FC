@@ -1,0 +1,74 @@
+.quotedPrice {
+  padding: 0 .44rem;
+}
+.quotedPrice section > p {
+  line-height: .8rem;
+}
+.quotedPrice section table {
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: .4rem;
+  border-radius: .1rem;
+  background: #ffffff;
+}
+.quotedPrice section table.selectedPlan {
+  background: #34aadc;
+}
+.quotedPrice section table td {
+  vertical-align: middle;
+  padding: 0 .2rem;
+  font-size: 13px;
+}
+.quotedPrice section table td.iconTd {
+  text-align: right;
+}
+.quotedPrice section table td img {
+  width: 1rem;
+}
+.quotedPriceDetail {
+  padding-bottom: 1.2rem;
+}
+.quotedPriceDetail ul {
+  overflow: hidden;
+}
+.quotedPriceDetail ul li {
+  background: #ffffff;
+  padding: 0 .44rem;
+  height: .8rem;
+  line-height: .8rem;
+  margin-bottom: 2px;
+}
+.quotedPriceDetail ul li.spec {
+  margin-bottom: .2rem;
+}
+.quotedPriceDetail ul li > b {
+  color: #34aadc;
+}
+.quotedPriceDetail ul li b {
+  font-weight: normal;
+}
+.quotedPriceDetail ul li > span {
+  float: right;
+}
+.quotedPriceDetail ul li > span input {
+  width: 1.2rem;
+  height: .4rem;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #999999;
+  text-align: center;
+}
+#quotedPriceDetail .um-footer > button {
+  height: .8rem;
+  border: none;
+  outline: none;
+  width: 1.6rem;
+  line-height: .8rem;
+  color: #ffffff;
+  margin: .3rem .4rem;
+  border-radius: 5px;
+  background: #34aadc;
+}
+#quotedPriceDetail .um-footer > button.red {
+  background: red;
+}
