@@ -69,6 +69,10 @@
 					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
 					<li><b>期数</b><span>{{resultData.term}}</span></li>
 				</ul>
+				<section v-if="pickerStatus" class="pickerPrice">
+					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+					<p><span @click="surePickerColor">取消</span><span  @click="surePickerColor('confirm')">确定</span></p>
+				</section>
       </div>
 			<div class="um-footer" id="footer">
 				<button>测算</button>
@@ -90,6 +94,16 @@
 								bail:'20000.00',
 								bailList:["融资额","首期款"],
 							},
+							pickerStatus:true,
+							slots: [
+								{
+									flex: 1,
+									values: ['白色', '黑色', '蓝色', '红色', '玫瑰金', '紫色'],
+									defaultIndex:2,
+									className: 'slot1',
+									textAlign: 'center'
+								}
+							],
 							quoted:{
 								term:18,
 								rate:50,
@@ -108,7 +122,15 @@
             }
           },
 					methods:{
-
+						onValuesChange(picker,values) {
+							this.pickedColor=values[0];
+				    },
+						surePickerColor(param){
+							this.pickerStatus=!this.pickerStatus;
+							if(param=='confirm'){
+								this.color=this.pickedColor;
+							}
+						}
 					}
         })
 

@@ -66,8 +66,8 @@
 					</tr>
         </table>
 				<section v-if="pickerColorStatus" class="pickerColor">
-					<p><span @click="surePickerColor">取消</span><span  @click="surePickerColor('confirm')">确定</span></p>
 					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+					<p><span @click="surePickerColor">取消</span><span  @click="surePickerColor('confirm')">确定</span></p>
 				</section>
 
 			</div>
