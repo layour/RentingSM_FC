@@ -5,10 +5,12 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/mint.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<style>
 			.uploadImg ul{overflow:hidden;}
@@ -21,6 +23,18 @@
 			.uploadImg ul li p{line-height: .8rem;}
 			.uploadImg ul li img{
 				width:100%;
+				height:2.2rem;
+			}
+			.mint-popup{
+				width:100%;
+				padding-top:.2rem;
+			}
+			.mint-popup p{
+				line-height: .8rem;
+				text-align: center;
+			}
+			.mint-popup p.border{
+				border-bottom: 1px solid #f7f7f7;
 			}
 		</style>
 	</head>
@@ -28,37 +42,42 @@
 		<div class="um-win" id="uploadImg">
 			<div class="um-content uploadImg">
 				<ul>
-					<li @click="uploadImg('apply')">
+					<li @click="openPopup('apply')">
 						<img v-if="list.applyImg" :src="list.applyImg" alt="">
 						<img v-else src="../../img/test1.jpg" alt="">
 						<p>融资租赁申请表</p>
 					</li>
-					<li @click="uploadImg('marry')">
+					<li @click="openPopup('marry')">
 						<img v-if="list.marryImg"  :src="list.marryImg" alt="">
 						<img v-else src="../../img/test1.jpg" alt="">
 						<p>结婚证明</p>
 					</li>
-					<li @click="uploadImg('residence')">
+					<li @click="openPopup('residence')">
 						<img v-if="list.residenceImg"  :src="list.residenceImg" alt="">
 						<img v-else src="../../img/test1.jpg" alt="">
 						<p>户口证明</p>
 					</li>
-					<li @click="uploadImg('assets')">
+					<li @click="openPopup('assets')">
 						<img v-if="list.assetsImg"  :src="list.assetsImg" alt="">
 						<img v-else src="../../img/test1.jpg" alt="">
 						<p>资产证明</p>
 					</li>
-					<li @click="uploadImg('Interview')">
+					<li @click="openPopup('Interview')">
 						<img v-if="list.InterviewImg"  :src="list.InterviewImg" alt="">
 						<img v-else src="../../img/test1.jpg" alt="">
 						<p>面谈信息表</p>
 					</li>
-					<li @click="uploadImg('other')">
+					<li @click="openPopup('other')">
 						<img v-if="list.otherImg"  :src="list.otherImg" alt="">
 						<img v-else src="../../img/test1.jpg" alt="">
 						<p>其他</p>
 					</li>
 				</ul>
+				<mt-popup v-model="popupVisible" position="bottom">
+					<p class='border' @click="openCame">打开相机</p>
+					<p class='border' @click="uploadImg">打开相册</p>
+					<p @click="claosePopup">取消</p>
+				</mt-popup>
       </div>
 			<div class="um-footer"id="footer">
         <button class="btn um-btn-primary" style="padding:5px 12px" @click="save">保存</button>
@@ -77,44 +96,73 @@
 								assetsImg:'',
 								InterviewImg:'',
 								otherImg:'',
-							}
+							},
+							popupVisible:false,
+							status:''
             }
           },
 					mounted(){
 
 					},
 					methods:{
-						uploadImg(param){
+						openPopup(param){
+							this.popupVisible=true
+							this.status=param
+						},
+						claosePopup(){
+							this.popupVisible=false
+						},
+						openCame(){
 							// 打开相机
-							summer.openCamera({
-								compressionRatio:0.5,
-							  callback : function(args){
-							    alert(args.imgPath);
-									if(param=='apply'){
-
-									}else if(param=='marry'){
-
-									}else if(param=='residence'){
-
-									}else if(param=='assets'){
-
-									}else if(param=='Interview'){
-
-									}else if(param=='other'){
-
-									}
-							  }
-							});
+							var that=this
+							summer.getPermission(["android.permission.CAMERA","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE"],
+							function successFn(){
+								summer.openCamera({
+									compressionRatio:0.5,
+								  callback : function(args){
+										// $summer.alert(args);
+									 // alert(args.imgPath);
+										if(that.status=='apply'){
+											that.list.applyImg=args.compressImgPath
+										}else if(that.status=='marry'){
+											that.list.marryImg=args.compressImgPath
+										}else if(that.status=='residence'){
+											that.list.residenceImg=args.compressImgPath
+										}else if(that.status=='assets'){
+											that.list.assetsImg=args.compressImgPath
+										}else if(that.status=='Interview'){
+											that.list.InterviewImg=args.compressImgPath
+										}else if(that.status=='other'){
+											that.list.otherImg=args.compressImgPath
+										}
+								  }
+								});
+							},
+							function errorFn(err){
+								alert(err)
+							})
+						},
+						uploadImg(){
 							// 选择相册
+							this.popupVisible=false
+							var that=this
 							summer.openPhotoAlbum({
 									compressionRatio:0.5,
 							    callback : function (args){
-							      $summer.alert(args);
-							      alert(args.imgPath);
-										if(param=='apply'){
-
-										}else if(param=='marry'){
-
+							      // $summer.alert(args);
+							      // alert(args.imgPath);
+										if(that.status=='apply'){
+											that.list.applyImg=args.compressImgPath
+										}else if(that.status=='marry'){
+											that.list.marryImg=args.compressImgPath
+										}else if(that.status=='residence'){
+											that.list.residenceImg=args.compressImgPath
+										}else if(that.status=='assets'){
+											that.list.assetsImg=args.compressImgPath
+										}else if(that.status=='Interview'){
+											that.list.InterviewImg=args.compressImgPath
+										}else if(that.status=='other'){
+											that.list.otherImg=args.compressImgPath
 										}
 							    }
 							});

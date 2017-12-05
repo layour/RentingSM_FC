@@ -83,7 +83,7 @@
       </div>
 			<div class="um-footer" id="footer">
 				<button>测算</button>
-				<button class="red">保存</button>
+				<button class="red" @click="saveData">保存</button>
 			</div>
     </div>
     <script>
@@ -237,6 +237,10 @@
 								}
 							}
 
+						},
+						saveData(){
+							// http
+							summer.closeToWin({id:'setProject'})
 						}
 					}
         })

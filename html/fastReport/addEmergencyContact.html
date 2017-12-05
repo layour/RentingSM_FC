@@ -29,6 +29,7 @@
 			.addContact table input{
 				width:100%;
 				border:none;
+				outline: none;
 				border-bottom:1px solid #f7f7f7;
 			}
 		</style>
@@ -59,8 +60,7 @@
 			</div>
     </div>
     <script>
-      $(function(){
-        new Vue({
+        var vueTemplate=new Vue({
           el:'#addContact',
           data(){
             return {
@@ -90,8 +90,11 @@
 							summer.closeWin()
 						}
 					}
-        })
-      });
+        });
+				function addEmergencyContract(){
+					vueTemplate.addItem()
+				}
+
     </script>
   </body>
 </html>

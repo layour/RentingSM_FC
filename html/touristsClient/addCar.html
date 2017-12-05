@@ -73,7 +73,7 @@
 			</div>
 
 			<div class="um-footer">
-				<button type="button" class='btn btn-inline um-btn-primary'>保存</button>
+				<button type="button" class='btn  um-btn-primary' @click="save">保存</button>
 			</div>
 		</div>
 		<script>
@@ -119,7 +119,7 @@
 						      backgroundColor: "#34aadc",
 						      leftItem:{
 						          image: "img/back.png",
-						          method:'',
+						          method:function(){summer.closeWin()},
 						          text:"取消",
 						          textColor:"#000000"
 						      }
@@ -158,6 +158,9 @@
 								this.color=this.pickedColor;
 							}
 						},
+						save(){
+							summer.closeWin()
+						}
 					}
 				});
 				function getDealer(){
