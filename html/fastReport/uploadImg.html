@@ -73,14 +73,14 @@
 						<p>其他</p>
 					</li>
 				</ul>
+      </div>
+			<div class="um-footer"id="footer">
 				<mt-popup v-model="popupVisible" position="bottom">
 					<p class='border' @click="openCame">打开相机</p>
 					<p class='border' @click="uploadImg">打开相册</p>
 					<p @click="claosePopup">取消</p>
 				</mt-popup>
-      </div>
-			<div class="um-footer"id="footer">
-        <button class="btn um-btn-primary" style="padding:5px 12px" @click="save">保存</button>
+        <button v-if="!popupVisible" class="btn um-btn-primary" style="padding:5px 12px" @click="save">保存</button>
 			</div>
     </div>
     <script>
@@ -116,31 +116,31 @@
 							// 打开相机
 							var that=this
 							summer.getPermission(["android.permission.CAMERA","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE"],
-							function successFn(){
-								summer.openCamera({
-									compressionRatio:0.5,
-								  callback : function(args){
-										// $summer.alert(args);
-									 // alert(args.imgPath);
-										if(that.status=='apply'){
-											that.list.applyImg=args.compressImgPath
-										}else if(that.status=='marry'){
-											that.list.marryImg=args.compressImgPath
-										}else if(that.status=='residence'){
-											that.list.residenceImg=args.compressImgPath
-										}else if(that.status=='assets'){
-											that.list.assetsImg=args.compressImgPath
-										}else if(that.status=='Interview'){
-											that.list.InterviewImg=args.compressImgPath
-										}else if(that.status=='other'){
-											that.list.otherImg=args.compressImgPath
-										}
-								  }
-								});
-							},
-							function errorFn(err){
-								alert(err)
+								function successFn(){
+								},
+								function errorFn(err){
+									alert(err)
 							})
+							summer.openCamera({
+								compressionRatio:0.5,
+								callback : function(args){
+									// $summer.alert(args);
+								 // alert(args.imgPath);
+									if(that.status=='apply'){
+										that.list.applyImg=args.compressImgPath
+									}else if(that.status=='marry'){
+										that.list.marryImg=args.compressImgPath
+									}else if(that.status=='residence'){
+										that.list.residenceImg=args.compressImgPath
+									}else if(that.status=='assets'){
+										that.list.assetsImg=args.compressImgPath
+									}else if(that.status=='Interview'){
+										that.list.InterviewImg=args.compressImgPath
+									}else if(that.status=='other'){
+										that.list.otherImg=args.compressImgPath
+									}
+								}
+							});
 						},
 						uploadImg(){
 							// 选择相册

@@ -44,7 +44,7 @@
   border-color: #34aadc;
   background: #34aadc;
 }
-.addCar .pickerColor {
+.pickerColor {
   position: fixed;
   left: 0;
   bottom: 0;
@@ -52,13 +52,13 @@
   z-index: 10;
   background: #ffffff;
 }
-.addCar .pickerColor > p {
+.pickerColor > p {
   padding: .24rem .44rem;
 }
-.addCar .pickerColor > p span {
+.pickerColor > p span {
   color: #34aadc;
 }
-.addCar .pickerColor > p span:last-child {
+.pickerColor > p span:last-child {
   float: right;
 }
 #pickerDealer .um-input-group {

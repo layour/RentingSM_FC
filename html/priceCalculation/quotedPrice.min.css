@@ -58,23 +58,20 @@
   border-bottom: 1px solid #999999;
   text-align: center;
 }
-.quotedPriceDetail .pickerPrice {
+.pickerPrice {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 100;
   background: #ffffff;
   border-top: 1px solid #999999;
 }
-.quotedPriceDetail .pickerPrice > p {
+.pickerPrice > p {
   padding: .24rem .44rem;
 }
-.quotedPriceDetail .pickerPrice > p span {
+.pickerPrice > p span {
   color: #34aadc;
-}
-.quotedPriceDetail .pickerPrice > p span:last-child {
-  float: right;
 }
 #quotedPriceDetail .um-footer > button {
   height: .8rem;

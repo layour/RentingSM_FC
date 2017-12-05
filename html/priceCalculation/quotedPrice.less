@@ -60,20 +60,19 @@ out:quotedPrice.min.css,sourcemap:false,compress:true;
       }
     }
   }
-  .pickerPrice{
-    position:fixed;
-    left:0;
-    bottom:0;
-    width:100%;
-    z-index: 10;
-    background: @white;
-    border-top:1px solid @borderColor;
-    >p{
-      padding:.24rem .44rem;
-      span{
-        color:@grayBlue;
-        &:last-child{float:right;}
-      }
+}
+.pickerPrice{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  z-index: 100;
+  background: @white;
+  border-top:1px solid @borderColor;
+  >p{
+    padding:.24rem .44rem;
+    span{
+      color:@grayBlue;
     }
   }
 }
