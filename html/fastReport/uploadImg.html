@@ -10,12 +10,59 @@
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<style>
+			.uploadImg ul{overflow:hidden;}
+			.uploadImg ul li{
+				padding:.22rem .22rem 0 .22rem;;
+				width:50%;
+				float:left;
+				text-align: center;
+			}
+			.uploadImg ul li p{line-height: .8rem;}
+			.uploadImg ul li img{
+				width:100%;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="um-win" id="uploadImg">
 			<div class="um-content uploadImg">
-
+				<ul>
+					<li @click="uploadImg('apply')">
+						<img v-if="list.applyImg" :src="list.applyImg" alt="">
+						<img v-else src="../../img/test1.jpg" alt="">
+						<p>融资租赁申请表</p>
+					</li>
+					<li @click="uploadImg('marry')">
+						<img v-if="list.marryImg"  :src="list.marryImg" alt="">
+						<img v-else src="../../img/test1.jpg" alt="">
+						<p>结婚证明</p>
+					</li>
+					<li @click="uploadImg('residence')">
+						<img v-if="list.residenceImg"  :src="list.residenceImg" alt="">
+						<img v-else src="../../img/test1.jpg" alt="">
+						<p>户口证明</p>
+					</li>
+					<li @click="uploadImg('assets')">
+						<img v-if="list.assetsImg"  :src="list.assetsImg" alt="">
+						<img v-else src="../../img/test1.jpg" alt="">
+						<p>资产证明</p>
+					</li>
+					<li @click="uploadImg('Interview')">
+						<img v-if="list.InterviewImg"  :src="list.InterviewImg" alt="">
+						<img v-else src="../../img/test1.jpg" alt="">
+						<p>面谈信息表</p>
+					</li>
+					<li @click="uploadImg('other')">
+						<img v-if="list.otherImg"  :src="list.otherImg" alt="">
+						<img v-else src="../../img/test1.jpg" alt="">
+						<p>其他</p>
+					</li>
+				</ul>
       </div>
+			<div class="um-footer"id="footer">
+        <button class="btn um-btn-primary" style="padding:5px 12px" @click="save">保存</button>
+			</div>
     </div>
     <script>
       $(function(){
@@ -23,14 +70,59 @@
           el:'#uploadImg',
           data(){
             return {
-							uploadImgList:''
+							list:{
+								applyImg:'',
+								marryImg:'',
+								residenceImg:'',
+								assetsImg:'',
+								InterviewImg:'',
+								otherImg:'',
+							}
             }
           },
 					mounted(){
 
 					},
 					methods:{
+						uploadImg(param){
+							// 打开相机
+							summer.openCamera({
+								compressionRatio:0.5,
+							  callback : function(args){
+							    alert(args.imgPath);
+									if(param=='apply'){
 
+									}else if(param=='marry'){
+
+									}else if(param=='residence'){
+
+									}else if(param=='assets'){
+
+									}else if(param=='Interview'){
+
+									}else if(param=='other'){
+
+									}
+							  }
+							});
+							// 选择相册
+							summer.openPhotoAlbum({
+									compressionRatio:0.5,
+							    callback : function (args){
+							      $summer.alert(args);
+							      alert(args.imgPath);
+										if(param=='apply'){
+
+										}else if(param=='marry'){
+
+										}
+							    }
+							});
+						},
+						save(){
+							//http
+							summer.closeWin()
+						}
 					}
         })
 
