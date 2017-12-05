@@ -1,62 +1,75 @@
 #content{
    padding: 0;
+   background-color: #f6f6f6;
 }
-.swiper-container{
+.container{
    width: 100%;
-   height: 3.1rem;
+   height: 3.4rem;
    position: relative;
-   background: #f1f1f1;
+   background: #039be5;
 }
-.swiper-container img{
+.container dl{
+   width: 1.2rem;
+   height: 1.8rem;
+   position: absolute;
+   left: 50%;
+   margin-left: -0.6rem;
+   top: 0.84rem;
+}
+.container dl dt img{
    display: block;
    border: 0;
-   width: 100%;
-   height: 3.1rem;
-}
-.userInfo{
-   height: 0.8rem;
+   width: 1.2rem;
+   height: 1.2rem;
+   border-radius: 0.6rem;
    background-color: #fff;
-   padding-left: 0.4rem;
+   margin-bottom: 0.2rem;
 }
-.userInfo .userIcon,.userInfo .userName{
-   float: left;
-   line-height: 0.8rem;
-   margin-right: 0.3rem;
-}
-.userInfo .userName{
+.container dl dd{
+   width: 1.2rem;
+   height: 0.4rem;
    font-size: 0.28rem;
+   line-height: 0.4rem;
+   text-align: center;
+   color: #fff;
 }
-.userInfo .setIcon{
-   width: 1rem;
-   float: right;
-   line-height: 0.8rem;
-   display: flex;
-   align-items:center;
-   justify-content:center;
+.container .icon-set{
+   position: absolute;
+   width: 0.4rem;
+   height: 0.4rem;
+   color: #fff;
+   font-size: 0.4rem;
+   line-height: 0.4rem;
+   right: 0.42rem;
+   top: 0.6rem;
 }
+
 .crm,.xmgl{
    height: 0.7rem;
-   background-color: #e7eee7;
+   background-color: #f6f6f6;
    line-height: 0.7rem;
    padding: 0 0 0 0.4rem;
    margin: 0;
    font-weight: normal;
    font-size: 0.28rem;
+   color: #424242;
 }
 .crm_con,.xmgl_con{
    background-color: #fff;
    width: 100%;
-   height: 4rem;
+   height: 3.6rem;
 }
 .crm_list,.xmgl_list{
    width: 100%;
-   height: 4rem;
+   height: 3.6rem;
+   padding: 0.2rem;
 }
 .crm_list li,.xmgl_list li{
    float: left;
-   width: 2.5rem;
-   height: 1.8rem;
+   width: 2rem;
+   height: 1.16rem;
    font-size: 0.24rem;
+   margin: 0 0.18rem 0.54rem 0.18rem;
 }
 .crm_list li dl,.xmgl_list li dl{
    width: 100%;
@@ -64,13 +77,17 @@
 }
 .crm_list li dl dt,.xmgl_list li dl dt{
    width: 100%;
-   height: 1.2rem;
-   line-height: 1.2rem;
+   height: 0.8rem;
+   line-height: 0.8rem;
    display: flex;
    align-items:center;
    justify-content:center;
-   font-size: 0.5rem;
+   font-size: 0.4rem;
 }
 .crm_list li dl dd,.xmgl_list li dl dd{
    text-align: center;
+   height: 0.36rem;
+   line-height: 0.36rem;
+   font-size: 0.24rem;
+   color: #424242;
 }
