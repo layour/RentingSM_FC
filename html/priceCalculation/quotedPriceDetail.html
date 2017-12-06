@@ -76,14 +76,17 @@
 					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
 					<li><b>期数</b><span>{{resultData.term}}</span></li>
 				</ul>
-				<section v-if="pickerStatus" class="pickerPrice">
-					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
-					<p><span @click="surePicker">取消</span><span  @click="surePicker('','confirm')">确定</span></p>
-				</section>
+
       </div>
 			<div class="um-footer" id="footer">
-				<button>测算</button>
-				<button class="red">保存</button>
+				<section v-if="pickerStatus" class="pickerPrice">
+					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+					<p><span class="fl" @click="surePicker">取消</span><span class="fr" @click="surePicker('','confirm')">确定</span></p>
+				</section>
+				<template v-else>
+					<button>测算</button>
+					<button class="red" @click="saveData">保存</button>
+				</template>
 			</div>
     </div>
     <script>
@@ -237,6 +240,10 @@
 								}
 							}
 
+						},
+						saveData(){
+							// http
+							summer.closeToWin({id:'setProject'})
 						}
 					}
         })

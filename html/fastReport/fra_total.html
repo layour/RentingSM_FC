@@ -6,17 +6,82 @@
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/font-icons.css">
-		<link rel="stylesheet" href="../../css/totalContent.css">
+		<link rel="stylesheet" href="css/fraCommon.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script src="js/totalContent.js" ></script>
 	</head>
 	<body>
 		<div class="um-frame" id="index">
 			<div class="um-content">
-				 
+				 <div class="list customList um-bgc-white">
+			       <p class="pl10 title pr10">全部<span class="status fr">已驳回</span></p>
+			       <div class="center" onclick="openDetail()">
+			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
+			       		<p class="type card pl10">312329197605205638</p>
+			      		 <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span> <span class="fr">客户经理：<span>张三</span></span></p>
+			       </div>
+			       <p class="pl10 pr10 select"><button class="btn btn-inline btn-sm um-btn-primary mr10">上传资料</button><span class="fr"><button class="btn btn-inline btn-sm um-btn-primary mr10">提交</button><button class="btn btn-inline btn-sm um-btn-primary mr10">修改</button><button class="btn btn-inline btn-sm um-btn-danger">删除</button></span> </p>
+			    </div>
+			    <div class="list customList um-bgc-white">
+			       <p class="pl10 title pr10">吴猛<span class="status fr">已驳回</span></p>
+			       <div class="center">
+			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
+			       		<p class="type card pl10">312329197605205638</p>
+			      		 <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span> <span class="fr">客户经理：<span>张三</span></span></p>
+			       </div>
+			       <p class="pl10 pr10 select"><button class="btn btn-inline btn-sm um-btn-primary mr10">上传资料</button><span class="fr"><button class="btn btn-inline btn-sm um-btn-primary mr10">提交</button><button class="btn btn-inline btn-sm um-btn-primary mr10">修改</button><button class="btn btn-inline btn-sm um-btn-danger">删除</button></span> </p>
+			    </div>
+			    <div class="list customList um-bgc-white">
+			       <p class="pl10 title pr10">吴猛<span class="status fr">已驳回</span></p>
+			       <div class="center">
+			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
+			       		<p class="type card pl10">312329197605205638</p>
+			      		 <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span> <span class="fr">客户经理：<span>张三</span></span></p>
+			       </div>
+			       <p class="pl10 pr10 select"><button class="btn btn-inline btn-sm um-btn-primary mr10">上传资料</button><span class="fr"><button class="btn btn-inline btn-sm um-btn-primary mr10">提交</button><button class="btn btn-inline btn-sm um-btn-primary mr10">修改</button><button class="btn btn-inline btn-sm um-btn-danger">删除</button></span> </p>
+			    </div>
+			    <div class="list customList um-bgc-white">
+			       <p class="pl10 title pr10">吴猛<span class="status fr">已驳回</span></p>
+			       <div class="center">
+			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
+			       		<p class="type card pl10">312329197605205638</p>
+			      		 <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span> <span class="fr">客户经理：<span>张三</span></span></p>
+			       </div>
+			       <p class="pl10 pr10 select"><button class="btn btn-inline btn-sm um-btn-primary mr10">上传资料</button><span class="fr"><button class="btn btn-inline btn-sm um-btn-primary mr10">提交</button><button class="btn btn-inline btn-sm um-btn-primary mr10">修改</button><button class="btn btn-inline btn-sm um-btn-danger">删除</button></span> </p>
+			    </div>
 			</div>
 		</div>
+		<script>
+			summerready=function(){
+				summer.setRefreshHeaderInfo({
+				    visible: true,
+				    loadingImg: 'img/refresh.png',
+				    bgColor: '#ccc',
+				    textColor: '#ffffff',
+				    textDown: '下拉刷新...',
+				    textUp: '松开刷新...',
+				    showTime: true
+				}, function(ret, err) {
+				    //通常在这里从服务器加载数据，t
+				    alert(1);
+				    summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+				});
+				summer.setRefreshFooterInfo({
+				    visible: true,
+				    loadingImg: 'img/refresh.png',
+				    bgColor: '#ccc',
+				    textColor: '#ffffff',
+				    textDown: '上拉刷新...',
+				    textUp: '松开刷新...',
+				    showTime: true
+				}, function(ret, err) {
+				    //通常在这里从服务器加载数据，
+				    alert(2);
+				    summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+				});
+			}
+		</script>
 	</body>
 </html>

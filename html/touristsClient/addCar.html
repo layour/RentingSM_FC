@@ -65,15 +65,14 @@
 						</td>
 					</tr>
         </table>
-				<section v-if="pickerColorStatus" class="pickerColor">
-					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
-					<p><span @click="surePickerColor">取消</span><span  @click="surePickerColor('confirm')">确定</span></p>
-				</section>
-
 			</div>
 
 			<div class="um-footer">
-				<button type="button" class='btn btn-inline um-btn-primary'>保存</button>
+				<section v-if="pickerColorStatus" class="pickerColor">
+					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+					<p><span class="fl" @click="surePickerColor">取消</span><span class="fr" @click="surePickerColor('confirm')">确定</span></p>
+				</section>
+				<button v-else type="button" class='btn  um-btn-primary' @click="save">保存</button>
 			</div>
 		</div>
 		<script>
@@ -158,6 +157,9 @@
 								this.color=this.pickedColor;
 							}
 						},
+						save(){
+							summer.closeWin()
+						}
 					}
 				});
 				function getDealer(){

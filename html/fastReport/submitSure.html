@@ -5,17 +5,19 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">	
-		<script src="../../js/summer.js" ></script>		
+		<link rel="stylesheet" href="../../css/font-icons.css">
+		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<style>
 			.listContent{
-				 border-top:5px solid #007AFF;
+				border-top:5px solid #007AFF;
 			 border-radius:5px;
-			 margin-top:0.2rem;
+			 margin-top:0.4rem;
 			 background:#fff;
+			 padding:0 .44rem;
 			}
 			.listContent p.title{
 				color:#333;
@@ -30,11 +32,11 @@
 		</style>
 	</head>
 	<body>
-		<div class="um-win" id="index">
+		<div class="um-win" id="submit" v-cloak>
 			<div class="um-content">
 				 <div class="list listContent">
 				 	<p class="title pl10">基本信息</p>
-				 	<p class="pl10 pr10">客户信息<span class="fr">徐毅</span></p>
+				 	<p class="pl10 pr10">客户信息<span class="fr">{{data.userName}}</span></p>
 				 	<p class="pl10 pr10">合同号<span class="fr">CN976666788KYR</span></p>
 				 	<p class="pl10 pr10">项目类型<span class="fr">大客户业务</span></p>
 				 	<p class="pl10 pr10">业务模式<span class="fr">形式售后回租</span></p>
@@ -55,29 +57,43 @@
 				 </div>
 			</div>
 			<div class="um-footer">
-				 <button class="btn um-btn-primary" onclick="opensubmitFinanl()">提交评审</button>
+				 <button class="btn um-btn-primary" @click="opensubmitFinanl">提交评审</button>
 			</div>
 		</div>
 		<script>
-			function opensubmitFinanl(){
-				summer.openWin({
-					id:'finanlSubmit',
-					url:'html/fastReport/finanlSubmit.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "提交评审",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
-						leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+			$(function(){
+				new Vue({
+					el:'#submit',
+					data(){
+						return {
+							data:{
+								userName:"徐毅"
+							}
+						}
+					},
+					methods:{
+						opensubmitFinanl(){
+							summer.openWin({
+								id:'finanlSubmit',
+								url:'html/fastReport/finanlSubmit.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+									title: "提交评审",
+									titleColor: "#ffffff",
+									backgroundColor: "#007aff",
+									leftItem:{
+											image: "img/back.png",
+											method:'',
+											text:"返回",
+											textColor:"#ffffff"
+									}
+								}
+							});
 						}
 					}
-				});
-			}
+				})
+			})
 		</script>
 	</body>
 </html>
