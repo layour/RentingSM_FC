@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="index.css">
+		<script src="../../../js/summer.js" ></script>
+		<script src="../../../js/jquery.min.js" ></script>
+		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script src="../../../js/font.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="index">
+			<div class="um-content">
+            <div class="navbar">
+               <ul class="pay_list">
+			         <li class="active">付款信息</li>
+                  <li>付款流程</li>
+			      </ul>
+            </div>
+			</div>
+		</div>
+		<script type="text/javascript">
+      summerready = function() {
+         var top = $('.um-header').height() + $('.navbar').height();
+         summer.openFrameGroup({
+            id: 'checkPay',
+            background: '#ffffff',
+            scrollEnabled: false,
+            position: {
+               top: top,
+               bottom: 0,
+               left: 0,
+               right: 0
+            },
+            index: 0,
+            frames: [
+               {
+                  id: 'payInfo',
+                  url: 'html/repayApply/checkPay/payInfo.html',
+                  bgColor: '#ffffff',
+                  hidden: false
+               }, {
+                  id: 'toBeSubmitted',
+                  url: 'html/repayApply/checkPay/payProcess.html',
+                  bgColor: '#ffffff',
+                  hidden: true
+               }
+            ],
+         }, function(ret, err) {
+            var index = ret.index;
+         });
+      }
+      $(function() {
+         $('.pay_list li').on('click', function() {
+            var tar = $(this).index();
+            $('.pay_list li').removeClass('active');
+            $(this).addClass('active');
+            summer.setFrameGroupAttr({id: 'checkPay', index: tar});
+         });
+      });
+		</script>
+	</body>
+</html>

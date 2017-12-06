@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title>添加车辆</title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="css/baseMessage.css">
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="baseMessage" v-cloak>
+			<div class="um-content baseMessage">
+				<ul>
+					<li @click="surePickerProgram">
+						<p class="pl10 pr10">
+							项目类型 <span class="fr"><span v-if='programStyle'>{{programStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+					</li>
+					<li @click="surePickerTask">
+						<p class="pl10 pr10">
+							业务类型<span class="fr"><span v-if='taskStyle'>{{taskStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+					</li>
+					<li>
+						<p class="pl10 pr10">
+							合同签署方式<span class="fr">
+								<button @click="changContractStatus($event,'electron')" class='btn btn-inline btn-sm active'>
+									电子
+								</button>
+								<button @click="changContractStatus($event,'paper')" class="btn btn-inline btn-sm">
+									纸质
+								</button></span>
+						</p>
+					</li>
+					<li>
+						<p class="pl10 pr10">
+							是否团 单<span class="fr">
+								<button @click="changGroupStatus($event,'no')" class='btn btn-inline btn-sm active'>
+									否
+								</button>
+								<button @click="changGroupStatus($event,'yes')" class="btn btn-inline btn-sm">
+									是
+								</button></span>
+						</p>
+					</li>
+				</ul>
+				
+				
+			</div>
+
+			<div class="um-footer">
+				<section v-if="pickerProgramStatus" class="pickerProgram pickerColor">
+						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+						<p>
+							<span class="fl" @click="surePickerProgram">取消</span><span class="fr" @click="surePickerProgram('confirm')">确定</span>
+						</p>
+				</section>
+				<section v-if="pickerTaskStatus" class="pickerTask pickerColor">
+						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
+						<p>
+							<span class="fl" @click="surePickerTask">取消</span><span class="fr" @click="surePickerTask('confirm')">确定</span>
+						</p>
+				</section>
+				<button v-else type="button" class='btn  um-btn-primary' @click="save">
+					保存
+				</button>
+			</div>
+		</div>
+		<script>
+			var addCar=new Vue({
+			el:'#baseMessage',
+			data() {
+				return {
+					contractStatus : 'electron',
+					GroupStatus : 'no',
+					programStyle : '',
+					taskStyle:'',
+					holdPrice : 100,
+					pickerProgramStatus:false,
+					pickerTaskStatus:false,
+					pickerProgram:'',
+					pickerTask:'',
+					slots1 : [{
+						flex : 1,
+						values : ['大客户业务', '个人业务', '对公业务'],
+						defaultIndex :0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					slots2 : [{
+						flex : 1,
+						values : ['形式售后回租', '形式回租'],
+						defaultIndex : 0,
+						className : 'slot2',
+						textAlign : 'center'
+					}]
+				}
+			},
+			created() {
+
+			}, methods: {
+				goBack() {
+					summer.closeWin();
+				},
+				changContractStatus(e, status) {
+					$(e.currentTarget).addClass('active').siblings('.active').removeClass('active');
+					this.contractStatus = status;
+				},
+				changGroupStatus(e, status) {
+					$(e.currentTarget).addClass('active').siblings('.active').removeClass('active');
+					this.GroupStatus = status;
+				},
+				onValuesChange1(picker, values) {
+					this.pickerProgram = values[0];
+				},
+				onValuesChange2(picker, values) {
+					this.pickerTask = values[0];
+				},
+				surePickerProgram(param) {
+					this.pickerProgramStatus = !this.pickerProgramStatus;
+					if (param == 'confirm') {
+						this.programStyle = this.pickerProgram;
+					}
+				},
+				surePickerTask(param) {
+					this.pickerTaskStatus = !this.pickerTaskStatus;
+					if (param == 'confirm') {
+						this.taskStyle = this.pickerTask;
+					}
+				},
+				save() {
+					summer.closeWin()
+				}
+			}
+			});
+
+		</script>
+	</body>
+</html>

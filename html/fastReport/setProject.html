@@ -40,7 +40,7 @@
 						</div>
 					</div></a>
 					<a href="javascript:void(0);" class="um-list-item border"
-					onclick="openWin('userFeedback')">
+					onclick="checkVersion('baseMessage')">
 					<div class="um-list-item-inner">
 						<div class="um-list-item-body">
 							项目基础信息
@@ -138,6 +138,9 @@
 					}else if(param=='submitSure'){
 						url="html/fastReport/submitSure.html";
 						title='提交确认';
+					}else if(param=='baseMessage'){
+						url="html/fastReport/baseMessage.html";
+						title='项目基本信息';
 					}
 					summer.openWin({
 						id:id,
