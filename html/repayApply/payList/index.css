@@ -20,7 +20,10 @@
 .userList{
    margin-top: 0.1rem;
    width: 100%;
+}
+.userList li{
    border-top: 4px solid #0394d3;
+   margin-bottom: 0.1rem;
    background-color: #fff;
 }
 .title{
