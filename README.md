@@ -11,4 +11,4 @@
 
 # 发布流程
 
-- 证书、签名
+- 证书、签名（doc/rentin.keystore）
