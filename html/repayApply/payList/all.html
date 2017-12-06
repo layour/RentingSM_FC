@@ -30,6 +30,20 @@
 							<span class="iconfont icon-enter"></span>
 						</div>
 					</li>
+					<li>
+						<div class="title">
+							<span class="name">徐艺</span>
+							<span class="state">已申请</span>
+						</div>
+						<div class="content">
+							<p class="p1">放款金额：￥200000</p>
+							<p class="p2">合同号：CNK1561654</p>
+							<p class="p3">支付表号：CNK15616548965416</p>
+							<p class="p4">放款时间：2017-01-16</p>
+							<p class="p5">客户经理：张仁中</p>
+							<span class="iconfont icon-enter"></span>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -63,5 +77,26 @@
 				 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
 			});
 		}
+		$(function (){
+			$('.userList .content').on('click',function (){
+				summer.openWin({
+					id:'checkPay',
+					url:'html/repayApply/checkPay/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "付款查看",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#007aff",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			});
+		});
 	</script>
 </html>
