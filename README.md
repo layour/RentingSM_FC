@@ -12,7 +12,7 @@
 # 发布流程
 
 - 证书
-- 签名（doc/renting.keystore）
-　　－ 别名：renting.keystore
-　　－ 密码：123456
+- 签名（doc/renting.keystore）；别名：renting.keystore，密码：123456
+- 打包账号（RentingSM/SM123456）
+
 
