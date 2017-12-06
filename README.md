@@ -11,4 +11,8 @@
 
 # 发布流程
 
-- 证书、签名（doc/rentin.keystore）
+- 证书
+- 签名（doc/renting.keystore）
+　　－ 别名：renting.keystore
+　　－ 密码：123456
+
