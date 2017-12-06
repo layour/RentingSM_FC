@@ -1,0 +1,108 @@
+ 
+  button.active {
+  color: #ffffff;
+  border-color: #34aadc;
+  background: #34aadc;
+}
+.baseMessage ul{
+	background:#ffffff;
+}
+.baseMessage ul li{
+	line-height:0.8rem;
+	border-bottom:1px solid #f7f7f7;
+}
+.pickerColor {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background: #ffffff;
+}
+.pickerColor > p {
+  padding: .24rem .44rem;
+}
+.pickerColor > p span {
+  color: #34aadc;
+}
+.pickerColor > p span:last-child {
+  float: right;
+}
+#pickerDealer .um-input-group {
+  padding: .3rem .8rem;
+  height: 1.2rem;
+  line-height: .6rem;
+  background: #34aadc;
+}
+#pickerDealer .um-input-group * {
+  height: .6rem;
+  line-height: .6rem;
+}
+#pickerDealer .um-input-group input {
+  background: #ffffff;
+  border-radius: .6rem;
+  padding: 0 1.2rem 0 .6rem;
+}
+#pickerDealer .um-input-group .icon-nav_search {
+  left: 1rem;
+  position: absolute;
+  top: .32rem;
+  z-index: 1;
+}
+#pickerDealer .um-input-group button {
+  position: absolute;
+  padding: 0;
+  right: .6rem;
+  width: 1.2rem;
+  border-top-right-radius: .3rem;
+  border-bottom-right-radius: .3rem;
+}
+#pickerDealer .dealerList {
+  background: #ffffff;
+  padding: .22rem 0;
+}
+#pickerDealer .dealerList li {
+  height: .8rem;
+  line-height: .8rem;
+  padding: 0 .44rem;
+  border-bottom: 1px solid #aaaaaa;
+}
+#pickerDealer .mint-popup {
+  width: 100%;
+}
+#pickerDealer .mint-popup > p {
+  text-align: center;
+  line-height: .6rem;
+}
+#pickerDealer .mint-popup ul {
+  padding-bottom: .44rem;
+}
+#pickerDealer .mint-popup ul li {
+  border-top: 1px solid #aaaaaa;
+  padding: .2rem .44rem;
+}
+#pickerDealer .mint-popup ul li p {
+  color: #aaaaaa;
+}
+#pickerDealer .mint-popup ul li p:first-child {
+  color: #000000;
+}
+#pickerDealer .mint-popup ul li i {
+  position: absolute;
+  top: 1rem;
+  right: .44rem;
+  color: #aaaaaa;
+}
+.modelsList p {
+  padding: 0 .44rem;
+  background: #aaaaaa;
+}
+.pickerModels {
+  background: #ffffff;
+}
+.pickerModels li {
+  height: .8rem;
+  line-height: .8rem;
+  padding: 0 .44rem;
+  border-bottom: 1px solid #aaaaaa;
+}
