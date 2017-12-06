@@ -3,6 +3,7 @@
  * 1、图片加水印：watermark(params, successFn)
  * 2、获取当前位置：getLocation(successFn)
  * 3、日期时间格式化：datePattern(fmt, date)
+ * 4、兼容获取权限：getPermission(params, successFn)
  */
 function CommonUtil() {
 
@@ -77,5 +78,19 @@ CommonUtil.prototype = {
 	        }         
 	    }         
 	    return fmt; 
+	},
+	//兼容获取权限
+	getPermission : function(params, successFn) {
+		if($summer.os == 'ios'){
+			successFn();
+		} else {
+			summer.getPermission(params, function() {
+				successFn();
+			}, function(args) {
+				summer.toast({
+	            	"msg" : "获取权限错误：" + JSON.stringify(args)
+	            });
+			})
+		}
 	}
 }; 
