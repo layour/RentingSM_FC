@@ -24,11 +24,11 @@
 
 			<div class="um-content addCar">
         <table>
-          <tr>
+          <tr @click="pickerDealer">
             <td>经销商</td>
             <td>
 							<span v-if='dealer'>{{dealer}}</span><span v-else>请选择</span>
-							<i @click="pickerDealer" class="icon iconfont icon-enter"></i>
+							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr>
@@ -38,18 +38,18 @@
 							<button @click="changCarStatus($event,'old')" class="btn btn-inline btn-sm">二手车</button>
 						</td>
 					</tr>
-					<tr>
+					<tr @click="pickerModels">
             <td>选择车型</td>
             <td>
 							<span v-if='carModels'>{{carModels}}</span><span v-else>请选择</span>
-							<i @click="pickerModels" class="icon iconfont icon-enter"></i>
+							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
-					<tr>
+					<tr @click="surePickerColor">
             <td>车身颜色</td>
             <td>
 							<span v-if='color'>{{color}}</span><span v-else>请选择</span>
-							<i  @click="surePickerColor" class="icon iconfont icon-enter"></i>
+							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr>

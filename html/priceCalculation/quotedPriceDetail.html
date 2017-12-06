@@ -95,7 +95,7 @@
           el:'#quotedPriceDetail',
           data(){
             return {
-							termList:['一个月', '二个月', '三个月', '四个月', '五个月', '六个月','一年','二年','三年'],
+							termList:['3个月','6个月','12个月','18个月','24个月','48个月'],
 							// termType:['月'],
 							payTypeList:['期末等额本息','期末不等额'],
 							bailList:["融资额","首期款"],
@@ -110,9 +110,9 @@
 								payType:'',
 								firstPayRate:10, //首付比例
 								firstPay:'2000.00',
-								bail:'20000.00', //保证金
+								bail:'2000.00', //保证金
 								bailRate:10,  //保证金比例
-								bailType:'',  //保证金类型
+								bailType:'融资额',  //保证金类型
 								consultingFee:'200.00',
 								sureBail:'3000.00',
 							},
@@ -156,10 +156,8 @@
 							if(status=='confirm'){
 								if(this.pickerType=='term'){
 									this.quoted.term=this.pickerVal
-									var num=this.quoted.term.substr(0,1),type=this.quoted.term.substr(this.quoted.term.length-1,1)
-									var i=['一','二','三','四','五','六','七','八','九'].indexOf(num)
-									console.log(i+1,type);
-									if(type=="年"){this.quoted.contractTerm=(i+1)*12}else{this.quoted.contractTerm=i+1}
+									var i=this.quoted.term.indexOf("个");
+									this.quoted.contractTerm=this.quoted.term.substring(0,i);
 								}else if(this.pickerType=='payType'){
 									this.quoted.payType=this.pickerVal
 								}else if(this.pickerType=='bail') {
@@ -173,13 +171,13 @@
 						},
 						rateCheck(){
 							var val=String(this.quoted.rate).trim();
-							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=100){
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.rate=''
 							}
 						},
 						changeFirstPay(){
 							var val=String(this.quoted.firstPayRate).trim();
-							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=100){
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.firstPayRate=''
 								this.quoted.firstPay=''
 							}else {
@@ -190,7 +188,7 @@
 						},
 						changeFirstPayRate(){
 							var val=String(this.quoted.firstPay).trim();
-							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>this.quoted.allPrice){
 								this.quoted.firstPay=''
 								this.quoted.firstPayRate=''
 							}else {
@@ -199,7 +197,7 @@
 						},
 						changeBail(){
 							var val=String(this.quoted.bailRate).trim();
-							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=100){
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.bailRate=''
 								this.quoted.bail=''
 							}else {
@@ -219,7 +217,7 @@
 						},
 						changBailRate(){
 							var val=String(this.quoted.bail).trim(),number=this.bailTypeReset();;
-							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=number){
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>number){
 								this.quoted.bail=''
 								this.quoted.bailRate=''
 							}else {

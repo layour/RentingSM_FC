@@ -74,13 +74,13 @@
   color: #34aadc;
 }
 #quotedPriceDetail .um-footer > button {
-  height: .8rem;
+  height: .7rem;
   border: none;
   outline: none;
-  width: 1.6rem;
-  line-height: .8rem;
+  width: 2rem;
+  line-height: .7rem;
   color: #ffffff;
-  margin: .3rem .4rem;
+  margin: .1rem .4rem;
   border-radius: 5px;
   background: #34aadc;
 }
