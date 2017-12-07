@@ -13,7 +13,7 @@ CommonUtil.prototype = {
 	//图片加水印
 	watermark : function(params, successFn) {
 		//调用定位
-		getLocation(function(args) {
+		this.getLocation(function(args) {
 			var textgroup = [{
 				text : params.name,
 				style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "80", "font-size" : "12"}
