@@ -1,48 +1,66 @@
 /*less模块*/
+i {
+  color: #DBDBDB;
+}
 /*重定义通用*/
+input::-webkit-input-placeholder {
+  color: #DEDEDE;
+  font-size: 14px;
+}
+.addCar {
+  font-size: 14px;
+}
 .addCar table {
   width: 100%;
   background: #ffffff;
 }
 .addCar table tr {
-  border-bottom: 2px solid #EFEFF4;
+  border-bottom: 1px solid #EFEFEF;
 }
 .addCar table tr td {
-  height: .8rem;
-  line-height: .8rem;
-  padding-left: .44rem;
+  height: .88rem;
+  line-height: .88rem;
+  padding-left: .56rem;
+  color: #333;
+  font-size: 14px;
 }
 .addCar table tr td:last-child {
   text-align: right;
   padding-left: 0;
-  padding-right: .44rem;
-  color: #aaaaaa;
+  padding-right: .56rem;
 }
 .addCar table tr td:last-child span {
   padding-right: .1rem;
+}
+.addCar table tr td:last-child span.grayColor {
+  color: #DEDEDE;
 }
 .addCar table tr td:last-child > i {
   vertical-align: middle;
 }
 .addCar table tr td input {
   border: none;
-  border-bottom: 1px solid #999999;
   height: .6rem;
   text-align: right;
   outline: none;
 }
-.addCar table tr td input::-webkit-input-placeholder {
-  color: #aaaaaa;
-  font-size: 14px;
-}
 .addCar table tr td button {
-  color: #000000;
-  border: 1px solid #000000;
+  color: #DEDEDE;
+  border: 1px solid #EFEFEF;
+  font-size: 12px;
+  padding: 0;
+  width: .8rem;
+  height: .44rem;
+}
+.addCar table tr td button:first-child {
+  border-right: none;
+}
+.addCar table tr td button:last-child {
+  border-left: none;
 }
 .addCar table tr td button.active {
   color: #ffffff;
-  border-color: #34aadc;
-  background: #34aadc;
+  background: #039BE5;
 }
 .pickerColor {
   position: fixed;
@@ -52,53 +70,28 @@
   z-index: 10;
   background: #ffffff;
 }
+.pickerColor .picker-item {
+  font-size: 14px;
+}
 .pickerColor > p {
   padding: .24rem .44rem;
 }
 .pickerColor > p span {
-  color: #34aadc;
+  color: #039BE5;
 }
 .pickerColor > p span:last-child {
   float: right;
 }
-#pickerDealer .um-input-group {
-  padding: .3rem .8rem;
-  height: 1.2rem;
-  line-height: .6rem;
-  background: #34aadc;
-}
-#pickerDealer .um-input-group * {
-  height: .6rem;
-  line-height: .6rem;
-}
-#pickerDealer .um-input-group input {
-  background: #ffffff;
-  border-radius: .6rem;
-  padding: 0 1.2rem 0 .6rem;
-}
-#pickerDealer .um-input-group .icon-nav_search {
-  left: 1rem;
-  position: absolute;
-  top: .32rem;
-  z-index: 1;
-}
-#pickerDealer .um-input-group button {
-  position: absolute;
-  padding: 0;
-  right: .6rem;
-  width: 1.2rem;
-  border-top-right-radius: .3rem;
-  border-bottom-right-radius: .3rem;
-}
 #pickerDealer .dealerList {
   background: #ffffff;
-  padding: .22rem 0;
 }
 #pickerDealer .dealerList li {
-  height: .8rem;
-  line-height: .8rem;
-  padding: 0 .44rem;
-  border-bottom: 1px solid #aaaaaa;
+  height: .68rem;
+  line-height: .68rem;
+  padding: 0 .56rem;
+  border-bottom: 1px solid #EFEFEF;
+  font-size: 14px;
+  color: fontColor;
 }
 #pickerDealer .mint-popup {
   width: 100%;
@@ -126,16 +119,46 @@
   right: .44rem;
   color: #aaaaaa;
 }
+.um-input-group {
+  padding: .16rem;
+  height: .88rem;
+  line-height: .6rem;
+  background: #F6F6F6;
+  font-size: 14px;
+}
+.um-input-group * {
+  height: .6rem;
+  line-height: .6rem;
+}
+.um-input-group input {
+  background: #ffffff;
+  border-radius: .08rem;
+  font-size: 14px;
+  padding: 0 0 0 .6rem;
+}
+.um-input-group .icon-nav_search {
+  left: .3rem;
+  position: absolute;
+  top: .15rem;
+  z-index: 1;
+}
+.modelsList {
+  border-top: 1px solid #EFEFEF;
+}
 .modelsList p {
-  padding: 0 .44rem;
-  background: #aaaaaa;
+  padding: 0 .56rem;
+  background: #F6F6F6;
+  font-size: 14px;
+  color: #333;
 }
 .pickerModels {
   background: #ffffff;
+  font-size: 14px;
+  color: #333;
 }
 .pickerModels li {
-  height: .8rem;
-  line-height: .8rem;
-  padding: 0 .44rem;
-  border-bottom: 1px solid #aaaaaa;
+  height: .68rem;
+  line-height: .68rem;
+  padding: 0 .56rem;
+  border-bottom: 1px solid #EFEFEF;
 }

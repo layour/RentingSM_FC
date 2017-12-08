@@ -14,19 +14,19 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
-		<div class="um-win" id="quotedPrice">
+		<div class="um-win" id="quotedPrice" v-cloak>
 			<div class="um-content quotedPrice">
 				<section>
 					<p>已选方案</p>
-					<table class="selectedPlan" @click="goDetail(selectedPlan.id)">
+					<table class="selectedPlan"  @click="goDetail(selectedPlan.id)">
 						<tr><td><img src="../../img/test1.jpg" alt=""></td>
 							<td>
-								<p><span>快易融：</span>{{selectedPlan.carModels}}</p>
+								<p class="spanT"><span>快易融：</span>{{selectedPlan.carModels}}</p>
 								<p><span>期末等额本息：</span>{{selectedPlan.term}}</p>
 								<p><span>首付：</span>{{selectedPlan.firstPrice}}</p>
 								<p><span>总价：</span>{{selectedPlan.allPrice}}</p>
 							</td>
-							<td class="iconTd"><i class="icon iconfont icon-enter"></i></td>
+							<td class="iconTd"> <button>已选择</button></td>
 						</tr>
 					</table>
 				</section>
@@ -36,7 +36,7 @@
 						<tr>
 							<td><img src="../../img/test1.jpg" alt=""></td>
 							<td>
-								<p><span>快易融：</span>{{item.carModels}}</p>
+								<p class="spanT"><span>快易融：</span>{{item.carModels}}</p>
 								<p><span>期末等额本息：</span>{{item.term}}</p>
 								<p><span>首付：</span>{{item.firstPrice}}</p>
 								<p><span>总价：</span>{{item.allPrice}}</p>
@@ -88,14 +88,20 @@
 								type:'actionBar',
 								actionBar: {
 						      title: "报价",
-						      titleColor: "#000000",
-						      backgroundColor: "#34aadc",
+						      titleColor: "#ffffff",
+						      backgroundColor: "#039BE5",
 						      leftItem:{
 						          image: "img/back.png",
 						          method:'',
 						          text:"返回",
-						          textColor:"#000000"
-						      }
+						          textColor:"#ffffff"
+						      },
+									rightItems:[{
+										type:"text",
+										text:"保存",
+										textColor:"#ffffff" ,
+										method:"save()"
+									}]
 								}
 							})
 						}

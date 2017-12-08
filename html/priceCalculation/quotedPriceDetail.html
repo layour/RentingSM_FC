@@ -28,11 +28,16 @@
 							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
-					<li><b>合同周期</b><span>{{quoted.contractTerm}}&nbsp;个月</span></li>
+					<li class="liContr">
+						<b>合同周期</b>
+						<span class="fr">
+							{{quoted.contractTerm}}&nbsp;个月
+						</span>
+					</li>
 					<li>
 						<b>租赁年利率</b>
 						<span>
-							<input type="text" v-model="quoted.rate" @input="rateCheck">&nbsp;%
+							<input type="text" v-model="quoted.rate" @input="rateCheck" placeholder="请输入年利率">&nbsp;%
 						</span>
 					</li>
 					<li class='spec' @click="surePicker('payType')">
@@ -60,16 +65,22 @@
 							<input type="text" name="bail" @blur="changBailRate" v-model="quoted.bail">&nbsp;元
 						</span>
 					</li>
-					<li>
+					<li class="input">
 						<b>咨询费</b>
 						<span>
-							<input type="text" @input="checkVal('fee')" name="consultingFee" v-model="quoted.consultingFee">&nbsp;元
+							<input type="text" @input="checkVal('fee')" placeholder="请输入咨询费" name="consultingFee" v-model="quoted.consultingFee">&nbsp;元
 						</span>
-					</li>
-					<li class='spec'>
+					</li><li class="input">
 						<b>保险保证金</b>
 						<span>
-							<input type="text" @input="checkVal('bail')"  name="sureBail" v-model="quoted.sureBail">&nbsp;元
+							<input type="text" @input="checkVal('bail')" placeholder="请输入保险保证金" name="sureBail" v-model="quoted.sureBail">&nbsp;元
+						</span>
+
+					</li>
+					<li class='spec input'>
+						<b>GPS费</b>
+						<span>
+							<input type="text" @input="checkVal('gps')" placeholder="请输入GPS费" name="gps" v-model="quoted.gps">&nbsp;元
 						</span>
 					</li>
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
@@ -85,13 +96,11 @@
 				</section>
 				<template v-else>
 					<button>测算</button>
-					<button class="red" @click="saveData">保存</button>
 				</template>
 			</div>
     </div>
     <script>
-      $(function(){
-        new Vue({
+      var quotedVue=new Vue({
           el:'#quotedPriceDetail',
           data(){
             return {
@@ -108,13 +117,14 @@
 								contractTerm:'',
 								rate:50,
 								payType:'',
-								firstPayRate:10, //首付比例
-								firstPay:'2000.00',
-								bail:'2000.00', //保证金
-								bailRate:10,  //保证金比例
+								firstPayRate:'', //首付比例
+								firstPay:'',
+								bail:'', //保证金
+								bailRate:'',  //保证金比例
 								bailType:'融资额',  //保证金类型
-								consultingFee:'200.00',
-								sureBail:'3000.00',
+								gps:'',
+								consultingFee:'',
+								sureBail:'',
 							},
 							resultData:{
 								firstPrice:'134000.00',
@@ -236,17 +246,23 @@
 								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
 									this.quoted.sureBail=''
 								}
+							}else if (value=='gps') {
+								val=this.quoted.gps;
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+									this.quoted.gps=''
+								}
 							}
 
 						},
-						saveData(){
+						save(){
 							// http
 							summer.closeToWin({id:'setProject'})
 						}
 					}
         })
-
-      })
+			function save(){
+				quotedVue.save()
+			}
     </script>
   </body>
 </html>

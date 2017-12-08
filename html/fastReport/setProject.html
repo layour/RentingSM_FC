@@ -124,11 +124,30 @@
 		function checkVersion(param){
 					var id=param,url='',title='';
 					if(param=='addCar'){
+						id='addCar';
 						url="html/touristsClient/addCar.html";
 						title='添加车辆';
 					}else if (param=='quotedPrice') {
 						url="html/priceCalculation/quotedPriceList.html";
 						title="选择报价方案"
+						summer.openWin({
+							id:id,
+							url:url,
+							create:false,
+							type:'actionBar',
+							actionBar: {
+								title:title,
+								titleColor: "#ffffff",
+								backgroundColor: "#039BE5",
+								leftItem:{
+										image: "img/back.png",
+										method:"",//返回按钮自定义事件
+										text:"返回",
+										textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								}
+							}
+						})
+						return
 					}else if(param=='uploadImg'){
 						url="html/fastReport/uploadImg.html";
 						title='资料上传';
@@ -139,6 +158,7 @@
 						url="html/fastReport/submitSure.html";
 						title='提交确认';
 					}
+
 					summer.openWin({
 						id:id,
 						url:url,
@@ -147,13 +167,19 @@
 						actionBar: {
 							title:title,
 							titleColor: "#ffffff",
-							backgroundColor: "#007aff",
+							backgroundColor: "#039BE5",
 							leftItem:{
 									image: "img/back.png",
-									method:"",//返回按钮自定义事件
+									method:"",
 									text:"返回",
-									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
+									textColor:"#ffffff"
+							},
+							rightItems:[{
+								type:"text",
+								text:"保存",
+								textColor:"#ffffff" ,
+								method:"save()"
+							}]
 						}
 					})
 		}
@@ -166,7 +192,7 @@
 				actionBar: {
 					title:'添加紧急联系人',
 					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#007aff",
+					backgroundColor: "#039BE5",
 					leftItem:{
 							image: "img/back.png",
 							method:"",//返回按钮自定义事件
@@ -190,7 +216,7 @@
 					actionBar: {
 						title: "我的担保人",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
+						backgroundColor: "#039BE5",
 						leftItem:{
 								image: "img/back.png",
 								method:"",//返回按钮自定义事件

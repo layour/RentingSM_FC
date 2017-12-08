@@ -2,24 +2,34 @@ out:car.min.css,sourcemap:false,compress:true;
 /*less模块*/
 @import "../../css/comment.less";
 /*重定义通用*/
+input::-webkit-input-placeholder {
+    color: @grayColor;
+    font-size: 14px;
+}
 .addCar{
+  font-size: 14px;
   table{
 
     width:100%;
     background:@white;
     tr{
-      border-bottom:2px solid @bgColor;
+      border-bottom:1px solid @borderColor;
       td{
-        height:.8rem;
-        line-height:.8rem;
-        padding-left:.44rem;
+        height:.88rem;
+        line-height:.88rem;
+        padding-left:.56rem;
+        color:@fontColor;
+        font-size:14px;
         &:last-child{
           text-align:right;
           padding-left: 0;
-          padding-right: .44rem;
-          color:@aaa;
+          padding-right: .56rem;
+
           span{
             padding-right: .1rem;
+            &.grayColor{
+              color:@grayColor;
+            }
           }
           >i{
             vertical-align: middle;
@@ -27,14 +37,10 @@ out:car.min.css,sourcemap:false,compress:true;
         }
         input{
           border:none;
-          border-bottom: 1px solid @borderColor;
+          // border-bottom: 1px solid @borderColor;
           height:.6rem;
           text-align: right;
           outline:none;
-        }
-        input::-webkit-input-placeholder {
-            color: @aaa;
-            font-size: 14px;
         }
         // input::-webkit-outer-spin-button,
         // input::-webkit-inner-spin-button {
@@ -42,11 +48,16 @@ out:car.min.css,sourcemap:false,compress:true;
         //     margin: 0;
         // }
         button{
-          color:@black;
-          border:1px solid @black;
+          color:@grayColor;
+          border:1px solid @borderColor;
+          font-size: 12px;
+          padding:0;
+          width:.8rem;
+          height:.44rem;
+          &:first-child{border-right: none;}
+          &:last-child{border-left: none;}
           &.active{
             color:@white;
-            border-color:@grayBlue;
             background:@grayBlue;
           }
         }
@@ -62,6 +73,9 @@ out:car.min.css,sourcemap:false,compress:true;
   width:100%;
   z-index: 10;
   background: @white;
+  .picker-item{
+    font-size: 14px;
+  }
   >p{
     padding:.24rem .44rem;
     span{
@@ -71,44 +85,16 @@ out:car.min.css,sourcemap:false,compress:true;
   }
 }
 #pickerDealer{
-  .um-input-group{
-    padding:.3rem .8rem;
-    height:1.2rem;
-    line-height:.6rem;
-    background:@grayBlue;
-    *{
-      height:.6rem;
-      line-height:.6rem;
-    }
-    input{
-      background: @white;
-      border-radius: .6rem;
-      // text-indent: .4rem;
-      padding:0 1.2rem 0 .6rem;
-    }
-    .icon-nav_search{
-        left:1rem;
-        position: absolute;
-        top:.32rem;
-        z-index: 1;
-    }
-    button{
-      position:absolute;
-      padding:0;
-      right:.6rem;
-      width:1.2rem;
-      border-top-right-radius: .3rem;
-      border-bottom-right-radius: .3rem;
-    }
-  }
   .dealerList{
     background: @white;
-    padding:.22rem 0;
+    // padding:.22rem 0;
     li{
-      height:.8rem;
-      line-height: .8rem;
-      padding:0 .44rem;
-      border-bottom:1px solid @aaa;
+      height:.68rem;
+      line-height: .68rem;
+      padding:0 .56rem;
+      border-bottom:1px solid @borderColor;
+      font-size: 14px;
+      color:fontColor;
     }
   }
   .mint-popup{
@@ -137,19 +123,55 @@ out:car.min.css,sourcemap:false,compress:true;
     }
   }
 }
+.um-input-group{
+  padding:.16rem;
+  height:.88rem;
+  line-height:.6rem;
+  background:@bgColor;
+  font-size: 14px;
+  *{
+    height:.6rem;
+    line-height:.6rem;
+  }
+  input{
+    background: @white;
+    border-radius: .08rem;
+    font-size: 14px;
+    // text-indent: .4rem;
+    padding:0 0 0 .6rem;
+  }
+  .icon-nav_search{
+      left:.3rem;
+      position: absolute;
+      top:.15rem;
+      z-index: 1;
+  }
+  // button{
+  //   position:absolute;
+  //   padding:0;
+  //   right:.6rem;
+  //   width:1.2rem;
+  //   border-top-right-radius: .3rem;
+  //   border-bottom-right-radius: .3rem;
+  // }
+}
 .modelsList{
+  border-top:1px solid @borderColor;
   p{
-    padding:0 .44rem;
-    background: @aaa;
+    padding:0 .56rem;
+    background: @bgColor;
+    font-size: 14px;
+    color:@fontColor;
   }
 }
 .pickerModels{
     background: @white;
-    // padding:.22rem 0;
+    font-size: 14px;
+    color:@fontColor;
     li{
-      height:.8rem;
-      line-height: .8rem;
-      padding:0 .44rem;
-      border-bottom:1px solid @aaa;
+      height:.68rem;
+      line-height: .68rem;
+      padding:0 .56rem;
+      border-bottom:1px solid @borderColor;
     }
   }

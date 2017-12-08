@@ -1,61 +1,119 @@
+i {
+  color: #DBDBDB;
+}
+input::-webkit-input-placeholder {
+  color: #DEDEDE;
+  font-size: 14px;
+}
 .quotedPrice {
-  padding: 0 .44rem;
+  padding: 0 .26rem;
 }
 .quotedPrice section > p {
-  line-height: .8rem;
+  line-height: .6rem;
+  font-size: 13px;
+  color: #999;
 }
 .quotedPrice section table {
   overflow: hidden;
   width: 100%;
-  margin-bottom: .4rem;
-  border-radius: .1rem;
+  border-radius: .04rem;
   background: #ffffff;
+  border-bottom: 1px solid red;
 }
 .quotedPrice section table.selectedPlan {
-  background: #34aadc;
+  background: #B3E5FC;
+  border: 1px solid #039BE5;
+}
+.quotedPrice section table.selectedPlan p {
+  color: #01579B;
+}
+.quotedPrice section table.selectedPlan p.spanT {
+  font-weight: bold;
+  color: #01579B;
+  line-height: .6rem;
+  font-size: 14px;
 }
 .quotedPrice section table td {
   vertical-align: middle;
-  padding: 0 .2rem;
-  font-size: 13px;
+  padding-left: .28rem;
 }
 .quotedPrice section table td.iconTd {
   text-align: right;
+  padding-right: .28rem;
+}
+.quotedPrice section table td.iconTd button {
+  width: 1.24rem;
+  height: .42rem;
+  color: #ffffff;
+  border: none;
+  background: #039BE5;
+  border-radius: .08rem;
+}
+.quotedPrice section table td p {
+  font-size: 12px;
+  color: #9E9E9E;
+}
+.quotedPrice section table td p:last-child {
+  margin-bottom: .28rem;
+}
+.quotedPrice section table td p.spanT {
+  font-size: 14px;
+  color: #424242;
+  margin-top: .28rem;
 }
 .quotedPrice section table td img {
-  width: 1rem;
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
 }
 .quotedPriceDetail {
-  padding-bottom: 1.2rem;
+  padding-bottom: 1rem;
 }
 .quotedPriceDetail ul {
   overflow: hidden;
 }
 .quotedPriceDetail ul li {
   background: #ffffff;
-  padding: 0 .44rem;
-  height: .8rem;
-  line-height: .8rem;
-  margin-bottom: 2px;
+  padding: 0 .56rem;
+  height: .88rem;
+  line-height: .88rem;
+  border-bottom: 1px solid #EFEFEF;
+  font-size: 14px;
+  color: #333;
+}
+.quotedPriceDetail ul li.liContr {
+  position: relative;
+}
+.quotedPriceDetail ul li.liContr > span {
+  position: absolute;
+  right: .56rem;
+  top: 0;
+}
+.quotedPriceDetail ul li.input input {
+  min-width: 2.3rem;
+  text-align: right;
 }
 .quotedPriceDetail ul li.spec {
   margin-bottom: .2rem;
 }
 .quotedPriceDetail ul li > b {
-  color: #34aadc;
+  color: #333;
 }
 .quotedPriceDetail ul li b {
   font-weight: normal;
 }
 .quotedPriceDetail ul li > span {
   float: right;
+  display: inline-block;
+}
+.quotedPriceDetail ul li > span .default {
+  color: #DEDEDE;
 }
 .quotedPriceDetail ul li > span input {
-  width: 1.2rem;
   height: .4rem;
   outline: none;
   border: none;
-  border-bottom: 1px solid #999999;
+  width: 1.2rem;
   text-align: center;
 }
 .pickerPrice {
@@ -65,25 +123,24 @@
   width: 100%;
   z-index: 100;
   background: #ffffff;
-  border-top: 1px solid #999999;
+  border-top: 1px solid #EFEFEF;
 }
 .pickerPrice > p {
   padding: .24rem .44rem;
 }
 .pickerPrice > p span {
-  color: #34aadc;
+  color: #039BE5;
+}
+#quotedPriceDetail .um-footer {
+  padding: .1rem .4rem;
 }
 #quotedPriceDetail .um-footer > button {
   height: .7rem;
   border: none;
   outline: none;
-  width: 2rem;
+  width: 100%;
   line-height: .7rem;
   color: #ffffff;
-  margin: .1rem .4rem;
   border-radius: 5px;
-  background: #34aadc;
-}
-#quotedPriceDetail .um-footer > button.red {
-  background: red;
+  background: #039BE5;
 }
