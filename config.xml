@@ -9,18 +9,22 @@
   <theme>blue</theme>  
   <icon relativePath="css/themes/default/app">app</icon>  
   <versionCode>1</versionCode>  
-  <versionBuild>1</versionBuild>  
-  <versionName>1</versionName>  
+  <versionBuild>1.0.0</versionBuild>  
+  <versionName>1.0.0</versionName>  
   <orientation>unspecified</orientation>  
-  <permission id="android.permission.INTERNET"></permission>  
-  <statusBarStyle>dark</statusBarStyle>  
+  <permission id="android.permission.INTERNET"/>  
+  <statusBarStyle>light</statusBarStyle>  
   <fullScreen>true</fullScreen>  
   <windowSoftInputMode>stateHidden</windowSoftInputMode>  
-  <import id="cordova-plugin-compat" type="web" ref="cordova"></import>  
-  <import id="cordova-plugin-file" type="web" ref="cordova"/>  
-  <import id="cordova-plugin-http" type="web" ref="cordova"/>  
-  <import id="cordova-plugin-camera" type="web" ref="cordova"/>  
-  <import id="cordova-plugin-summer-personscan" type="web" ref="cordova"/> 
+  <openMDoctor>false</openMDoctor>  
+  <import id="cordova-plugin-compat" type="web" ref="cordova"/>
+  <import id="cordova-plugin-http" type="web" ref="cordova"/>
+  <import id="cordova-plugin-camera" type="web" ref="cordova"/>
+  <import id="cordova-plugin-file" type="web" ref="cordova"/>
+  <import id="cordova-plugin-summer-personscan" type="web" ref="cordova"/>
+  <import id="cordova-plugin-amap" type="web" ref="cordova">
+    <parameter>AMAP_KEY=509c705cf6786d61f4a62913efb94029</parameter>
+  </import>
 </application>
 <!--
 【屏幕显示方向】

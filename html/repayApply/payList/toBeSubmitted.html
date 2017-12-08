@@ -40,5 +40,56 @@
 				</ul>
 			</div>
 		</div>
+		<script type="text/javascript">
+			summerready=function(){
+				summer.setRefreshHeaderInfo({
+					 visible: true,
+					 loadingImg: 'img/refresh.png',
+					 bgColor: '#ccc',
+					 textColor: '#ffffff',
+					 textDown: '下拉刷新...',
+					 textUp: '松开刷新...',
+					 showTime: true
+				}, function(ret, err) {
+					 //通常在这里从服务器加载数据，t
+					 alert(1);
+					 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+				});
+				summer.setRefreshFooterInfo({
+					 visible: true,
+					 loadingImg: 'img/refresh.png',
+					 bgColor: '#ccc',
+					 textColor: '#ffffff',
+					 textDown: '上拉刷新...',
+					 textUp: '松开刷新...',
+					 showTime: true
+				}, function(ret, err) {
+					 //通常在这里从服务器加载数据，
+					 alert(2);
+					 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+				});
+			}
+			$(function (){
+				$('.userList .content').on('click',function (){
+					summer.openWin({
+						id:'checkPay',
+						url:'html/repayApply/checkPay/index.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "付款查看",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#007aff",
+							leftItem:{
+									image: "img/back.png",
+									method:"",//返回按钮自定义事件
+									text:"返回",
+									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						}
+					});
+				});
+			});
+		</script>
 	</body>
 </html>
