@@ -5,11 +5,7 @@
  * 3、日期时间格式化：datePattern("yyyy-MM-dd EE hh:mm:ss", date) =>2009-03-10 周二 08:09:04
  * 4、兼容获取权限：getPermission(["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"], successFn)
  */
-function CommonUtil() {
-
-}
-
-CommonUtil.prototype = {
+var CommonUtil = {
 	//图片加水印
 	watermark : function(params, successFn) {
 		//调用定位
