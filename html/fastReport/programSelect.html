@@ -64,14 +64,13 @@
 		<script>
 			summerready=function(){
 				  var top = $summer.offset($summer.byId('header')).h;
-				  var bottom = $summer.offset($summer.byId('footer')).h;
 				  summer.openFrameGroup({
 				    id: 'group1',
 				    background: '#ffffff',
 				    scrollEnabled: false,
 				    position: {
 				        top: top,
-				        bottom: bottom,
+				        bottom: 0,
 				        left: 0,
 				        right: 0
 				    },
