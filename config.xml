@@ -4,7 +4,7 @@
   <app_start>login.html</app_start>  
   <app_name>RentingSM</app_name>  
   <project_name>RentingSM</project_name>  
-  <package_name>com.lionbridge.rentingsm</package_name>  
+  <package_name>com.skywish.rentingsm</package_name>  
   <frame_name>summer-um</frame_name>  
   <theme>blue</theme>  
   <icon relativePath="css/themes/default/app">app</icon>  

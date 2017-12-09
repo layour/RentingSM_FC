@@ -19,15 +19,16 @@
 		<div id="win" class="um-win" >
 			<div id="content" class="um-content p15">
 				<div class="container">
-					<dl>
-						<dt>
-							<img src="" alt="">
-						</dt>
-						<dd>张帅飞</dd>
-					</dl>
-					<span class="iconfont icon-set" onclick="showUserInfo()"></span>
+					<img src="" alt="">
+					<span class="userName">张帅经理</span>
+					<span class="iconfont icon-enter" onclick="showUserInfo()"></span>
 				</div>
-				<h2 class="crm">CRM</h2>
+				<h2 class="crm">
+					<div>
+						<span></span>
+						<i>CRM</i>
+					</div>
+				</h2>
 				<div class="crm_con">
 					<ul class="crm_list">
 						<li>
@@ -62,7 +63,12 @@
 						</li>
 					</ul>
 				</div>
-				<h2 class="xmgl">项目管理</h2>
+				<h2 class="xmgl">
+					<div>
+						<span></span>
+						<i>项目管理</i>
+					</div>
+				</h2>
 				<div class="xmgl_con">
 					<ul class="xmgl_list">
 						<li onclick="openFastReport()">
@@ -103,16 +109,21 @@
 						</li>
 					</ul>
 				</div>
-				<h2 class="xmgl">其他</h2>
+				<h2 class="xmgl">
+					<div>
+						<span></span>
+						<i>其他</i>
+					</div>
+				</h2>
 				<div class="xmgl_con">
 					<ul class="xmgl_list">
-						<li onclick="openFastReport()">
+						<li>
 							<dl>
 								<dt class="iconfont icon-module"></dt>
 								<dd>业务申请</dd>
 							</dl>
 						</li>
-						<li onclick="openPayList()">
+						<li>
 							<dl>
 								<dt class="iconfont icon-module"></dt>
 								<dd>付款申请</dd>
@@ -156,7 +167,7 @@
 					actionBar: {
 						title: "快捷报单",
 						titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#34aadc",
+						backgroundColor: "#039be5",
 						leftItem:{
 								image: "img/back.png",
 								method:"",//返回按钮自定义事件
@@ -175,13 +186,20 @@
 					actionBar: {
 						title: "项目查询",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
+						backgroundColor: "#039be5",
 						leftItem:{
 								image: "img/back.png",
 								method:"",//返回按钮自定义事件
 								text:"返回",
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
+						},
+						rightItem:[
+							{
+								type:"image",
+					         image:"img/add.png",
+					         method:"newCustom()" //在打开的window中自定义事件
+							}
+						]
 					}
 				});
 			}
@@ -195,7 +213,7 @@
 					actionBar: {
 						title: "付款申请",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
+						backgroundColor: "#039be5",
 						leftItem:{
 								image: "img/back.png",
 								method:"",//返回按钮自定义事件
@@ -215,7 +233,7 @@
 					actionBar: {
 						title: "我的资料",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
+						backgroundColor: "#039be5",
 						leftItem:{
 								image: "img/back.png",
 								method:"",//返回按钮自定义事件
