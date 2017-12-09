@@ -12,70 +12,53 @@
 		<script src="../../js/font.js" ></script>
 	</head>
 	<style>
-		.headertitle {
-			background-color: white;
-			box-sizing: border-box;
+		 
+		.um-content{
+		   height: 0.88rem;
+		   background-color: #fff
 		}
-		.headertitle .tabbar {
-			position: relative;
-			line-height: 0.88rem;
-			color: #8A9BAC;
+		.um-content .headertitle{
+		   height: 0.88rem;
+		   display: flex;
+		   display: -webkit-flex;
+		   justify-content: space-around;
 		}
-		.headertitle .tabbar p {
-			display: inline-block;
-			height: 0.84rem;
-			line-height: 0.86rem;
-			font-size: 0.32rem;
-			padding: 0 0.1rem;
-			color: #8A9BAC;
-			position: relative;
-			top: 0.02rem;
+		.um-content .headertitle li{
+		   width: 100%;
+		   text-align: center;
+		   line-height: 0.88rem;
+		   font-size:0.32rem;
+		   color:#424242;
 		}
-		.headertitle .tabbar {
-			width: 20%;
-		}
-		.headertitle .tabbar.active p {
-			color: #333;
-			border-bottom: 2.5px solid #007aff;
-			position: relative;
-			top: 0.02rem;
+		.um-content .headertitle li.active{
+		   border-bottom: 0.05rem solid #039BE5;
 		}
 	</style>
 	<body>
 		<div class="um-win" id="index">
 			<div class="um-content">
-				 <div class=" headertitle  um-box" id="header">
-                    <div class="tabbar  active  tc" data-index="0"  >
-                        <p>
+				 <ul class=" headertitle  um-box" id="header">
+                    <li class="tabbar  active  tc" data-index="0"  >
                             全部
-                        </p>
-                    </div>
-                    <div class="tabbar   tc" data-index="1">
-                        <p class="tc">
+                    </li>
+                    <li class="tabbar   tc" data-index="1">
                             待提交
-                        </p>
-                    </div>
-                    <div class="tabbar  tc" data-index="2"  >
-                        <p>
+                    </li>
+                    <li class="tabbar  tc" data-index="2"  >
                             审核中
-                        </p>
-                    </div>
-                    <div class="tabbar  tc" data-index="3">
-                        <p class="tc">
+                    </li>
+                    <li class="tabbar  tc" data-index="3">
                             已驳回
-                        </p>
-                    </div>
-                    <div class="tabbar  tc" data-index="4">
-                        <p class="tc">
+                    </li>
+                    <li class="tabbar  tc" data-index="4">
                             评审结束
-                        </p>
-                    </div>
+                    </li>
                 </div>
 			</div>
 
-            <div class="um-footer"id="footer">
+            <!-- <div class="um-footer"id="footer">
                 <button class="btn um-btn-primary" onclick="newCustom()">新建项目</button>
-            </div>
+            </div> -->
 
 		</div>
 		<script>
