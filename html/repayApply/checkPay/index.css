@@ -46,3 +46,75 @@
    font-size: 0.28rem;
    color: #333;
 }
+.processNum{
+   height: 0.8rem;
+   padding: 0 0.3rem;
+   font-size: 0.28rem;
+   line-height: 0.8rem;
+   color: #333;
+   background-color: #fff;
+   font-weight: normal;
+}
+.processList{
+   width: 100%;
+   border-top: 4px solid #0394d3;
+   margin-bottom: 0.1rem;
+   background-color: #fff;
+}
+.processList .title{
+   height: 0.8rem;
+   padding: 0 0.3rem;
+   border-bottom: 1px solid #f1f1f1;
+   line-height: 0.8rem;
+   font-size: 0.3rem;
+   color: #0394d3;
+}
+.processList li{
+   width: 100%;
+   padding: 0 0.3rem;
+   border-bottom: 1px solid #f1f1f1;
+}
+.processList li:after{
+   content: ".";
+   overflow: hidden;
+   visibility: hidden;
+   height: 0;
+   clear: both;
+   display: block;
+}
+.processList .l-con{
+   float: left;
+   height: 1.2rem;
+   width: 60%;
+}
+.processList .l-con span{
+   width: 100%;
+   height: 0.24rem;
+   line-height: 0.24rem;
+   font-size: 0.24rem;
+   color: #666;
+   float: left;
+   padding-left: 0.12rem;
+   margin: 0.2rem 0 0.3rem 0;
+}
+.processList .l-con i{
+   width: 100%;
+   height: 0.26rem;
+   line-height: 0.26rem;
+   font-size: 0.26rem;
+   color: #333;
+   float: left;
+   font-style: normal;
+}
+.processList .r-con{
+   float: right;
+   height: 1.2rem;
+   width: 40%;
+}
+.processList .r-con span{
+   float: right;
+   height: 1.2rem;
+   line-height: 1.2rem;
+   color: #0394d3;
+   font-size: 0.26rem;
+}
