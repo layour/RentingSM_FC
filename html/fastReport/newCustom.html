@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">	
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<script src="../../js/summer.js" ></script>		
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
@@ -13,7 +13,13 @@
 		<style>
 		.sera{
 			padding:0.13rem 0.19rem;
-			background:#f7f7f7;
+			background:#f6f6f6;
+		}
+		.sera p.txt{
+			display:inline-block;
+		}
+		.iconfont{
+			font-size:0.32rem;
 		}
 		.sera .s-box{
 			height:0.6rem;
@@ -22,6 +28,8 @@
 			border-radius: 4px;
 			border: 1px solid #ededed;
 			text-align: center;
+			font-size:0.28rem;
+			color:#dedede;
 		}
 		.sera .s-box:active{
 			transform: scale(0.95);
@@ -29,40 +37,39 @@
 		.s-box .icon-sousuo:before{
 			font-size:0.28rem;
 			color:rgba(136,153,170,1);	
-		}
-		.s-box .txt{
-			display:inline;
-			color:rgba(136,153,170,1);
-			font-size:0.26rem;
+		}	
+		.customList:first-child{
+	margin-top:0px;
 		}
 		.customList{
-			 border-top:5px solid #007AFF;
-			 border-radius:5px;
+			 position: relative;
 			 margin-top:0.2rem;
 		}
-		.customList p.title{
-			font-size:0.36rem;
-			color:#333;
-			line-height:0.8rem;
+			.customList p.title{
+			font-size:0.32rem;
+			color:#039be5;
+			line-height:0.88rem;
 			border-bottom:1px solid #f7f7f7;
 		}
-		.customList p.type{
-			font-size:0.32rem;
-			color:#999;
-			line-height:0.8rem;
+		.customList p.title span{
+			color:#424242;
+			
 		}
-		.customList p.time{
-			font-size:0.32rem;
-			color:#999;
-			line-height:0.8rem;
-			border-bottom:1px solid #f7f7f7;
-		}
+		 
 		.customList p.select{
-			line-height:0.8rem;
-			 
+			line-height:0.88rem;
+			color:#424242;
+			font-size:0.24rem;
+			border-bottom:1px solid #f6f6f6;
 		}
-		.customList p.time .manager{
-			font-size:0.36rem;
+		.customList p.select span{
+			border-right:1px solid #f6f6f6;
+		}
+		.customList .center{
+			padding:0.3rem 0.2rem;
+			border-bottom:1px solid #f7f7f7;
+			font-size:0.28rem;
+			color:#424242;
 		}
 		</style>
 	</head>
@@ -71,59 +78,40 @@
 			<div class="um-header-light">
 				<div class="sera">
 						<div class="s-box" onclick="opensearch()">
-							<i class="iconfont icon-sousuo"> </i>
+							<i class="iconfont icon-search"> </i>
 							<p class="txt">
-								输入客户名称 关键词
+								输入客户名称/关键词
 							</p>
 						</div>
-					</div>
+				</div>
 			</div>
 			<div class="um-content">
 			   <div class="list customList um-bgc-white">
-			       <p class="pl10 title">吴猛</p>
-			       <p class="type pl10"><span>自然人 </span> | <span> 普通客户</span></p>
-			       <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span><span class="fr manager">客户经理:<span>张三</span></span></p>
-			       <p class="tr pr10 select"> <button class="btn btn-inline btn-sm um-btn-primary">选择</button></p>
-			   </div>
+			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
+			       <div class="center" onclick="openDetail()">
+			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
+			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
+			       </div>
+			    </div>
 			    <div class="list customList um-bgc-white">
-			       <p class="pl10 title">吴猛</p>
-			       <p class="type pl10"><span>自然人 </span> | <span> 普通客户</span></p>
-			       <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span><span class="fr manager">客户经理:<span>张三</span></span></p>
-			       <p class="tr pr10 select"> <button class="btn btn-inline btn-sm um-btn-primary">选择</button></p>
-			   </div>
-			   
+			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
+			       <div class="center" onclick="openDetail()">
+			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
+			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
+			       </div>
+			    </div>
 			    <div class="list customList um-bgc-white">
-			       <p class="pl10 title">吴猛</p>
-			       <p class="type pl10"><span>自然人 </span> | <span> 普通客户</span></p>
-			       <p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span><span class="fr manager">客户经理:<span>张三</span></span></p>
-			       <p class="tr pr10 select"> <button class="btn btn-inline btn-sm um-btn-primary">选择</button></p>
-			   </div>
+			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
+			       <div class="center" onclick="openDetail()">
+			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
+			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
+			       </div>
+			    </div>
+			    
 			</div>
-			 <div class="um-footer"id="footer">
-                <button class="btn um-btn-primary"   onclick="newCreateCustom()">新建客户</button>
-            </div>
 		</div>
 	</body>
 	<script>
-		function newCustom(){
-			summer.openWin({
-					id:'addCar',
-					url:'html/fastReport/newCustom.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "选择客户",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
-						leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
-					}
-				});
-		}
 		function newCreateCustom(){
 			summer.openWin({
 					id:'newCreateCustom',
@@ -139,7 +127,13 @@
 								method:"",//返回按钮自定义事件
 								text:"返回",
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
+						},
+						 rightItems:[{
+					          type:"text",
+					          text:"下一步",
+					          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					          method:"nextStopAction()" //在打开的window中自定义事件
+					      }]
 					}
 				});
 		}
