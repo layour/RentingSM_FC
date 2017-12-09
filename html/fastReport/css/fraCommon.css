@@ -2,7 +2,9 @@
 	line-height:0.88rem;
 	min-height:0px;
 }
-
+.um-content{
+	background:#f6f6f6;
+}
 .sera{
 	padding:0.13rem 0.19rem;
 	background:#f6f6f6;
@@ -35,45 +37,57 @@
 	margin-top:0px;
 }
 .customList{
-	 border-top:5px solid #007AFF;
-	 border-radius:5px;
-	 margin-top:0.2rem;
 	 position: relative;
+	 margin-top:0.2rem;
 }
 	.customList p.title{
-	font-size:0.36rem;
-	color:#007AFF;
-	line-height:0.8rem;
+	font-size:0.32rem;
+	color:#039be5;
+	line-height:0.88rem;
 	border-bottom:1px solid #f7f7f7;
 }
 .customList p.title span{
-	color:#666;
+	color:#424242;
+	
 }
-.customList p.type{
-	font-size:0.32rem;
-	color:#999;
-	line-height:0.8rem;
-}
-.customList p.time{
-	font-size:0.32rem;
-	color:#999;
-	line-height:0.8rem;
-	border-bottom:1px solid #f7f7f7;
-}
+ 
 .customList p.select{
-	line-height:0.8rem;
+	line-height:0.88rem;
+	color:#424242;
+	font-size:0.24rem;
+	border-bottom:1px solid #f6f6f6;
+	
+	
 	 
+}
+.customList p.select span{
+	border-right:1px solid #f6f6f6;
+}
+.customList p.select span:active{
+	 background:#f6f6f6;
+}
+.customList p.select span:last-child{
+	border-right:0px solid #f6f6f6;
 }
 .customList p.time .manager{
 	font-size:0.36rem;
+}
+.customList .center{
+	padding:0.3rem 0.2rem;
+	border-bottom:1px solid #f7f7f7;
+	font-size:0.28rem;
+	color:#424242;
+}
+.customList .center p.status span{
+	padding-right:0.7rem;
 }
 .customList .center:after{
 	content: "";
 	display: inline-block;
 	width: 0.24rem;
 	height: 0.24rem;
-	border-right: 2px solid #d4d4d4;
-	border-bottom: 2px solid #d4d4d4;
+	border-right: 1px solid #dbdbdb;
+	border-bottom: 1px solid #dbdbdb;
 	transform: rotate(-45deg);
 	transform: rotate(-45deg);
 	-ms-transform: rotate(-45deg);	/* IE 9 */
@@ -82,7 +96,7 @@
 	-o-transform: rotate(-45deg);
 	position: absolute;
 	right: 0.6rem;
-	top:1.5rem;
+	top:1.7rem;
 }
 .customList .center:active{
 	background:#f4f4f4;
