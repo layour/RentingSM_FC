@@ -76,7 +76,34 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-
+			summerready=function(){
+				summer.setRefreshHeaderInfo({
+					 visible: true,
+					 loadingImg: 'img/refresh.png',
+					 bgColor: '#ffffff',
+					 textColor: '#aaaaaa',
+					 textDown: '下拉刷新...',
+					 textUp: '松开刷新...',
+					 showTime: true
+				}, function(ret, err) {
+					 //通常在这里从服务器加载数据，t
+					 alert(1);
+					 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+				});
+				summer.setRefreshFooterInfo({
+					 visible: true,
+					 loadingImg: 'img/refresh.png',
+					 bgColor: '#ffffff',
+					 textColor: '#aaaaaa',
+					 textDown: '上拉刷新...',
+					 textUp: '松开刷新...',
+					 showTime: true
+				}, function(ret, err) {
+					 //通常在这里从服务器加载数据，
+					 alert(2);
+					 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+				});
+			}
 		</script>
 	</body>
 </html>
