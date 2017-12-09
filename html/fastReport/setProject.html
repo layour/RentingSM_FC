@@ -121,44 +121,67 @@
 			      }
 		      }
 		  })
-		function checkVersion(param){
-					var id=param,url='',title='';
-					if(param=='addCar'){
-						url="html/touristsClient/addCar.html";
-						title='添加车辆';
-					}else if (param=='quotedPrice') {
-						url="html/priceCalculation/quotedPriceList.html";
-						title="选择报价方案"
-					}else if(param=='uploadImg'){
-						url="html/fastReport/uploadImg.html";
-						title='资料上传';
-					}else if(param=='remark'){
-						url="html/fastReport/remark.html";
-						title='备注';
-					}else if(param=='submitSure'){
-						url="html/fastReport/submitSure.html";
-						title='提交确认';
-					}else if(param=='baseMessage'){
-						url="html/fastReport/baseMessage.html";
-						title='项目基本信息';
-					}
-					summer.openWin({
-						id:id,
-						url:url,
-						create:false,
-						type:'actionBar',
-						actionBar: {
-							title:title,
-							titleColor: "#ffffff",
-							backgroundColor: "#007aff",
-							leftItem:{
-									image: "img/back.png",
-									method:"",//返回按钮自定义事件
-									text:"返回",
-									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
+			function checkVersion(param){
+						var id=param,url='',title='';
+						if(param=='addCar'){
+							id='addCar';
+							url="html/touristsClient/addCar.html";
+							title='添加车辆';
+						}else if (param=='quotedPrice') {
+							url="html/priceCalculation/quotedPriceList.html";
+							title="选择报价方案"
+							summer.openWin({
+								id:id,
+								url:url,
+								create:false,
+								type:'actionBar',
+								actionBar: {
+									title:title,
+									titleColor: "#ffffff",
+									backgroundColor: "#039BE5",
+									leftItem:{
+											image: "img/back.png",
+											method:"",//返回按钮自定义事件
+											text:"返回",
+											textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+									}
+								}
+							})
+							return
+						}else if(param=='uploadImg'){
+							url="html/fastReport/uploadImg.html";
+							title='资料上传';
+						}else if(param=='remark'){
+							url="html/fastReport/remark.html";
+							title='备注';
+						}else if(param=='submitSure'){
+							url="html/fastReport/submitSure.html";
+							title='提交确认';
 						}
-					})
+
+						summer.openWin({
+							id:id,
+							url:url,
+							create:false,
+							type:'actionBar',
+							actionBar: {
+								title:title,
+								titleColor: "#ffffff",
+								backgroundColor: "#039BE5",
+								leftItem:{
+										image: "img/back.png",
+										method:"",
+										text:"返回",
+										textColor:"#ffffff"
+								},
+								rightItems:[{
+									type:"text",
+									text:"保存",
+									textColor:"#ffffff" ,
+									method:"save()"
+								}]
+							}
+						})
 		}
 		function addContact(){
 			summer.openWin({

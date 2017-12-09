@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="css/fraCommon.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
@@ -14,6 +14,16 @@
 	</head>
 	<body>
 		<div class="um-frame" id="index">
+			<div class="um-header-light">
+				<div class="sera">
+						<div class="s-box" onclick="opensearch()">
+							<i class="iconfont icon-search"> </i>
+							<p class="txt">
+								输入客户名称/关键词
+							</p>
+						</div>
+				</div>
+			</div>
 			<div class="um-content">
 				 <div class="list customList um-bgc-white">
 			       <p class="pl10 title pr10">全部<span class="status fr">已驳回</span></p>
@@ -59,7 +69,7 @@
 				    visible: true,
 				    loadingImg: 'img/refresh.png',
 				    bgColor: '#ffffff',
-				    textColor: '#999999',
+				    textColor: '#aaaaaa',
 				    textDown: '下拉刷新...',
 				    textUp: '松开刷新...',
 				    showTime: true
@@ -72,7 +82,7 @@
 				    visible: true,
 				    loadingImg: 'img/refresh.png',
 				     bgColor: '#ffffff',
-				    textColor: '#999999',
+				    textColor: '#aaaaaa',
 				    textDown: '上拉刷新...',
 				    textUp: '松开刷新...',
 				    showTime: true

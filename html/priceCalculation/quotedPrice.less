@@ -1,29 +1,61 @@
 out:quotedPrice.min.css,sourcemap:false,compress:true;
 @import "../../css/comment.less";
 .quotedPrice{
-  padding: 0 .44rem;
+  padding: 0 .26rem;
   section{
     >p{
-      line-height: .8rem;
+      line-height: .6rem;
+      font-size: 13px;
+      color:#999;
     }
     table{
       overflow: hidden;
       width: 100%;
-      margin-bottom: .4rem;
-      border-radius: .1rem;
+      border-radius: .04rem;
       background: @white;
+      border-bottom:1px solid red;
       &.selectedPlan{
-          background: @grayBlue;
+        background: #B3E5FC;
+        border:1px solid #039BE5;
+        p{
+          color:#01579B;
+          &.spanT{
+            font-weight: bold;
+            color:#01579B;
+            line-height: .6rem;
+            font-size: 14px;
+          }
+        }
       }
       td{
         vertical-align: middle;
-        padding:0 .2rem;
-        font-size: 13px;
+        padding-left:.28rem;
         &.iconTd{
           text-align: right;
+          padding-right: .28rem;
+          button{
+            width:1.24rem;
+            height:.42rem;
+            color:@white;
+            border:none;
+            background: @grayBlue;
+            border-radius: .08rem;
+          }
+        }
+        p{
+          font-size: 12px;
+          color:#9E9E9E;
+          &:last-child{margin-bottom:.28rem;}
+          &.spanT{
+            font-size: 14px;
+            color:#424242;
+            margin-top:.28rem;
+          }
         }
         img{
-          width:1rem;
+          width:.8rem;
+          height: .8rem;
+          border-radius: 50%;
         }
       }
     }
@@ -31,31 +63,52 @@ out:quotedPrice.min.css,sourcemap:false,compress:true;
 }
 
 .quotedPriceDetail{
-  padding-bottom: 1.2rem;
+  padding-bottom: 1rem;
   ul{
     overflow: hidden;
     li{
       background: @white;
-      padding:0 .44rem;
-      height: .8rem;
-      line-height: .8rem;
-      margin-bottom: 2px;
+      padding:0 .56rem;
+      height: .88rem;
+      line-height: .88rem;
+      border-bottom:1px solid @borderColor;
+      font-size: 14px;
+      color:@fontColor;
+      &.liContr{
+        position: relative;
+        >span{
+          position: absolute;
+          right: .56rem;
+          top:0;
+        }
+      }
+      &.input{
+        input{
+          min-width: 2.3rem;
+          text-align: right;
+        }
+      }
       &.spec{
         margin-bottom: .2rem;
       }
-      >b{color:@grayBlue;}
+      >b{color:@fontColor;}
       b{
         font-weight: normal;
       }
       >span{
         float: right;
+        display: inline-block;
+        .default{
+          color:@grayColor;
+        }
         input{
-          width:1.2rem;
           height:.4rem;
           outline: none;
           border:none;
-          border-bottom: 1px solid @borderColor;
+          width:1.2rem;
+          // border-bottom: 1px solid @borderColor;
           text-align: center;
+
         }
       }
     }
@@ -78,18 +131,17 @@ out:quotedPrice.min.css,sourcemap:false,compress:true;
 }
 #quotedPriceDetail {
   .um-footer{
-
+  padding:.1rem .4rem;
     >button{
       height: .7rem;
       border:none;
       outline: none;
-      width:2rem;
+      width:100%;
       line-height: .7rem;
       color:@white;
-      margin:.1rem .4rem;
+
       border-radius: 5px;
       background: @grayBlue;
-      &.red{background: @red;}
     }
   }
 }

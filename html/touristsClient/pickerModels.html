@@ -6,6 +6,7 @@
 		<title>添加车辆</title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="./car.min.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
@@ -17,6 +18,12 @@
 	<body>
 		<div class="um-win" id="pickerModels">
 			<div class="um-content">
+				<div class="um-input-group pr">
+          <i class="icon iconfont icon-nav_search"></i>
+          <input type="search" class="form-control"  placeholder="搜索">
+          <!-- <i class="um-input-clear ti-close"></i> -->
+          <!-- <button class='btn btn-inline btn-sm'>搜索</button> -->
+        </div>
         <ul class="modelsList">
           <li v-for="(item,index) in modelsList" :key="index">
 						<p>{{index}}</p>
@@ -52,13 +59,13 @@
 								pageParam:{carId:it.id},
 								actionBar: {
 						      title: it.name,
-						      titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						      backgroundColor: "#34aadc",
+						      titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						      backgroundColor: "#039BE5",
 						      leftItem:{
 						          image: "img/back.png",
 						          method:'',//返回按钮自定义事件
 						          text:"取消",
-						          textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						          textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						      }
 								}
 							})

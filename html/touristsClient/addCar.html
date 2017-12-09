@@ -17,62 +17,52 @@
 	</head>
 	<body>
 		<div class="um-win" id="addCar" v-cloak>
-			<!-- <div class="um-header" >
-				<button @click="goBack" class="um-back f15">返回</button>
-				<h3>添加车辆</h3>
-			</div> -->
-
 			<div class="um-content addCar">
         <table>
           <tr @click="pickerDealer">
             <td>经销商</td>
             <td>
-							<span v-if='dealer'>{{dealer}}</span><span v-else>请选择</span>
+							<span v-if='dealer'>{{dealer}}</span><span class="grayColor" v-else>请选择</span>
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr>
 						<td>车辆状况</td>
 						<td>
-							<button @click="changCarStatus($event,'new')" class='btn btn-inline btn-sm active'>新车</button>
-							<button @click="changCarStatus($event,'old')" class="btn btn-inline btn-sm">二手车</button>
+							<button @click="changCarStatus($event,'new')" class='btn btn-inline btn-sm active'>新车</button><button @click="changCarStatus($event,'old')" class="btn btn-inline btn-sm">二手车</button>
 						</td>
 					</tr>
 					<tr @click="pickerModels">
             <td>选择车型</td>
             <td>
-							<span v-if='carModels'>{{carModels}}</span><span v-else>请选择</span>
+							<span v-if='carModels'>{{carModels}}</span><span class="grayColor"  v-else>请选择</span>
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr @click="surePickerColor">
             <td>车身颜色</td>
             <td>
-							<span v-if='color'>{{color}}</span><span v-else>请选择</span>
+							<span v-if='color'>{{color}}</span><span  class="grayColor" v-else>请选择</span>
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr>
             <td>新车指导价</td>
             <td>
-							<input type="text" name="price" placeholder="请输入指导价" v-model="guidePrice">
+							<input type="text" @input="checkNumber($event,'guidePrice')" name="price" placeholder="请输入指导价" v-model="guidePrice">
 						</td>
 					</tr>
 					<tr>
             <td>留购价</td>
             <td>
-							<input type="text" name="holdPrice" placeholder="请输入留购价" v-model="holdPrice">
+							<input type="text" @input="checkNumber($event,'holdPrice')" name="holdPrice" placeholder="请输入留购价" v-model="holdPrice">
 						</td>
 					</tr>
         </table>
-			</div>
-
-			<div class="um-footer">
 				<section v-if="pickerColorStatus" class="pickerColor">
 					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
-					<p><span class="fl" @click="surePickerColor">取消</span><span class="fr" @click="surePickerColor('confirm')">确定</span></p>
+					<p><span class="" @click="surePickerColor">取消</span><span class="" @click="surePickerColor('confirm')">确定</span></p>
 				</section>
-				<button v-else type="button" class='btn  um-btn-primary' @click="save">保存</button>
 			</div>
 		</div>
 		<script>
@@ -84,8 +74,8 @@
 							carStatus:'new',
 							carModels:'',
 							color:'',
-							guidePrice:'20000',
-							holdPrice:100,
+							guidePrice:'',
+							holdPrice:'',
 							pickerColorStatus:false,
 							pickedColor:'',
 							slots: [
@@ -103,8 +93,15 @@
 
 					},
 					methods:{
-						goBack(){
-							summer.closeWin();
+						checkNumber(e,param){
+							var val=$(e.currentTarget).val()
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)){
+								if(param=='guidePrice'){
+									this.guidePrice=''
+								}else{
+									this.holdPrice=''
+								}
+							}
 						},
 						pickerDealer(){
 							summer.openWin({
@@ -114,13 +111,13 @@
 								type:'actionBar',
 								actionBar: {
 						      title: "选择经销商",
-						      titleColor: "#000000",
-						      backgroundColor: "#34aadc",
+						      titleColor: "#ffffff",
+						      backgroundColor: "#039BE5",
 						      leftItem:{
 						          image: "img/back.png",
-						          method:function(){summer.closeWin()},
-						          text:"取消",
-						          textColor:"#000000"
+						          method:'',
+						          text:"返回",
+						          textColor:"#ffffff"
 						      }
 								}
 							})
@@ -133,13 +130,13 @@
 								type:'actionBar',
 								actionBar: {
 						      title: "选择车型",
-						      titleColor: "#000000",
-						      backgroundColor: "#34aadc",
+						      titleColor: "#ffffff",
+						      backgroundColor: "#039BE5",
 						      leftItem:{
 						          image: "img/back.png",
-						          method:function(){summer.closeWin()},
+						          method:'',
 						          text:"返回",
-						          textColor:"#000000"
+						          textColor:"#ffffff"
 						      }
 								}
 							})
@@ -173,6 +170,9 @@
 					if(models){
 						addCar.carModels=models;
 					}
+				}
+				function save(){
+					addCar.save()
 				}
 		</script>
 	</body>
