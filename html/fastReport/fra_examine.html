@@ -64,7 +64,17 @@
 			    
 			</div>
 		</div>
-		<script>
+		<script>function opensearch(){
+		    	summer.openWin({
+					id:'search',
+					url:'html/fastReport/search.html',
+					pageParam:{
+						source:"program"
+					}
+					
+				});
+		    }
+			
 			summerready=function(){
 				summer.setRefreshHeaderInfo({
 				    visible: true,
@@ -76,7 +86,7 @@
 				    showTime: true
 				}, function(ret, err) {
 				    //通常在这里从服务器加载数据，t
-				    alert(9);
+				    //alert(9);
 				    summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
 				});
 				summer.setRefreshFooterInfo({
@@ -89,7 +99,7 @@
 				    showTime: true
 				}, function(ret, err) {
 				    //通常在这里从服务器加载数据，
-				    alert(10);
+				     summer.toast({msg:"没有更多了"});
 				    summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
 				});
 			}
