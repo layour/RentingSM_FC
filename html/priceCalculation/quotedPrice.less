@@ -11,12 +11,12 @@ out:quotedPrice.min.css,sourcemap:false,compress:true;
     table{
       overflow: hidden;
       width: 100%;
-      border-radius: .04rem;
+      border-radius: .1rem;
       background: @white;
       border-bottom:1px solid red;
       &.selectedPlan{
-        background: #B3E5FC;
-        border:1px solid #039BE5;
+        background: #F0FAFE;
+        tr{border:2px solid #039BE5;}
         p{
           color:#01579B;
           &.spanT{
@@ -61,72 +61,129 @@ out:quotedPrice.min.css,sourcemap:false,compress:true;
     }
   }
 }
-
+input{
+  font-size: 14px;
+}
 .quotedPriceDetail{
   padding-bottom: 1rem;
-  ul{
-    overflow: hidden;
-    li{
-      background: @white;
-      padding:0 .56rem;
-      height: .88rem;
-      line-height: .88rem;
-      border-bottom:1px solid @borderColor;
-      font-size: 14px;
-      color:@fontColor;
-      &.liContr{
-        position: relative;
-        >span{
-          position: absolute;
-          right: .56rem;
-          top:0;
-        }
-      }
-      &.input{
-        input{
-          min-width: 2.3rem;
-          text-align: right;
-        }
-      }
-      &.spec{
-        margin-bottom: .2rem;
-      }
-      >b{color:@fontColor;}
-      b{
-        font-weight: normal;
-      }
-      >span{
-        float: right;
-        display: inline-block;
-        .default{
-          color:@grayColor;
-        }
-        input{
-          height:.4rem;
-          outline: none;
-          border:none;
-          width:1.2rem;
-          // border-bottom: 1px solid @borderColor;
-          text-align: center;
 
-        }
+}
+ul{
+  overflow: hidden;
+  li{
+    background: @white;
+    padding:0 .56rem;
+    height: .88rem;
+    line-height: .88rem;
+    border-bottom:1px solid @borderColor;
+    font-size: 14px;
+    color:@fontColor;
+    position: relative;
+    >span{
+      position: absolute;
+      right: .56rem;
+      top:0;
+    }
+    // &.liContr{
+    //
+    // }
+    &.input{
+      input{
+        min-width: 2.3rem;
+        text-align: right;
+      }
+    }
+    &.spec{
+      margin-bottom: .2rem;
+    }
+    >b{color:@fontColor;}
+    b{
+      font-weight: normal;
+    }
+    >span{
+      float: right;
+      display: inline-block;
+      .default{
+        color:@grayColor;
+      }
+      input{
+        height:.4rem;
+        outline: none;
+        border:none;
+        width:1.2rem;
+        // border-bottom: 1px solid @borderColor;
+        text-align: center;
+
       }
     }
   }
 }
 .pickerPrice{
-  position:fixed;
-  left:0;
-  bottom:0;
+  // position:fixed;
+  // left:0;
+  // bottom:0;
   width:100%;
-  z-index: 100;
+  // z-index: 100;
   background: @white;
   border-top:1px solid @borderColor;
+  .picker-slot{
+    font-size: 14px;
+    color:@grayColor;
+  }
+  .picker-item.picker-selected{
+    font-size: 22px;
+    color:@fontColor;
+  }
   >p{
-    padding:.24rem .44rem;
+    padding:0 .56rem;
+    line-height: .88rem;
+    border-top: 1px solid @E0;
+    font-size: 14px;
     span{
       color:@grayBlue;
     }
+  }
+}
+.firstPayCont{
+  ul{
+    li{
+      text-align: left;
+      &.alertLi{
+        font-size: 12px;
+        height: .56rem;
+        line-height: .56rem;
+        background: #F9F9F9;
+        font-weight: normal;
+        >button{
+          color:@grayBlue;
+        }
+      }
+      >span{
+        >button{
+          color:@grayColor;
+          border:1px solid @borderColor;
+          font-size: 12px;
+          padding:0;
+          width:1rem;
+          height:.46rem;
+          line-height:.46rem;
+          background: @white;
+          outline: none;
+          &:first-child{border-right: none;}
+          &:last-child{border-left: none;}
+          &.active{
+            color:@white;
+            background:@grayBlue;
+          }
+        }
+      }
+    }
+  }
+  >p{
+    line-height: .88rem;
+    padding: 0 .56rem;
+    color:@grayBlue;
+    border-top: 1px solid @E0;
   }
 }
 #quotedPriceDetail {
@@ -144,4 +201,7 @@ out:quotedPrice.min.css,sourcemap:false,compress:true;
       background: @grayBlue;
     }
   }
+}
+.mint-popup{
+  width: 100%;
 }

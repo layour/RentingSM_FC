@@ -59,10 +59,10 @@
 						</td>
 					</tr>
         </table>
-				<section v-if="pickerColorStatus" class="pickerColor">
+				<mt-popup v-model="pickerColorStatus" position='bottom' class="pickerColor">
 					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
 					<p><span class="" @click="surePickerColor">取消</span><span class="" @click="surePickerColor('confirm')">确定</span></p>
-				</section>
+				</mt-popup>
 			</div>
 		</div>
 		<script>
@@ -81,7 +81,7 @@
 							slots: [
 								{
 									flex: 1,
-									values: ['白色', '黑色', '蓝色', '红色', '玫瑰金', '紫色'],
+									values: ['白色', '黑色', '蓝色', '红色', '其他', '紫色'],
 									defaultIndex:2,
 									className: 'slot1',
 									textAlign: 'center'

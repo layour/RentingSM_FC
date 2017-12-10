@@ -28,16 +28,17 @@
           <li @click="pickerAcc" v-for="(item,index) in dealerList" :key="index">{{item}}</li>
         </ul>
         <mt-popup v-model="popupVisible" position="bottom">
-          <p>选择经销商收款账户</p>
+          <!-- <p>选择经销商收款账户</p> -->
           <ul>
-            <li v-for="(it,i) in accList" @click="pickerDealer(it)" class="pr" :key="i">
+            <li v-for="(it,i) in accList" @click="pickerIt($event)" class="pr" :key="i">
               <p>{{it.name}}</p>
               <p>{{it.acc}}</p>
               <p>{{it.addr}}</p>
               <p>开户行号：{{it.number}}</p>
-              <i class="ti-angle-right"></i>
+              <span><i class="icon iconfont icon-yes"></i></span>
             </li>
           </ul>
+					<p><span class="fl" @click="pickerAcc">	取消</span><span class="fr"  @click="pickerDealer">	确定</span></p>
         </mt-popup>
       </div>
     </div>
@@ -52,16 +53,21 @@
 							accList:[
 								{name:"石家庄4S店裕华分店/对公",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213},
 								{name:"郑冬秋/对私",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213}
-							]
+							],
+							item:[]
             }
           },
 					methods:{
 						pickerAcc(){
-							this.popupVisible=true;
+							this.popupVisible=!this.popupVisible;
 						},
-						pickerDealer(item){
+						pickerIt(e){
+							$(e.currentTarget).addClass('active').siblings('li').removeClass('active')
+							this.item=item
+						},
+						pickerDealer(){
 							this.popupVisible=false;
-							summer.setStorage('pickerDealer',JSON.stringify(item));
+							summer.setStorage('pickerDealer',JSON.stringify(this.item));
 							summer.execScript({
 							    winId: 'addCar',
 							    script: 'getDealer()'

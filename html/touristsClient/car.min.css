@@ -2,6 +2,10 @@
 i {
   color: #DBDBDB;
 }
+input::-webkit-input-placeholder {
+  color: #DEDEDE;
+  font-size: 14px;
+}
 /*重定义通用*/
 input::-webkit-input-placeholder {
   color: #DEDEDE;
@@ -49,8 +53,9 @@ input::-webkit-input-placeholder {
   border: 1px solid #EFEFEF;
   font-size: 12px;
   padding: 0;
-  width: .8rem;
-  height: .44rem;
+  width: 1rem;
+  height: .46rem;
+  line-height: .46rem;
 }
 .addCar table tr td button:first-child {
   border-right: none;
@@ -63,18 +68,17 @@ input::-webkit-input-placeholder {
   background: #039BE5;
 }
 .pickerColor {
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100%;
-  z-index: 10;
   background: #ffffff;
 }
 .pickerColor .picker-item {
   font-size: 14px;
 }
 .pickerColor > p {
-  padding: .24rem .44rem;
+  line-height: .88rem;
+  padding: 0 .56rem;
+  color: #039BE5;
+  border-top: 1px solid #E0E0E0;
 }
 .pickerColor > p span {
   color: #039BE5;
@@ -97,27 +101,40 @@ input::-webkit-input-placeholder {
   width: 100%;
 }
 #pickerDealer .mint-popup > p {
-  text-align: center;
-  line-height: .6rem;
-}
-#pickerDealer .mint-popup ul {
-  padding-bottom: .44rem;
+  line-height: .88rem;
+  padding: 0 .56rem;
+  color: #039BE5;
+  border-top: 1px solid #E0E0E0;
 }
 #pickerDealer .mint-popup ul li {
-  border-top: 1px solid #aaaaaa;
-  padding: .2rem .44rem;
+  border-top: 1px solid #EFEFEF;
+  padding: .28rem .56rem;
 }
 #pickerDealer .mint-popup ul li p {
-  color: #aaaaaa;
+  color: #DEDEDE;
+  font-size: 12px;
+  line-height: .4rem;
 }
 #pickerDealer .mint-popup ul li p:first-child {
-  color: #000000;
+  color: #333;
+  font-size: 14px;
+  line-height: .6rem;
 }
-#pickerDealer .mint-popup ul li i {
+#pickerDealer .mint-popup ul li span {
   position: absolute;
   top: 1rem;
   right: .44rem;
-  color: #aaaaaa;
+  border: 1px solid #EFEFEF;
+  padding-left: .08rem;
+  width: .48rem;
+  height: .48rem;
+  border-radius: 50%;
+}
+#pickerDealer .mint-popup ul li span i {
+  color: #ffffff;
+}
+#pickerDealer .mint-popup ul li.active span {
+  background: #039BE5;
 }
 .um-input-group {
   padding: .16rem;

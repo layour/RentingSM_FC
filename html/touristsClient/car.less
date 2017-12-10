@@ -52,8 +52,9 @@ input::-webkit-input-placeholder {
           border:1px solid @borderColor;
           font-size: 12px;
           padding:0;
-          width:.8rem;
-          height:.44rem;
+          width:1rem;
+          height:.46rem;
+          line-height:.46rem;
           &:first-child{border-right: none;}
           &:last-child{border-left: none;}
           &.active{
@@ -67,17 +68,20 @@ input::-webkit-input-placeholder {
 
 }
 .pickerColor{
-  position:fixed;
-  left:0;
-  bottom:0;
+  // position:fixed;
+  // left:0;
+  // bottom:0;
   width:100%;
-  z-index: 10;
+  // z-index: 10;
   background: @white;
   .picker-item{
     font-size: 14px;
   }
   >p{
-    padding:.24rem .44rem;
+    line-height: .88rem;
+    padding: 0 .56rem;
+    color:@grayBlue;
+    border-top: 1px solid @E0;
     span{
       color:@grayBlue;
       &:last-child{float:right;}
@@ -100,25 +104,39 @@ input::-webkit-input-placeholder {
   .mint-popup{
     width:100%;
     >p{
-      text-align: center;
-      line-height: .6rem;
+      line-height: .88rem;
+      padding: 0 .56rem;
+      color:@grayBlue;
+      border-top: 1px solid @E0;
     }
     ul{
-      padding-bottom:.44rem;
+      // padding-bottom:.44rem;
       li{
-        border-top:1px solid @aaa;
-        padding:.2rem .44rem;
+        border-top:1px solid @borderColor;
+        padding:.28rem .56rem;
 
         p{
-          color:@aaa;
-          &:first-child{color:@black;}
+          color:@grayColor;
+          font-size: 12px;
+          line-height: .4rem;
+          &:first-child{
+            color:@fontColor;
+            font-size: 14px;
+            line-height: .6rem;
+          }
         }
-        i{
+        span{
           position: absolute;
           top:1rem;
           right:.44rem;
-          color:@aaa;
+          border:1px solid @borderColor;
+          padding-left: .08rem;
+          width: .48rem;
+          height:.48rem;
+          border-radius: 50%;
+          i{color:@white;}
         }
+        &.active span{background:@grayBlue;}
       }
     }
   }

@@ -48,21 +48,25 @@
 							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
-					<li>
+					<li @click="pickFirstRate">
 						<b>首付比例</b>
 						<span>
-							<input type="text" maxlength='5' @input="changeFirstPay" name="firstPayRate" v-model="quoted.firstPayRate"> %
-							<input type="text" @blur="changeFirstPayRate" name="firstPay" v-model="quoted.firstPay">&nbsp;元
+							<b v-if="quoted.sureFirstPay">{{quoted.sureFirstPayRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.sureFirstPay}}&nbsp;元</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
-					<li>
+					<li @click="pickerBail">
 						<b>保证金</b>
 						<span>
-							<button type="button" name="button" v-if="!quoted.bailType" @click="surePicker('bail')">点击选择基数</button>
+							<b v-if="quoted.lastBail">{{quoted.sureBailType}}&nbsp;&nbsp;&nbsp;{{quoted.sureBailRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.lastBail}}&nbsp;元</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
+							<!-- <button type="button" name="button" v-if="!quoted.bailType" @click="surePicker('bail')">点击选择基数</button>
 							<button type="button" name="button" v-else @click="surePicker('bail')">{{quoted.bailType}}</button>
 
 							<input type="text" name="bailRate" @input="changeBail" v-model="quoted.bailRate"> %
-							<input type="text" name="bail" @blur="changBailRate" v-model="quoted.bail">&nbsp;元
+							<input type="text" name="bail" @blur="changBailRate" v-model="quoted.bail">&nbsp;元 -->
 						</span>
 					</li>
 					<li class="input">
@@ -90,10 +94,76 @@
 
       </div>
 			<div class="um-footer" id="footer">
-				<section v-if="pickerStatus" class="pickerPrice">
+				<mt-popup v-model="pickerStatus" v-if="pickerStatus" position="bottom" class="pickerPrice">
 					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
 					<p><span class="fl" @click="surePicker">取消</span><span class="fr" @click="surePicker('','confirm')">确定</span></p>
-				</section>
+				</mt-popup>
+				<mt-popup v-model="firstPayStatu" class="firstPayCont" v-else-if="firstPayStatu" position="bottom">
+					<ul v-if="moneyToRate">
+						<li class="input">
+							<b>首付金额</b>
+							<span><input type="text" @input="changeFirstPayRate" placeholder="请输入您的金额" name="firstPay" v-model="quoted.firstPay">&nbsp;元</span>
+						</li>
+						<li class="alertLi">当前为金额计算，<button @click="moneyToRateStatus">改为百分比计算</button></li>
+						<li>
+							<b>百分百</b>
+							<span> <b v-if="quoted.firstPayRate">{{quoted.firstPayRate}}</b>
+							<b v-else class="default">自动计算</b>&nbsp;%</span>
+						</li>
+					</ul>
+					<ul v-else>
+						<li class="input">
+							<b>百分百</b>
+							<span><input type="text" maxlength='5' @input="changeFirstPay" placeholder='请输入百分百' name="firstPayRate" v-model="quoted.firstPayRate">&nbsp;%</span>
+						</li>
+						<li class="alertLi">当前为百分百计算，<button @click="moneyToRateStatus">改为金额计算</button></li>
+						<li class="input">
+							<b>首付金额</b>
+							<span>
+								<b v-if="quoted.firstPay">{{quoted.firstPay}}</b>
+								<b v-else class="default">自动计算</b>&nbsp;元
+							</span>
+						</li>
+					</ul>
+					<p><span class="fl" @click="pickFirstRate">取消</span><span class="fr" @click="sureFristPay">确定</span></p>
+				</mt-popup>
+				<mt-popup v-model="bailStatue" class="firstPayCont" v-else-if="bailStatue" position="bottom">
+					<ul>
+						<li>
+							<b>保证金方式</b>
+							<span>
+								<button type="button" name="button" @click="toggleClass($event,'首期款')">首期款</button><button type="button" name="button" class="active" @click="toggleClass($event,'融资额')">融资额</button>
+							</span>
+						</li>
+					</ul>
+					<ul v-if="bailToRate">
+						<li class="input">
+							<b>保证金金额</b>
+							<span><input type="text" @input="changBailRate" placeholder="请输入您的金额" name="bail" v-model="quoted.bail">&nbsp;元</span>
+						</li>
+						<li class="alertLi">当前为金额计算，<button @click="bailToRateStatus">改为百分比计算</button></li>
+						<li>
+							<b>百分百</b>
+							<span> <b v-if="quoted.bailRate">{{quoted.bailRate}}</b>
+							<b v-else class="default">自动计算</b>&nbsp;%</span>
+						</li>
+					</ul>
+					<ul v-else>
+						<li class="input">
+							<b>百分百</b>
+							<span><input type="text" maxlength='5' @input="changeBail" placeholder="请输入百分百" name="bail" v-model="quoted.bailRate">&nbsp;%</span>
+						</li>
+						<li class="alertLi">当前为百分百计算，<button @click="bailToRateStatus">改为金额计算</button></li>
+						<li class="input">
+							<b>保证金金额</b>
+							<span>
+								<b v-if="quoted.bail">{{quoted.bail}}</b>
+								<b v-else class="default">自动计算</b>&nbsp;元
+							</span>
+						</li>
+					</ul>
+					<p><span class="fl" @click="pickerBail">取消</span><span class="fr" @click="sureBail">确定</span></p>
+				</mt-popup>
 				<template v-else>
 					<button>测算</button>
 				</template>
@@ -109,6 +179,10 @@
 							payTypeList:['期末等额本息','期末不等额'],
 							bailList:["融资额","首期款"],
 							pickerStatus:false,
+							bailStatue:false,
+							firstPayStatu:false,
+							moneyToRate:true,
+							bailToRate:true,
 							pickerType:'payType',
 							pickerVal:'',
 							quoted:{
@@ -117,11 +191,16 @@
 								contractTerm:'',
 								rate:50,
 								payType:'',
-								firstPayRate:'', //首付比例
+								firstPayRate:'', //待定首付比例
+								sureFirstPayRate:'', //选择的首付比例
 								firstPay:'',
+								sureFirstPay:'',
 								bail:'', //保证金
+								sureBail:'', //保证金
 								bailRate:'',  //保证金比例
-								bailType:'融资额',  //保证金类型
+								sureBailRate:'',  //保证金比例
+								bailType:'融资额',  //选择的保证金类型
+								sureBailType:'',  //确认的保证金类型
 								gps:'',
 								consultingFee:'',
 								sureBail:'',
@@ -157,6 +236,40 @@
 						}
 					},
 					methods:{
+						sureBail(){
+							this.quoted.lastBail=this.quoted.bail
+							this.quoted.sureBailRate=this.quoted.bailRate
+							this.quoted.sureBailType=this.quoted.bailType
+							this.bailStatue=false
+						},
+						bailToRateStatus(){
+							this.bailToRate=!this.bailToRate
+						},
+						toggleClass(e,str){
+							if(str=="首期款"&&!this.quoted.sureFirstPay){
+								summer.toast({msg:"请先选择首付比例"})
+								console.log("ss");
+								return
+							}
+							this.quoted.bail=''
+							this.quoted.bailRate=''
+							$(e.currentTarget).addClass('active').siblings().removeClass('active')
+							this.quoted.bailType=str
+						},
+						pickerBail(){
+							this.bailStatue=!this.bailStatue
+						},
+						moneyToRateStatus(){
+							this.moneyToRate=!this.moneyToRate
+						},
+						sureFristPay(){
+							this.quoted.sureFirstPay=this.quoted.firstPay
+							this.quoted.sureFirstPayRate=this.quoted.firstPayRate
+							this.firstPayStatu=false
+						},
+						pickFirstRate(){
+							this.firstPayStatu=!this.firstPayStatu
+						},
 						onValuesChange(picker,values) {
 							this.pickerVal=values[0];
 							console.log(this.pickerVal)
@@ -198,7 +311,7 @@
 						},
 						changeFirstPayRate(){
 							var val=String(this.quoted.firstPay).trim();
-							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>this.quoted.allPrice){
+							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>parseFloat(this.quoted.allPrice)){
 								this.quoted.firstPay=''
 								this.quoted.firstPayRate=''
 							}else {
@@ -206,7 +319,7 @@
 							}
 						},
 						changeBail(){
-							var val=String(this.quoted.bailRate).trim();
+							var val=parseFloat(String(this.quoted.bailRate).trim());
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.bailRate=''
 								this.quoted.bail=''
@@ -223,10 +336,11 @@
 							}else if(this.quoted.bailType=="首期款"){
 								number=this.quoted.firstPay;
 							}
-							return number
+							return parseFloat(number)
 						},
 						changBailRate(){
-							var val=String(this.quoted.bail).trim(),number=this.bailTypeReset();;
+							var val=parseFloat(String(this.quoted.bail).trim()),number=this.bailTypeReset();
+							console.log(val,number);
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>number){
 								this.quoted.bail=''
 								this.quoted.bailRate=''
@@ -238,17 +352,17 @@
 							var val='';
 							if(value=='fee'){
 								val=this.quoted.consultingFee;
-								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
 									this.quoted.consultingFee=''
 								}
 							}else if (value=='bail') {
 								val=this.quoted.sureBail;
-								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
 									this.quoted.sureBail=''
 								}
 							}else if (value=='gps') {
 								val=this.quoted.gps;
-								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=this.quoted.allPrice){
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
 									this.quoted.gps=''
 								}
 							}
