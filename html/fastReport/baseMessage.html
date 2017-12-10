@@ -20,13 +20,15 @@
 			<div class="um-content baseMessage">
 				<ul>
 					<li @click="surePickerProgram">
-						<p class="pl10 pr10">
-							项目类型 <span class="fr"><span v-if='programStyle'>{{programStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10 tr">
+							<span class="fl">项目类型</span>
+							 <span class=""><span v-if='programStyle'>{{programStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
 					<li @click="surePickerTask">
-						<p class="pl10 pr10">
-							业务类型<span class="fr"><span v-if='taskStyle'>{{taskStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10 tr ">
+							<span class="fl">业务类型</span>
+							<span class=""><span v-if='taskStyle'>{{taskStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
 					<li>

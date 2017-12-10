@@ -95,9 +95,9 @@
 					</div></a>
 			</div>
 			</div>
-			 <div class="um-footer"id="footer">
-        <button class="btn um-btn-primary" onclick="checkVersion('submitSure')">下一步</button>
-       </div>
+			 <!-- <div class="um-footer"id="footer">
+			         <button class="btn um-btn-primary" onclick="checkVersion('submitSure')">下一步</button>
+			        </div> -->
 		</div>
 		<script>
 			new Vue({
@@ -154,9 +154,9 @@
 						}else if(param=='remark'){
 							url="html/fastReport/remark.html";
 							title='备注';
-						}else if(param=='submitSure'){
-							url="html/fastReport/submitSure.html";
-							title='提交确认';
+						}else if(param=='baseMessage'){
+							url="html/fastReport/baseMessage.html";
+							title='基本信息';
 						}
 
 						summer.openWin({
@@ -214,7 +214,7 @@
 					create:false,
 					type:'actionBar',
 					actionBar: {
-						title: "我的担保人",
+						title: "添加担保人",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						backgroundColor: "#007aff",
 						leftItem:{
@@ -232,6 +232,25 @@
 					}
 				});
 		}
+        	function	nextStopInput(){
+        			summer.openWin({
+							id:"submitSure",
+							url:"html/fastReport/submitSure.html",
+							create:false,
+							type:'actionBar',
+							actionBar: {
+								title:"提交确认",
+								titleColor: "#ffffff",
+								backgroundColor: "#039BE5",
+								leftItem:{
+										image: "img/back.png",
+										method:"",
+										text:"返回",
+										textColor:"#ffffff"
+								}
+							}
+						})
+        	}
 		</script>
 	</body>
 </html>

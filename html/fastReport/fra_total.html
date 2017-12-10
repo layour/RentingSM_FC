@@ -83,6 +83,25 @@
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
+		    function openDetail(){
+		    		summer.openWin({
+					id:'programDetail',
+					url:'html/fastReport/programDetail.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "项目查看",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						} 
+					}
+				});
+		    }
 			summerready=function(){
 				summer.setRefreshHeaderInfo({
 				    visible: true,
