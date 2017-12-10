@@ -120,7 +120,7 @@
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
-		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
 			var newCreateCustom=new Vue({
@@ -174,9 +174,13 @@
 					      _self.message.address=args.address;
 					      _self.cardUrl=args.imagePath;
 					      _self.cardShow = !_self.cardShow;
+					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},_self.successCallBack(args));
 					},function(args){
 					    console.log(args);
 					});
+		        },
+		        successCallBack(args){
+		        	console.log(args);
 		        },
 		        onValuesChange1(picker, values) {
 					this.pickerSex = values[0];
@@ -292,7 +296,14 @@
 		     function nextStopAction(){
 		    	newCreateCustom.nextStopAction();
 		    }
-		    
+		    summerready=function(){
+		    	var params = ["android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
+					summer.getPermission(params,  function(args){
+					    alert(args); //成功返回OK
+					}, function(args){
+					    alert(args); //失败返回illegal access
+					})
+		    }
 	 
 		</script>
 	</body>

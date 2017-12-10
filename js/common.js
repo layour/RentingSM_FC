@@ -9,12 +9,13 @@ var CommonUtil = {
 	//图片加水印
 	watermark : function(params, successFn) {
 		//调用定位
+		var self=this;
 		this.getLocation(function(args) {
-			var textgroup = [{
+			/*var textgroup = [{
 				text : params.name,
 				style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "80", "font-size" : "12"}
 			},{
-				text : datePattern("yyyy-MM-dd EE hh:mm:ss", new Date()),
+				text : self.datePattern("yyyy-MM-dd EE hh:mm:ss", new Date()),
 				style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "50", "font-size" : "12"}
 			},{
 				text : args.address,
@@ -24,10 +25,21 @@ var CommonUtil = {
 				"src" : params.srcImage, //源图片路径
 				"target" : params.targetImage, //目标图片路径
 				"textGroup" : textgroup
+			};*/
+			var textgroup = [{
+			    text:"你好",
+			    style:{"left":"10","top":"0","right":"0","bottom":"10","font-size":"12"}
+			}];
+			var data = {
+			    "src":"/storage/emulated/0/alpha/SIDCard/_SIDCard_20171210_102308.jpg",//源图片路径
+			    "target":"/storage/emulated/0/alpha/SIDCard/_SIDCard_20171210_102308.jpg",//目标图片路径
+			    "textGroup":textgroup
 			};
 			var result = summer.callService("UMGraphics.watermark", data, false);
-			successFn(result.target);
+				successFn("/storage/emulated/0/alpha/SIDCard/_SIDCard_20171210_102308.jpg");
+			
 		});
+	
 	},
 	//获取当前位置
 	getLocation : function(successFn) {
