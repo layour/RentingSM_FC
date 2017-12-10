@@ -41,14 +41,16 @@
 						</p>
 					</li>
 					<li>
-						<p class="pl10 pr10">
-							是否团 单<span class="fr">
-								<button @click="changGroupStatus($event,'no')" class='btn btn-inline btn-sm active'>
-									否
-								</button>
-								<button @click="changGroupStatus($event,'yes')" class="btn btn-inline btn-sm">
-									是
-								</button></span>
+						<p class="pl10 pr10 tr" style="line-height:0.88rem;">
+								 <span class="fl">是否团单</span>
+							<span class="isGroup">
+									<span @click="changGroupStatus($event,'no')" class='active'>
+										否
+									</span>
+									<span @click="changGroupStatus($event,'yes')" class="">
+										是
+									</span>
+							</span>
 						</p>
 					</li>
 				</ul>
