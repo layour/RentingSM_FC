@@ -1,19 +1,24 @@
-body,.um-frame{
+body,.um-frame,.um-win,html{
    background-color: #fff;
 }
-#footer{
+#bot{
    height: 1.2rem;
    background-color: #fff;
    border: 0;
+   width: 3.8rem;
+   position: fixed;
+   bottom: 0;
+   left: 50%;
+   margin-left: -1.9rem;
 }
-#footer span{
+#bot span{
    display: inline-block;
    height: 0.4rem;
    font-size: 0.3rem;
    line-height: 0.4rem;
    color: #424242;
 }
-#footer .shu{
+#bot .shu{
    padding: 0 0.5rem;
 }
 .loginTitle{
