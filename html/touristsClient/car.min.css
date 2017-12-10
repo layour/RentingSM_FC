@@ -120,21 +120,14 @@ input::-webkit-input-placeholder {
   font-size: 14px;
   line-height: .6rem;
 }
-#pickerDealer .mint-popup ul li span {
+#pickerDealer .mint-popup ul li i {
   position: absolute;
   top: 1rem;
   right: .44rem;
-  border: 1px solid #EFEFEF;
-  padding-left: .08rem;
-  width: .48rem;
-  height: .48rem;
-  border-radius: 50%;
+  font-size: 20px;
 }
-#pickerDealer .mint-popup ul li span i {
-  color: #ffffff;
-}
-#pickerDealer .mint-popup ul li.active span {
-  background: #039BE5;
+#pickerDealer .mint-popup ul li.active i {
+  color: #039BE5;
 }
 .um-input-group {
   padding: .16rem;

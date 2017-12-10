@@ -181,9 +181,6 @@ ul li > span input {
   color: #039BE5;
   border-top: 1px solid #E0E0E0;
 }
-#quotedPriceDetail .um-footer {
-  padding: .1rem .4rem;
-}
 #quotedPriceDetail .um-footer > button {
   height: .7rem;
   border: none;

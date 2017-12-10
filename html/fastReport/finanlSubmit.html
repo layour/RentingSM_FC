@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/vue.js" ></script>
@@ -13,20 +13,17 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<style>
 			.listContent{
-				border-top:5px solid #007AFF;
-			 border-radius:5px;
-			 margin-top:0.2rem;
 			 background:#fff;
-			 padding:0 .44rem;
 			}
 			.listContent p.title{
 				color:#333;
-				font-size:0.36rem;
 			}
 			.listContent p{
+				padding:0 .56rem;
+				font-size: 14px;
 				line-height:0.8rem;
-				border-bottom:1px solid #f7f7f7;
-				color:#666;
+				border-bottom:1px solid #EFEFEF;
+				color:#333;
 				font-size:0.32rem;
 			}
 			.listContent .nb{border:none;}
@@ -35,20 +32,15 @@
 	<body>
 		<div class="um-win" id="finanlSub" v-cloak>
 			<div class="um-content">
-				<p class="f24 tc m20 um-blue">成功受理申请!</p>
+				<p class="f18 tc m30"><i style="font-size:20px;color:#1287DE;" class='icon  iconfont icon-done'></i><span class="p10">成功受理申请!</span></p>
 				<div class="list listContent">
-					<p class="title pl10">立项通过</p>
+					<p class="title f16">立项通过<span class="fr">形式售后回租</span></p>
 					<div>
-						<p class="pl10 pr10 nb">胖子购买了一台朗行-1<span class="fr">CA</span></p>
-						<p class="pl10 pr10">&yen;116100 <span class="fr">形式售后回租</span></p>
+						<p class="nb">胖子购买了一台朗行-1<span class="fr">CA</span></p>
+						<p class="">&yen;116100 </p>
 					</div>
-					<p class="pl10 pr10">流程ID:<span class="fr">汽车金融项目评审流程.18282121</span></p>
+					<p class="last">流程ID：<span style="color:#1287DE;">汽车金融项目评审流程.18282121</span> <i class='icon iconfont icon-enter fr' style="color:#DBDBDB;"></i></p>
 				</div>
-			</div>
-
-			<div class="um-footer"id="footer">
-        <button class="btn um-btn-primary" style="padding:5px 12px" @click="returnInit">返回首页</button>
-
 			</div>
 		</div>
 		<script>

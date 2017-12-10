@@ -6,31 +6,101 @@
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/mint.css">
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<style media="screen">
-			.addContact div{
-			 border-top:5px solid #007AFF;
-			 border-radius:5px;
-			 background:#fff;
-			 margin:.44rem;
+			.addContact ul li{
+				background:#fff;
+				margin-bottom: .2rem;
+				height: 1.76rem;
+				padding-left: .56rem;
 			}
-			.addContact table{
-				width：100%;
+			.addContact ul li div{
+				display: inline-block;
 			}
-			.addContact table td{
+		.addContact ul li div:first-child{padding:.4rem 0;}
+			.title{
+				font-size: 16px;
+				color:#039BE5;
+			}
+			.normal{
+				color:#333;
+				font-size: 14px;
+			}
+			.fr a{
+				display: inline-block;
+				width: .8rem;
+				height: .48rem;
 				text-align: center;
-				line-height: .8rem;
-				padding:0 .44rem;
+				line-height: .48rem;
+				border: 1px solid #EFEFEF;
+				border-radius: 4px;
+				position: relative;
+				top:.1rem;
 			}
-			.addContact table input{
-				width:100%;
-				border:none;
+			.one a{
+				top:.6rem;
+				right:.6rem;
+			}
+			.fr a i{
+				font-size: 23px;
+				color: #9E9E9E;
+			}
+			.fr button{
+				height: 1.76rem;
+				width: 1.72rem;
+				border: none;
 				outline: none;
-				border-bottom:1px solid #f7f7f7;
+				background: #f44336;
+				line-height: 100%;
+				text-align: center;
+				color:#fff;
+				margin-left: .28rem;
+			}
+			.mint-popup{
+				width: 100%;
+			}
+			.mint-popup>p{
+				text-align: left;
+				line-height: .88rem;
+				padding: 0 .56rem;
+				color:#039BE5;
+				border-top: 1px solid #E0E0E0;
+			}
+			.mint-popup ul{
+				padding-bottom: 2rem;
+			}
+			.mint-popup li{
+				text-align: left;
+				padding:0 .56rem;
+				line-height: .88rem;
+				border-top:1px solid #EFEFEF;
+				color:#333;
+				font-size: 14px;
+			}
+			input::-webkit-input-placeholder {
+			    color: @grayColor;
+			    font-size: 14px;
+			}
+			input{
+				line-height: .88rem;
+				outline: none;
+				border: none;
+				text-align: right;
+				font-size: 14px;
+			}
+			.um-footer{
+				padding: 0 .6rem;
+			}
+			.um-footer button{
+
+				color: #fff;
+				background:#039BE5;
 			}
 		</style>
 	</head>
@@ -38,25 +108,38 @@
 		<div class="um-win" id="addContact">
 			<div class="um-content addContact">
 				<div class="">
-					<table>
-						<tr>
-							<td>姓名</td>
-							<td>手机号</td>
-							<td></td>
-						</tr>
-						<tr v-for="(item,index) in addContactList" :key='index'>
-							<td><input type="text" v-model="item.name"></td>
-							<td><input type="number" @blur="checkPhone(index)" v-model="item.phone"></td>
-							<td>
-								<i v-if="addContactList.length>1"  @click="deleteItem(index)" style="color:red;" class="icon iconfont icon-backspace"></i>
-								<i v-else  style="opacity:0;" class="icon iconfont icon-backspace"></i>
-							</td>
-						</tr>
-					</table>
+					<ul>
+						<li v-for="(item,index) in addContactList" :key='index'>
+							<div style="padding-right:1rem;">
+								<p class="title">{{item.name}}</p>
+								<p class="normal">{{item.phone}}</p>
+							</div>
+							<div v-if="addContactList.length==1" class="fr one">
+								<a href=""><i class="icon iconfont icon-call"></i></a>
+							</div>
+							<div v-else class="fr">
+								<a href=""><i class="icon iconfont icon-call"></i></a>
+								<button type="button" name="button" @click="deleteItem(index)">删除</button>
+							</div>
+						</li>
+					</ul>
 				</div>
       </div>
 			<div class="um-footer"id="footer">
-				<button class="btn um-btn-primary" style="padding:5px 12px" @click="save">保存</button>
+				<mt-popup v-model="addStatus" v-if="addStatus" position="bottom" class="add">
+					<ul>
+						<li>
+							<span>紧急联系人</span>
+							<input type="text" name="name" class='fr' maxlength='6' v-model="name" placeholder='请输入真实姓名'>
+						</li>
+						<li>
+							<span>电话</span>
+							<input type="number" class='fr' name="phone" v-model="phone" placeholder='请输入号码'>
+						</li>
+					</ul>
+					<p><span  @click="addItem">取消</span><span class="fr" @click="sureAdd">确定</span></p>
+				</mt-popup>
+				<button class="btn um-btn-primary" style="background:#039BE5;height:.88rem;padding:5px 12px" @click="save">保存</button>
 			</div>
     </div>
     <script>
@@ -64,26 +147,37 @@
           el:'#addContact',
           data(){
             return {
+							addStatus:false,
 							addContactList:[
 								{name:"张自忠",phone:'13146829922'},
 								{name:"秦始皇",phone:'18646829984'}
-							]
+							],
+							name:'',
+							phone:''
             }
           },
 					mounted(){},
 					methods:{
-						checkPhone(i){
-							var reg=/^1[3|4|5|8][0-9]\d{4,8}$/
-							if(!reg.test(this.addContactList[i].phone)){
+						checkPhone(){
+							var reg=/^1[3|4|5|6|8][0-9]\d{4,8}$/
+							if(!reg.test(this.phone)){
 								summer.toast({msg:'手机号码格式有误'})
-								// this.addContactList[i].phone=''  提示号码输错了
+								return
 							}
 						},
 						deleteItem(i){
 							this.addContactList.splice(i,1)
 						},
 						addItem(){
-							this.addContactList.push({name:'',phone:''})
+							this.addStatus=!this.addStatus
+						},
+						sureAdd(){
+							this.checkPhone()
+							if(!this.name){
+								summer.toast({msg:'请输入联系人姓名'})
+							}
+							this.addContactList.push({name:this.name,phone:this.phone})
+							this.addStatus=false
 						},
 						save(){
 							//发请求
