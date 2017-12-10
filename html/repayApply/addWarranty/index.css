@@ -58,3 +58,34 @@
    top: 5.2rem;
    border-radius: 0.1rem;
 }
+.insurer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background: #ffffff;
+}
+.insurer .picker-item {
+  font-size: 14px;
+}
+.insurer > p {
+  padding: .24rem .44rem;
+}
+.insurer > p span {
+  color: #039BE5;
+}
+.insurer > p span:last-child {
+  float: right;
+}
+.mint-popup{
+   width:100%;
+   padding-top:.2rem;
+}
+.mint-popup p{
+   line-height: .8rem;
+   text-align: center;
+}
+.mint-popup p.border{
+   border-bottom: 1px solid #f7f7f7;
+}
