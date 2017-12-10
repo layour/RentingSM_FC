@@ -165,7 +165,7 @@
 					<p><span class="fl" @click="pickerBail">取消</span><span class="fr" @click="sureBail">确定</span></p>
 				</mt-popup>
 				<template v-else>
-					<button>测算</button>
+					<button style="height:.88rem;">测算</button>
 				</template>
 			</div>
     </div>
@@ -247,7 +247,7 @@
 						},
 						toggleClass(e,str){
 							if(str=="首期款"&&!this.quoted.sureFirstPay){
-								summer.toast({msg:"请先选择首付比例"})
+								// summer.toast({msg:"请先选择首付比例"})
 								console.log("ss");
 								return
 							}

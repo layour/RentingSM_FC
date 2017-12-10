@@ -30,12 +30,12 @@
         <mt-popup v-model="popupVisible" position="bottom">
           <!-- <p>选择经销商收款账户</p> -->
           <ul>
-            <li v-for="(it,i) in accList" @click="pickerIt($event)" class="pr" :key="i">
+            <li v-for="(it,i) in accList" @click="pickerIt($event,item)" class="pr" :key="i">
               <p>{{it.name}}</p>
               <p>{{it.acc}}</p>
               <p>{{it.addr}}</p>
               <p>开户行号：{{it.number}}</p>
-              <span><i class="icon iconfont icon-yes"></i></span>
+              <i class="icon iconfont icon-done"></i>
             </li>
           </ul>
 					<p><span class="fl" @click="pickerAcc">	取消</span><span class="fr"  @click="pickerDealer">	确定</span></p>
@@ -61,7 +61,7 @@
 						pickerAcc(){
 							this.popupVisible=!this.popupVisible;
 						},
-						pickerIt(e){
+						pickerIt(e,item){
 							$(e.currentTarget).addClass('active').siblings('li').removeClass('active')
 							this.item=item
 						},

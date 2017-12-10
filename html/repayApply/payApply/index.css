@@ -45,6 +45,9 @@
    text-align: center;
    left: 50%;
    transform: translate(-50%);
-   top: 8.5rem;
+   top: 6rem;
    border-radius: 0.1rem;
+}
+.change{
+   display: none;
 }
