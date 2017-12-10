@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">	
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<script src="../../js/font.js" ></script>
 		<style>
@@ -38,7 +38,7 @@
 				background:#ffffff;
 				border-bottom:1px solid #f7f7f7;
 				font-size:0.28rem;
-				
+
 			}
 			div.item span{
 				color:#666;
@@ -63,7 +63,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="um-win" id="app">
+		<div class="um-win" id="app" v-cloak>
 			<div class="topheader tc" @click="cardIdentify">
 				 <img v-bind:src="cardUrl"   v-show="cardShow"   alt="" />
 			</div>
@@ -77,7 +77,7 @@
 				</div>
 				 <div @click="sureDateConfirm" class="item">
 						<p class="pl10 pr10">
-							出生年月 <span class="fr"><span v-if='pickerValue'>{{pickerValue}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+							出生年月 <span class="fr"><span v-if='surePicekerDateVal'>{{surePicekerDateVal}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
@@ -102,21 +102,26 @@
 							<span class="fl" @click="surePickerMarrige">取消</span><span class="fr" @click="surePickerMarrige('confirm')">确定</span>
 						</p>
 			   </section>
-			   <section v-show="pickerDateStatus" class="pickerProgram pickerColor">
+			   <!-- <section class="pickerProgram" v-show='pickerDateStatus'> -->
 						 <mt-datetime-picker
+						 		ref="picker"
 							  v-model="pickerValue"
 							  type="date"
+								cancel-text='取消'
+								confirm-text='确定'
+								:start-date='new Date("1950-01-01")'
+								:end-date="noweDate"
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
 						<!-- <p>
 							<span class="fl" @click="handleConfirm">取消</span><span class="fr" @click="handleConfirm('confirm')">确定</span>
 						</p> -->
-			   </section>
+			   <!-- </section> -->
 			</div>
-			
+
 		</div>
-		<script src="../../js/summer.js" ></script>		
+		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
@@ -125,40 +130,44 @@
 		<script>
 			var newCreateCustom=new Vue({
 		      el: '#app',
-		      data:{
-		      	cardShow:false,
-		      	cardUrl:"",
-		      	pickerVisible:"",
-		      	pickerDate:"",
-		      	pickerValue:"",
-		      	pickerSexStatus:false,
-				pickerDateStatus:false,
-				pickerMarrigeStatus:false,
-				pickerSex:"",
-				pickerMarrige:"",
-				slots1 : [{
-						flex : 1,
-						values : ['男', '女'],
-						defaultIndex :0,
-						className : 'slot1',
-						textAlign : 'center'
-					}],
-				slots2 : [{
-						flex : 1,
-						values : ['未婚', '已婚'],
-						defaultIndex :0,
-						className : 'slot1',
-						textAlign : 'center'
-					}],
-		      	message:{
-		      		username:'',
-		      		card:'',
-		      		sex:'',
-		      		address:'',
-		      		phone:'',
-		      		phoneAddress:'',
-		      		marrige:''
-		      	}
+		      data(){
+		      	return {
+							cardShow:false,
+			      	cardUrl:"",
+			      	pickerVisible:"",
+			      	pickerDate:"",
+			      	pickerValue:new Date(),
+							surePicekerDateVal:'',
+			      	pickerSexStatus:false,
+							pickerDateStatus:false,
+							pickerMarrigeStatus:false,
+							pickerSex:"",
+							pickerMarrige:"",
+							noweDate:new Date(),
+							slots1 : [{
+									flex : 1,
+									values : ['男', '女'],
+									defaultIndex :0,
+									className : 'slot1',
+									textAlign : 'center'
+								}],
+							slots2 : [{
+									flex : 1,
+									values : ['未婚', '已婚'],
+									defaultIndex :0,
+									className : 'slot1',
+									textAlign : 'center'
+								}],
+			      	message:{
+			      		username:'',
+			      		card:'',
+			      		sex:'',
+			      		address:'',
+			      		phone:'',
+			      		phoneAddress:'',
+			      		marrige:''
+			      	}
+						}
 		      },
 		      methods: {
 		        handleClick: function() {
@@ -231,9 +240,22 @@
 				},
 				sureDateConfirm:function(){
 					this.pickerDateStatus=!this.pickerDateStatus;
+					this.$refs.picker.open();
 				},
 				handleConfirm:function(pickerValue){
 					this.pickerValue = pickerValue;
+					this.surePicekerDateVal=getFormatDate(pickerValue)
+					function getFormatDate(date){
+						var date=new Date(date), seperator1 = "-";
+						var year = date.getFullYear(), month = date.getMonth() + 1, strDate = date.getDate();
+						if (month >= 1 && month <= 9) {
+							month = "0" + month;
+						}
+						if (strDate >= 0 && strDate <= 9) {
+							strDate = "0" + strDate;
+						}
+					 return  year + seperator1 + month + seperator1 + strDate;
+				 }
 				},
 				savePerson:function(){
 						summer.openWin({
@@ -289,7 +311,7 @@
 			        this.$refs.picker.open();
 			      }
 		      }
-		    })	
+		    })
 		    function savePerson(){
 		    	newCreateCustom.savePerson();
 		    }
@@ -304,7 +326,7 @@
 					    alert(args); //失败返回illegal access
 					})
 		    }
-	 
+
 		</script>
 	</body>
 </html>
