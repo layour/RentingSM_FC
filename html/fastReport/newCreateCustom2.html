@@ -44,21 +44,27 @@
 				color:#666;
 			}
 			.pickerColor {
-			  position: fixed;
-			  left: 0;
-			  bottom: 0;
 			  width: 100%;
 			  z-index: 10;
 			  background: #ffffff;
 			}
 			.pickerColor > p {
-			  padding: .24rem .44rem;
+			   line-height: .88rem;
+		    padding: 0.56rem;
+		    color: #039BE5;
+		    border-top: 1px solid #E0E0E0;
 			}
 			.pickerColor > p span {
 			  color: #34aadc;
 			}
 			.pickerColor > p span:last-child {
 			  float: right;
+			}
+			.item .first{
+				color:#333;
+			}
+			.item .second{
+				color:#dedede;
 			}
 		</style>
 	</head>
@@ -73,13 +79,13 @@
 				<div @click="surePickerSex" class="item">
 						<p class="pl10 pr10 tr">
 							<span class="fl">性别</span>
-							 <span class=""><span v-if='message.sex'>{{message.sex}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+							 <span class=""><span v-if='message.sex' class="first">{{message.sex}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 				 <div @click="sureDateConfirm" class="item">
 					<p class="pl10 pr10 tr">
 						<span class="fl">出生年月</span>
-					         <span class=""><span v-if='message.dateBirth'>{{message.dateBirth}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					         <span class=""><span v-if='message.dateBirth' class="first">{{message.dateBirth}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 					</p>
 				</div>
 				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
@@ -87,13 +93,13 @@
 				<mt-field label="通讯地址" placeholder="请输入您的通讯地址"   v-model="message.phoneAddress"></mt-field>
 			</div>
 			<div >
-				<section v-show="pickerSexStatus" class="pickerProgram pickerColor">
+				 
+				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
 						<p>
 							<span class="fl" @click="surePickerSex">取消</span><span class="fr" @click="surePickerSex('confirm')">确定</span>
 						</p>
-			   </section>
-			   <!-- <section class="pickerProgram" v-show='pickerDateStatus'> -->
+			 	</mt-popup>
 						 <mt-datetime-picker
 						 		ref="picker"
 							  v-model="pickerValue"
@@ -105,10 +111,6 @@
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
-						<!-- <p>
-							<span class="fl" @click="handleConfirm">取消</span><span class="fr" @click="handleConfirm('confirm')">确定</span>
-						</p> -->
-			   <!-- </section> -->
 			</div>
 
 		</div>

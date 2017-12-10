@@ -56,8 +56,6 @@
         		top:0.06rem;
         		left:-0.14rem;
         		width:0.28rem;
-        		 
-        		
         	}
         	.contentFlow .listItem:first-child  .inside img.true{
         		top:0.02rem;
@@ -72,19 +70,61 @@
           	line-height:0.7rem;
           	height:0.7rem;
           } 
+           .listContent:first-child{
+           		margin-top:0px;
+           }
+          .listContent{
+			 border-radius:5px;
+			 margin-top:0.2rem;
+			 background:#fff;
+			}
+			.listContent p.title{
+				color:#333;
+				font-size:0.36rem;
+			}
+			.listContent p.title:before{}
+			.listContent p{
+				line-height:0.9rem;
+				border-bottom:1px solid #f7f7f7;
+				color:#666;
+				font-size:0.32rem;
+			}
         </style>
 		
 	</head>
 	<body>
 		<div class="um-win" id="index">
 			 <ul class="um-tabbar um-tabbar-underline um-tabbar-switch">
-               	<li data-tar='.base' class="tc"><a>基本信息</a></li>
-               	<li  class="active tc" data-tar='.flow'><a>评审流程</a></li>
+               	<li data-tar='.base' class="active tc"><a>基本信息</a></li>
+               	<li  class=" tc" data-tar='.flow'><a>评审流程</a></li>
             </ul>
 			<div class="um-content">
                <div class="Artical">        
-               	<div class="base  ">基本信息</div>
-               	<div class="flow active">
+               	<div class="base  active">
+               		 <div class="list listContent">
+				 	<p class="title pl10">基本信息</p>
+				 	<p class="pl10 pr10">客户信息<span class="fr">张三</span></p>
+				 	<p class="pl10 pr10">合同号<span class="fr">CN976666788KYR</span></p>
+				 	<p class="pl10 pr10">项目类型<span class="fr">大客户业务</span></p>
+				 	<p class="pl10 pr10">业务模式<span class="fr">形式售后回租</span></p>
+				 	<p class="pl10 pr10">所属机构<span class="fr">汽车金融事业部</span></p>
+				 	<p class="pl10 pr10">客户经理<span class="fr">张自忠</span></p>
+				 </div>
+				 <div class="list listContent">
+				 	<p class="title pl10">车辆信息</p>
+				 	<p class="pl10 pr10">车型<span class="fr">2016款  昂科威 28T 精英型</span></p>
+				 	<p class="pl10 pr10">颜色<span class="fr">珍珠白</span></p>
+				 	<p class="pl10 pr10">成交价<span class="fr">200000</span></p>
+				 </div>
+				 <div class="list listContent">
+				 	<p class="title pl10">报价方案</p>
+				 	<p class="pl10 pr10">车型<span class="fr">2016款  昂科威 28T 精英型</span></p>
+				 	<p class="pl10 pr10">颜色<span class="fr">珍珠白</span></p>
+				 	<p class="pl10 pr10">成交价<span class="fr">200000</span></p>
+				 </div>
+               		
+               	</div>
+               	<div class="flow">
                		<p class="title   tc um-bgc-white">流程ID：汽车金融项目评审流程.1823211</p>
                		<div class="contentFlow um-bgc-white">
                			<div class="listItem">

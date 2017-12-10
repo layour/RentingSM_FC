@@ -22,13 +22,13 @@
 					<li @click="surePickerProgram">
 						<p class="pl10 pr10 tr">
 							<span class="fl">项目类型</span>
-							 <span class=""><span v-if='programStyle'>{{programStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+							 <span class="right"><span v-if='programStyle' class="first">{{programStyle}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
 					<li @click="surePickerTask">
 						<p class="pl10 pr10 tr ">
 							<span class="fl">业务类型</span>
-							<span class=""><span v-if='taskStyle'>{{taskStyle}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+							<span class="right"><span v-if='taskStyle'  class="first">{{taskStyle}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
 					<li>
@@ -60,21 +60,21 @@
 				
 				
 			</div>
-
+			
 			<div class="um-footer">
-				<section v-if="pickerProgramStatus" class="pickerProgram pickerColor">
+				<mt-popup v-model="pickerProgramStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
 						<p>
 							<span class="fl" @click="surePickerProgram">取消</span><span class="fr" @click="surePickerProgram('confirm')">确定</span>
 						</p>
-				</section>
-				<section v-if="pickerTaskStatus" class="pickerTask pickerColor">
+				</mt-popup>
+				<mt-popup v-model="pickerTaskStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
 						<p>
 							<span class="fl" @click="surePickerTask">取消</span><span class="fr" @click="surePickerTask('confirm')">确定</span>
 						</p>
-				</section>
-				<button v-else type="button" class='btn  um-btn-primary' @click="save">
+				</mt-popup>
+				<button  type="button" class='btn  um-btn-primary' @click="save">
 					保存
 				</button>
 			</div>
