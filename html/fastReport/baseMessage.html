@@ -30,14 +30,15 @@
 						</p>
 					</li>
 					<li>
-						<p class="pl10 pr10">
-							合同签署方式<span class="fr">
-								<button @click="changContractStatus($event,'electron')" class='btn btn-inline btn-sm active'>
+						<p class="pl10 pr10 tr" style="line-height:0.88rem;">
+							<span class="fl">合同签署方式</span>
+							<span class="isGroup">
+								<span @click="changContractStatus($event,'electron')" class='active'>
 									电子
-								</button>
-								<button @click="changContractStatus($event,'paper')" class="btn btn-inline btn-sm">
+								</span>
+								<span @click="changContractStatus($event,'paper')" class="">
 									纸质
-								</button></span>
+								</span></span>
 						</p>
 					</li>
 					<li>
