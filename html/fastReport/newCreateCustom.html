@@ -174,27 +174,27 @@
 					      _self.message.address=args.address;
 					      _self.cardUrl=args.imagePath;
 					      _self.cardShow = !_self.cardShow;
-					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},_self.successCallBack(args));
+					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (args){console.log(args)});
 					},function(args){
 					    console.log(args);
 					});
 		        },
-		        successCallBack(args){
+		        successCallBack:function(args){
 		        	console.log(args);
 		        },
-		        onValuesChange1(picker, values) {
+		        onValuesChange1:function(picker, values) {
 					this.pickerSex = values[0];
 				},
-				surePickerSex(param) {
+				surePickerSex:function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
 						this.message.sex = this.pickerSex;
 					}
 				},
-				onValuesChange2(picker, values) {
+				onValuesChange2:function(picker, values) {
 					this.pickerMarrige = values[0];
 				},
-				surePickerMarrige(param) {
+				surePickerMarrige:function(param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
 						this.message.marrige = this.pickerMarrige;
@@ -229,13 +229,13 @@
 						}
 					}
 				},
-				sureDateConfirm(){
+				sureDateConfirm:function(){
 					this.pickerDateStatus=!this.pickerDateStatus;
 				},
-				handleConfirm(pickerValue){
+				handleConfirm:function(pickerValue){
 					this.pickerValue = pickerValue;
 				},
-				savePerson(){
+				savePerson:function(){
 						summer.openWin({
 						id:'setProject',
 						url:'html/fastReport/setProject.html',
@@ -260,7 +260,7 @@
 						}
 					});
 				},
-				nextStopAction(){
+				nextStopAction:function(){
 						summer.openWin({
 						id:'newCreateCustom2',
 						url:'html/fastReport/newCreateCustom2.html',
@@ -285,7 +285,7 @@
 						}
 					});
 				},
-		        openPicker() {
+		        openPicker:function() {
 			        this.$refs.picker.open();
 			      }
 		      }
@@ -297,7 +297,7 @@
 		    	newCreateCustom.nextStopAction();
 		    }
 		    summerready=function(){
-		    	var params = ["android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
+		    	var params = ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
 					summer.getPermission(params,  function(args){
 					    alert(args); //成功返回OK
 					}, function(args){
