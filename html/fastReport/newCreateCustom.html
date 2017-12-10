@@ -83,6 +83,11 @@
 				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
 				<mt-field label="手机号" placeholder="请输入您的手机号码"  v-model="message.phone"></mt-field>
 				<mt-field label="通讯地址" placeholder="请输入您的通讯地址"   v-model="message.phoneAddress"></mt-field>
+				<div @click="surePickerMarrige" class="item">
+						<p class="pl10 pr10">
+							婚姻状况 <span class="fr"><span v-if='message.marrige'>{{message.marrige}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
 			</div>
 			<div >
 				<section v-show="pickerSexStatus" class="pickerProgram pickerColor">
@@ -91,11 +96,18 @@
 							<span class="fl" @click="surePickerSex">取消</span><span class="fr" @click="surePickerSex('confirm')">确定</span>
 						</p>
 			   </section>
+			   <section v-show="pickerMarrigeStatus" class="pickerProgram pickerColor">
+						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
+						<p>
+							<span class="fl" @click="surePickerMarrige">取消</span><span class="fr" @click="surePickerMarrige('confirm')">确定</span>
+						</p>
+			   </section>
 			   <section v-show="pickerDateStatus" class="pickerProgram pickerColor">
 						 <mt-datetime-picker
 							  v-model="pickerValue"
 							  type="date"
-							  @confirm="handleConfirm">
+							  @confirm="handleConfirm"
+							  >
 						</mt-datetime-picker>
 						<!-- <p>
 							<span class="fl" @click="handleConfirm">取消</span><span class="fr" @click="handleConfirm('confirm')">确定</span>
@@ -111,7 +123,7 @@
 		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
-			new Vue({
+			var newCreateCustom=new Vue({
 		      el: '#app',
 		      data:{
 		      	cardShow:false,
@@ -121,10 +133,19 @@
 		      	pickerValue:"",
 		      	pickerSexStatus:false,
 				pickerDateStatus:false,
+				pickerMarrigeStatus:false,
 				pickerSex:"",
+				pickerMarrige:"",
 				slots1 : [{
 						flex : 1,
 						values : ['男', '女'],
+						defaultIndex :0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+				slots2 : [{
+						flex : 1,
+						values : ['未婚', '已婚'],
 						defaultIndex :0,
 						className : 'slot1',
 						textAlign : 'center'
@@ -135,7 +156,8 @@
 		      		sex:'',
 		      		address:'',
 		      		phone:'',
-		      		phoneAddress:''
+		      		phoneAddress:'',
+		      		marrige:''
 		      	}
 		      },
 		      methods: {
@@ -165,38 +187,113 @@
 						this.message.sex = this.pickerSex;
 					}
 				},
+				onValuesChange2(picker, values) {
+					this.pickerMarrige = values[0];
+				},
+				surePickerMarrige(param) {
+					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
+					if (param == 'confirm') {
+						this.message.marrige = this.pickerMarrige;
+						if(this.message.marrige=="未婚"){
+							summer.setWinAttr({
+							    actionBar: {
+							    	title: "客户信息",
+							        titleColor: "#ffffff",
+							        backgroundColor: "#039be5",
+							        rightItems:[{
+							            type:"text",
+							            text:"保存",
+							            textColor:"#ffffff",
+							            method:"savePerson()"  //自定义事件
+							        }]
+							    }
+							});
+						}else{
+							summer.setWinAttr({
+							    actionBar: {
+							    	 title: "客户信息",
+							        titleColor: "#ffffff",
+							        backgroundColor: "#039be5",
+							        rightItems:[{
+							             type:"text",
+								          text:"下一步",
+								          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								          method:"nextStopAction()" //在打开的window中自定义事件
+							        }]
+							    }
+							});
+						}
+					}
+				},
 				sureDateConfirm(){
 					this.pickerDateStatus=!this.pickerDateStatus;
 				},
 				handleConfirm(pickerValue){
 					this.pickerValue = pickerValue;
 				},
+				savePerson(){
+						summer.openWin({
+						id:'setProject',
+						url:'html/fastReport/setProject.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "快捷报单",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+									image: "img/back.png",
+									method:"",//返回按钮自定义事件
+									text:"返回",
+									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							 rightItems:[{
+						          type:"text",
+						          text:"下一步",
+						          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						          method:"nextStopInput()" //在打开的window中自定义事件
+						      }]
+						}
+					});
+				},
+				nextStopAction(){
+						summer.openWin({
+						id:'newCreateCustom2',
+						url:'html/fastReport/newCreateCustom2.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "配偶信息",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+									image: "img/back.png",
+									method:"",//返回按钮自定义事件
+									text:"返回",
+									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							 rightItems:[{
+						          type:"text",
+						          text:"保存",
+						          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						          method:"saveAllPerMessage()" //在打开的window中自定义事件
+						      }]
+						}
+					});
+				},
 		        openPicker() {
 			        this.$refs.picker.open();
 			      }
 		      }
 		    })	
-		    function openSetProject(){
-		    	summer.openWin({
-					id:'setProject',
-					url:'html/fastReport/setProject.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "快捷报单",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
-						leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
-					}
-				});
-		}
-	</script>
+		    function savePerson(){
+		    	newCreateCustom.savePerson();
 		    }
+		     function nextStopAction(){
+		    	newCreateCustom.nextStopAction();
+		    }
+		    
+	 
 		</script>
 	</body>
 </html>

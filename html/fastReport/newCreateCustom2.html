@@ -5,53 +5,209 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">	
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">	
 		<link rel="stylesheet" href="../../css/mint.css">
+		<script src="../../js/font.js" ></script>
+		<style>
+			.topheader{
+				height:186px;
+				background-image:url("img/cardBgc.png");
+				background-repeat:no-repeat;
+				background-size:100%;
+			}
+			.topheader img{
+				 margin-top:0.8rem;
+				 width:2.8rem;
+				 height:1.8rem;
+			}
+			.mint-field-core{
+				text-align: right;
+			}
+			.mint-cell-wrapper{
+				color:#333;
+				font-size:0.28rem;
+			}
+			.mint-cell{
+				min-height:40px;
+				height:0.88rem;
+				color:#333;
+				font-size:0.28rem;
+			}
+			div.item{
+				line-height:0.88rem;
+				background:#ffffff;
+				border-bottom:1px solid #f7f7f7;
+				font-size:0.28rem;
+				
+			}
+			div.item span{
+				color:#666;
+			}
+			.pickerColor {
+			  position: fixed;
+			  left: 0;
+			  bottom: 0;
+			  width: 100%;
+			  z-index: 10;
+			  background: #ffffff;
+			}
+			.pickerColor > p {
+			  padding: .24rem .44rem;
+			}
+			.pickerColor > p span {
+			  color: #34aadc;
+			}
+			.pickerColor > p span:last-child {
+			  float: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="um-win" id="app">
+			<div class="topheader tc" @click="cardIdentify">
+				 <img v-bind:src="cardUrl"   v-show="cardShow"   alt="" />
+			</div>
+			<div class="um-content">
+                <mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.username"> </mt-field>
+				<mt-field label="身份证" placeholder="请输入您的身份证号码"   v-model="message.card"></mt-field>
+				<div @click="surePickerSex" class="item">
+						<p class="pl10 pr10">
+							性别 <span class="fr"><span v-if='message.sex'>{{message.sex}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
+				 <div @click="sureDateConfirm" class="item">
+						<p class="pl10 pr10">
+							出生年月 <span class="fr"><span v-if='pickerValue'>{{pickerValue}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
+				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
+				<mt-field label="手机号" placeholder="请输入您的手机号码"  v-model="message.phone"></mt-field>
+				<mt-field label="通讯地址" placeholder="请输入您的通讯地址"   v-model="message.phoneAddress"></mt-field>
+			</div>
+			<div >
+				<section v-show="pickerSexStatus" class="pickerProgram pickerColor">
+						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+						<p>
+							<span class="fl" @click="surePickerSex">取消</span><span class="fr" @click="surePickerSex('confirm')">确定</span>
+						</p>
+			   </section>
+			   <section v-show="pickerDateStatus" class="pickerProgram pickerColor">
+						 <mt-datetime-picker
+							  v-model="pickerValue"
+							  type="date"
+							  @confirm="handleConfirm"
+							  >
+						</mt-datetime-picker>
+						<!-- <p>
+							<span class="fl" @click="handleConfirm">取消</span><span class="fr" @click="handleConfirm('confirm')">确定</span>
+						</p> -->
+			   </section>
+			</div>
+			
+		</div>
 		<script src="../../js/summer.js" ></script>		
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
+		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-	</head>
-	<body>
-		<div class="um-win" id="app">
-			<div class="um-header-light" >
-				 <img src="img/choosePhoto.png" alt="" />
-			</div>
-			<div class="um-content">
-                <mt-field label="姓名" placeholder="请输入姓名" v-model="message.username"> </mt-field>
-				<mt-field label="身份证" placeholder="请输入身份证号"   v-model="message.card"></mt-field>
-				<mt-field label="性别" placeholder="请选择性别"   v-model="message.sex"></mt-field>
-				<mt-field label="住址" placeholder="请输入住址"   v-model="message.address"></mt-field>
-				<mt-field label="手机号" placeholder="请输入手机号"  v-model="message.phone"></mt-field>
-				<mt-field label="通讯地址" placeholder="请输入通讯地址"   v-model="message.phoneAddress"></mt-field>
-			</div>
-			 <div class="um-footer"id="footer">
-                <button class="btn" onclick="newCreateCustom()">下一步</button>
-            </div>
-		</div>
 		<script>
-			new Vue({
+			var newCreateCustom=new Vue({
 		      el: '#app',
 		      data:{
+		      	cardShow:false,
+		      	cardUrl:"",
+		      	pickerVisible:"",
+		      	pickerDate:"",
+		      	pickerValue:"",
+		      	pickerSexStatus:false,
+				pickerDateStatus:false,
+				pickerSex:"",
+				slots1 : [{
+						flex : 1,
+						values : ['男', '女'],
+						defaultIndex :0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
 		      	message:{
 		      		username:'',
 		      		card:'',
 		      		sex:'',
 		      		address:'',
 		      		phone:'',
-		      		phoneAddress:''
+		      		phoneAddress:'',
 		      	}
 		      },
 		      methods: {
 		        handleClick: function() {
 		          this.$toast('Hello world!')
 		        },
+		        cardIdentify:function(){
+		           var _self=this;
+		        	PersonScan.scan({},function(args){
+		        		console.log(args);
+					      _self.message.username=args.name;
+					      _self.message.card=args.id;
+					      _self.message.sex=args.sex;
+					      _self.message.address=args.address;
+					      _self.cardUrl=args.imagePath;
+					      _self.cardShow = !_self.cardShow;
+					},function(args){
+					    console.log(args);
+					});
+		        },
+		        onValuesChange1(picker, values) {
+					this.pickerSex = values[0];
+				},
+				surePickerSex(param) {
+					this.pickerSexStatus = !this.pickerSexStatus;
+					if (param == 'confirm') {
+						this.message.sex = this.pickerSex;
+					}
+				},
+				sureDateConfirm(){
+					this.pickerDateStatus=!this.pickerDateStatus;
+				},
+				handleConfirm(pickerValue){
+					this.pickerValue = pickerValue;
+				},
+				saveAllPerMessage(){
+						summer.openWin({
+						id:'setProject',
+						url:'html/fastReport/setProject.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "快捷报单",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+									image: "img/back.png",
+									method:"",//返回按钮自定义事件
+									text:"返回",
+									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							 rightItems:[{
+						          type:"text",
+						          text:"下一步",
+						          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						          method:"nextStopInput()" //在打开的window中自定义事件
+						      }]
+						}
+					});
+				},
 		        openPicker() {
 			        this.$refs.picker.open();
 			      }
 		      }
 		    })	
+		    function saveAllPerMessage(){
+		    	newCreateCustom.saveAllPerMessage();
+		    }
+		      
+		    
+	 
 		</script>
 	</body>
 </html>
