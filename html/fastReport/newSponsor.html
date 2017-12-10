@@ -13,29 +13,40 @@
 		<script src="../../js/mint.js" ></script>
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<style>
+			.topheader{
+				height:180px;
+				background-image:url("img/cardBgc.png");
+				background-repeat:no-repeat;
+				background-size:100% 100%;
+			}
+			.topheader img{
+				 margin-top:0.8rem;
+				 width:2.8rem;
+				 height:1.8rem;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="um-win" id="app">
-			 <div class="um-header-light" >
-				 <img src="img/choosePhoto2.png" width="100%" alt="" />
+			<div class="topheader tc" @click="cardIdentify">
+				 <img v-bind:src="cardUrl"   v-show="cardShow"   alt="" />
 			</div>
 			<div class="um-content">
 			    <mt-field label="姓名" placeholder="请输入姓名" v-model="message.username"> </mt-field>
 				<mt-field label="身份证" placeholder="请输入身份证号"   v-model="message.card"></mt-field>
 				<mt-field label="手机号" placeholder="请输入手机号"  v-model="message.phone"></mt-field>
 			</div>
-
 			<div class="um-footer"id="footer">
-                <button class="btn um-btn-primary"   onclick="saveMessage()">保存</button>
+                <button class="btn um-btn-primary"   @click="saveMessage">保存</button>
             </div>
 		</div>
 		<script>
-			function saveMessage(){
-				summer.closeWin();
-			}
 			new Vue({
 		      el: '#app',
 		      data:{
+		      	cardShow:false,
+			    cardUrl:"",
 		      	message:{
 		      		username:'',
 		      		card:'',
@@ -45,6 +56,35 @@
 		      methods: {
 		        handleClick: function() {
 		          this.$toast('Hello world!')
+		        },
+		        cardIdentify:function(){
+		           var _self=this;
+		        	PersonScan.scan({},function(args){
+		        		console.log(args);
+					      _self.message.username=args.name;
+					      _self.message.card=args.id;
+					     // _self.message.sex=args.sex;
+					      // _self.message.dateBirth=args.birth_date;
+					      //_self.message.address=args.address;
+					      _self.cardUrl=args.imagePath;
+					      _self.cardShow = !_self.cardShow;
+					     // CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (args){console.log(args)});
+					},function(args){
+					    console.log(args);
+					});
+		        },
+		        saveMessage(){
+		        	var that=this;
+		        	if(that.message.username==""||that.message.card==""||that.message.phone==""){
+		        		summer.toast({msg:"信息不能为空"});
+		        		return;
+		        	}
+		        	summer.execScript({
+		        		winId:"mySponsor",
+		        		script:"getData('"+that.message+"')"
+		        		
+		        	});
+		        	summer.closeWin();
 		        },
 		        openPicker() {
 			        this.$refs.picker.open();

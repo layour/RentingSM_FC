@@ -44,23 +44,23 @@
                   <span>经销商</span>
                   <div>湖南测试经销商</div>
                </li>
-               <li onclick = "addWarranty()">
+               <li>
                   <span>保险</span>
-                  <div>
+                  <div onclick = "addWarranty()">
                      <span class="iconfont icon-enter"></span>
                      <i>添加保单</i>
                   </div>
                </li>
                <li>
                   <span>合格证</span>
-                  <div>
+                  <div onclick = "addCertificate()">
                      <span class="iconfont icon-enter"></span>
                      <i>添加合格证</i>
                   </div>
                </li>
                <li>
                   <span>付款审核资料</span>
-                  <div>
+                  <div onclick = "toUpload()">
                      <span class="iconfont icon-enter"></span>
                      <i>开始上传</i>
                   </div>
@@ -70,6 +70,7 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+			// 立即申请付款
 			function toApply(){
 				summer.openWin({
 					id:'payList',
@@ -109,6 +110,52 @@
 					}
 				});
 			}
+			// 添加合格证
+			function addCertificate(){
+				summer.openWin({
+					id:'certificate',
+					url:'html/repayApply/addCertificate/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "添加合格证",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			}
+			// 跳转到上传页
+			function toUpload(){
+				summer.openWin({
+					id:'uploadImg',
+					url:'html/fastReport/uploadImg.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title:"资料上传",
+						titleColor: "#ffffff",
+						backgroundColor: "#039BE5",
+						leftItem:{
+								image: "img/back.png",
+								method:"",
+								text:"返回",
+								textColor:"#ffffff"
+						},
+						rightItems:[{
+							type:"text",
+							text:"保存",
+							textColor:"#ffffff" ,
+							method:"save()"
+						}]
+					}
+				});
+			};
 		</script>
 	</body>
 </html>

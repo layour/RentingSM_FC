@@ -10,10 +10,10 @@
 		<script src="../../js/font.js" ></script>
 		<style>
 			.topheader{
-				height:186px;
+				height:180px;
 				background-image:url("img/cardBgc.png");
 				background-repeat:no-repeat;
-				background-size:100%;
+				background-size:100% 100%;
 			}
 			.topheader img{
 				 margin-top:0.8rem;
@@ -71,14 +71,16 @@
                 <mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.username"> </mt-field>
 				<mt-field label="身份证" placeholder="请输入您的身份证号码"   v-model="message.card"></mt-field>
 				<div @click="surePickerSex" class="item">
-						<p class="pl10 pr10">
-							性别 <span class="fr"><span v-if='message.sex'>{{message.sex}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10 tr">
+							<span class="fl">性别</span>
+							 <span class=""><span v-if='message.sex'>{{message.sex}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 				 <div @click="sureDateConfirm" class="item">
-						<p class="pl10 pr10">
-							出生年月 <span class="fr"><span v-if='surePicekerDateVal'>{{surePicekerDateVal}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
-						</p>
+					<p class="pl10 pr10 tr">
+						<span class="fl">出生年月</span>
+					         <span class=""><span v-if='message.dateBirth'>{{message.dateBirth}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					</p>
 				</div>
 				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
 				<mt-field label="手机号" placeholder="请输入您的手机号码"  v-model="message.phone"></mt-field>
@@ -165,7 +167,8 @@
 			      		address:'',
 			      		phone:'',
 			      		phoneAddress:'',
-			      		marrige:''
+			      		marrige:'',
+			      		dateBirth:''
 			      	}
 						}
 		      },
@@ -180,6 +183,7 @@
 					      _self.message.username=args.name;
 					      _self.message.card=args.id;
 					      _self.message.sex=args.sex;
+					       _self.message.dateBirth=args.birth_date;
 					      _self.message.address=args.address;
 					      _self.cardUrl=args.imagePath;
 					      _self.cardShow = !_self.cardShow;
@@ -244,7 +248,7 @@
 				},
 				handleConfirm:function(pickerValue){
 					this.pickerValue = pickerValue;
-					this.surePicekerDateVal=getFormatDate(pickerValue)
+					this.message.dateBirth=getFormatDate(pickerValue)
 					function getFormatDate(date){
 						var date=new Date(date), seperator1 = "-";
 						var year = date.getFullYear(), month = date.getMonth() + 1, strDate = date.getDate();
@@ -254,7 +258,7 @@
 						if (strDate >= 0 && strDate <= 9) {
 							strDate = "0" + strDate;
 						}
-					 return  year + seperator1 + month + seperator1 + strDate;
+					 return  year  + month + strDate;
 				 }
 				},
 				savePerson:function(){
@@ -321,9 +325,9 @@
 		    summerready=function(){
 		    	var params = ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
 					summer.getPermission(params,  function(args){
-					    alert(args); //成功返回OK
+					    //alert(args); //成功返回OK
 					}, function(args){
-					    alert(args); //失败返回illegal access
+					    //alert(args); //失败返回illegal access
 					})
 		    }
 

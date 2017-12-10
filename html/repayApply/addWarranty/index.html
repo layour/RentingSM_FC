@@ -42,7 +42,7 @@
                </li>
                <li>
                   <span>保费总额</span>
-                  <input type="text" placeholder="请输入" />
+                  <input v-model="warrantyMoney" type="text" placeholder="请输入" />
                </li>
                <li>
                   <span>上传保单</span>
@@ -82,6 +82,7 @@
                         textAlign: 'center'
                      }
                   ],
+                  warrantyMoney:'',
                   popupVisible:false,
                   warrantyImg:''
                }

@@ -5,15 +5,15 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">	
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<script src="../../js/font.js" ></script>
 		<style>
 			.topheader{
-				height:186px;
+				height:180px;
 				background-image:url("img/cardBgc.png");
 				background-repeat:no-repeat;
-				background-size:100%;
+				background-size:100% 100%;
 			}
 			.topheader img{
 				 margin-top:0.8rem;
@@ -38,7 +38,7 @@
 				background:#ffffff;
 				border-bottom:1px solid #f7f7f7;
 				font-size:0.28rem;
-				
+
 			}
 			div.item span{
 				color:#666;
@@ -63,7 +63,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="um-win" id="app">
+		<div class="um-win" id="app" v-cloak>
 			<div class="topheader tc" @click="cardIdentify">
 				 <img v-bind:src="cardUrl"   v-show="cardShow"   alt="" />
 			</div>
@@ -71,14 +71,16 @@
                 <mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.username"> </mt-field>
 				<mt-field label="身份证" placeholder="请输入您的身份证号码"   v-model="message.card"></mt-field>
 				<div @click="surePickerSex" class="item">
-						<p class="pl10 pr10">
-							性别 <span class="fr"><span v-if='message.sex'>{{message.sex}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10 tr">
+							<span class="fl">性别</span>
+							 <span class=""><span v-if='message.sex'>{{message.sex}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 				 <div @click="sureDateConfirm" class="item">
-						<p class="pl10 pr10">
-							出生年月 <span class="fr"><span v-if='pickerValue'>{{pickerValue}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
-						</p>
+					<p class="pl10 pr10 tr">
+						<span class="fl">出生年月</span>
+					         <span class=""><span v-if='message.dateBirth'>{{message.dateBirth}}</span><span v-else>请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					</p>
 				</div>
 				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
 				<mt-field label="手机号" placeholder="请输入您的手机号码"  v-model="message.phone"></mt-field>
@@ -91,53 +93,64 @@
 							<span class="fl" @click="surePickerSex">取消</span><span class="fr" @click="surePickerSex('confirm')">确定</span>
 						</p>
 			   </section>
-			   <section v-show="pickerDateStatus" class="pickerProgram pickerColor">
+			   <!-- <section class="pickerProgram" v-show='pickerDateStatus'> -->
 						 <mt-datetime-picker
+						 		ref="picker"
 							  v-model="pickerValue"
 							  type="date"
+								cancel-text='取消'
+								confirm-text='确定'
+								:start-date='new Date("1950-01-01")'
+								:end-date="noweDate"
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
 						<!-- <p>
 							<span class="fl" @click="handleConfirm">取消</span><span class="fr" @click="handleConfirm('confirm')">确定</span>
 						</p> -->
-			   </section>
+			   <!-- </section> -->
 			</div>
-			
+
 		</div>
-		<script src="../../js/summer.js" ></script>		
+		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
-		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
 			var newCreateCustom=new Vue({
 		      el: '#app',
-		      data:{
-		      	cardShow:false,
-		      	cardUrl:"",
-		      	pickerVisible:"",
-		      	pickerDate:"",
-		      	pickerValue:"",
-		      	pickerSexStatus:false,
-				pickerDateStatus:false,
-				pickerSex:"",
-				slots1 : [{
-						flex : 1,
-						values : ['男', '女'],
-						defaultIndex :0,
-						className : 'slot1',
-						textAlign : 'center'
-					}],
-		      	message:{
-		      		username:'',
-		      		card:'',
-		      		sex:'',
-		      		address:'',
-		      		phone:'',
-		      		phoneAddress:'',
-		      	}
+		      data(){
+		      	return {
+							cardShow:false,
+					      	cardUrl:"",
+					      	pickerVisible:"",
+					      	pickerDate:"",
+					      	pickerValue:new Date(),
+							surePicekerDateVal:'',
+					      	pickerSexStatus:false,
+							pickerDateStatus:false,
+							pickerSex:"",
+							noweDate:new Date(),
+							slots1 : [{
+									flex : 1,
+									values : ['男', '女'],
+									defaultIndex :0,
+									className : 'slot1',
+									textAlign : 'center'
+								}] ,
+					      	message:{
+					      		username:'',
+					      		card:'',
+					      		sex:'',
+					      		address:'',
+					      		phone:'',
+					      		phoneAddress:'',
+					      		marrige:'',
+					      		dateBirth:''
+					      	}
+						}
 		      },
 		      methods: {
 		        handleClick: function() {
@@ -150,29 +163,47 @@
 					      _self.message.username=args.name;
 					      _self.message.card=args.id;
 					      _self.message.sex=args.sex;
+					       _self.message.dateBirth=args.birth_date;
 					      _self.message.address=args.address;
 					      _self.cardUrl=args.imagePath;
 					      _self.cardShow = !_self.cardShow;
+					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (args){console.log(args)});
 					},function(args){
 					    console.log(args);
 					});
 		        },
-		        onValuesChange1(picker, values) {
+		        successCallBack:function(args){
+		        	console.log(args);
+		        },
+		        onValuesChange1:function(picker, values) {
 					this.pickerSex = values[0];
 				},
-				surePickerSex(param) {
+				surePickerSex:function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
 						this.message.sex = this.pickerSex;
 					}
 				},
-				sureDateConfirm(){
+				sureDateConfirm:function(){
 					this.pickerDateStatus=!this.pickerDateStatus;
+					this.$refs.picker.open();
 				},
-				handleConfirm(pickerValue){
+				handleConfirm:function(pickerValue){
 					this.pickerValue = pickerValue;
+					this.message.dateBirth=getFormatDate(pickerValue)
+					function getFormatDate(date){
+						var date=new Date(date), seperator1 = "-";
+						var year = date.getFullYear(), month = date.getMonth() + 1, strDate = date.getDate();
+						if (month >= 1 && month <= 9) {
+							month = "0" + month;
+						}
+						if (strDate >= 0 && strDate <= 9) {
+							strDate = "0" + strDate;
+						}
+					 return  year  + month + strDate;
+				 }
 				},
-				saveAllPerMessage(){
+				savePerson:function(){
 						summer.openWin({
 						id:'setProject',
 						url:'html/fastReport/setProject.html',
@@ -197,17 +228,23 @@
 						}
 					});
 				},
-		        openPicker() {
+		        openPicker:function() {
 			        this.$refs.picker.open();
 			      }
 		      }
-		    })	
-		    function saveAllPerMessage(){
-		    	newCreateCustom.saveAllPerMessage();
+		    })
+		    function savePerson(){
+		    	newCreateCustom.savePerson();
 		    }
-		      
-		    
-	 
+		    summerready=function(){
+		    	var params = ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
+					summer.getPermission(params,  function(args){
+					    //alert(args); //成功返回OK
+					}, function(args){
+					    //alert(args); //失败返回illegal access
+					})
+		    }
+
 		</script>
 	</body>
 </html>

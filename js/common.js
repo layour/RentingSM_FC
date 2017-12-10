@@ -32,7 +32,7 @@ var CommonUtil = {
 			}];
 			var data = {
 			    "src":"/storage/emulated/0/alpha/SIDCard/_SIDCard_20171210_102308.jpg",//源图片路径
-			    "target":"/storage/emulated/0/alpha/SIDCard/_SIDCard_20171210_102308.jpg",//目标图片路径
+			    "target":"/storage/emulated/0/alpha/SIDCard/_SIDCard.jpg",//目标图片路径
 			    "textGroup":textgroup
 			};
 			var result = summer.callService("UMGraphics.watermark", data, false);

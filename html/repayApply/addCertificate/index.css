@@ -1,0 +1,136 @@
+.um-content{
+   position: relative;
+}
+.list_1,.GPS{
+   margin-top: 0.1rem;
+   width: 100%;
+   background-color: #fff;
+}
+.list_1 li,.GPS li{
+   width: 100%;
+   height: 0.8rem;
+   border-bottom: 1px solid #f1f1f1;
+   padding: 0 0.3rem;
+}
+.list_1 li span,.GPS li span{
+   float: left;
+   height: 0.8rem;
+   line-height: 0.8rem;
+   font-size: 0.28rem;
+}
+.list_1 li div,.GPS li div{
+   float: right;
+   height: 0.8rem;
+   line-height: 0.8rem;
+   font-size: 0.28rem;
+}
+.list_1 li div i,.list_1 li div span,.GPS li div i,.GPS li div span{
+   float: right;
+   font-style: normal;
+}
+.list_1 li div i,.GPS li div i{
+   color: #0394d3;
+}
+.list_1 li div span,.GPS li div span{
+   margin-left: 0.2rem;
+}
+.list_1 li input,.GPS li input{
+   border: 0;
+   background: none;
+   float: right;
+   height: 0.8rem;
+   line-height: 0.8rem;
+   font-size: 0.28rem;
+   text-align: right;
+   outline: none;
+}
+.uploadCertificate{
+   width: 100%;
+   height: 0.8rem;
+   border-bottom: 1px solid #f1f1f1;
+   padding: 0 0.3rem;
+   background-color: #fff;
+}
+.uploadCertificate span{
+   float: left;
+   height: 0.8rem;
+   line-height: 0.8rem;
+   font-size: 0.28rem;
+}
+.uploadCertificate div{
+   float: right;
+   height: 0.8rem;
+   line-height: 0.8rem;
+   font-size: 0.28rem;
+}
+.uploadCertificate div i,.uploadCertificate div span{
+   float: right;
+   font-style: normal;
+}
+.uploadCertificate div i{
+   color: #0394d3;
+}
+.uploadCertificate div span{
+   margin-left: 0.2rem;
+}
+.GPS li .type span{
+   float: left;
+   width: 1.5rem;
+   height: 0.6rem;
+   border: 1px solid #ededed;
+   margin-top: 0.1rem;
+   border-radius: 0.1rem;
+   line-height: 0.6rem;
+   text-align: center;
+   font-size: 0.28rem;
+}
+.active{
+   border: 0;
+   background-color: #0394d3;
+   color: #fff;
+}
+.saveBtn{
+   position: absolute;
+   width: 80%;
+   height: 1rem;
+   background-color: #0394d3;
+   font-size: 0.28rem;
+   line-height: 1rem;
+   color: #fff;
+   text-align: center;
+   left: 50%;
+   transform: translate(-50%);
+   top: 10.2rem;
+   border-radius: 0.1rem;
+}
+.gpsChoose {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background: #ffffff;
+}
+.gpsChoose .picker-item {
+  font-size: 14px;
+}
+.gpsChoose > p {
+  padding: .24rem .44rem;
+}
+.gpsChoose > p span {
+  color: #039BE5;
+}
+.gpsChoose > p span:last-child {
+  float: right;
+}
+.mint-popup{
+   width:100%;
+   padding-top:.2rem;
+}
+.mint-popup p{
+   line-height: .8rem;
+   text-align: center;
+}
+.mint-popup p.border{
+   border-bottom: 1px solid #f7f7f7;
+}
