@@ -40,15 +40,15 @@
 				},
 				index: 0,
 				frames: [{
-					id: 'customer_login',
-					url: 'html/login/customer_login.html',
-					bgColor: '#ffffff',
-					hidden: false
-				}, {
-					id: 'saler_login',
-					url: 'html/login/saler_login.html',
+					id: 'salerLogin',
+					url: 'html/login/salerLogin.html',
 					bgColor: '#ffffff',
 					hidden: true
+				}, {
+					id: 'customerLogin',
+					url: 'html/login/customerLogin.html',
+					bgColor: '#ffffff',
+					hidden: false
 				}],
 			}, function(ret, err) {
 				var index = ret.index;
@@ -56,8 +56,8 @@
 		}
 		$(function() {
 			var onOff = true;
-			$('.changeLog').text('销售登录');
-			$('.changeLog').on('click', function() {
+			$('.changeLog').text('客户登陆');
+			/*$('.changeLog').on('click', function() {
 				if (onOff) {
 					onOff = false;
 					$('.changeLog').text('客户登陆');
@@ -73,13 +73,9 @@
 						index: 0
 					});
 				}
-			});
+			});*/
 			$('.taste').on('click',function (){
-				summer.openWin({
-					id:'login',
-					url:'index.html',
-					create:false
-				});
+				//暂无
 			});
 		});
 	</script>
