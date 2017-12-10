@@ -14,24 +14,64 @@
 	</head>
 	<body>
 		<div class="um-frame" id="index">
+			<div class="um-header-light">
+				<div class="sera">
+						<div class="s-box" onclick="opensearch()">
+							<i class="iconfont icon-search"> </i>
+							<p class="txt">
+								输入客户名称/关键词
+							</p>
+						</div>
+				</div>
+			</div>
 			<div class="um-content">
 				<ul class="userList">
 					<li>
 						<div class="title">
 							<span class="name">徐艺</span>
-							<span class="state">待提交</span>
+							<span class="state">张仁忠</span>
+							<span class="iconfont icon-customer"></span>
 						</div>
 						<div class="content">
-							<p class="p1">放款金额：￥200000</p>
-							<p class="p2">合同号：CNK1561654</p>
-							<p class="p3">支付表号：CNK15616548965416</p>
-							<p class="p4">放款时间：2017-01-16</p>
-							<p class="p5">客户经理：张仁中</p>
-							<span class="iconfont icon-enter"></span>
+							<div class="leftCon">
+								<p class="p1">放款金额：￥200000</p>
+								<p class="p2">合同号：CNK1561654</p>
+								<p class="p3">支付表号：CNK15616548965416</p>
+								<p class="p4">放款时间：2017-01-16</p>
+							</div>
+							<div class="enter">
+								<i class="iconfont icon-enter"></i>
+								<b>待提交</b>
+							</div>
 						</div>
 						<div class="footer">
 							<ul class="footerList">
-								<li>提前放款</li>
+								<li class="first">提前放款</li>
+								<li>正常放款</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<span class="name">徐艺</span>
+							<span class="state">张仁忠</span>
+							<span class="iconfont icon-customer"></span>
+						</div>
+						<div class="content">
+							<div class="leftCon">
+								<p class="p1">放款金额：￥200000</p>
+								<p class="p2">合同号：CNK1561654</p>
+								<p class="p3">支付表号：CNK15616548965416</p>
+								<p class="p4">放款时间：2017-01-16</p>
+							</div>
+							<div class="enter">
+								<i class="iconfont icon-enter"></i>
+								<b>待提交</b>
+							</div>
+						</div>
+						<div class="footer">
+							<ul class="footerList">
+								<li class="first">提前放款</li>
 								<li>正常放款</li>
 							</ul>
 						</div>
@@ -104,7 +144,32 @@
 									text:"返回",
 									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							}
-						}
+						},
+						pageParam: {
+					      show: true
+					   }
+					});
+				});
+				$('.footerList').find('li').eq(0).on('click',function (){
+					summer.openWin({
+						id:'payApply',
+						url:'html/repayApply/payApply/index.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "付款申请",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+									image: "img/back.png",
+									method:"",//返回按钮自定义事件
+									text:"返回",
+									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						},
+						pageParam: {
+					      show: false
+					   }
 					});
 				});
 			});

@@ -44,21 +44,21 @@
                   <span>经销商</span>
                   <div>湖南测试经销商</div>
                </li>
-               <li>
+               <li class="change">
                   <span>保险</span>
                   <div onclick = "addWarranty()">
                      <span class="iconfont icon-enter"></span>
                      <i>添加保单</i>
                   </div>
                </li>
-               <li>
+               <li class="change">
                   <span>合格证</span>
                   <div onclick = "addCertificate()">
                      <span class="iconfont icon-enter"></span>
                      <i>添加合格证</i>
                   </div>
                </li>
-               <li>
+               <li class="change">
                   <span>付款审核资料</span>
                   <div onclick = "toUpload()">
                      <span class="iconfont icon-enter"></span>
@@ -70,24 +70,17 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+			summerready=function(){
+				var show = summer.pageParam.show;
+				if (show) {
+					$('.change').css('display','block');
+					$('.applyBtn').css('top','8.5rem');
+				}
+			};
 			// 立即申请付款
 			function toApply(){
-				summer.openWin({
-					id:'payList',
-					url:'html/repayApply/payList/index.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "付款申请",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
-					}
+				summer.closeToWin({
+				   id: 'payList'
 				});
 			}
 			// 添加保单
