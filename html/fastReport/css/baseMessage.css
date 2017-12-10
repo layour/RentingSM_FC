@@ -21,8 +21,10 @@
 	background:#ffffff;
 }
 .baseMessage ul li{
-	line-height:0.8rem;
+	line-height:0.88rem;
 	border-bottom:1px solid #f7f7f7;
+	color:#333;
+	font-size:0.28rem;
 }
 .pickerColor {
   position: fixed;
