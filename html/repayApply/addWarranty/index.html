@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../../css/fonts/iconfont.css">
+      <link rel="stylesheet" href="../../../css/mint.css">
+		<link rel="stylesheet" href="index.css">
+		<script src="../../../js/summer.js" ></script>
+		<script src="../../../js/jquery.min.js" ></script>
+		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script src="../../../js/font.js" ></script>
+      <script src="../../../js/vue.js" ></script>
+		<script src="../../../js/mint.js" ></script>
+	</head>
+	<body>
+		<div class="um-win" id="index">
+			<div class="um-content">
+            <ul class="warrantyList">
+               <li>
+                  <span>被保险人</span>
+                  <div>徐艺</div>
+               </li>
+               <li>
+                  <span>身份证号</span>
+                  <div>210213199578123</div>
+               </li>
+               <li>
+                  <span>保险公司</span>
+                  <div>
+                     <span class="iconfont icon-enter"></span>
+                     <i>请选择</i>
+                  </div>
+               </li>
+               <li>
+                  <span>投保期限</span>
+                  <div>
+                     <i>请选择</i><span>至</span><i>请选择</i><span>自</span>
+                  </div>
+               </li>
+               <li>
+                  <span>保费总额</span>
+                  <input type="text" placeholder="请输入" />
+               </li>
+               <li>
+                  <span>上传保单</span>
+                  <div>
+                     <span class="iconfont icon-enter"></span>
+                     <i>开始上传</i>
+                  </div>
+               </li>
+            </ul>
+            <div class="saveBtn" onclick = "save()">保存</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+         function save(){
+				summer.openWin({
+               id:'payApply',
+					url:'html/repayApply/payApply/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "付款申请",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			};
+		</script>
+	</body>
+</html>
