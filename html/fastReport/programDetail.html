@@ -81,8 +81,28 @@
 			.listContent p.title{
 				color:#333;
 				font-size:0.36rem;
+				position: relative;
+				line-height:0.9rem;
+				padding-left:0.5rem;
 			}
-			.listContent p.title:before{}
+			.listContent p{
+				padding:0 0.54rem;
+				font-size:0.28rem;
+				line-height:0.9rem;
+				
+			}
+			.listContent p span{
+				 color:#424242;
+			}
+			.listContent p.title:before{
+				content:"";
+				width:3px;
+				height:0.32rem;
+				background:#039be5;
+				position: absolute;
+				left:0.4rem;
+				top:0.26rem;
+			}
 			.listContent p{
 				line-height:0.9rem;
 				border-bottom:1px solid #f7f7f7;
@@ -102,7 +122,7 @@
                <div class="Artical">        
                	<div class="base  active">
                		 <div class="list listContent">
-				 	<p class="title pl10">基本信息</p>
+				 	<p class="title">基本信息</p>
 				 	<p class="pl10 pr10">客户信息<span class="fr">张三</span></p>
 				 	<p class="pl10 pr10">合同号<span class="fr">CN976666788KYR</span></p>
 				 	<p class="pl10 pr10">项目类型<span class="fr">大客户业务</span></p>
@@ -118,9 +138,17 @@
 				 </div>
 				 <div class="list listContent">
 				 	<p class="title pl10">报价方案</p>
-				 	<p class="pl10 pr10">车型<span class="fr">2016款  昂科威 28T 精英型</span></p>
-				 	<p class="pl10 pr10">颜色<span class="fr">珍珠白</span></p>
-				 	<p class="pl10 pr10">成交价<span class="fr">200000</span></p>
+				 	<p class="pl10 pr10">方案名称<span class="fr">好易贷</span></p>
+				 	<p class="pl10 pr10">租赁物总价值<span class="fr">￥200,000.00</span></p>
+				 	<p class="pl10 pr10">合同额<span class="fr">￥200,000.00</span></p>
+				 	<p class="pl10 pr10">首付比例<span class="fr">44%</span></p>
+				 	<p class="pl10 pr10">首期租金<span class="fr">￥22,000.00</span></p>
+				 	<p class="pl10 pr10">保证金<span class="fr">￥1500.00</span></p>
+				 	<p class="pl10 pr10">咨询费比例<span class="fr">6%</span></p>
+				 	<p class="pl10 pr10">咨询费<span class="fr">￥30,000.00</span></p>
+				 	<p class="pl10 pr10">年利率<span class="fr">7.6%</span></p>
+				 	<p class="pl10 pr10">租赁期数<span class="fr">36</span></p>
+				 	<p class="pl10 pr10">支付方式<span class="fr">期末等额本息</span></p>
 				 </div>
                		
                	</div>
