@@ -370,6 +370,10 @@
 						},
 						save(){
 							// http
+							summer.execScript({
+							    winId: "setProject",
+							    script: "addRight('price')"
+							});
 							summer.closeToWin({id:'setProject'})
 						}
 					}

@@ -198,6 +198,10 @@
 						},
 						save(){
 							//http
+							summer.execScript({
+							    winId: "setProject",
+							    script: "addRight('uploadImg')"
+							});
 							summer.closeWin()
 						}
 					}

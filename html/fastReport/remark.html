@@ -61,6 +61,10 @@
 					},
 					methods:{
 						save(){
+							summer.execScript({
+							    winId: "setProject",
+							    script: "addRight('remark')"
+							});
 							summer.closeWin()
 						}
 					}

@@ -187,6 +187,10 @@
 						},
 						save(){
 							//发请求
+							summer.execScript({
+							    winId: "setProject",
+							    script: "addRight('emergencyContract')"
+							});
 							summer.closeWin()
 						}
 					}

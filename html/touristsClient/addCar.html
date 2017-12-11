@@ -155,6 +155,10 @@
 							}
 						},
 						save(){
+							summer.execScript({
+							    winId: "setProject",
+							    script: "addRight('addCar')"
+							});
 							summer.closeWin()
 						}
 					}
