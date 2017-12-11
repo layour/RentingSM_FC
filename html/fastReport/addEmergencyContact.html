@@ -13,22 +13,31 @@
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<style media="screen">
-			.addContact ul li{
+		<style>
+			.addContact>ul li{
 				background:#fff;
 				margin-bottom: .2rem;
 				height: 1.76rem;
+			}
+			.inDiv{display: inline-block;}
+			.mint-cell-swipe{
+				height: 1.76rem;
 				padding-left: .56rem;
+				background: none;
 			}
-			.addContact ul li div{
-				display: inline-block;
+			.mint-cell-wrapper{
+				height: 1.76rem;
+				padding-left: 0;
+				background: none;
 			}
-		.addContact ul li div:first-child{padding:.4rem 0;}
-			.title{
+			.mint-cell-right{
+				/*width:1.72rem;*/
+			}
+			.title,.mint-cell-text{
 				font-size: 16px;
 				color:#039BE5;
 			}
-			.normal{
+			.normal,.mint-cell-label{
 				color:#333;
 				font-size: 14px;
 			}
@@ -42,26 +51,16 @@
 				border-radius: 4px;
 				position: relative;
 				top:.1rem;
-			}
-			.one a{
-				top:.6rem;
 				right:.6rem;
+			}
+			.inDiv.one a{
+				top:.6rem;
 			}
 			.fr a i{
 				font-size: 23px;
 				color: #9E9E9E;
 			}
-			.fr button{
-				height: 1.76rem;
-				width: 1.72rem;
-				border: none;
-				outline: none;
-				background: #f44336;
-				line-height: 100%;
-				text-align: center;
-				color:#fff;
-				margin-left: .28rem;
-			}
+
 			.mint-popup{
 				width: 100%;
 			}
@@ -84,8 +83,8 @@
 				font-size: 14px;
 			}
 			input::-webkit-input-placeholder {
-			    color: @grayColor;
-			    font-size: 14px;
+					color: @grayColor;
+					font-size: 14px;
 			}
 			input{
 				line-height: .88rem;
@@ -98,32 +97,32 @@
 				padding: 0 .6rem;
 			}
 			.um-footer button{
-
 				color: #fff;
 				background:#039BE5;
 			}
 		</style>
 	</head>
 	<body>
-		<div class="um-win" id="addContact">
+		<div class="um-win" id="addContact" v-cloak>
 			<div class="um-content addContact">
-				<div class="">
-					<ul>
-						<li v-for="(item,index) in addContactList" :key='index'>
-							<div style="padding-right:1rem;">
+				<ul>
+					<li v-for="(item,index) in addContactList" :key='index'>
+						<template v-if="addContactList.length==1">
+							<div class="inDiv" style="padding:.4rem 1rem; .4rem 0;">
 								<p class="title">{{item.name}}</p>
 								<p class="normal">{{item.phone}}</p>
 							</div>
-							<div v-if="addContactList.length==1" class="fr one">
+							<div  class="fr one inDiv">
 								<a href=""><i class="icon iconfont icon-call"></i></a>
 							</div>
-							<div v-else class="fr">
-								<a href=""><i class="icon iconfont icon-call"></i></a>
-								<button type="button" name="button" @click="deleteItem(index)">删除</button>
-							</div>
-						</li>
-					</ul>
-				</div>
+						</template>
+						<mt-cell-swipe :title="item.name" :label="item.phone" :right="[{content: '&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'1.76rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index)}]" v-else>
+								<div class="fr">
+									<a href=""><i class="icon iconfont icon-call"></i></a>
+								</div>
+						</mt-cell-swipe>
+					</li>
+				</ul>
       </div>
 			<div class="um-footer"id="footer">
 				<mt-popup v-model="addStatus" v-if="addStatus" position="bottom" class="add">
@@ -150,10 +149,19 @@
 							addStatus:false,
 							addContactList:[
 								{name:"张自忠",phone:'13146829922'},
+								{name:"秦始皇",phone:'18646829984'},
+								{name:"秦始皇",phone:'18646829984'},
 								{name:"秦始皇",phone:'18646829984'}
 							],
 							name:'',
-							phone:''
+							phone:'',
+							swipeArr:[
+						    {
+						      content: '删除',
+						      style: { background: 'red', color: '#fff' },
+						      handler: () => this.$messagebox('delete')
+						    }
+						  ]
             }
           },
 					mounted(){},
