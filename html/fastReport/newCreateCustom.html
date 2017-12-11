@@ -145,6 +145,10 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
+			function  successCallback(sender,args){
+					 newCreateCustom.cardUrl=sender.target;
+				}
+			
 			var newCreateCustom=new Vue({
 		      el: '#app',
 		      data(){
@@ -200,9 +204,37 @@
 					      _self.message.sex=args.sex;
 					       _self.message.dateBirth=args.birth_date;
 					      _self.message.address=args.address;
-					      _self.cardUrl=args.imagePath;
+					    //  _self.cardUrl=args.imagePath;
 					      _self.cardShow = !_self.cardShow;
-					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (args){console.log(args)});
+					      
+					      summer.getNativeLocation({
+							"single" : "true"
+						}, function(arg) {
+							var textgroup = [{
+								text : args.name,
+								style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "80", "font-size" : "20"}
+							},{
+								text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
+								style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "50", "font-size" : "20"}
+							},{
+								text : arg.address,
+								style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "20", "font-size" : "20"}
+							}];
+							var data = {
+								"src" : args.imagePath, //源图片路径
+								"target" : args.imagePath, //目标图片路径
+								"textGroup" : textgroup,
+								"callback":"successCallback(sender,args)"
+							}; 
+			                summer.callService("UMGraphics.watermark", data, false);
+						}, function(args) {
+							summer.toast({
+				            	"msg" : "获取位置信息错误：" + JSON.stringify(args)
+				            });
+						}); 
+					     // CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (sender,args){
+					     //	 _self.cardUrl=args.target;
+					     // });
 					},function(args){
 					    console.log(args);
 					});
