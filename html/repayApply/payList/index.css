@@ -48,6 +48,7 @@
    text-align: center;
    line-height: 0.88rem;
 	font-size: 0.32rem;
+	color: #424242;
 }
 .active{
    border-bottom: 0.06rem solid #039be5;

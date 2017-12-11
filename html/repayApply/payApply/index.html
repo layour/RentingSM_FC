@@ -17,8 +17,11 @@
 			<div class="um-content">
             <ul class="applyList">
                <li>
-                  <span>徐艺</span>
-                  <div>44045522565223</div>
+                  <span class="title">
+							<i></i>
+							<b>徐艺</b>
+						</span>
+                  <div class="first">44045522565223</div>
                </li>
                <li>
                   <span>融资租赁合同号</span>
@@ -34,11 +37,11 @@
                </li>
                <li>
                   <span>价格</span>
-                  <div>196800.00</div>
+                  <div>￥<strong>196800.00</strong>元</div>
                </li>
                <li>
                   <span>留购价</span>
-                  <div>100.00</div>
+                  <div>￥<strong>100.00</strong>元</div>
                </li>
                <li>
                   <span>经销商</span>
@@ -74,7 +77,7 @@
 				var show = summer.pageParam.show;
 				if (show) {
 					$('.change').css('display','block');
-					$('.applyBtn').css('top','8.5rem');
+					$('.applyBtn').css('top','9.8rem');
 				}
 			};
 			// 立即申请付款
@@ -99,7 +102,13 @@
 								method:"",//返回按钮自定义事件
 								text:"返回",
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
+						},
+						rightItems:[{
+							type:"text",
+							text:"保存",
+							textColor:"#ffffff" ,
+							method:"addWarranty.save()"
+						}]
 					}
 				});
 			}
@@ -119,7 +128,13 @@
 								method:"",//返回按钮自定义事件
 								text:"返回",
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
+						},
+						rightItems:[{
+							type:"text",
+							text:"保存",
+							textColor:"#ffffff" ,
+							method:"addCertificate.save()"
+						}]
 					}
 				});
 			}
