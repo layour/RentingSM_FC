@@ -152,23 +152,42 @@ input::-webkit-input-placeholder {
   top: .15rem;
   z-index: 1;
 }
-.modelsList {
+.modelsList,
+.mint-indexlist {
   border-top: 1px solid #EFEFEF;
 }
-.modelsList p {
+.modelsList p,
+.mint-indexlist p {
   padding: 0 .56rem;
   background: #F6F6F6;
   font-size: 14px;
   color: #333;
 }
-.pickerModels {
+.pickerModels,
+.mint-indexsection > ul {
   background: #ffffff;
   font-size: 14px;
   color: #333;
 }
-.pickerModels li {
+.pickerModels .mint-cell:last-child,
+.mint-indexsection > ul .mint-cell:last-child {
+  background: none;
+}
+.pickerModels li,
+.mint-indexsection > ul li,
+.pickerModels .mint-cell,
+.mint-indexsection > ul .mint-cell {
   height: .68rem;
+  min-height: .68rem;
   line-height: .68rem;
   padding: 0 .56rem;
   border-bottom: 1px solid #EFEFEF;
+}
+.pickerModels li .mint-cell-wrapper,
+.mint-indexsection > ul li .mint-cell-wrapper,
+.pickerModels .mint-cell .mint-cell-wrapper,
+.mint-indexsection > ul .mint-cell .mint-cell-wrapper {
+  background: none;
+  padding: 0;
+  font-size: 14px;
 }

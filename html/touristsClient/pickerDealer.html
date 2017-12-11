@@ -30,7 +30,7 @@
         <mt-popup v-model="popupVisible" position="bottom">
           <!-- <p>选择经销商收款账户</p> -->
           <ul>
-            <li v-for="(it,i) in accList" @click="pickerIt($event,item)" class="pr" :key="i">
+            <li v-for="(it,i) in accList" @click="pickerIt($event,it)" class="pr" :key="i">
               <p>{{it.name}}</p>
               <p>{{it.acc}}</p>
               <p>{{it.addr}}</p>
@@ -68,7 +68,6 @@
 						pickerDealer(){
 							this.popupVisible=false;
 							summer.setStorage('pickerDealer',JSON.stringify(this.item));
-							alert(summer.getStorage('pickerDealer'))
 							summer.execScript({
 							    winId: 'addCar',
 							    script: 'getDealer()'

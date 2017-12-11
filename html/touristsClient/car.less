@@ -168,7 +168,7 @@ input::-webkit-input-placeholder {
   //   border-bottom-right-radius: .3rem;
   // }
 }
-.modelsList{
+.modelsList,.mint-indexlist{
   border-top:1px solid @borderColor;
   p{
     padding:0 .56rem;
@@ -177,14 +177,23 @@ input::-webkit-input-placeholder {
     color:@fontColor;
   }
 }
-.pickerModels{
+.pickerModels,.mint-indexsection>ul{
     background: @white;
     font-size: 14px;
     color:@fontColor;
-    li{
+    .mint-cell:last-child{
+      background: none;
+    }
+    li,.mint-cell{
       height:.68rem;
+      min-height: .68rem;
       line-height: .68rem;
       padding:0 .56rem;
       border-bottom:1px solid @borderColor;
+      .mint-cell-wrapper{
+        background: none;
+        padding:0;
+        font-size: 14px;
+      }
     }
   }

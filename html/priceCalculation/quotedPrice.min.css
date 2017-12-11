@@ -153,6 +153,7 @@ ul li > span input {
 }
 .firstPayCont ul li.alertLi > button {
   color: #039BE5;
+  background: #F9F9F9;
 }
 .firstPayCont ul li > span > button {
   color: #DEDEDE;
@@ -183,7 +184,6 @@ ul li > span input {
 }
 #quotedPriceDetail button {
   border: none;
-  background: #ffffff;
 }
 #quotedPriceDetail .um-footer > button {
   height: .7rem;

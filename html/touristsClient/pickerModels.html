@@ -24,16 +24,13 @@
           <!-- <i class="um-input-clear ti-close"></i> -->
           <!-- <button class='btn btn-inline btn-sm'>搜索</button> -->
         </div>
-        <ul class="modelsList">
-          <li v-for="(item,index) in modelsList" :key="index">
-						<p>{{index}}</p>
-						<ul class="pickerModels">
-							<li v-for="(it,i) in item" @click="pickerModels(it)" :key="i">
-								{{it.name}}
-							</li>
-						</ul>
-					</li>
-        </ul>
+				<mt-index-list>
+					<mt-index-section v-for="(item,index) in modelsList" :key="index" :index="index">
+						<div v-for="(it,i) in item"  @click="pickerCarModels(it)"  :key="i">
+							<mt-cell  :title="it.name"></mt-cell>
+						</div>
+ 					</mt-index-section>
+				</mt-index-list>
       </div>
     </div>
     <script>
@@ -45,12 +42,27 @@
               modelsList:{
 								'A':[{name:'奥迪',id:10},{name:"阿斯顿·马丁",id:11}],
 								'B':[{name:'本田',id:20},{name:"别克",id:21},{name:"宝马",id:22},{name:"奔驰",id:23}],
-								'C':[{name:'长安',id:30},{name:"长城",id:31}]
+								'C':[{name:'长安',id:30},{name:"长城",id:31}],
+								'D':[{name:'长安',id:30},{name:"长城",id:31}],
+								'E':[{name:'长安',id:30},{name:"阿斯顿·马丁",id:31}],
+								'F':[{name:'长安',id:30},{name:"长城",id:31}],
+								'G':[{name:'长安',id:30},{name:"长城",id:31}],
+								'H':[{name:'长安',id:30},{name:"阿斯顿·马丁",id:31}],
+								'I':[{name:'长安',id:30},{name:"长城",id:31}],
+								'J':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
+								'K':[{name:'长安',id:30},{name:"长城",id:31}],
+								'L':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
+								'M':[{name:'长安',id:30},{name:"长城",id:31}],
+								'N':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
+								'O':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
+								'P':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
+								'Q':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
+								'R':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
 							}
             }
           },
 					methods:{
-						pickerModels(it){
+						pickerCarModels(it){
 							summer.openWin({
 								id:'pickerModels-2',
 								url:'html/touristsClient/pickerModels-2.html',
