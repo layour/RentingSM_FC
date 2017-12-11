@@ -11,7 +11,7 @@
 		<style>
 			input::-webkit-input-placeholder {
 					color: #DEDEDE;
-					font-size: 14px;
+					font-size: 0.28rem;
 			}
 			.topheader{
 				height:180px;
@@ -47,6 +47,9 @@
 			div.item span{
 				color:#666;
 			}
+			div.item span i{
+				color:#dbdbdb;
+			}
 			.pickerColor {
 			  width: 100%;
 			  z-index: 10;
@@ -54,12 +57,16 @@
 			}
 			.pickerColor > p {
 			  line-height: .88rem;
-		    padding: .56rem;
+		    padding:0  .56rem;
 		    color: #039BE5;
 		    border-top: 1px solid #E0E0E0;
 			}
 			.pickerColor > p span {
 			  color: #34aadc;
+			}
+			.mint-cell-wrapper{
+				background-size:100% 0px;
+				border-bottom:1px solid #f7f7f7;
 			}
 			.pickerColor > p span:last-child {
 			  float: right;
@@ -69,20 +76,8 @@
 				color:#333;
 			}
 			.item .second{
-				color:#dedede;
+				color:#9e9e9e;
 			}
-			.mint-cell-value input.mint-field-core::-webkit-input-placeholder { /* WebKit browsers */
-		　　		color:#dedede;
-		　　}
-		　　.mint-cell-value input.mint-field-core:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-		　　		color:#dedede;
-		　　}
-		　　.mint-cell-value input.mint-field-core::-moz-placeholder { /* Mozilla Firefox 19+ */
-		　　		color:#dedede;
-		　　}
-		　　.mint-cell-value input.mint-field-core:-ms-input-placeholder { /* Internet Explorer 10+ */
-		　　		color:#dedede;
-		　　}
 		</style>
 	</head>
 	<body>
@@ -118,13 +113,13 @@
 				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
 						<p>
-							<span class="fl" @click="surePickerSex">取消</span><span class="fr" @click="surePickerSex('confirm')">确定</span>
+							<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
 						</p>
 				</mt-popup>
 			   <mt-popup v-model="pickerMarrigeStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
 						<p>
-							<span class="fl" @click="surePickerMarrige">取消</span><span class="fr" @click="surePickerMarrige('confirm')">确定</span>
+							<span class="" @click="surePickerMarrige">取消</span><span class="" @click="surePickerMarrige('confirm')">确定</span>
 						</p>
 				</mt-popup>
 						 <mt-datetime-picker
