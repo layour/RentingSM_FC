@@ -74,34 +74,37 @@
 			<div class="um-content uploadImg">
 				<ul>
 					<li @click="openPopup('apply')">
-						<div><img v-if="list.applyImg" :src="list.applyImg" alt="">
-						<i class="icon iconfont icon-add"></i></div>
+						<!-- <div><img v-if="list.applyImg" :src="list.applyImg" alt="">
+						<i v-else class="icon iconfont icon-add"></i></div> -->
+						<div class="">
+							<img src="img/choosePhoto.png" alt="">
+						</div>
 						<p>融资租赁申请表</p>
 					</li>
 					<li @click="openPopup('marry')">
 						<div><img v-if="list.marryImg"  :src="list.marryImg" alt="">
-						<i class="icon iconfont icon-add"></i></div>
+						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>结婚证明</p>
 					</li>
 					<li @click="openPopup('residence')">
 						<div><img v-if="list.residenceImg"  :src="list.residenceImg" alt="">
-						<i class="icon iconfont icon-add"></i></div>
+						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>户口证明</p>
 
 					</li>
 					<li @click="openPopup('assets')">
 						<div><img v-if="list.assetsImg"  :src="list.assetsImg" alt="">
-						<i class="icon iconfont icon-add"></i></div>
+						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>资产证明</p>
 					</li>
 					<li @click="openPopup('Interview')">
 						<div><img v-if="list.InterviewImg"  :src="list.InterviewImg" alt="">
-						<i class="icon iconfont icon-add"></i></div>
+						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>面谈信息表</p>
 					</li>
 					<li @click="openPopup('other')">
 						<div><img v-if="list.otherImg"  :src="list.otherImg" alt="">
-						<i class="icon iconfont icon-add"></i></div>
+						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>其他</p>
 					</li>
 				</ul>
@@ -113,8 +116,7 @@
 			</mt-popup>
     </div>
     <script>
-      $(function(){
-        new Vue({
+        var uploadVue=new Vue({
           el:'#uploadImg',
           data(){
             return {
@@ -150,6 +152,7 @@
 								function errorFn(err){
 									alert(err)
 							})
+							this.popupVisible=false;
 							summer.openCamera({
 								compressionRatio:0.5,
 								callback : function(args){
@@ -202,8 +205,10 @@
 						}
 					}
         })
+				function save(){
+					uploadVue.save()
+				}
 
-      });
     </script>
   </body>
 </html>

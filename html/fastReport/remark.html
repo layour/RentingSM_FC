@@ -42,13 +42,9 @@
 					<span>{{remark.length}}/200</span>
 				</div>
       </div>
-			<div class="um-footer"id="footer">
-        <button class="btn um-btn-primary" style="padding:5px 12px" @click="save">保存</button>
-			</div>
     </div>
     <script>
-      $(function(){
-        new Vue({
+      var remarkVue= new Vue({
           el:'#remark',
           data(){
             return {
@@ -60,13 +56,13 @@
 					},
 					methods:{
 						save(){
-
 							summer.closeWin()
 						}
 					}
         })
-
-      });
+			function save(){
+				remarkVue.save()
+			}
     </script>
   </body>
 </html>

@@ -68,6 +68,7 @@
 						pickerDealer(){
 							this.popupVisible=false;
 							summer.setStorage('pickerDealer',JSON.stringify(this.item));
+							alert(summer.getStorage('pickerDealer'))
 							summer.execScript({
 							    winId: 'addCar',
 							    script: 'getDealer()'
