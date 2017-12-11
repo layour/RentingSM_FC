@@ -9,6 +9,10 @@
 		<link rel="stylesheet" href="../../css/mint.css">
 		<script src="../../js/font.js" ></script>
 		<style>
+			input::-webkit-input-placeholder {
+					color: #DEDEDE;
+					font-size: 14px;
+			}
 			.topheader{
 				height:180px;
 				background-image:url("img/cardBgc.png");
@@ -61,7 +65,7 @@
 			  float: right;
 			}
 			.item .first{
-	
+
 				color:#333;
 			}
 			.item .second{
@@ -134,7 +138,7 @@
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
-						 
+
 			</div>
 
 		</div>
@@ -148,7 +152,7 @@
 			function  successCallback(sender,args){
 					 newCreateCustom.cardUrl=sender.target;
 				}
-			
+
 			var newCreateCustom=new Vue({
 		      el: '#app',
 		      data(){
@@ -206,7 +210,7 @@
 					      _self.message.address=args.address;
 					    //  _self.cardUrl=args.imagePath;
 					      _self.cardShow = !_self.cardShow;
-					      
+
 					      summer.getNativeLocation({
 							"single" : "true"
 						}, function(arg) {
@@ -225,13 +229,13 @@
 								"target" : args.imagePath, //目标图片路径
 								"textGroup" : textgroup,
 								"callback":"successCallback(sender,args)"
-							}; 
+							};
 			                summer.callService("UMGraphics.watermark", data, false);
 						}, function(args) {
 							summer.toast({
 				            	"msg" : "获取位置信息错误：" + JSON.stringify(args)
 				            });
-						}); 
+						});
 					     // CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (sender,args){
 					     //	 _self.cardUrl=args.target;
 					     // });
