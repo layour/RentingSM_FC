@@ -1,53 +1,90 @@
+html{
+   background-color: #f6f6f6;
+}
 .um-content{
    position: relative;
 }
 .applyList{
-   margin-top: 0.1rem;
    width: 100%;
-   background-color: #fff;
 }
 .applyList li{
    width: 100%;
-   height: 0.8rem;
+   height: 0.9rem;
    border-bottom: 1px solid #f1f1f1;
-   padding: 0 0.3rem;
+   padding: 0 0.56rem;
+   background-color: #fff;
+}
+.applyList li:nth-of-type(7){
+   margin-bottom: 0.2rem;
 }
 .applyList li span{
    float: left;
-   height: 0.8rem;
-   line-height: 0.8rem;
+   height: 0.9rem;
+   line-height: 0.9rem;
    font-size: 0.28rem;
+   color: #333;
+}
+.applyList li .title{
+   height: 0.9rem;
+}
+.applyList .title i,.applyList .title b{
+   float: left;
+}
+.applyList .title i{
+   width: 0.06rem;
+   height: 0.32rem;
+   background: #039be5;
+   margin-top: 0.26rem;
+   margin-right: 0.08rem;
+}
+.applyList .title b{
+   height: 0.9rem;
+   font-weight: normal;
+   line-height: 0.9rem;
+   font-size: 0.36rem;
+   color: #000;
 }
 .applyList li div{
    float: right;
-   height: 0.8rem;
-   line-height: 0.8rem;
+   height: 0.9rem;
+   line-height: 0.9rem;
    font-size: 0.28rem;
+   color: #424242;
+}
+.applyList li .first{
+   height: 0.9rem;
+   line-height: 0.9rem;
+   font-size: 0.28rem;
+   color: #000;
 }
 .applyList li div i,.applyList li div span{
    float: right;
    font-style: normal;
 }
 .applyList li div i{
-   color: #0394d3;
+   color: #039be5;
 }
 .applyList li div span{
    margin-left: 0.2rem;
+   color: #dbdbdb;
 }
 .applyBtn{
    position: absolute;
-   width: 80%;
-   height: 1rem;
-   background-color: #0394d3;
-   font-size: 0.28rem;
-   line-height: 1rem;
+   width: 6.34rem;
+   height: 0.9rem;
+   background-color: #039be5;
+   font-size: 0.32rem;
+   line-height: 0.9rem;
    color: #fff;
    text-align: center;
    left: 50%;
    transform: translate(-50%);
-   top: 6rem;
+   top: 7rem;
    border-radius: 0.1rem;
 }
 .change{
    display: none;
+}
+strong{
+   font-weight: normal;
 }

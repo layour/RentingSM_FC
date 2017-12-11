@@ -9,6 +9,10 @@
 		<link rel="stylesheet" href="../../css/mint.css">
 		<script src="../../js/font.js" ></script>
 		<style>
+			input::-webkit-input-placeholder {
+					color: #DEDEDE;
+					font-size: 0.28rem;
+			}
 			.topheader{
 				height:180px;
 				background-image:url("img/cardBgc.png");
@@ -43,6 +47,13 @@
 			div.item span{
 				color:#666;
 			}
+			div.item span i{
+				color:#dbdbdb;
+			}
+			.mint-cell-wrapper{
+				background-size:100% 0px;
+				border-bottom:1px solid #f7f7f7;
+			}
 			.pickerColor {
 			  width: 100%;
 			  z-index: 10;
@@ -50,7 +61,7 @@
 			}
 			.pickerColor > p {
 			   line-height: .88rem;
-		    padding: 0.56rem;
+		    padding: 0  .56rem;
 		    color: #039BE5;
 		    border-top: 1px solid #E0E0E0;
 			}
@@ -64,7 +75,7 @@
 				color:#333;
 			}
 			.item .second{
-				color:#dedede;
+				color:#9e9e9e;
 			}
 		</style>
 	</head>
@@ -97,7 +108,7 @@
 				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
 						<p>
-							<span class="fl" @click="surePickerSex">取消</span><span class="fr" @click="surePickerSex('confirm')">确定</span>
+							<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
 						</p>
 			 	</mt-popup>
 						 <mt-datetime-picker

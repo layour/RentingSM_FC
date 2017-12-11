@@ -11,7 +11,7 @@
 		<style>
 			input::-webkit-input-placeholder {
 					color: #DEDEDE;
-					font-size: 14px;
+					font-size: 0.28rem;
 			}
 			.topheader{
 				height:180px;
@@ -47,6 +47,9 @@
 			div.item span{
 				color:#666;
 			}
+			div.item span i{
+				color:#dbdbdb;
+			}
 			.pickerColor {
 			  width: 100%;
 			  z-index: 10;
@@ -54,12 +57,16 @@
 			}
 			.pickerColor > p {
 			  line-height: .88rem;
-		    padding: .56rem;
+		    padding:0  .56rem;
 		    color: #039BE5;
 		    border-top: 1px solid #E0E0E0;
 			}
 			.pickerColor > p span {
 			  color: #34aadc;
+			}
+			.mint-cell-wrapper{
+				background-size:100% 0px;
+				border-bottom:1px solid #f7f7f7;
 			}
 			.pickerColor > p span:last-child {
 			  float: right;
@@ -69,20 +76,8 @@
 				color:#333;
 			}
 			.item .second{
-				color:#dedede;
+				color:#9e9e9e;
 			}
-			.mint-cell-value input.mint-field-core::-webkit-input-placeholder { /* WebKit browsers */
-		　　		color:#dedede;
-		　　}
-		　　.mint-cell-value input.mint-field-core:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-		　　		color:#dedede;
-		　　}
-		　　.mint-cell-value input.mint-field-core::-moz-placeholder { /* Mozilla Firefox 19+ */
-		　　		color:#dedede;
-		　　}
-		　　.mint-cell-value input.mint-field-core:-ms-input-placeholder { /* Internet Explorer 10+ */
-		　　		color:#dedede;
-		　　}
 		</style>
 	</head>
 	<body>
@@ -118,13 +113,13 @@
 				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
 						<p>
-							<span class="fl" @click="surePickerSex">取消</span><span class="fr" @click="surePickerSex('confirm')">确定</span>
+							<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
 						</p>
 				</mt-popup>
 			   <mt-popup v-model="pickerMarrigeStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
 						<p>
-							<span class="fl" @click="surePickerMarrige">取消</span><span class="fr" @click="surePickerMarrige('confirm')">确定</span>
+							<span class="" @click="surePickerMarrige">取消</span><span class="" @click="surePickerMarrige('confirm')">确定</span>
 						</p>
 				</mt-popup>
 						 <mt-datetime-picker
@@ -138,7 +133,10 @@
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 87a0bb6727799d4df735daa152624d9afee90366
 			</div>
 		</div>
 		<script src="../../js/summer.js" ></script>
@@ -194,9 +192,12 @@
 						dateBirth : ''
 					}
 				}
-			}, methods: { handleClick: function() {
+			}, 
+			methods: { 
+			    handleClick: function() {
 					this.$toast('Hello world!')
-				}, cardIdentify:function() {
+				}, 
+				cardIdentify:function() {
 					var _self = this;
 					PersonScan.scan({}, function(args) {
 						console.log(args);
@@ -242,6 +243,7 @@
 								"src" : args.imagePath, //源图片路径
 								"target" : args.imagePath, //目标图片路径
 								"textGroup" : textgroup,
+<<<<<<< HEAD
 								"callback" : "successCallback(sender,args)"
 							};
 							summer.callService("UMGraphics.watermark", data, false);
@@ -250,21 +252,37 @@
 								"msg" : "获取位置信息错误：" + JSON.stringify(args)
 							});
 						});
+=======
+								"callback":"successCallback(sender,args)"
+							};
+			                summer.callService("UMGraphics.watermark", data, false);
+						}, function(args) {
+							summer.toast({
+				            	"msg" : "获取位置信息错误：" + JSON.stringify(args)
+				            });
+						});
+					 
+>>>>>>> 87a0bb6727799d4df735daa152624d9afee90366
 					}, function(args) {
 						console.log(args);
 					});
-				}, successCallBack:function(args) {
+				}, 
+				successCallBack:function(args) {
 					console.log(args);
-				}, onValuesChange1:function(picker, values) {
+				}, 
+				onValuesChange1:function(picker, values) {
 					this.pickerSex = values[0];
-				}, surePickerSex:function(param) {
+				}, 
+				surePickerSex:function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
 						this.message.sex = this.pickerSex;
 					}
-				}, onValuesChange2:function(picker, values) {
+				}, 
+				onValuesChange2:function(picker, values) {
 					this.pickerMarrige = values[0];
-				}, surePickerMarrige:function(param) {
+				}, 
+				surePickerMarrige:function(param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
 						this.message.marrige = this.pickerMarrige;
@@ -298,10 +316,12 @@
 							});
 						}
 					}
-				}, sureDateConfirm:function() {
+				}, 
+				sureDateConfirm:function() {
 					this.pickerDateStatus = !this.pickerDateStatus;
 					this.$refs.picker.open();
-				}, handleConfirm:function(pickerValue) {
+				}, 
+				handleConfirm:function(pickerValue) {
 					this.pickerValue = pickerValue;
 					this.message.dateBirth = getFormatDate(pickerValue)
 					function getFormatDate(date) {
@@ -319,7 +339,8 @@
 						return year + month + strDate;
 					}
 
-				}, savePerson:function() {
+				}, 
+				savePerson:function() {
 					summer.openWin({
 						id : 'setProject',
 						url : 'html/fastReport/setProject.html',
@@ -343,7 +364,8 @@
 							}]
 						}
 					});
-				}, nextStopAction:function() {
+				}, 
+				nextStopAction:function() {
 					summer.openWin({
 						id : 'newCreateCustom2',
 						url : 'html/fastReport/newCreateCustom2.html',
@@ -367,7 +389,8 @@
 							}]
 						}
 					});
-				}, openPicker:function() {
+				}, 
+				openPicker:function() {
 					this.$refs.picker.open();
 				}
 			}
@@ -375,7 +398,6 @@
 			function savePerson() {
 				newCreateCustom.savePerson();
 			}
-
 			function nextStopAction() {
 				newCreateCustom.nextStopAction();
 			}

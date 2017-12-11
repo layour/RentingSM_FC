@@ -2,61 +2,48 @@
    position: relative;
 }
 .warrantyList{
-   margin-top: 0.1rem;
    width: 100%;
    background-color: #fff;
 }
 .warrantyList li{
    width: 100%;
-   height: 0.8rem;
+   height: 0.9rem;
    border-bottom: 1px solid #f1f1f1;
-   padding: 0 0.3rem;
+   padding: 0 0.56rem;
 }
 .warrantyList li span{
    float: left;
-   height: 0.8rem;
-   line-height: 0.8rem;
+   height: 0.9rem;
+   line-height: 0.9rem;
    font-size: 0.28rem;
+   color: #333;
 }
 .warrantyList li div{
    float: right;
-   height: 0.8rem;
-   line-height: 0.8rem;
+   height: 0.9rem;
+   line-height: 0.9rem;
    font-size: 0.28rem;
+   color: #424242;
 }
 .warrantyList li div i,.warrantyList li div span{
    float: right;
    font-style: normal;
 }
 .warrantyList li div i{
-   color: #0394d3;
+   color: #9e9e9e;
 }
 .warrantyList li div span{
-   margin-left: 0.2rem;
+   margin: 0 0.1rem;
 }
 .warrantyList li input{
    border: 0;
    background: none;
    float: right;
-   height: 0.8rem;
-   line-height: 0.8rem;
+   height: 0.9rem;
+   line-height: 0.9rem;
    font-size: 0.28rem;
    text-align: right;
    outline: none;
-}
-.saveBtn{
-   position: absolute;
-   width: 80%;
-   height: 1rem;
-   background-color: #0394d3;
-   font-size: 0.28rem;
-   line-height: 1rem;
-   color: #fff;
-   text-align: center;
-   left: 50%;
-   transform: translate(-50%);
-   top: 5.2rem;
-   border-radius: 0.1rem;
 }
 .insurer {
   position: fixed;
@@ -88,4 +75,19 @@
 }
 .mint-popup p.border{
    border-bottom: 1px solid #f7f7f7;
+}
+strong{
+   float: right;
+   height: 0.9rem;
+   line-height: 0.9rem;
+   font-weight: normal;
+   font-size: 0.28rem;
+   color: #333;
+}
+.warrantyList li div .upload{
+   color: #039be5;
+}
+.warrantyList li div .icon-enter{
+   margin: 0;
+   color: #dbdbdb;
 }
