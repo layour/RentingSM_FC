@@ -54,7 +54,7 @@
 			}
 			.pickerColor > p {
 			  line-height: .88rem;
-		    padding: 0 .56rem;
+		    padding: .56rem;
 		    color: #039BE5;
 		    border-top: 1px solid #E0E0E0;
 			}
@@ -72,16 +72,16 @@
 				color:#dedede;
 			}
 			.mint-cell-value input.mint-field-core::-webkit-input-placeholder { /* WebKit browsers */
-		　　color:#dedede;
+		　　		color:#dedede;
 		　　}
 		　　.mint-cell-value input.mint-field-core:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-		　　color:#dedede;
+		　　		color:#dedede;
 		　　}
 		　　.mint-cell-value input.mint-field-core::-moz-placeholder { /* Mozilla Firefox 19+ */
-		　　color:#dedede;
+		　　		color:#dedede;
 		　　}
 		　　.mint-cell-value input.mint-field-core:-ms-input-placeholder { /* Internet Explorer 10+ */
-		　　color:#dedede;
+		　　		color:#dedede;
 		　　}
 		</style>
 	</head>
@@ -138,9 +138,11 @@
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
+<<<<<<< HEAD
 
+=======
+>>>>>>> f19e0c8956eea2bcd6c8fcaa257726ad91546513
 			</div>
-
 		</div>
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
@@ -149,6 +151,7 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
+<<<<<<< HEAD
 			function  successCallback(sender,args){
 					 newCreateCustom.cardUrl=sender.target;
 				}
@@ -212,22 +215,103 @@
 					      _self.cardShow = !_self.cardShow;
 
 					      summer.getNativeLocation({
+=======
+			function successCallback(sender, args) {
+				newCreateCustom.cardUrl = sender.target;
+				newCreateCustom.cardShow = true;
+			}
+
+			var newCreateCustom=new Vue({
+			el: '#app',
+			data() {
+				return {
+					cardShow : false,
+					cardUrl : "",
+					pickerVisible : "",
+					pickerDate : "",
+					pickerValue : new Date(),
+					surePicekerDateVal : '',
+					pickerSexStatus : false,
+					pickerDateStatus : false,
+					pickerMarrigeStatus : false,
+					pickerSex : "",
+					pickerMarrige : "",
+					noweDate : new Date(),
+					slots1 : [{
+						flex : 1,
+						values : ['男', '女'],
+						defaultIndex : 0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					slots2 : [{
+						flex : 1,
+						values : ['未婚', '已婚'],
+						defaultIndex : 0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					message : {
+						username : '',
+						card : '',
+						sex : '',
+						address : '',
+						phone : '',
+						phoneAddress : '',
+						marrige : '',
+						dateBirth : ''
+					}
+				}
+			}, methods: { handleClick: function() {
+					this.$toast('Hello world!')
+				}, cardIdentify:function() {
+					var _self = this;
+					PersonScan.scan({}, function(args) {
+						console.log(args);
+						_self.message.username = args.name;
+						_self.message.card = args.id;
+						_self.message.sex = args.sex;
+						_self.message.dateBirth = args.birth_date;
+						_self.message.address = args.address;
+						_self.cardShow = !_self.cardShow;
+
+						summer.getNativeLocation({
+>>>>>>> f19e0c8956eea2bcd6c8fcaa257726ad91546513
 							"single" : "true"
 						}, function(arg) {
 							var textgroup = [{
 								text : args.name,
-								style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "80", "font-size" : "20"}
-							},{
+								style : {
+									"left" : "20",
+									"top" : "0",
+									"right" : "0",
+									"bottom" : "80",
+									"font-size" : "20"
+								}
+							}, {
 								text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
-								style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "50", "font-size" : "20"}
-							},{
+								style : {
+									"left" : "20",
+									"top" : "0",
+									"right" : "0",
+									"bottom" : "50",
+									"font-size" : "20"
+								}
+							}, {
 								text : arg.address,
-								style : {"left" : "20", "top" : "0", "right" : "0", "bottom" : "20", "font-size" : "20"}
+								style : {
+									"left" : "20",
+									"top" : "0",
+									"right" : "0",
+									"bottom" : "20",
+									"font-size" : "20"
+								}
 							}];
 							var data = {
 								"src" : args.imagePath, //源图片路径
 								"target" : args.imagePath, //目标图片路径
 								"textGroup" : textgroup,
+<<<<<<< HEAD
 								"callback":"successCallback(sender,args)"
 							};
 			                summer.callService("UMGraphics.watermark", data, false);
@@ -241,146 +325,154 @@
 					     // });
 					},function(args){
 					    console.log(args);
+=======
+								"callback" : "successCallback(sender,args)"
+							};
+							summer.callService("UMGraphics.watermark", data, false);
+						}, function(args) {
+							summer.toast({
+								"msg" : "获取位置信息错误：" + JSON.stringify(args)
+							});
+						});
+					}, function(args) {
+						console.log(args);
+>>>>>>> f19e0c8956eea2bcd6c8fcaa257726ad91546513
 					});
-		        },
-		        successCallBack:function(args){
-		        	console.log(args);
-		        },
-		        onValuesChange1:function(picker, values) {
+				}, successCallBack:function(args) {
+					console.log(args);
+				}, onValuesChange1:function(picker, values) {
 					this.pickerSex = values[0];
-				},
-				surePickerSex:function(param) {
+				}, surePickerSex:function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
 						this.message.sex = this.pickerSex;
 					}
-				},
-				onValuesChange2:function(picker, values) {
+				}, onValuesChange2:function(picker, values) {
 					this.pickerMarrige = values[0];
-				},
-				surePickerMarrige:function(param) {
+				}, surePickerMarrige:function(param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
 						this.message.marrige = this.pickerMarrige;
-						if(this.message.marrige=="未婚"){
+						if (this.message.marrige == "未婚") {
 							summer.setWinAttr({
-							    actionBar: {
-							    	title: "客户信息",
-							        titleColor: "#ffffff",
-							        backgroundColor: "#039be5",
-							        rightItems:[{
-							            type:"text",
-							            text:"保存",
-							            textColor:"#ffffff",
-							            method:"savePerson()"  //自定义事件
-							        }]
-							    }
+								actionBar : {
+									title : "客户信息",
+									titleColor : "#ffffff",
+									backgroundColor : "#039be5",
+									rightItems : [{
+										type : "text",
+										text : "保存",
+										textColor : "#ffffff",
+										method : "savePerson()" //自定义事件
+									}]
+								}
 							});
-						}else{
+						} else {
 							summer.setWinAttr({
-							    actionBar: {
-							    	 title: "客户信息",
-							        titleColor: "#ffffff",
-							        backgroundColor: "#039be5",
-							        rightItems:[{
-							             type:"text",
-								          text:"下一步",
-								          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								          method:"nextStopAction()" //在打开的window中自定义事件
-							        }]
-							    }
+								actionBar : {
+									title : "客户信息",
+									titleColor : "#ffffff",
+									backgroundColor : "#039be5",
+									rightItems : [{
+										type : "text",
+										text : "下一步",
+										textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										method : "nextStopAction()" //在打开的window中自定义事件
+									}]
+								}
 							});
 						}
 					}
-				},
-				sureDateConfirm:function(){
-					this.pickerDateStatus=!this.pickerDateStatus;
+				}, sureDateConfirm:function() {
+					this.pickerDateStatus = !this.pickerDateStatus;
 					this.$refs.picker.open();
-				},
-				handleConfirm:function(pickerValue){
+				}, handleConfirm:function(pickerValue) {
 					this.pickerValue = pickerValue;
-					this.message.dateBirth=getFormatDate(pickerValue)
-					function getFormatDate(date){
-						var date=new Date(date), seperator1 = "-";
-						var year = date.getFullYear(), month = date.getMonth() + 1, strDate = date.getDate();
+					this.message.dateBirth = getFormatDate(pickerValue)
+					function getFormatDate(date) {
+						var date = new Date(date),
+						    seperator1 = "-";
+						var year = date.getFullYear(),
+						    month = date.getMonth() + 1,
+						    strDate = date.getDate();
 						if (month >= 1 && month <= 9) {
 							month = "0" + month;
 						}
 						if (strDate >= 0 && strDate <= 9) {
 							strDate = "0" + strDate;
 						}
-					 return  year  + month + strDate;
-				 }
-				},
-				savePerson:function(){
-						summer.openWin({
-						id:'setProject',
-						url:'html/fastReport/setProject.html',
-						create:false,
-						type:'actionBar',
-						actionBar: {
-							title: "快捷报单",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem:{
-									image: "img/back.png",
-									method:"",//返回按钮自定义事件
-									text:"返回",
-									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						return year + month + strDate;
+					}
+
+				}, savePerson:function() {
+					summer.openWin({
+						id : 'setProject',
+						url : 'html/fastReport/setProject.html',
+						create : false,
+						type : 'actionBar',
+						actionBar : {
+							title : "快捷报单",
+							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor : "#039be5",
+							leftItem : {
+								image : "img/back.png",
+								method : "", //返回按钮自定义事件
+								text : "返回",
+								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							},
-							 rightItems:[{
-						          type:"text",
-						          text:"下一步",
-						          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						          method:"nextStopInput()" //在打开的window中自定义事件
-						      }]
+							rightItems : [{
+								type : "text",
+								text : "下一步",
+								textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method : "nextStopInput()" //在打开的window中自定义事件
+							}]
 						}
 					});
-				},
-				nextStopAction:function(){
-						summer.openWin({
-						id:'newCreateCustom2',
-						url:'html/fastReport/newCreateCustom2.html',
-						create:false,
-						type:'actionBar',
-						actionBar: {
-							title: "配偶信息",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem:{
-									image: "img/back.png",
-									method:"",//返回按钮自定义事件
-									text:"返回",
-									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				}, nextStopAction:function() {
+					summer.openWin({
+						id : 'newCreateCustom2',
+						url : 'html/fastReport/newCreateCustom2.html',
+						create : false,
+						type : 'actionBar',
+						actionBar : {
+							title : "配偶信息",
+							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor : "#039be5",
+							leftItem : {
+								image : "img/back.png",
+								method : "", //返回按钮自定义事件
+								text : "返回",
+								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							},
-							 rightItems:[{
-						          type:"text",
-						          text:"保存",
-						          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						          method:"saveAllPerMessage()" //在打开的window中自定义事件
-						      }]
+							rightItems : [{
+								type : "text",
+								text : "保存",
+								textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method : "saveAllPerMessage()" //在打开的window中自定义事件
+							}]
 						}
 					});
-				},
-		        openPicker:function() {
-			        this.$refs.picker.open();
-			      }
-		      }
-		    })
-		    function savePerson(){
-		    	newCreateCustom.savePerson();
-		    }
-		     function nextStopAction(){
-		    	newCreateCustom.nextStopAction();
-		    }
-		    summerready=function(){
-		    	var params = ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
-					summer.getPermission(params,  function(args){
-					    //alert(args); //成功返回OK
-					}, function(args){
-					    //alert(args); //失败返回illegal access
-					})
-		    }
+				}, openPicker:function() {
+					this.$refs.picker.open();
+				}
+			}
+			})
+			function savePerson() {
+				newCreateCustom.savePerson();
+			}
+
+			function nextStopAction() {
+				newCreateCustom.nextStopAction();
+			}
+
+			summerready = function() {
+				var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
+				summer.getPermission(params, function(args) {
+					//alert(args); //成功返回OK
+				}, function(args) {
+					//alert(args); //失败返回illegal access
+				})
+			}
 
 		</script>
 	</body>
