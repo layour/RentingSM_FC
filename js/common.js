@@ -32,7 +32,6 @@ var CommonUtil = {
 			 
 			  successFn(_sender, _args);
 		});
-	
 	},
 	//获取当前位置
 	getLocation : function(successFn) {

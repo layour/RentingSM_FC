@@ -11,46 +11,59 @@
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<style>
-			.customList{
-			 border-top:5px solid #007AFF;
-			 border-radius:5px;
+		.customList:first-child{
+	margin-top:0px;
+		}
+		.customList{
+			 position: relative;
 			 margin-top:0.2rem;
 		}
-		.customList p{
-			line-height:0.8rem;
+			.customList p.title{
+			font-size:0.32rem;
+			color:#039be5;
+			line-height:0.88rem;
+			border-bottom:1px solid #f7f7f7;
 		}
-		.customList p.item{
-			padding-left:20%;
-			font-size:0.36rem;
-			color:#666;
+		.customList p.title span{
+			color:#424242;
+			
 		}
-		.customList p.title{
-			font-size:0.40rem;
-			color:#333;
+		 
+		.customList p.select{
+			line-height:0.88rem;
+			color:#424242;
+			font-size:0.24rem;
+			border-bottom:1px solid #f6f6f6;
+		}
+		.customList p.select span{
+			border-right:1px solid #f6f6f6;
+		}
+		.customList .center{
+			padding:0.3rem 0.2rem;
+			border-bottom:1px solid #f7f7f7;
+			font-size:0.28rem;
+			color:#424242;
 		}
 		</style>
 	</head>
 	<body>
 		<div class="um-win" id="index">
 			<div class="um-content">
+				<div class="list customList um-bgc-white">
+			       <p class="pl20 title pr20">张三<span class="status fr"></p>
+			       <div class="center" onclick="openDetail()">
+			       		<p class="type pl10"><span>手机号 :</span> <span> 18810622176</span> </p>
+			      		<p class="time pl10 pr10"><span>身份证：<span>413344198812263463</span></span></p>
+			       </div>
+			    </div>
 			    <div class="list customList um-bgc-white">
-			       <p class="pl10 title">吴猛</p>
-			       <p class="item   tl pr10"><span>手机号 </span>  <span>18810622176</span></p>
-			       <p class="item pl40 pr10 tl"><span>身份证：<span>413344198812263463</span></p>
-			   </div>
-			   <div class="list customList um-bgc-white">
-			       <p class="pl10 title">吴猛</p>
-			       <p class="item   tl pr10"><span>手机号 </span>  <span>18810622176</span></p>
-			       <p class="item pl40 pr10 tl"><span>身份证：<span>413344198812263463</span></p>
-			   </div>
-			   <div class="list customList um-bgc-white">
-			       <p class="pl10 title">吴猛</p>
-			       <p class="item   tl pr10"><span>手机号 </span>  <span>18810622176</span></p>
-			       <p class="item pl40 pr10 tl"><span>身份证：<span>413344198812263463</span></p>
-			   </div>
-			   
+			       <p class="pl20 title pr20">张三<span class="status fr"></p>
+			       <div class="center" onclick="openDetail()">
+			       		<p class="type pl10"><span>手机号 :</span> <span> 18810622176</span> </p>
+			      		<p class="time pl10 pr10"><span>身份证：<span>413344198812263463</span></span></p>
+			       </div>
+			    </div>
 			</div>
-
 			<div class="um-footer"id="footer">
                 <button class="btn um-btn-primary"   onclick="saveMessage()">保存</button>
             </div>
