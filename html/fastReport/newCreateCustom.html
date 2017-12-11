@@ -138,10 +138,6 @@
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
-<<<<<<< HEAD
-
-=======
->>>>>>> f19e0c8956eea2bcd6c8fcaa257726ad91546513
 			</div>
 		</div>
 		<script src="../../js/summer.js" ></script>
@@ -151,71 +147,6 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
-<<<<<<< HEAD
-			function  successCallback(sender,args){
-					 newCreateCustom.cardUrl=sender.target;
-				}
-
-			var newCreateCustom=new Vue({
-		      el: '#app',
-		      data(){
-		      	return {
-							cardShow:false,
-			      	cardUrl:"",
-			      	pickerVisible:"",
-			      	pickerDate:"",
-			      	pickerValue:new Date(),
-							surePicekerDateVal:'',
-			      	pickerSexStatus:false,
-							pickerDateStatus:false,
-							pickerMarrigeStatus:false,
-							pickerSex:"",
-							pickerMarrige:"",
-							noweDate:new Date(),
-							slots1 : [{
-									flex : 1,
-									values : ['男', '女'],
-									defaultIndex :0,
-									className : 'slot1',
-									textAlign : 'center'
-								}],
-							slots2 : [{
-									flex : 1,
-									values : ['未婚', '已婚'],
-									defaultIndex :0,
-									className : 'slot1',
-									textAlign : 'center'
-								}],
-			      	message:{
-			      		username:'',
-			      		card:'',
-			      		sex:'',
-			      		address:'',
-			      		phone:'',
-			      		phoneAddress:'',
-			      		marrige:'',
-			      		dateBirth:''
-			      	}
-						}
-		      },
-		      methods: {
-		        handleClick: function() {
-		          this.$toast('Hello world!')
-		        },
-		        cardIdentify:function(){
-		           var _self=this;
-		        	PersonScan.scan({},function(args){
-		        		console.log(args);
-					      _self.message.username=args.name;
-					      _self.message.card=args.id;
-					      _self.message.sex=args.sex;
-					       _self.message.dateBirth=args.birth_date;
-					      _self.message.address=args.address;
-					    //  _self.cardUrl=args.imagePath;
-					      _self.cardShow = !_self.cardShow;
-
-					      summer.getNativeLocation({
-=======
 			function successCallback(sender, args) {
 				newCreateCustom.cardUrl = sender.target;
 				newCreateCustom.cardShow = true;
@@ -262,9 +193,12 @@
 						dateBirth : ''
 					}
 				}
-			}, methods: { handleClick: function() {
+			}, 
+			methods: { 
+			    handleClick: function() {
 					this.$toast('Hello world!')
-				}, cardIdentify:function() {
+				}, 
+				cardIdentify:function() {
 					var _self = this;
 					PersonScan.scan({}, function(args) {
 						console.log(args);
@@ -276,7 +210,6 @@
 						_self.cardShow = !_self.cardShow;
 
 						summer.getNativeLocation({
->>>>>>> f19e0c8956eea2bcd6c8fcaa257726ad91546513
 							"single" : "true"
 						}, function(arg) {
 							var textgroup = [{
@@ -311,7 +244,6 @@
 								"src" : args.imagePath, //源图片路径
 								"target" : args.imagePath, //目标图片路径
 								"textGroup" : textgroup,
-<<<<<<< HEAD
 								"callback":"successCallback(sender,args)"
 							};
 			                summer.callService("UMGraphics.watermark", data, false);
@@ -320,36 +252,27 @@
 				            	"msg" : "获取位置信息错误：" + JSON.stringify(args)
 				            });
 						});
-					     // CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (sender,args){
-					     //	 _self.cardUrl=args.target;
-					     // });
-					},function(args){
-					    console.log(args);
-=======
-								"callback" : "successCallback(sender,args)"
-							};
-							summer.callService("UMGraphics.watermark", data, false);
-						}, function(args) {
-							summer.toast({
-								"msg" : "获取位置信息错误：" + JSON.stringify(args)
-							});
-						});
+					 
 					}, function(args) {
 						console.log(args);
->>>>>>> f19e0c8956eea2bcd6c8fcaa257726ad91546513
 					});
-				}, successCallBack:function(args) {
+				}, 
+				successCallBack:function(args) {
 					console.log(args);
-				}, onValuesChange1:function(picker, values) {
+				}, 
+				onValuesChange1:function(picker, values) {
 					this.pickerSex = values[0];
-				}, surePickerSex:function(param) {
+				}, 
+				surePickerSex:function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
 						this.message.sex = this.pickerSex;
 					}
-				}, onValuesChange2:function(picker, values) {
+				}, 
+				onValuesChange2:function(picker, values) {
 					this.pickerMarrige = values[0];
-				}, surePickerMarrige:function(param) {
+				}, 
+				surePickerMarrige:function(param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
 						this.message.marrige = this.pickerMarrige;
@@ -383,10 +306,12 @@
 							});
 						}
 					}
-				}, sureDateConfirm:function() {
+				}, 
+				sureDateConfirm:function() {
 					this.pickerDateStatus = !this.pickerDateStatus;
 					this.$refs.picker.open();
-				}, handleConfirm:function(pickerValue) {
+				}, 
+				handleConfirm:function(pickerValue) {
 					this.pickerValue = pickerValue;
 					this.message.dateBirth = getFormatDate(pickerValue)
 					function getFormatDate(date) {
@@ -404,7 +329,8 @@
 						return year + month + strDate;
 					}
 
-				}, savePerson:function() {
+				}, 
+				savePerson:function() {
 					summer.openWin({
 						id : 'setProject',
 						url : 'html/fastReport/setProject.html',
@@ -428,7 +354,8 @@
 							}]
 						}
 					});
-				}, nextStopAction:function() {
+				}, 
+				nextStopAction:function() {
 					summer.openWin({
 						id : 'newCreateCustom2',
 						url : 'html/fastReport/newCreateCustom2.html',
@@ -452,7 +379,8 @@
 							}]
 						}
 					});
-				}, openPicker:function() {
+				}, 
+				openPicker:function() {
 					this.$refs.picker.open();
 				}
 			}
@@ -460,7 +388,6 @@
 			function savePerson() {
 				newCreateCustom.savePerson();
 			}
-
 			function nextStopAction() {
 				newCreateCustom.nextStopAction();
 			}
