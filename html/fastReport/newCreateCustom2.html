@@ -169,6 +169,32 @@
 		        handleClick: function() {
 		          this.$toast('Hello world!')
 		        },
+		        messageTest:function(){
+					 var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  //身份证校验
+					 var phoneCard=/^[1][3,4,5,7,8,9][0-9]{9}$/;
+					if(this.message.username==""){
+						summer.toast({msg:"姓名不能为空"});
+						return false;
+					}else if(this.message.card==""||regCard.test(this.message.card)===false){
+						summer.toast({msg:"请输入正确的身份证号"});
+						return false;
+					}else if(this.message.sex==""){
+						summer.toast({msg:"性别不能为空"});
+						return false;
+					}else if(this.message.dateBirth==""){
+						summer.toast({msg:"出生年月不能为空"});
+						return false;
+					}else if(this.message.address==""){
+						summer.toast({msg:"住址不能为空"});
+						return false;
+					}else if(this.message.phone==""){
+						summer.toast({msg:"手机号不能为空"});
+						return false;
+					}else if(!phoneCard.test(this.message.phone)){
+						summer.toast({msg:"手机号格式不正确"});
+						return false;
+					} 
+				},
 		        cardIdentify:function(){
 		           var _self=this;
 		        	PersonScan.scan({},function(args){
@@ -217,6 +243,9 @@
 				 }
 				},
 				savePerson:function(){
+					 if(!this.messageTest()){
+					 	return;
+					 };
 						summer.openWin({
 						id:'setProject',
 						url:'html/fastReport/setProject.html',
