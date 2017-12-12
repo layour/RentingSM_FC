@@ -39,7 +39,24 @@
 	</div>
 	<script type="text/javascript">
 		function toLogin() {
-			var workNum = $('.workNum').val();
+			summer.openWin({
+				id:'login',
+				url:'index.html',
+				isKeep: false,
+				addBackListener:true,
+				create:false,
+				type:'actionBar',
+				actionBar: {
+					title: "首页",
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039be5",
+					leftItem:{
+						image: "img/opacity0.png",
+						method:"",//返回按钮自定义事件
+					},
+				}
+			});
+			/*var workNum = $('.workNum').val();
 			var psw = $('.psw').val();
 			if (workNum == '') {
 				summer.toast({msg:"工号不得为空"});
@@ -87,7 +104,7 @@
 				if (error.status == 500) {
 					summer.toast({msg:"系统内部错误"});
 				}
-			});
+			});*/
 		};
 	</script>
 </body>
