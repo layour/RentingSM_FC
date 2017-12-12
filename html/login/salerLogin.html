@@ -1,60 +1,95 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-      <link rel="stylesheet" href="../../css/login.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-      <script src="../../js/font.js" ></script>
-	</head>
-	<body>
-		<div class="um-frame" id="index">
 
-			<div class="um-content">
-            <img src = "" class="loginTitle"></img>
-            <form action="">
-               <dl>
-                  <dt class="iconfont icon-login"></dt>
-                  <dd>
-                     <input type="text" placeholder="工号">
-                  </dd>
-               </dl>
-               <dl>
-                  <dt class="iconfont icon-key"></dt>
-                  <dd>
-                     <input type="password" placeholder="密码">
-                  </dd>
-               </dl>
-					<p class="forget">忘记密码？</p>
-               <button type="button" class="loginBtn" onclick="toLogin()">销售登陆</button>
-            </form>
-			</div>
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/login.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js"></script>
+</head>
+
+<body>
+	<div class="um-frame" id="index">
+
+		<div class="um-content">
+			<img src="" class="loginTitle"></img>
+			<form action="">
+				<dl>
+					<dt class="iconfont icon-login"></dt>
+					<dd>
+						<input class="workNum" type="text" placeholder="工号">
+					</dd>
+				</dl>
+				<dl>
+					<dt class="iconfont icon-key"></dt>
+					<dd>
+						<input class="psw" type="password" placeholder="密码">
+					</dd>
+				</dl>
+				<p class="forget">忘记密码？</p>
+				<button type="button" class="loginBtn" onclick="toLogin()">销售登陆</button>
+			</form>
 		</div>
-		<script type="text/javascript">
-			function toLogin(){
-				summer.openWin({
-					id:'login',
-					url:'index.html',
-					isKeep: false,
-    				addBackListener:true,
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "首页",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/opacity0.png",
-							method:"",//返回按钮自定义事件
-						},
+	</div>
+	<script type="text/javascript">
+		function toLogin() {
+			var workNum = $('.workNum').val();
+			var psw = $('.psw').val();
+			if (workNum == '') {
+				summer.toast({msg:"工号不得为空"});
+				return;
+			}
+			if (psw == '') {
+				summer.toast({msg:"密码不得为空"});
+				return;
+			}
+			window.cordovaHTTP.settings = {
+				timeout: 5000
+			}; //设置5秒超时
+			summer.ajax({
+				type: "get",
+				url: "http://122.49.7.88:8080/honor/appservice/login/carLogin?loginName=" + workNum + "&password=" + psw + ""
+			}, function(response) {
+				console.log(response);
+				console.log(JSON.parse(response.data));
+				if (response.status == 200) {
+					if (JSON.parse(response.data).info == "成功") {
+						summer.toast({msg:"登陆成功"});
+						summer.openWin({
+							id:'login',
+							url:'index.html',
+							isKeep: false,
+							addBackListener:true,
+							create:false,
+							type:'actionBar',
+							actionBar: {
+								title: "首页",
+								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								backgroundColor: "#039be5",
+								leftItem:{
+									image: "img/opacity0.png",
+									method:"",//返回按钮自定义事件
+								},
+							}
+						});
+					} else if (JSON.parse(response.data).info == "用户密码错误！") {
+						summer.toast({msg:"用户名或密码错误"});
 					}
-				});
-			};
-		</script>
-	</body>
+				}
+			}, function(error) {
+				console.log(error);
+				if (error.status == 500) {
+					summer.toast({msg:"系统内部错误"});
+				}
+			});
+		};
+	</script>
+</body>
+
 </html>
