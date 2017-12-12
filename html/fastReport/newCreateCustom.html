@@ -133,10 +133,7 @@
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
-<<<<<<< HEAD
-
-=======
->>>>>>> 87a0bb6727799d4df735daa152624d9afee90366
+ 
 			</div>
 		</div>
 		<script src="../../js/summer.js" ></script>
@@ -243,16 +240,6 @@
 								"src" : args.imagePath, //源图片路径
 								"target" : args.imagePath, //目标图片路径
 								"textGroup" : textgroup,
-<<<<<<< HEAD
-								"callback" : "successCallback(sender,args)"
-							};
-							summer.callService("UMGraphics.watermark", data, false);
-						}, function(args) {
-							summer.toast({
-								"msg" : "获取位置信息错误：" + JSON.stringify(args)
-							});
-						});
-=======
 								"callback":"successCallback(sender,args)"
 							};
 			                summer.callService("UMGraphics.watermark", data, false);
@@ -262,7 +249,6 @@
 				            });
 						});
 					 
->>>>>>> 87a0bb6727799d4df735daa152624d9afee90366
 					}, function(args) {
 						console.log(args);
 					});
