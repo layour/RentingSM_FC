@@ -42,7 +42,6 @@
 				background:#ffffff;
 				border-bottom:1px solid #f7f7f7;
 				font-size:0.28rem;
-
 			}
 			div.item span{
 				color:#666;
@@ -104,24 +103,23 @@
 				<mt-field label="通讯地址" placeholder="请输入您的通讯地址"   v-model="message.phoneAddress"></mt-field>
 			</div>
 			<div >
-				 
 				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
 						<p>
 							<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
 						</p>
 			 	</mt-popup>
-						 <mt-datetime-picker
-						 		ref="picker"
-							  v-model="pickerValue"
-							  type="date"
-								cancel-text='取消'
-								confirm-text='确定'
-								:start-date='new Date("1950-01-01")'
-								:end-date="noweDate"
-							  @confirm="handleConfirm"
-							  >
-						</mt-datetime-picker>
+				 <mt-datetime-picker
+				 		ref="picker"
+					  v-model="pickerValue"
+					  type="date"
+						cancel-text='取消'
+						confirm-text='确定'
+						:start-date='new Date("1950-01-01")'
+						:end-date="noweDate"
+					  @confirm="handleConfirm"
+					  >
+				</mt-datetime-picker>
 			</div>
 
 		</div>
@@ -194,6 +192,7 @@
 						summer.toast({msg:"手机号格式不正确"});
 						return false;
 					} 
+					return true;
 				},
 		        cardIdentify:function(){
 		           var _self=this;
@@ -204,15 +203,15 @@
 					      _self.message.sex=args.sex;
 					       _self.message.dateBirth=args.birth_date;
 					      _self.message.address=args.address;
-					      _self.cardUrl=args.imagePath;
-					      _self.cardShow = !_self.cardShow;
-					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name},function (args){console.log(args)});
+					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name,callback:function(arg){
+					      	 _self.cardUrl=arg.target;
+					      	 _self.cardShow = true;
+					      }});
+					      
+					      
 					},function(args){
 					    console.log(args);
 					});
-		        },
-		        successCallBack:function(args){
-		        	console.log(args);
 		        },
 		        onValuesChange1:function(picker, values) {
 					this.pickerSex = values[0];
@@ -251,6 +250,9 @@
 						url:'html/fastReport/setProject.html',
 						create:false,
 						type:'actionBar',
+						pageParam:{
+							source:"customer"
+						},
 						actionBar: {
 							title: "快捷报单",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
@@ -275,7 +277,7 @@
 			      }
 		      }
 		    })
-		    function savePerson(){
+		    function saveAllPerMessage(){
 		    	newCreateCustom.savePerson();
 		    }
 		    summerready=function(){

@@ -5,10 +5,9 @@
  * 3、日期时间格式化：datePattern("yyyy-MM-dd EE hh:mm:ss", date) =>2009-03-10 周二 08:09:04
  * 4、兼容获取权限：getPermission(["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"], successFn)
  */
- 
 var CommonUtil = {
 	//图片加水印
-	watermark : function(params, successFn) {
+	watermark : function(params) {
 		//调用定位
 		var self=this;
 		this.getLocation(function(args) {
@@ -26,11 +25,10 @@ var CommonUtil = {
 				"src" : params.srcImage, //源图片路径
 				"target" : params.targetImage, //目标图片路径
 				"textGroup" : textgroup,
-				"callback":"successCallback(sender,args)"
+				"callback" : params.callback
 			}; 
 			 summer.callService("UMGraphics.watermark", data, false);
 			 
-			  successFn(_sender, _args);
 		});
 	},
 	//获取当前位置

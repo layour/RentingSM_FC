@@ -70,7 +70,7 @@
 						<div class="um-list-item-bodys">
 							项目基础信息
 							<span class="frp">
-								<i class="project icon iconfont icon-right"></i>&nbsp;
+								<i class="baseMessage icon iconfont icon-right"></i>&nbsp;
 								<i class="icon iconfont icon-enter"></i>
 							</span>
 						</div>
@@ -137,6 +137,10 @@
 			        </div> -->
 		</div>
 		<script>
+		summerready=function(){
+			var sourceId=summer.pageParam.source;
+			$("."+sourceId).addClass('active').siblings('i').addClass("active");
+		}
 			new Vue({
 		      el: '#app',
 		      data:{
@@ -254,7 +258,7 @@
 					actionBar: {
 						title: "添加担保人",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#007aff",
+						backgroundColor: "#039BE5",
 						leftItem:{
 								image: "img/back.png",
 								method:"",//返回按钮自定义事件
@@ -262,10 +266,12 @@
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						},
 						rightItems:[{
-				          type:"image",
-				          image:"img/useplus.png",
-				          method:"addSponsor()"
-				      }]
+						type:"text",
+						text:"添加",
+						textColor:"#ffffff" ,
+						method:"addSponsor()"
+					   }]
+						 
 
 					}
 				});

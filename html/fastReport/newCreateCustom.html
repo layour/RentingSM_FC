@@ -143,11 +143,6 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
-			function successCallback(sender, args) {
-				newCreateCustom.cardUrl = sender.target;
-				newCreateCustom.cardShow = true;
-			}
-
 			var newCreateCustom=new Vue({
 			el: '#app',
 			data() {
@@ -203,52 +198,10 @@
 						_self.message.sex = args.sex;
 						_self.message.dateBirth = args.birth_date;
 						_self.message.address = args.address;
-						_self.cardShow = !_self.cardShow;
-
-						summer.getNativeLocation({
-							"single" : "true"
-						}, function(arg) {
-							var textgroup = [{
-								text : args.name,
-								style : {
-									"left" : "20",
-									"top" : "0",
-									"right" : "0",
-									"bottom" : "80",
-									"font-size" : "20"
-								}
-							}, {
-								text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
-								style : {
-									"left" : "20",
-									"top" : "0",
-									"right" : "0",
-									"bottom" : "50",
-									"font-size" : "20"
-								}
-							}, {
-								text : arg.address,
-								style : {
-									"left" : "20",
-									"top" : "0",
-									"right" : "0",
-									"bottom" : "20",
-									"font-size" : "20"
-								}
-							}];
-							var data = {
-								"src" : args.imagePath, //源图片路径
-								"target" : args.imagePath, //目标图片路径
-								"textGroup" : textgroup,
-								"callback":"successCallback(sender,args)"
-							};
-			                summer.callService("UMGraphics.watermark", data, false);
-						}, function(args) {
-							summer.toast({
-				            	"msg" : "获取位置信息错误：" + JSON.stringify(args)
-				            });
-						});
-					 
+						 CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name,callback:function(arg){
+					      	 _self.cardUrl=arg.target;
+					      	 _self.cardShow = true;
+					      }});
 					}, function(args) {
 						console.log(args);
 					});
@@ -354,6 +307,7 @@
 						summer.toast({msg:"请选择婚姻状况"});
 						return false;
 					}
+					return true;
 				},
 				savePerson:function() {
 					 if(!this.messageTest()){
@@ -364,6 +318,9 @@
 						url : 'html/fastReport/setProject.html',
 						create : false,
 						type : 'actionBar',
+						pageParam:{
+							source:"customer"
+						},
 						actionBar : {
 							title : "快捷报单",
 							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）

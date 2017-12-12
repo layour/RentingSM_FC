@@ -74,13 +74,13 @@
 							<span class="fl" @click="surePickerTask">取消</span><span class="fr" @click="surePickerTask('confirm')">确定</span>
 						</p>
 				</mt-popup>
-				<button  type="button" class='btn  um-btn-primary' @click="save">
-					保存
-				</button>
 			</div>
 		</div>
 		<script>
-			var addCar=new Vue({
+			function save(){
+				baseMessage.save();
+			}
+			var baseMessage=new Vue({
 			el:'#baseMessage',
 			data() {
 				return {
@@ -111,7 +111,8 @@
 			},
 			created() {
 
-			}, methods: {
+			},
+			 methods: {
 				goBack() {
 					summer.closeWin();
 				},
@@ -142,6 +143,17 @@
 					}
 				},
 				save() {
+					if(this.programStyle==""){
+						summer.toast({msg:"请选择项目类型"});
+						return;
+					}else if(this.taskStyle==""){
+						summer.toast({msg:"请选择业务类型"});
+						return;
+					}
+					summer.execScript({
+					    winId: "setProject",
+					    script: "addRight('baseMessage')"
+					});
 					summer.closeWin()
 				}
 			}

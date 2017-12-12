@@ -36,13 +36,16 @@
 			color:rgba(136,153,170,1);	
 		}	
 		.customList:first-child{
-	margin-top:0px;
+			margin-top:0px;
 		}
 		.customList{
 			 position: relative;
 			 margin-top:0.2rem;
 		}
-			.customList p.title{
+		.customList:active{
+			background:#f6f6f6;
+		}
+		.customList p.title{
 			font-size:0.32rem;
 			color:#039be5;
 			line-height:0.88rem;
@@ -85,21 +88,21 @@
 			<div class="um-content">
 			   <div class="list customList um-bgc-white">
 			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="openDetail()">
+			       <div class="center" onclick="completeCustom()">
 			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
 			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
 			       </div>
 			    </div>
 			    <div class="list customList um-bgc-white">
 			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="openDetail()">
+			       <div class="center" onclick="completeCustom()">
 			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
 			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
 			       </div>
 			    </div>
 			    <div class="list customList um-bgc-white">
 			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="openDetail()">
+			       <div class="center" onclick="completeCustom()">
 			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
 			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
 			       </div>
@@ -138,5 +141,35 @@
 					}
 				});
 		}
+		function completeCustom(){
+			//此处应调后台接口，完成客户选择
+		 	summer.openWin({
+				id : 'setProject',
+				url : 'html/fastReport/setProject.html',
+				create : false,
+				type : 'actionBar',
+				pageParam:{
+					source:"customer"
+				},
+				actionBar : {
+					title : "快捷报单",
+					titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor : "#039be5",
+					leftItem : {
+						image : "img/back.png",
+						method : "", //返回按钮自定义事件
+						text : "返回",
+						textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems : [{
+						type : "text",
+						text : "下一步",
+						textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						method : "nextStopInput()" //在打开的window中自定义事件
+					}]
+				}
+			});
+		}
+		
 	</script>
 </html>

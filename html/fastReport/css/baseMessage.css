@@ -34,9 +34,11 @@
 	color:#dedede;
 }
 .pickerColor {
- 
   width: 100%;
   background: #ffffff;
+}
+i.iconfont{
+	color:#dbdbdb;
 }
 .pickerColor > p {
       line-height: .88rem;
