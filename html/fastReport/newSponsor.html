@@ -182,13 +182,13 @@
 					}else if(this.message.address==""){
 						summer.toast({msg:"住址不能为空"});
 						return false;
-					}else if(this.message.phone==""){
+					}/*else if(this.message.phone==""){
 						summer.toast({msg:"手机号不能为空"});
 						return false;
 					}else if(!phoneCard.test(this.message.phone)){
 						summer.toast({msg:"手机号格式不正确"});
 						return false;
-					} 
+					} */
 					return true;
 				},
 		        cardIdentify:function(){
@@ -240,13 +240,21 @@
 					 if(!this.messageTest()){
 					 	return;
 					 };
-					 var message=JSON.parse(JSON.stringify(this.message));
+					 var message= JSON.stringify(this.message);
 					 console.log(message);
+					/* summer.execScript({
+					    winId: "mySponsor",
+					    script: "addSponsor('nihao')"
+					});
+					 summer.closeWin();*/
+					 
+					 
 					 summer.execScript({
 					    winId: "mySponsor",
-					    script: "addSponsor('"+message+"')"
+					    script: "addSponsor1('"+message+"')"
 					});
-					 summer.closeWin();
+				
+				summer.closeWin();
 						 
 				},
 		        openPicker:function() {

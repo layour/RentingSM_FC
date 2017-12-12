@@ -63,6 +63,10 @@
             </div>
 		</div>
 		<script>
+			function addSponsor1(args){
+				console.log(args);
+				mySponsor.sponsorList.push(JSON.parse(args));
+			}
 			var mySponsor=new Vue({
 					el:'#mySponsor',
 					data(){
@@ -100,10 +104,6 @@
 						}
 					}
 				})
-			function addSponsor(args){
-				console.log(args);
-				mySponsor.sponsorList.push(JSON.parse(args));
-			}
 			function saveMessage(){
 				summer.execScript({
 				    winId: "setProject",
