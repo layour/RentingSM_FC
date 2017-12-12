@@ -9,10 +9,11 @@
 		<script src="../../js/summer.js" ></script>		
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<style>
 		.customList:first-child{
-	margin-top:0px;
+			margin-top:0px;
 		}
 		.customList{
 			 position: relative;
@@ -47,20 +48,13 @@
 		</style>
 	</head>
 	<body>
-		<div class="um-win" id="index">
+		<div class="um-win" id="mySponsor">
 			<div class="um-content">
-				<div class="list customList um-bgc-white">
-			       <p class="pl20 title pr20">张三<span class="status fr"></p>
-			       <div class="center" onclick="openDetail()">
-			       		<p class="type pl10"><span>手机号 :</span> <span> 18810622176</span> </p>
-			      		<p class="time pl10 pr10"><span>身份证：<span>413344198812263463</span></span></p>
-			       </div>
-			    </div>
-			    <div class="list customList um-bgc-white">
-			       <p class="pl20 title pr20">张三<span class="status fr"></p>
-			       <div class="center" onclick="openDetail()">
-			       		<p class="type pl10"><span>手机号 :</span> <span> 18810622176</span> </p>
-			      		<p class="time pl10 pr10"><span>身份证：<span>413344198812263463</span></span></p>
+				<div class="list customList um-bgc-white" v-for="(item,index) in sponsorList">
+			       <p class="pl20 title pr20">{{item.username}}<span class="status fr"></p>
+			       <div class="center"  >
+			       		<p class="type pl10"><span>手机号 :</span> <span>{{item.phone}}</span> </p>
+			      		<p class="time pl10 pr10"><span>身份证：<span>{{item.card}}</span></span></p>
 			       </div>
 			    </div>
 			</div>
@@ -69,6 +63,47 @@
             </div>
 		</div>
 		<script>
+			var mySponsor=new Vue({
+					el:'#mySponsor',
+					data(){
+						return {
+							sponsorList:[{
+								username:'张三',
+					      		card:'23232323',
+					      		sex:'男',
+					      		address:'北京市海淀区',
+					      		phone:'18703652736',
+					      		dateBirth:'19880520'
+							}]
+								 
+						}
+					},
+					methods:{
+						opensubmitFinanl(){
+							summer.openWin({
+								id:'finanlSubmit',
+								url:'html/fastReport/finanlSubmit.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+									title: "提交评审",
+									titleColor: "#ffffff",
+									backgroundColor: "#007aff",
+									leftItem:{
+											image: "img/back.png",
+											method:'',
+											text:"返回",
+											textColor:"#ffffff"
+									}
+								}
+							});
+						}
+					}
+				})
+			function addSponsor(args){
+				console.log(args);
+				mySponsor.sponsorList.push(JSON.parse(args));
+			}
 			function saveMessage(){
 				summer.execScript({
 				    winId: "setProject",

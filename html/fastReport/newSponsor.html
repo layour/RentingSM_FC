@@ -156,8 +156,6 @@
 					      		sex:'',
 					      		address:'',
 					      		phone:'',
-					      		phoneAddress:'',
-					      		marrige:'',
 					      		dateBirth:''
 					      	}
 						}
@@ -242,6 +240,12 @@
 					 if(!this.messageTest()){
 					 	return;
 					 };
+					 var message=JSON.parse(JSON.stringify(this.message));
+					 console.log(message);
+					 summer.execScript({
+					    winId: "mySponsor",
+					    script: "addSponsor('"+message+"')"
+					});
 					 summer.closeWin();
 						 
 				},
