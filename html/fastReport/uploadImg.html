@@ -14,6 +14,7 @@
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script src="../../js/common.js" ></script>
 		<style>
 			.uploadImg{
 				font-size: 14px;
@@ -113,6 +114,14 @@
 			</mt-popup>
     </div>
     <script>
+				summerready = function() {
+					var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
+					summer.getPermission(params, function(args) {
+						//alert(args); //成功返回OK
+					}, function(args) {
+						//alert(args); //失败返回illegal access
+					})
+				}
         var uploadVue=new Vue({
           el:'#uploadImg',
           data(){
@@ -143,20 +152,23 @@
 						openCame(){
 							// 打开相机
 							var that=this
-							summer.getPermission(["android.permission.CAMERA","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE"],
-								function successFn(){
-								},
-								function errorFn(err){
-									alert(err)
-							})
-							this.popupVisible=false;
+              this.popupVisible=false;
 							summer.openCamera({
 								compressionRatio:0.5,
 								callback : function(args){
 									// $summer.alert(args);
-								 // alert(args.imgPath);
+								//  alert(args.imgPath);
 									if(that.status=='apply'){
-										that.list.applyImg=args.compressImgPath
+										that.list.applyImg=args.imgPath;
+										CommonUtil.watermark({
+											srcImage:args.compressImgPath,
+											targetImage:args.compressImgPath,
+											name:'融资租赁申请表',
+											callback:function(arg){
+													that.list.applyImg=arg.target;
+													alert(arg.target)
+											 }
+										});
 									}else if(that.status=='marry'){
 										that.list.marryImg=args.compressImgPath
 									}else if(that.status=='residence'){
@@ -170,6 +182,7 @@
 									}
 								}
 							});
+
 						},
 						uploadImg(){
 							// 选择相册
@@ -181,7 +194,16 @@
 							      // $summer.alert(args);
 							      // alert(args.imgPath);
 										if(that.status=='apply'){
-											that.list.applyImg=args.compressImgPath
+											that.list.applyImg=args.imgPath;
+											CommonUtil.watermark({
+												srcImage:args.compressImgPath,
+												targetImage:args.compressImgPath,
+												name:'融资租赁申请表',
+												callback:function(arg){
+													alert(arg)
+														that.list.applyImg=arg.target;
+												 }
+											});
 										}else if(that.status=='marry'){
 											that.list.marryImg=args.compressImgPath
 										}else if(that.status=='residence'){
@@ -198,18 +220,42 @@
 						},
 						save(){
 							//http
-							summer.execScript({
-							    winId: "setProject",
-							    script: "addRight('uploadImg')"
-							});
-							summer.closeWin()
+							var that=this;
+							summer.multiUpload({
+						    fileArray : [
+									{fileURL:that.list.applyImg,type:"image/jpeg",name:"imgs"},
+									{fileURL:that.list.marryImg,type:"image/jpeg",name:"imgs"},
+									{fileURL:that.list.residenceImg,type:"image/jpeg",name:"imgs"},
+									{fileURL:that.list.assetsImg,type:"image/jpeg",name:"imgs"},
+									{fileURL:that.list.InterviewImg,type:"image/jpeg",name:"imgs"},
+									{fileURL:that.list.otherImg,type:"image/jpeg",name:"imgs"}
+								],
+						    params : {
+						        a : 1   //参数
+						    },
+						    // headers :{},
+						    SERVER : "http://***",
+						    timeout : 10
+							}, "multiUploadCallback()", "multiUploadErrCallback()");
+
+
 						}
 					}
         })
 				function save(){
 					uploadVue.save()
 				}
-
+				function multiUploadCallback(ret){
+						alert("成功"+ JSON.stringify(ret));
+						summer.execScript({
+								winId: "setProject",
+								script: "addRight('uploadImg')"
+						});
+						summer.closeWin()
+				}
+				function multiUploadErrCallback(err){
+						alert("失败"+ JSON.stringify(err));
+				}
     </script>
   </body>
 </html>

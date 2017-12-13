@@ -26,9 +26,8 @@ var CommonUtil = {
 				"target" : params.targetImage, //目标图片路径
 				"textGroup" : textgroup,
 				"callback" : params.callback
-			}; 
+			};
 			 summer.callService("UMGraphics.watermark", data, false);
-			 
 		});
 	},
 	//获取当前位置
@@ -41,6 +40,6 @@ var CommonUtil = {
 			summer.toast({
             	"msg" : "获取位置信息错误：" + JSON.stringify(args)
             });
-		}); 
+		});
 	},
-}; 
+};
