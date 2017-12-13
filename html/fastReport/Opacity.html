@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title></title>
+        <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+        <style>
+			/*遮罩层*/
+			.overlay {
+				background-color: rgba(0, 0, 0, 0.5);
+				 
+			}
+			html {
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+			 
+			 
+			.middle{
+				width:80%;
+				height:120px;
+				position: absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+				margin:auto;
+				border-radius:5px;
+			}
+			.middle .title{
+				border-bottom:1px solid #f6f6f6;
+				padding:25px 15px;
+			}
+			.action span{
+				padding:9px 12px;
+				color:#039be5;
+				font-size:0.34rem;
+			}
+			.action span:first-child{
+				border-right:1px solid #f6f6f6;
+			}
+        </style>
+        <script>
+			(function(doc, win) {
+				var docEl = doc.documentElement,
+				    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+				    recalc = function() {
+					var clientWidth = docEl.clientWidth;
+					if (clientWidth >= 750) {
+						clientWidth = 750;
+					};
+					if (!clientWidth)
+						return;
+					docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+				};
+				if (!doc.addEventListener)
+					return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			})(document, window);
+        </script>
+    </head>
+    <body>
+        <div class="um-win pr" id="wrap">
+            <div class="um-content">
+            	<div class="middle um-bgc-white">
+            		<p class="tc  title">确定要删除吗？</p>
+            		<p class="um-box action"><span class="um-bf1 tc cancleChoose" onclick="cancleChoose()" >取消</span><span class="um-bf1 tc makeSure" onclick="makeSure()" >确定</span></p>
+            	</div>
+            </div>
+             
+        </div>
+    </body>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/summer.js"></script>
+    <script>
+		summerready = function() {
+		/*	$('.um-content').on('touchstart', function() {
+				closeOpacity();
+			})
+			$('.cancleChoose').on('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				cancleChoose()
+			});
+			 
+			$('.makeSure').on('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				makeSure()
+			});*/
+		}
+		
+	 
+
+	  function cancleChoose(){
+	  	summer.toast({msg:"取消"});
+	  	closeOpacity();
+	  }
+	  function makeSure(){
+	  	summer.toast({msg:"确定"});
+	  	closeOpacity();
+	  }
+		// 关闭当前
+		function closeOpacity() {
+			 summer.closeFrame({id:"Opacity"});
+		}
+		
+		 
+    </script>
+</html>

@@ -13,7 +13,7 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
-		<div class="um-frame" id="index">
+		<div class="um-frame" id="fra_examine">
 			<div class="um-header-light">
 				<div class="sera">
 						<div class="s-box" onclick="opensearch()">
@@ -25,46 +25,23 @@
 				</div>
 			</div>
 			<div class="um-content">
-				 <div class="list customList um-bgc-white">
-			       <p class="pl10 title pr10">评审中(徐毅)<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="openDetail()">
-			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
-			       		<p class="type card pl10 status">312329197605205638   <span class="fr">已驳回</span></p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
+				  <div class="list customList um-bgc-white" v-for="(item,index) in dataList">
+			       <p class="pl10 title pr10">{{item.name}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.manager}}</span></p>
+			       <div class="center"   @click="openDetail(item.programId)">
+			       		<p class="type pl10"><span>{{item.personType}} </span> | <span>{{item.taskType}}</span> </p>
+			       		<p class="type card pl10 status">{{item.programNum}}   <span class="fr">{{item.status}}</span></p>
+			      		<p class="time pl10 pr10"><span>创建时间：<span>{{item.creatTime}}</span></span></p>
 			       </div>
-			      <p class=" select um-box"><span class="um-bf1   tc"><i class="iconfont icon-Upload mr5"></i>上传资料</span><span class="um-bf1  tc"><i class="iconfont icon-submit mr5"></i>提交</span><span class="um-bf1   tc"><i class="iconfont icon-modify mr5"></i>修改</span><span class="um-bf1  tc"><i class="iconfont icon-nav_delete mr5"></i>删除</span>   </p>
+			       <p class=" select um-box"  >
+				       <span class="um-bf1  tc"  @click="openOpacity(item.programId)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
+			       </p>
+			         
 			    </div>
-			    <div class="list customList um-bgc-white">
-			       <p class="pl10 title pr10">评审中(徐毅)<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="openDetail()">
-			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
-			       		<p class="type card pl10 status">312329197605205638   <span class="fr">已驳回</span></p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
-			       </div>
-			      <p class=" select um-box"><span class="um-bf1   tc"><i class="iconfont icon-Upload mr5"></i>上传资料</span><span class="um-bf1  tc"><i class="iconfont icon-submit mr5"></i>提交</span><span class="um-bf1   tc"><i class="iconfont icon-modify mr5"></i>修改</span><span class="um-bf1  tc"><i class="iconfont icon-nav_delete mr5"></i>删除</span>   </p>
-			    </div>
-			    <div class="list customList um-bgc-white">
-			       <p class="pl10 title pr10">评审中(徐毅)<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="openDetail()">
-			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
-			       		<p class="type card pl10 status">312329197605205638   <span class="fr">已驳回</span></p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
-			       </div>
-			      <p class=" select um-box"><span class="um-bf1   tc"><i class="iconfont icon-Upload mr5"></i>上传资料</span><span class="um-bf1  tc"><i class="iconfont icon-submit mr5"></i>提交</span><span class="um-bf1   tc"><i class="iconfont icon-modify mr5"></i>修改</span><span class="um-bf1  tc"><i class="iconfont icon-nav_delete mr5"></i>删除</span>   </p>
-			    </div>
-			    <div class="list customList um-bgc-white">
-			       <p class="pl10 title pr10">评审中(徐毅)<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="openDetail()">
-			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
-			       		<p class="type card pl10 status">312329197605205638   <span class="fr">已驳回</span></p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
-			       </div>
-			      <p class=" select um-box"><span class="um-bf1   tc"><i class="iconfont icon-Upload mr5"></i>上传资料</span><span class="um-bf1  tc"><i class="iconfont icon-submit mr5"></i>提交</span><span class="um-bf1   tc"><i class="iconfont icon-modify mr5"></i>修改</span><span class="um-bf1  tc"><i class="iconfont icon-nav_delete mr5"></i>删除</span>   </p>
-			    </div>
-			    
 			</div>
 		</div>
-		<script>function opensearch(){
+		<script src="../../js/vue.js" ></script>
+		<script>	
+			 function opensearch(){
 		    	summer.openWin({
 					id:'search',
 					url:'html/fastReport/search.html',
@@ -74,35 +51,169 @@
 					
 				});
 		    }
-			
+		     var _pageNum=1;
 			summerready=function(){
+				getData();
 				summer.setRefreshHeaderInfo({
 				    visible: true,
 				    loadingImg: 'img/refresh.png',
 				    bgColor: '#ffffff',
-				    textColor: '#999999',
+				    textColor: '#aaaaaa',
 				    textDown: '下拉刷新...',
 				    textUp: '松开刷新...',
 				    showTime: true
 				}, function(ret, err) {
 				    //通常在这里从服务器加载数据，t
-				    //alert(9);
+				   getData(1,true);
+               	   _pageNum=1;
 				    summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
 				});
 				summer.setRefreshFooterInfo({
 				    visible: true,
 				    loadingImg: 'img/refresh.png',
 				     bgColor: '#ffffff',
-				    textColor: '#999999',
+				    textColor: '#aaaaaa',
 				    textDown: '上拉刷新...',
 				    textUp: '松开刷新...',
 				    showTime: true
 				}, function(ret, err) {
 				    //通常在这里从服务器加载数据，
-				     summer.toast({msg:"没有更多了"});
+				    _pageNum++;
+        	 		getData(_pageNum,false);
+				    summer.toast({msg:"没有更多了"});
 				    summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
 				});
 			}
+			function getData(num,flag){
+				fra_examine.dataList=[{
+					name:"徐毅",
+					personType:"自然人",
+					taskType:"形式售后回租",
+					programNum:"312329197605205638",
+					status:"审核中",
+					manager:"张飞",
+					programId:"100",
+					creatTime:"2016-09-21"
+				},{
+					name:"徐毅",
+					personType:"自然人",
+					taskType:"形式售后回租",
+					programNum:"312329197605205638",
+					status:"审核中",
+					manager:"张飞",
+					programId:"101",
+					creatTime:"2016-09-21"
+				},{
+					name:"徐毅",
+					personType:"自然人",
+					taskType:"形式售后回租",
+					programNum:"312329197605205638",
+					status:"审核中",
+					manager:"张飞",
+					programId:"102",
+					creatTime:"2016-09-21"
+				},{
+					name:"徐毅",
+					personType:"自然人",
+					taskType:"形式售后回租",
+					programNum:"312329197605205638",
+					status:"审核中",
+					manager:"张飞",
+					programId:"103",
+					creatTime:"2016-09-21"
+				}];
+				//ajax请求
+				/*ajaxRequest({
+			        type: 'post',
+			        url: '/userlink/getMyCorpUser',
+			        param: {param:param}
+			    }, function (res) {
+			    	 summer.hideProgress();
+			          if (!flag) {
+			          	if(_pageNum==1){
+			                if(isEmpty(res.data.content)){
+			                	createNull('addressList');
+			                	return;
+			                }
+			             };
+			                renderList(res.data.content)
+			                if(_pageNum>1){
+			                    summer.refreshFooterLoadDone();
+			                }
+			                if(_pageNum>res.data.totalPages){
+			                	summer.toast({
+			                		msg:"没有更多了"
+			                	});
+			                }
+			
+			            } else {
+			                _pageNum=1;
+			                if(isEmpty(res.data.content)){
+			                	createNull('addressList');
+			                	return;
+			                }
+			                renderFresh(res.data.content);
+			                summer.refreshHeaderLoadDone();
+			            }
+				    }, function (err) {
+				    	 console.log(err);
+					   	 summer.hideProgress();
+					});*/
+			}
+			 var fra_examine= new Vue({
+						          el:'#fra_examine',
+						          data(){
+						            return {
+										    dataList:''
+						                   }
+						              },
+									mounted(){
+									},
+									methods:{
+										 openOpacity(id){
+										 	console.log(id);
+										 	summer.openFrame({
+								                id: 'Opacity',
+								                url: 'html/fastReport/Opacity.html',
+								                position: {
+								                    top: 0,
+								                    left: 0,
+								                    bottom: 0,
+								                    right: 0
+								                },
+							                	opaque: false,
+							                	pageParam:{
+							                		id:id
+							                	}
+							                 })
+										 },
+										 openDetail(id){
+										 	console.log(id);
+										 	summer.openWin({
+												id:'programDetail',
+												url:'html/fastReport/programDetail.html',
+												create:false,
+												type:'actionBar',
+												actionBar: {
+													title: "项目查看",
+													titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+													backgroundColor: "#039be5",
+													leftItem:{
+															image: "img/back.png",
+															method:"",//返回按钮自定义事件
+															text:"返回",
+															textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+													} 
+												},
+												pageParam:{
+							                		id:id
+							                	}
+											});
+										 } 
+									 
+									}
+									
+						        })
 		</script>
 	</body>
 </html>
