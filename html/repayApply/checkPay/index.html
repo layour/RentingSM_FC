@@ -25,6 +25,7 @@
 		</div>
 		<script type="text/javascript">
       summerready = function() {
+			var user = summer.pageParam.user;
          var top = $('.um-header').height() + $('.navbar').height();
          summer.openFrameGroup({
             id: 'checkPay',
@@ -44,12 +45,20 @@
                   bgColor: '#ffffff',
                   hidden: false
                }, {
-                  id: 'toBeSubmitted',
+                  id: 'payProcess',
                   url: 'html/repayApply/checkPay/payProcess.html',
                   bgColor: '#ffffff',
                   hidden: true
                }
             ],
+				pageParam:[
+					{
+			      	"payInfo":user
+			   	},
+					{
+			      	"payProcess":user
+			    	}
+				]
          }, function(ret, err) {
             var index = ret.index;
          });
