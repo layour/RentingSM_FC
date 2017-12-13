@@ -11,6 +11,7 @@
 		<script src="../../../js/jquery.min.js" ></script>
 		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script src="../../../js/font.js" ></script>
+		<script src="../../../js/vue.js" ></script>
 	</head>
 	<body>
 		<div class="um-frame" id="index">
@@ -19,7 +20,7 @@
 				   <li class="first"><strong></strong><i>基本信息</i></li>
 				   <li>
 				      <span>客户信息</span>
-                  <span>徐艺</span>
+                  <span>{{msg}}</span>
 				   </li>
 				   <li>
                   <span>合同号</span>
@@ -107,7 +108,16 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-
+			summerready = function (){
+				user = summer.pageParam.user;
+				payInfo.msg = user;
+			};
+			var payInfo = new Vue({
+				el:'#index',
+				data:{
+					msg:''
+				}
+			});
 		</script>
 	</body>
 </html>

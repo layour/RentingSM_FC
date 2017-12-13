@@ -84,7 +84,6 @@
             callback: function(args) {
                var imgPath = args.compressImgPath;
                g_pathArr.push(imgPath);
-               //var picDiv = '<div class="con">' + '<div class="con-con">' + '<img src="' + imgPath + '">' + '<span class="close iconfont icon-wrong" onClick="closePic(this);"></span>' + '</div></div>';
                var picDiv = '<div class="con">' + '<div class="con-con">' + '<img src="' + imgPath + '"><div class="bottomDelete"></div>' + '<span class="close iconfont icon-backspace" onClick="closePic(this);"></span>' + '</div></div>';
                $("#plus").before(picDiv);
                var len = $("#ibox .con").length - 1;
@@ -110,32 +109,6 @@
                   $("#plus").addClass("none");
                }
             }
-         });
-      }
-
-
-
-      function save(filepath) {
-         //保存提问
-         var question = $.trim($("#question").val());
-         var askJson = {
-            "question": question,
-            "filepath": filepath
-         };
-         var url = "usercenter/feedback";
-         common.ajaxRequest(url, "post", "application/x-www-form-urlencoded", askJson, function(data) {
-            if (data.status == 'success') {
-               common.toast("提交成功", true);
-               setTimeout(function() {
-                  summer.closeWin();
-               }, 2000);
-            } else {
-               common.toast('暂未开通');
-               setTimeout(function() {
-                  summer.closeWin();
-               }, 2000);
-            }
-            summer.hideProgress();
          });
       }
 

@@ -11,6 +11,7 @@
 		<script src="../../../js/jquery.min.js" ></script>
 		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script src="../../../js/font.js" ></script>
+		<script src="../../../js/vue.js" ></script>
 	</head>
 	<body>
 		<div class="um-frame" id="index">
@@ -26,41 +27,22 @@
 			</div>
 			<div class="um-content">
 				<ul class="userList">
-					<li>
+					<li v-for = "k in items">
 						<div class="title">
-							<span class="name">徐艺</span>
-							<span class="state">张仁忠</span>
+							<span class="name">{{k.name}}</span>
+							<span class="state">{{k.manager}}</span>
 							<span class="iconfont icon-customer"></span>
 						</div>
 						<div class="content">
 							<div class="leftCon">
-								<p class="p1">放款金额：￥200000</p>
-								<p class="p2">合同号：CNK1561654</p>
-								<p class="p3">支付表号：CNK15616548965416</p>
-								<p class="p4">放款时间：2017-01-16</p>
+								<p class="p1">放款金额：￥{{k.money}}</p>
+								<p class="p2">合同号：{{k.contract}}</p>
+								<p class="p3">支付表号：{{k.table}}</p>
+								<p class="p4">放款时间：{{k.time}}</p>
 							</div>
 							<div class="enter">
 								<i class="iconfont icon-enter"></i>
-								<b>全部</b>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="title">
-							<span class="name">徐艺</span>
-							<span class="state">张仁忠</span>
-							<span class="iconfont icon-customer"></span>
-						</div>
-						<div class="content">
-							<div class="leftCon">
-								<p class="p1">放款金额：￥200000</p>
-								<p class="p2">合同号：CNK1561654</p>
-								<p class="p3">支付表号：CNK15616548965416</p>
-								<p class="p4">放款时间：2017-01-16</p>
-							</div>
-							<div class="enter">
-								<i class="iconfont icon-enter"></i>
-								<b>全部</b>
+								<b>{{k.type}}</b>
 							</div>
 						</div>
 					</li>
@@ -69,6 +51,46 @@
 		</div>
 	</body>
 	<script type="text/javascript">
+		// 伪造数据
+		var listData = [
+			{
+				name:"徐艺1",
+				manager:"张仁忠",
+				money:"2000000",
+				contract:"CNK1561654",
+				table:"CNK1561489123",
+				time:"2017-01-16",
+				type:"全部"
+			},
+			{
+				name:"徐艺2",
+				manager:"张仁忠",
+				money:"2000000",
+				contract:"CNK1561654",
+				table:"CNK1561489123",
+				time:"2017-01-16",
+				type:"全部"
+			},
+			{
+				name:"徐艺3",
+				manager:"张仁忠",
+				money:"2000000",
+				contract:"CNK1561654",
+				table:"CNK1561489123",
+				time:"2017-01-16",
+				type:"全部"
+			},
+			{
+				name:"徐艺4",
+				manager:"张仁忠",
+				money:"2000000",
+				contract:"CNK1561654",
+				table:"CNK1561489123",
+				time:"2017-01-16",
+				type:"全部"
+			},
+		];
+
 		summerready=function(){
 			summer.setRefreshHeaderInfo({
 				 visible: true,
@@ -99,6 +121,7 @@
 		}
 		$(function (){
 			$('.userList .content').on('click',function (){
+				var user = $(this).prev().find('.name').text();
 				summer.openWin({
 					id:'checkPay',
 					url:'html/repayApply/checkPay/index.html',
@@ -114,6 +137,9 @@
 								text:"返回",
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						}
+					},
+					pageParam: {
+						user: user
 					}
 				});
 			});
@@ -128,5 +154,11 @@
 				}
 			});
 		};
+		var all = new Vue({
+			el:'#index',
+			data:{
+				items:listData
+			}
+		});
 	</script>
 </html>

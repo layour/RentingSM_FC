@@ -11,58 +11,22 @@
 		<script src="../../../js/jquery.min.js" ></script>
 		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script src="../../../js/font.js" ></script>
+		<script src="../../../js/vue.js" ></script>
 	</head>
 	<body>
 		<div class="um-frame" id="index">
 			<div class="um-content">
 				<h2 class="processNum">流程编号：乘用车放款审核流程31500015</h2>
 				<ul class="processList">
-					<li>
+					<li
+						v-for = "(k, index) in items"
+						v-bind:class="[index == items.length-1 ? '' : 'borderActive']"
+					>
 						<img src="../../../img/true.png" alt="">
 						<div class = "box">
-							<p class="p1">开始</p>
-							<p class="p2">【6100075】张仁忠：发起流程</p>
-							<p class="p3">2017-12-08 09：41：32</p>
-						</div>
-					</li>
-					<li>
-						<img src="../../../img/true.png" alt="">
-						<div class = "box">
-							<p class="p1">开始</p>
-							<p class="p2">【6100075】张仁忠：发起流程</p>
-							<p class="p3">2017-12-08 09：41：32</p>
-						</div>
-					</li>
-					<li>
-						<img src="../../../img/true.png" alt="">
-						<div class = "box">
-							<p class="p1">开始</p>
-							<p class="p2">【6100075】张仁忠：发起流程</p>
-							<p class="p3">2017-12-08 09：41：32</p>
-						</div>
-					</li>
-					<li>
-						<img src="../../../img/true.png" alt="">
-						<div class = "box">
-							<p class="p1">开始</p>
-							<p class="p2">【6100075】张仁忠：发起流程</p>
-							<p class="p3">2017-12-08 09：41：32</p>
-						</div>
-					</li>
-					<li>
-						<img src="../../../img/true.png" alt="">
-						<div class = "box">
-							<p class="p1">开始</p>
-							<p class="p2">【6100075】张仁忠：发起流程</p>
-							<p class="p3">2017-12-08 09：41：32</p>
-						</div>
-					</li>
-					<li>
-						<img src="../../../img/true.png" alt="">
-						<div class = "box">
-							<p class="p1">开始</p>
-							<p class="p2">【6100075】张仁忠：发起流程</p>
-							<p class="p3">2017-12-08 09：41：32</p>
+							<p class="p1">{{k.status}}</p>
+							<p class="p2">【{{k.num}}】{{k.manager}}：{{k.process}}</p>
+							<p class="p3">{{k.time}}</p>
 						</div>
 					</li>
 				</ul>
@@ -70,33 +34,59 @@
 		</div>
 		<script type="text/javascript">
 			summerready=function(){
-				summer.setRefreshHeaderInfo({
-					 visible: true,
-					 loadingImg: 'img/refresh.png',
-					 bgColor: '#ffffff',
-					 textColor: '#aaaaaa',
-					 textDown: '下拉刷新...',
-					 textUp: '松开刷新...',
-					 showTime: true
-				}, function(ret, err) {
-					 //通常在这里从服务器加载数据，t
-					//  alert(1);
-					 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
-				});
-				summer.setRefreshFooterInfo({
-					 visible: true,
-					 loadingImg: 'img/refresh.png',
-					 bgColor: '#ffffff',
-					 textColor: '#aaaaaa',
-					 textDown: '上拉刷新...',
-					 textUp: '松开刷新...',
-					 showTime: true
-				}, function(ret, err) {
-					 //通常在这里从服务器加载数据，
-					 summer.toast({msg:"没有更多了"});
-					 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
-				});
+				var user = summer.pageParam.user;
 			}
+			// 伪造数据
+			var processData = [
+				{
+					status:"开始",
+					num:6100075,
+					manager:"张仁忠",
+					process:"发起流程",
+					time:"2017-12-08 09:41:32"
+				},
+				{
+					status:"进行中1",
+					num:6100075,
+					manager:"张仁忠",
+					process:"发起流程",
+					time:"2017-12-08 09:41:32"
+				},
+				{
+					status:"进行中2",
+					num:6100075,
+					manager:"张仁忠",
+					process:"发起流程",
+					time:"2017-12-08 09:41:32"
+				},
+				{
+					status:"进行中3",
+					num:6100075,
+					manager:"张仁忠",
+					process:"发起流程",
+					time:"2017-12-08 09:41:32"
+				},
+				{
+					status:"进行中4",
+					num:6100075,
+					manager:"张仁忠",
+					process:"发起流程",
+					time:"2017-12-08 09:41:32"
+				},
+				{
+					status:"结束",
+					num:6100075,
+					manager:"张仁忠",
+					process:"发起流程",
+					time:"2017-12-08 09:41:32"
+				},
+			];
+			var payProcess = new Vue({
+				el:'#index',
+				data:{
+					items:processData
+				}
+			});
 		</script>
 	</body>
 </html>
