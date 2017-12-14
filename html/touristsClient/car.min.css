@@ -44,8 +44,9 @@ input::-webkit-input-placeholder {
 }
 .addCar table tr td input {
   border: none;
-  height: .6rem;
+  height: .8rem;
   text-align: right;
+  line-height: .8rem;
   outline: none;
 }
 .addCar table tr td button {

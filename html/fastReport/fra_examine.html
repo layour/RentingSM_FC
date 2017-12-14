@@ -13,7 +13,7 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
-		<div class="um-frame" id="fra_examine">
+		<div class="um-frame" id="fra_examine" v-cloak>
 			<div class="um-header-light">
 				<div class="sera">
 						<div class="s-box" onclick="opensearch()">
@@ -35,12 +35,12 @@
 			       <p class=" select um-box"  >
 				       <span class="um-bf1  tc"  @click="openOpacity(item.programId)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
 			       </p>
-			         
+
 			    </div>
 			</div>
 		</div>
 		<script src="../../js/vue.js" ></script>
-		<script>	
+		<script>
 			 function opensearch(){
 		    	summer.openWin({
 					id:'search',
@@ -48,7 +48,7 @@
 					pageParam:{
 						source:"program"
 					}
-					
+
 				});
 		    }
 		     var _pageNum=1;
@@ -145,7 +145,7 @@
 			                		msg:"没有更多了"
 			                	});
 			                }
-			
+
 			            } else {
 			                _pageNum=1;
 			                if(isEmpty(res.data.content)){
@@ -203,16 +203,16 @@
 															method:"",//返回按钮自定义事件
 															text:"返回",
 															textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-													} 
+													}
 												},
 												pageParam:{
 							                		id:id
 							                	}
 											});
-										 } 
-									 
+										 }
+
 									}
-									
+
 						        })
 		</script>
 	</body>
