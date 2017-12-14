@@ -108,16 +108,18 @@
          el:'#index',
          data(){
             return{
+					// 车架号，车辆型号，发动机号
                vin:'',
                version:'',
                motorNum:'',
                popupVisible:false,
+					// 合格证
                certificateImg:'',
-               // GPS1
+               // GPS1 卡号，类型，厂家
                GPS_1_num:'',
                GPS_1_type:'',
+					GPS_1:'请选择',
                pickedGPS_1:'',
-               GPS_1:'请选择',
                GPS_1_state:false,
                slots_1: [
                   {
@@ -128,11 +130,11 @@
                      textAlign: 'center'
                   }
                ],
-               // GPS2
+               // GPS2 卡号，类型，厂家
                GPS_2_num:'',
                GPS_2_type:'',
+					GPS_2:'请选择',
                pickedGPS_2:'',
-               GPS_2:'请选择',
                GPS_2_state:false,
                slots_2: [
                   {
@@ -150,6 +152,8 @@
          methods:{
             // 点击保存
             save(){
+					// 点击保存携带参数到payApply页面
+					
                summer.closeToWin({
    				   id: 'payApply'
    				});

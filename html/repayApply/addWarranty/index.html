@@ -73,6 +73,7 @@
                return{
                   insurerStatus:false,
                   pickedInsurer:'',
+						// 保险公司
                   insurer:'请选择',
                   slots: [
                      {
@@ -83,15 +84,19 @@
                         textAlign: 'center'
                      }
                   ],
+						// 保费总额
                   warrantyMoney:'',
                   popupVisible:false,
+						// 保单
                   warrantyImg:''
                }
             },
             methods:{
+					// 选择保险公司
                onInsurerChange(picker,values){
                   this.pickedInsurer = values[0];
                },
+					// 选择保险公司
                sureInsurer(param){
                   this.insurerStatus = !this.insurerStatus;
                   this.popupVisible = false;
@@ -101,6 +106,14 @@
                },
                // 点击保存
                save(){
+						var insurer = this.insurer;
+						var warrantyMoney = this.warrantyMoney;
+						var warrantyImg = this.warrantyImg;
+						// 点击保存携带参数到payApply页面
+						summer.execScript({
+						    winId: 'payApply',
+						    script: "saveWarranty('"+insurer+"','"+warrantyMoney+"','"+warrantyImg+"')"
+						});
                   summer.closeToWin({
       				   id: 'payApply'
       				});
