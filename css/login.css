@@ -26,7 +26,7 @@ body,.um-frame,.um-win,html{
    height: 1.8rem;
    position: absolute;
    border-radius: 0.9rem;
-   background-color: #0e3a5d;
+   background-color: #fff;
    left: 50%;
    margin-left: -0.9rem;
    top: 2.4rem;
@@ -41,7 +41,7 @@ body,.um-frame,.um-win,html{
     font-size: 1.2rem;
     line-height: 1.8rem;
     text-align: center;
-    color: #fff;
+    color: #0e3a5d;
 }
 form{
    width: 6.4rem;
