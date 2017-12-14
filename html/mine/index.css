@@ -126,3 +126,24 @@ strong{
    text-align: center;
    bottom: 0rem;
 }
+.um-modal .um-modal-title{
+	font-weight:normal;
+	color:#485358;
+}
+.um-modal{
+	border-radius:5px;
+}
+.um-modal .um-modal-btns .btn:visited{
+	color:#485358;
+	font-weight:normal;
+}
+.um-modal .um-modal-btns .active.btn{
+	background-color:white;
+}
+.um-modal .um-modal-content{
+	border-bottom:1px solid #f0f0f0;
+}
+.um-modal .um-modal-btns .btn:visited, .um-modal .um-modal-btns .btn-bg:visited, .um-modal .um-modal-btns .um-btn:visited{
+    color: #039be5!important;
+    font-weight: normal!important;
+}

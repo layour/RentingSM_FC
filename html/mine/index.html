@@ -60,12 +60,31 @@
 	</div>
 	<script type="text/javascript">
 		function logout() {
-			summer.openWin({
-				id: 'log',
-				url: 'login.html',
-				isKeep: false,
-				addBackListener: true,
-				create: false
+			var os = $summer.os;
+			UM.confirm({
+				title : '确定要退出吗？',
+				btnText : ["取消", "确定"],
+				overlay : true,
+				ok : function() {
+					summer.rmStorage("userinfo");
+					quitIm();
+					emm.logout({});
+					if (os == "android") {
+						summer.openWin({
+							"id" : 'root',
+							"url" : 'login.html',
+							"isKeep" : false
+						});
+						summer.closeToWin({
+							id : "login"
+						});
+					} else {
+						cordova.exec(null, null, "FrameManager", "initializeWin", [{
+							"id": 'root',
+							"url": 'login.html'
+						}]);
+					}
+				}
 			});
 		};
 		function help(){
