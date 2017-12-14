@@ -132,17 +132,23 @@
   font-size: 0.28rem;
 }
 .gpsChoose > p {
-  padding: .24rem .44rem;
+    padding: .24rem .44rem;
+    line-height: .88rem;
+    padding: 0 .56rem;
+    color: #039BE5;
+    border-top: 1px solid #E0E0E0;
 }
 .gpsChoose > p span {
-  color: #039BE5;
+  color: #34aadc;
 }
 .gpsChoose > p span:last-child {
   float: right;
 }
 .mint-popup{
-   width:100%;
-   padding-top:.2rem;
+    color: #333;
+    font-size: 0.28rem;
+    width:100%;
+    padding-top:.2rem;
 }
 .mint-popup p{
    line-height: .8rem;
