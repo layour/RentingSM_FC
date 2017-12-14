@@ -44,10 +44,12 @@ input::-webkit-input-placeholder {
 }
 .addCar table tr td input {
   border: none;
-  height: .8rem;
+  height: .7rem;
   text-align: right;
-  line-height: .8rem;
+  line-height: .7rem;
   outline: none;
+  margin-top: .09rem;
+  font-size: 14px;
 }
 .addCar table tr td button {
   color: #DEDEDE;
