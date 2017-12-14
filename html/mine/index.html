@@ -66,9 +66,6 @@
 				btnText : ["取消", "确定"],
 				overlay : true,
 				ok : function() {
-					summer.rmStorage("userinfo");
-					quitIm();
-					emm.logout({});
 					if (os == "android") {
 						summer.openWin({
 							"id" : 'root',
