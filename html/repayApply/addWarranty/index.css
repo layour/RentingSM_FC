@@ -54,18 +54,27 @@
   background: #ffffff;
 }
 .insurer .picker-item {
-  font-size: 14px;
+  font-size: 0.28rem;
 }
 .insurer > p {
-  padding: .24rem .44rem;
+    padding: .24rem .44rem;
+    line-height: .88rem;
+    padding: 0 .56rem;
+    color: #039BE5;
+    border-top: 1px solid #E0E0E0;
 }
 .insurer > p span {
-  color: #039BE5;
+  color: #34aadc;
 }
 .insurer > p span:last-child {
   float: right;
 }
+.picker-slot-wrapper{
+    height: auto;
+}
 .mint-popup{
+   color: #333;
+   font-size: 0.28rem;
    width:100%;
    padding-top:.2rem;
 }
