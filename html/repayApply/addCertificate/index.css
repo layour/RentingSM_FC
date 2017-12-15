@@ -44,11 +44,12 @@
    border: 0;
    background: none;
    float: right;
-   height: 0.9rem;
-   line-height: 0.9rem;
+   height: 0.28rem;
+   line-height: 0.28rem;
    font-size: 0.28rem;
    text-align: right;
    outline: none;
+   margin-top: 0.3rem;
 }
 .uploadCertificate{
    width: 100%;

@@ -69,16 +69,18 @@ dl dt{
 }
 dl dd{
    width: 4.6rem;
+   height: 0.8rem;
 }
 dl dd input{
    border: 0;
    outline: none;
-   height: 0.8rem;
+   height: 0.28rem;
    width: 4.6rem;
    background: none;
    color: #424242;
    font-size: 0.28rem;
-   line-height: 0.8rem;
+   line-height: 0.28rem;
+   margin-top: 0.25rem;
 }
 *::-webkit-input-placeholder {
     color: #e0e0e0;
