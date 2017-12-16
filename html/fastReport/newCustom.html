@@ -74,7 +74,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="um-win" id="index">
+		<div class="um-win" id="newCustom">
 			<div class="um-header-light">
 				<div class="sera">
 						<div class="s-box" onclick="opensearch()">
@@ -86,36 +86,94 @@
 				</div>
 			</div>
 			<div class="um-content">
-			   <div class="list customList um-bgc-white">
-			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="completeCustom()">
-			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
+			   <div class="list customList um-bgc-white" v-for="(item,index) in dataSource" @click="completeCustom()">
+			       <p class="pl20 title pr20">{{item.name}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.manager}}</span></p>
+			       <div class="center" >
+			       		<p class="type pl10"><span>{{item.personType}} </span> | <span> {{item.taskType}}</span> </p>
+			      		<p class="time pl10 pr10"><span>创建时间：<span>{{item.creatTime}}</span></span></p>
 			       </div>
 			    </div>
-			    <div class="list customList um-bgc-white">
-			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="completeCustom()">
-			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
-			       </div>
-			    </div>
-			    <div class="list customList um-bgc-white">
-			       <p class="pl20 title pr20">张三<span class="status fr"><i class="iconfont icon-customer mr5"></i>张仁泽</span></p>
-			       <div class="center" onclick="completeCustom()">
-			       		<p class="type pl10"><span>自然人 </span> | <span> 形式售后回租</span> </p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>2016-09-21</span></span></p>
-			       </div>
-			    </div>
-			    
 			</div>
 		</div>
 	</body>
 	<script src="../../js/summer.js" ></script>		
 	<script src="../../js/jquery.min.js" ></script>
 	<script src="../../js/common.js" ></script>
+	<script src="../../js/vue.js" ></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	<script>
+		summerready=function(){
+			summer.showProgress();
+		}
+		var newCustom=new Vue({
+			el:"#newCustom",
+			data(){
+				return{
+					dataSource:[{
+						name:"张三",
+						personType:"自然人",
+						taskType:"形式售后回租",
+						programNum:"312329197605205638",
+						status:"审核中",
+						manager:"张飞",
+						programId:"100",
+						creatTime:"2016-09-21"
+					},{
+						name:"张三2",
+						personType:"自然人",
+						taskType:"形式售后回租",
+						programNum:"312329197605205638",
+						status:"审核中",
+						manager:"张飞",
+						programId:"101",
+						creatTime:"2016-09-21"
+					},{
+						name:"张三3",
+						personType:"自然人",
+						taskType:"形式售后回租",
+						programNum:"312329197605205638",
+						status:"审核中",
+						manager:"张飞",
+						programId:"102",
+						creatTime:"2016-09-21"
+					}]
+				}
+			},
+			mounted(){
+				summer.hideProgress();
+			},
+			methods:{
+				completeCustom(id){
+					summer.openWin({
+						id : 'setProject',
+						url : 'html/fastReport/setProject.html',
+						create : false,
+						type : 'actionBar',
+						pageParam:{
+							source:"customer",
+							id:id
+						},
+						actionBar : {
+							title : "快捷报单",
+							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor : "#039be5",
+							leftItem : {
+								image : "img/back.png",
+								method : "", //返回按钮自定义事件
+								text : "返回",
+								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems : [{
+								type : "text",
+								text : "下一步",
+								textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method : "nextStopInput()" //在打开的window中自定义事件
+							}]
+						}
+					});
+				}
+			}
+		});
 		function newCreateCustom(){
 			summer.openWin({
 					id:'newCreateCustom',
@@ -141,35 +199,5 @@
 					}
 				});
 		}
-		function completeCustom(){
-			//此处应调后台接口，完成客户选择
-		 	summer.openWin({
-				id : 'setProject',
-				url : 'html/fastReport/setProject.html',
-				create : false,
-				type : 'actionBar',
-				pageParam:{
-					source:"customer"
-				},
-				actionBar : {
-					title : "快捷报单",
-					titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor : "#039be5",
-					leftItem : {
-						image : "img/back.png",
-						method : "", //返回按钮自定义事件
-						text : "返回",
-						textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					},
-					rightItems : [{
-						type : "text",
-						text : "下一步",
-						textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						method : "nextStopInput()" //在打开的window中自定义事件
-					}]
-				}
-			});
-		}
-		
 	</script>
 </html>

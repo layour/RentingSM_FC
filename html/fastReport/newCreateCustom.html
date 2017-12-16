@@ -313,11 +313,13 @@
 					 if(!this.messageTest()){
 					 	return;
 					 };
+					 //此处ajax请求
 					summer.openWin({
 						id : 'setProject',
 						url : 'html/fastReport/setProject.html',
 						create : false,
 						type : 'actionBar',
+						isKeep:false,
 						pageParam:{
 							source:"customer"
 						},
@@ -344,11 +346,13 @@
 					 if(!this.messageTest()){
 					 	return;
 					 };
+					  //此处ajax请求
 					summer.openWin({
 						id : 'newCreateCustom2',
 						url : 'html/fastReport/newCreateCustom2.html',
 						create : false,
 						type : 'actionBar',
+						isKeep:false,
 						actionBar : {
 							title : "配偶信息",
 							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）

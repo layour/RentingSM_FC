@@ -83,6 +83,7 @@
 				});
 		}
 			summerready=function(){
+				summer.showProgress();
 				  var top = $summer.offset($summer.byId('header')).h;
 				  summer.openFrameGroup({
 				    id: 'group1',
@@ -124,6 +125,7 @@
 				}, function(ret, err) {
 				    var index = ret.index;
 				});
+				summmer.hideProgress();
 			}
 			$(function() {
 				$(".headertitle").on("click", '.tabbar', function(e) {
