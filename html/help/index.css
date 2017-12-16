@@ -167,3 +167,29 @@ div.picItem {
     font-size: 0.24rem;
     color: #8899aa;
 }
+.um-actionsheet, .um-share{
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+.um-list.um-list-corner{
+    border-radius: 0 !important;
+}
+.um-actionsheet .um-list.um-list-corner, .um-share .um-list.um-list-corner{
+    margin-bottom: 0 !important;
+}
+.btn.action-item{
+    border: 0 !important;
+}
+.um-list.um-list-corner li div{
+    padding: 0 !important;
+    height: 0.8rem !important;
+    line-height: 0.8rem !important;
+    font-size: 0.28rem !important;
+    color: #333 !important;
+    border-bottom: 1px solid #f7f7f7 !important;
+}
+.um-actionsheet.active{
+    padding-top: 0.2rem;
+    background-color: #fff;
+}
