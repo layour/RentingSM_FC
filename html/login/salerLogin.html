@@ -42,7 +42,7 @@
 	</div>
 	<script type="text/javascript">
 		function toLogin() {
-			/*summer.openWin({
+			summer.openWin({
 				id:'login',
 				url:'index.html',
 				isKeep: false,
@@ -58,7 +58,7 @@
 						method:"",//返回按钮自定义事件
 					},
 				}
-			});*/
+			});
 			/*var workNum = $('.workNum').val();
 			var psw = $('.psw').val();
 			var base = new Base64();
@@ -71,7 +71,7 @@
 				summer.toast({msg:"密码不得为空"});
 				return;
 			}*/
-			window.cordovaHTTP.settings = {
+			/*window.cordovaHTTP.settings = {
 				timeout: 5000
 			}; //设置5秒超时
 			summer.ajax({
@@ -87,9 +87,7 @@
 			        "Content-Type" : "application/json"
 			    }
 			}, function(response) {
-				alert(response);
-				console.log(response);
-				console.log(JSON.parse(response.data));
+				alert(JSON.stringify(response));
 				if (response.status == 200) {
 					if (JSON.parse(response.data).info == "成功") {
 						summer.toast({msg:"登陆成功"});
@@ -120,7 +118,7 @@
 				if (error.status == 500) {
 					summer.toast({msg:"系统内部错误"});
 				}
-			});
+			});*/
 			/*$.ajax({
                 url: "http://122.49.7.88:8080/appservice/login/carLogin",
                 type: 'POST',

@@ -82,12 +82,10 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 		timeout : 5000
 	};
 	if (getUserId()) {
-		paramData = JSON.parse(paramObj.param);
+		paramData = paramObj.param;
 		paramData.EMPLOYEE_ID=getUserId();
-		paramData=JSON.stringify(paramData);
 	} else {
-		paramData = JSON.parse(paramObj.param);
-		paramData=JSON.stringify(paramData);
+		paramData = paramObj.param;
 	}
 	summer.ajax({
 		type : paramObj.type,
