@@ -89,9 +89,10 @@
 			}, function(response) {
 				alert(response);
 				console.log(response);
-				console.log(JSON.parse(response.data));
-				if (response.status == 200) {
-					if (JSON.parse(response.data).info == "成功") {
+				var userinfo={};
+				
+				userinfo.userId="fc01";
+				summer.setStorage('userinfo', userinfo);
 						summer.toast({msg:"登陆成功"});
 						summer.openWin({
 							id:'login',
@@ -110,10 +111,6 @@
 								},
 							}
 						});
-					} else if (JSON.parse(response.data).info == "用户密码错误！") {
-						summer.toast({msg:"用户名或密码错误"});
-					}
-				}
 			}, function(error) {
 				alert(error);
 				console.log(error);

@@ -7,7 +7,7 @@
  */
 
 // 福昌测试地址
-window.G_COMMON_URL = "http://122.49.7.88:8080";
+window.G_COMMON_URL = "http://122.49.7.88:8080/";
 
 function getUserId() {
 	var userinfo = summer.getStorage("userinfo");
@@ -82,22 +82,24 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 		timeout : 5000
 	};
 	if (getUserId()) {
-		paramData = JSON.parse(paramObj.param);
+		paramData =  paramObj.param;
 		paramData.EMPLOYEE_ID=getUserId();
-		paramData=JSON.stringify(paramData);
+		 
 	} else {
-		paramData = JSON.parse(paramObj.param);
-		paramData=JSON.stringify(paramData);
+		paramData =  paramObj.param;
+		 
 	}
 	summer.ajax({
 		type : paramObj.type,
 		url : testPath,
 		param : paramData,
 		// 考虑接口安全，每个请求都需要将这个公告header带过去
-		header : header
+		header :  {
+			        "Content-Type" : "application/json"
+			    }
 	}, function(response) {
 
-		successCallback(data);
+		successCallback(response);
 	}, function(response) {
 
 		// 执行自己的其它逻辑
