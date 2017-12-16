@@ -12,6 +12,7 @@
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="../../js/font.js"></script>
+	<script src="base64.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -41,7 +42,7 @@
 	</div>
 	<script type="text/javascript">
 		function toLogin() {
-			summer.openWin({
+			/*summer.openWin({
 				id:'login',
 				url:'index.html',
 				isKeep: false,
@@ -57,9 +58,11 @@
 						method:"",//返回按钮自定义事件
 					},
 				}
-			});
+			});*/
 			/*var workNum = $('.workNum').val();
 			var psw = $('.psw').val();
+			var base = new Base64();
+			psw = base.encode(psw);//ODg4ODg4
 			if (workNum == '') {
 				summer.toast({msg:"工号不得为空"});
 				return;
@@ -67,14 +70,24 @@
 			if (psw == '') {
 				summer.toast({msg:"密码不得为空"});
 				return;
-			}
+			}*/
 			window.cordovaHTTP.settings = {
 				timeout: 5000
 			}; //设置5秒超时
 			summer.ajax({
-				type: "get",
-				url: "http://122.49.7.88:8080/honor/appservice/login/carLogin?loginName=" + workNum + "&password=" + psw + ""
+				type: "post",
+				url: "http://122.49.7.88:8080/appservice/login/carLogin",
+				param:{
+					"appFlag":"1",
+					"EMPLOYEE_PWD":"HKSDODg4ODg4EFASD",
+					"EMPLOYEE_CODE":"fc01",
+					"SYSUSERFLAG":"1"
+				},
+				header : {
+			        "Content-Type" : "application/json"
+			    }
 			}, function(response) {
+				alert(response);
 				console.log(response);
 				console.log(JSON.parse(response.data));
 				if (response.status == 200) {
@@ -102,11 +115,43 @@
 					}
 				}
 			}, function(error) {
+				alert(error);
 				console.log(error);
 				if (error.status == 500) {
 					summer.toast({msg:"系统内部错误"});
 				}
-			});*/
+			});
+			/*$.ajax({
+                url: "http://122.49.7.88:8080/appservice/login/carLogin",
+                type: 'POST',
+                dataType: 'json',
+                headers: {"Content-Type": "application/json"},
+                data:'{"appFlag":"1","EMPLOYEE_PWD": "HKSDODg4ODg4EFASD","EMPLOYEE_CODE": "fc01","SYSUSERFLAG":"1"}',
+                success: function (result) {
+                    console.log(result);
+					summer.toast({msg:"登陆成功"});
+					summer.openWin({
+						id:'login',
+						url:'index.html',
+						isKeep: false,
+						addBackListener:true,
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "首页",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/opacity0.png",
+								method:"",//返回按钮自定义事件
+							},
+						}
+					});
+                },
+                error: function (arg) {
+                    console.log(arg);
+                }
+            });*/
 		};
 	</script>
 </body>

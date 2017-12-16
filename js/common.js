@@ -5,6 +5,16 @@
  * 3、日期时间格式化：datePattern("yyyy-MM-dd EE hh:mm:ss", date) =>2009-03-10 周二 08:09:04
  * 4、兼容获取权限：getPermission(["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"], successFn)
  */
+
+// 福昌测试地址
+window.G_COMMON_URL = "http://122.49.7.88:8080";
+
+function getUserId() {
+	var userinfo = summer.getStorage("userinfo");
+	var userId = userinfo ? userinfo.userId : "";
+	return userId;
+}
+
 var CommonUtil = {
 	//图片加水印
 	watermark : function(params) {
@@ -43,3 +53,71 @@ var CommonUtil = {
 		});
 	},
 };
+
+
+function ajaxRequest(paramObj, successCallback, errorCallback) {
+	//var testPath = "http://uculture-test.app.yyuap.com" + paramObj.url;
+	//var testPath = "http://172.27.35.1:8080" + paramObj.url;
+	var testPath = '';
+	var paramData = {};
+	if (paramObj.fullUrl) {
+		testPath = paramObj.url
+	} else {
+		testPath = G_COMMON_URL + paramObj.url;
+	}
+
+	if (paramObj.contentType) {
+		header["Content-Type"] = paramObj.contentType;
+	}
+	//判断网络
+	if (!summer.netAvailable()) {
+		summer.hideProgress();
+		summer.toast({
+			msg : "网络异常，请检查网络"
+		});
+		return false;
+	}
+	//设置超时
+	window.cordovaHTTP.settings = {
+		timeout : 5000
+	};
+	if (getUserId()) {
+		paramData = JSON.parse(paramObj.param);
+		paramData.EMPLOYEE_ID=getUserId();
+		paramData=JSON.stringify(paramData);
+	} else {
+		paramData = JSON.parse(paramObj.param);
+		paramData=JSON.stringify(paramData);
+	}
+	summer.ajax({
+		type : paramObj.type,
+		url : testPath,
+		param : paramData,
+		// 考虑接口安全，每个请求都需要将这个公告header带过去
+		header : header
+	}, function(response) {
+
+		successCallback(data);
+	}, function(response) {
+
+		// 执行自己的其它逻辑
+		errorCallback(response)
+	});
+}
+
+
+//判断是否为空
+function isEmpty(data) {
+	if (data == undefined || data == null || data == "" || data == 'NULL' || data == false || data == 'false') {
+		return true;
+	}
+	return false;
+}
+
+function createNull(id, url,text) {
+	var url = url ? url : "../image/empty.png";
+	var text=text?text:"暂无数据";
+	var html = '<div class="default-error" style="display: -webkit-box;display: flex; -webkit-box-pack: center;justify-content: center; -webkit-box-align: center;align-items: center; -webkit-box-orient: vertical; -webkit-box-direction: normal;flex-direction: column;width: 100%;height: 100%;position: fixed;">' + '<img src=' + url + ' style="width:30%;" alt=""/>' + '<p style="font-size: 14px;color: #CBCBCB;padding-top:20px;">'+text+'</p>' + '</div>';
+	var curId = $summer.byId(id);
+	$summer.html(curId, html);
+}
