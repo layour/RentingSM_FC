@@ -75,35 +75,42 @@
     </body>
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/summer.js"></script>
+    <script src="../../js/common.js" ></script>
     <script>
+    	var programId,programCode,frameId;
 		summerready = function() {
-		/*	$('.um-content').on('touchstart', function() {
-				closeOpacity();
-			})
-			$('.cancleChoose').on('click', function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				cancleChoose()
-			});
-			 
-			$('.makeSure').on('click', function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				makeSure()
-			});*/
+			 programId=summer.pageParam.id;
+			 programCode=summer.pageParam.code;
+			 frameId=summer.pageParam.frameId;
 		}
-		
-	 
-
 	  function cancleChoose(){
-	  	summer.toast({msg:"取消"});
 	  	closeOpacity();
 	  }
 	  function makeSure(){
 	  	summer.toast({msg:"确定"});
-	  	closeOpacity();
+	  	ajaxRequest({
+					type: 'post',
+					url: 'appservice/promc/procadisable',
+					param: {
+					"PROJECT_ID":programId,
+					"LEASE_CODE":programCode,
+					}
+				}, function (res) {
+					console.log(res);
+					if(res.data.datas.feiflag==1){
+						summer.toast({msg:"删除成功"});
+						summer.execScript({
+						    winId: "programSelect",
+						    frameId:frameId,
+						    script: "getData('10')"
+						});
+						closeOpacity();
+					}
+				}, function (err) {
+					console.log(err);
+					summer.hideProgress();
+				});
 	  }
-		// 关闭当前
 		function closeOpacity() {
 			 summer.closeFrame({id:"Opacity"});
 		}
