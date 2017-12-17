@@ -85,7 +85,7 @@
 						</div>
 				</div>
 			</div>
-			<div class="um-content">
+			<div class="um-content" id="content">
 			   <div class="list customList um-bgc-white" v-for="(item,index) in dataSource" @click="completeCustom()">
 			       <p class="pl20 title pr20">{{item.name}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.manager}}</span></p>
 			       <div class="center" >
@@ -102,8 +102,38 @@
 	<script src="../../js/vue.js" ></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	<script>
+		var _endNum=10;
 		summerready=function(){
-			//summer.showProgress();
+			getData(10)
+				summer.setRefreshHeaderInfo({
+					visible: true,
+					loadingImg: 'img/refresh.png',
+					bgColor: '#ffffff',
+					textColor: '#aaaaaa',
+					textDown: '下拉刷新...',
+					textUp: '松开刷新...',
+					showTime: true
+				}, function(ret, err) {
+					//通常在这里从服务器加载数据，t
+					getData(10);
+					_endNum=10;
+				});
+				summer.setRefreshFooterInfo({
+					visible: true,
+					loadingImg: 'img/refresh.png',
+					bgColor: '#ffffff',
+					textColor: '#aaaaaa',
+					textDown: '上拉刷新...',
+					textUp: '松开刷新...',
+					showTime: true
+				}, function(ret, err) {
+					//通常在这里从服务器加载数据，
+					_endNum+=10;
+					getData(_endNum);
+				});
+		}
+		function getData(end){
+				newCustom.getData(end);
 		}
 		var newCustom=new Vue({
 			el:"#newCustom",
@@ -143,6 +173,38 @@
 				summer.hideProgress();
 			},
 			methods:{
+				getData(end){
+					var self=this;
+						ajaxRequest({
+					        type: 'post',
+					        url: 'appservice/custaccdetail/getCustacclist',
+					        param: {
+								    "EMPLOYEE_NAME":"蒋晓冬",
+								    "ORG_CHILDREN":"",
+								    "PAGE_BEGIN":1,
+								    "PAGE_END":end,
+								    "SYSUSERFLAG":1
+					        }
+					    }, function (res) {
+							//alert(res);
+					    	 summer.hideProgress();
+					           if(res.data.flag==1){
+					           		self.dataSource=res.data.datas.custmerlist;
+					           		if(self.dataSource.length<1){
+					           			createNull("content", "../../img/empty.png")
+					           		}
+					           		console.log(self.dataSource);
+					           }
+						    }, function (err) {
+								alert(err);
+						    	 console.log(err);
+							   	 summer.hideProgress();
+							});
+						 this.$nextTick(function(){
+						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+			                 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+			            })
+					},
 				completeCustom(id){
 					summer.openWin({
 						id : 'setProject',
