@@ -82,19 +82,17 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 		timeout : 5000
 	};
 	if (getUserId()) {
-		paramData =  paramObj.param;
+		paramData = paramObj.param;
 		paramData.EMPLOYEE_ID=getUserId();
-		 
 	} else {
-		paramData =  paramObj.param;
-		 
+		paramData = paramObj.param;
 	}
 	summer.ajax({
 		type : paramObj.type,
 		url : testPath,
 		param : paramData,
 		// 考虑接口安全，每个请求都需要将这个公告header带过去
-		header :  {
+		header : {
 			        "Content-Type" : "application/json"
 			    }
 	}, function(response) {
