@@ -1,0 +1,124 @@
+html,body{
+    background-color: #f6f6f6;
+}
+.banner{
+    width: 100%;
+    height: 3.7rem;
+}
+.banner img{
+    width: 100%;
+    height: 3.7rem;
+    display: block;
+    border: 0;
+}
+.repayList{
+    width: 100%;
+}
+.repayList li{
+    width: 100%;
+    height: 2.4rem;
+    border-bottom: 1px solid #efefef;
+    padding: 0.28rem 0.56rem 0 0.56rem;
+    background-color: #fff;
+}
+.repayList li .l-con{
+    height: 100%;
+    float: left;
+    position: relative;
+    width: 5rem;
+}
+.repayList li .l-con .choose{
+    width: 0.4rem;
+    height: 0.4rem;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -0.34rem;
+    border-radius: 0.2rem;
+    border: 1px solid #e0e0e0;
+    box-sizing: content-box;
+}
+.repayList li .l-con .choose i{
+    width: 0.4rem;
+    height: 0.4rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 0.2rem;
+    background-color: #039be5;
+    font-size: 0.28rem;
+    color: #fff;
+    line-height: 0.4rem;
+    text-align: center;
+}
+.repayList li .l-con .repayDate{
+    height: 0.28rem;
+    line-height: 0.28rem;
+    font-size: 0.28rem;
+    color: #039be5;
+    position: absolute;
+    left: 0.7rem;
+    top: 0.05rem;
+}
+.repayList li .l-con .money{
+    height: 0.4rem;
+    line-height: 0.4rem;
+    font-size: 0.4rem;
+    color: #424242;
+    position: absolute;
+    left: 0.62rem;
+    top: 0.7rem;
+    font-weight: 600;
+}
+.repayList li .l-con .car{
+    height: 0.28rem;
+    line-height: 0.28rem;
+    font-size: 0.28rem;
+    color: #9e9e9e;
+    position: absolute;
+    left: 0.7rem;
+    bottom: 0.54rem;
+}
+.repayList li .r-con{
+    height: 2.12rem;
+    float: right;
+    line-height: 1.9rem;
+    font-size: 0.28rem;
+    color: #424242;
+}
+.um-footer{
+    width: 100%;
+    height: 1rem;
+    border-top: 1px solid #efefef;
+    background-color: #fff;
+}
+.footer-l{
+    width: 5rem;
+    height: 1rem;
+    float: left;
+    padding-left: 0.26rem;
+}
+.footer-l span{
+    float: left;
+    height: 1rem;
+    line-height: 1rem;
+    font-size: 0.32rem;
+    color: #9e9e9e;
+}
+.footer-l i{
+    float: left;
+    height: 1rem;
+    line-height: 1rem;
+    font-size: 0.32rem;
+    color: #039be5;
+    font-style: normal;
+}
+.footer-r{
+    width: 2.44rem;
+    height: 1rem;
+    line-height: 1rem;
+    background-color: #039be5;
+    float: right;
+    color: #fff;
+    font-size: 0.32rem;
+}
