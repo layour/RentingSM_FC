@@ -144,15 +144,17 @@
 					    "PAGE_END":"10",
 			        }
 			    }, function (res) {
+					alert(res);
 			    	 summer.hideProgress();
 			           if(res.data.flag==1){
 			           		fra_total.dataList=res.data.datas.projectdata;
 			           		console.log(fra_total.dataList);
 			           }
 				    }, function (err) {
+						alert(res);
 				    	 console.log(err);
 					   	 summer.hideProgress();
-					}); 
+					});
 			}
 			 var fra_total= new Vue({
 						          el:'#fra_total',
@@ -162,7 +164,7 @@
 						                   }
 						              },
 									mounted(){
-										
+
 									},
 									methods:{
 										 openOpacity(id){

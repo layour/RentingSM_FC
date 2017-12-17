@@ -72,10 +72,16 @@
 			    }
 			}, function(response) {
 				summer.hideProgress();
-				switch (response.data.flag) {
+				var Data;
+				if (Object.prototype.toString.call(response.data) === '[object String]') {
+					Data = JSON.parse(response.data);
+				} else {
+					Data = response.data;
+				}
+				switch (Data.flag) {
 					case 1:
 						summer.toast({msg:"登陆成功"});
-						var userData = response.data.datas;
+						var userData = Data.datas;
 						var userId = userData.EMPLOYEE_CODE;
 						var userName = userData.EMPLOYEE_NAME;
 						var JOB_NAME = userData.JOB_NAME;
