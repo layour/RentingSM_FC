@@ -23,25 +23,25 @@
 			</div>
 			<div class="um-content">
 				 <div class="list customList um-bgc-white" v-for="(item,index) in dataList">
-			       <p class="pl10 title pr10">{{item.name}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.manager}}</span></p>
-			       <div class="center"   @click="openDetail(item.programId)">
-			       		<p class="type pl10"><span>{{item.personType}} </span> | <span>{{item.taskType}}</span> </p>
-			       		<p class="type card pl10 status">{{item.programNum}}   <span class="fr">{{item.status}}</span></p>
+			       <p class="pl10 title pr10">{{item.CR_BECR_NAME}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span></p>
+			       <div class="center"   @click="openDetail(item.ID)">
+			       		<p class="type pl10"><span>{{item.CR_BECR_TYPE}} </span> | <span>{{item.PLATFORM}}</span> </p>
+			       		<p class="type card pl10 status">{{item.LEASE_CODE}}   <span class="fr">{{item.STATUS}}</span></p>
 			      		<p class="time pl10 pr10"><span>创建时间：<span>{{item.creatTime}}</span></span></p>
 			       </div>
 			       <p class=" select um-box" v-if="item.status=='待提交'">
-				       <span class="um-bf1   tc" @click="upload(item.programId)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-				       <span class="um-bf1  tc" @click="submit(item.programId)"><i class="iconfont icon-submit mr5"></i>提交</span>
-				       <span class="um-bf1   tc" @click="edit(item.programId)"><i class="iconfont icon-modify mr5"></i>修改</span>
-				       <span class="um-bf1  tc" @click="openOpacity(item.programId)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
+				       <span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
+				       <span class="um-bf1  tc" @click="submit(item.ID)"><i class="iconfont icon-submit mr5"></i>提交</span>
+				       <span class="um-bf1   tc" @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
+				       <span class="um-bf1  tc" @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
 			       </p>
 			       <p class=" select um-box"  v-else-if="item.status=='审核中'">
-				       <span class="um-bf1  tc"  @click="openOpacity(item.programId)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
+				       <span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
 			       </p>
 			        <p class=" select um-box"  v-else-if="item.status=='已驳回'">
-				       <span class="um-bf1   tc" @click="upload(item.programId)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-				       <span class="um-bf1   tc"  @click="edit(item.programId)"><i class="iconfont icon-modify mr5"></i>修改</span>
-				       <span class="um-bf1  tc"  @click="openOpacity(item.programId)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
+				       <span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
+				       <span class="um-bf1   tc"  @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
+				       <span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
 			       </p>
 			       <p v-else  ></p>
 			    </div>
@@ -50,6 +50,7 @@
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/vue.js" ></script>
+		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
 		    function opensearch(){
@@ -96,7 +97,7 @@
 				});
 			}
 			function getData(num,flag){
-					fra_total.dataList=[{
+					/*fra_total.dataList=[{
 					name:"徐毅",
 					personType:"自然人",
 					taskType:"形式售后回租",
@@ -133,44 +134,25 @@
 					programId:"103",
 					creatTime:"2016-09-21"
 				}];
-		summer.hideProgress();
+		summer.hideProgress();*/
 				//ajax请求
-				/*ajaxRequest({
+				ajaxRequest({
 			        type: 'post',
-			        url: '/userlink/getMyCorpUser',
-			        param: {param:param}
+			        url: 'appservice/promc/projectList',
+			        param: {
+			        	 "PAGE_BEGIN":"0",
+					    "PAGE_END":"10",
+			        }
 			    }, function (res) {
 			    	 summer.hideProgress();
-			          if (!flag) {
-			          	if(_pageNum==1){
-			                if(isEmpty(res.data.content)){
-			                	createNull('addressList');
-			                	return;
-			                }
-			             };
-			                renderList(res.data.content)
-			                if(_pageNum>1){
-			                    summer.refreshFooterLoadDone();
-			                }
-			                if(_pageNum>res.data.totalPages){
-			                	summer.toast({
-			                		msg:"没有更多了"
-			                	});
-			                }
-
-			            } else {
-			                _pageNum=1;
-			                if(isEmpty(res.data.content)){
-			                	createNull('addressList');
-			                	return;
-			                }
-			                renderFresh(res.data.content);
-			                summer.refreshHeaderLoadDone();
-			            }
+			           if(res.data.flag==1){
+			           		fra_total.dataList=res.data.datas.projectdata;
+			           		console.log(fra_total.dataList);
+			           }
 				    }, function (err) {
 				    	 console.log(err);
 					   	 summer.hideProgress();
-					});*/
+					}); 
 			}
 			 var fra_total= new Vue({
 						          el:'#fra_total',
