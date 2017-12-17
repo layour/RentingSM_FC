@@ -26,13 +26,13 @@
 				<dl>
 					<dt class="iconfont icon-login"></dt>
 					<dd>
-						<input class="workNum" type="text" placeholder="工号">
+						<input class="workNum" type="text" placeholder="工号" value = "fc01">
 					</dd>
 				</dl>
 				<dl>
 					<dt class="iconfont icon-key"></dt>
 					<dd>
-						<input class="psw" type="password" placeholder="密码">
+						<input class="psw" type="password" placeholder="密码" value = "888888">
 					</dd>
 				</dl>
 				<p class="forget">忘记密码？</p>
@@ -42,24 +42,7 @@
 	</div>
 	<script type="text/javascript">
 		function toLogin() {
-			summer.openWin({
-				id:'login',
-				url:'index.html',
-				isKeep: false,
-				addBackListener:true,
-				create:false,
-				type:'actionBar',
-				actionBar: {
-					title: "首页",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					leftItem:{
-						image: "img/opacity0.png",
-						method:"",//返回按钮自定义事件
-					},
-				}
-			});
-			/*var workNum = $('.workNum').val();
+			var workNum = $('.workNum').val();
 			var psw = $('.psw').val();
 			var base = new Base64();
 			psw = base.encode(psw);//ODg4ODg4
@@ -70,8 +53,9 @@
 			if (psw == '') {
 				summer.toast({msg:"密码不得为空"});
 				return;
-			}*/
-			/*window.cordovaHTTP.settings = {
+			}
+			summer.showProgress();
+			window.cordovaHTTP.settings = {
 				timeout: 5000
 			}; //设置5秒超时
 			summer.ajax({
@@ -79,18 +63,30 @@
 				url: "http://122.49.7.88:8080/appservice/login/carLogin",
 				param:{
 					"appFlag":"1",
-					"EMPLOYEE_PWD":"HKSDODg4ODg4EFASD",
-					"EMPLOYEE_CODE":"fc01",
+					"EMPLOYEE_PWD":"HKSD"+psw+"EFASD",
+					"EMPLOYEE_CODE":workNum,
 					"SYSUSERFLAG":"1"
 				},
 				header : {
 			        "Content-Type" : "application/json"
 			    }
 			}, function(response) {
-				alert(JSON.stringify(response));
-				if (response.status == 200) {
-					if (JSON.parse(response.data).info == "成功") {
+				summer.hideProgress();
+				switch (response.data.flag) {
+					case 1:
 						summer.toast({msg:"登陆成功"});
+						var userData = response.data.datas;
+						var userId = userData.EMPLOYEE_CODE;
+						var userName = userData.EMPLOYEE_NAME;
+						var JOB_NAME = userData.JOB_NAME;
+						var ORG_NAME = userData.ORG_NAME;
+						var userinfo = {
+							userId:userId,
+							userName:userName,
+							JOB_NAME:JOB_NAME,
+							ORG_NAME:ORG_NAME
+						};
+						summer.setStorage("userinfo",userinfo);
 						summer.openWin({
 							id:'login',
 							url:'index.html',
@@ -108,48 +104,18 @@
 								},
 							}
 						});
-					} else if (JSON.parse(response.data).info == "用户密码错误！") {
+						break;
+					case 0:
 						summer.toast({msg:"用户名或密码错误"});
-					}
+						break;
+					default:
+						summer.toast({msg:"登录失败"});
 				}
 			}, function(error) {
-				alert(error);
+				summer.hideProgress();
 				console.log(error);
-				if (error.status == 500) {
-					summer.toast({msg:"系统内部错误"});
-				}
-			});*/
-			/*$.ajax({
-                url: "http://122.49.7.88:8080/appservice/login/carLogin",
-                type: 'POST',
-                dataType: 'json',
-                headers: {"Content-Type": "application/json"},
-                data:'{"appFlag":"1","EMPLOYEE_PWD": "HKSDODg4ODg4EFASD","EMPLOYEE_CODE": "fc01","SYSUSERFLAG":"1"}',
-                success: function (result) {
-                    console.log(result);
-					summer.toast({msg:"登陆成功"});
-					summer.openWin({
-						id:'login',
-						url:'index.html',
-						isKeep: false,
-						addBackListener:true,
-						create:false,
-						type:'actionBar',
-						actionBar: {
-							title: "首页",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem:{
-								image: "img/opacity0.png",
-								method:"",//返回按钮自定义事件
-							},
-						}
-					});
-                },
-                error: function (arg) {
-                    console.log(arg);
-                }
-            });*/
+				summer.toast({msg:"系统内部异常"});
+			});
 		};
 	</script>
 </body>
