@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<div class="um-frame" id="fra_total" v-cloak>
-			<div class="um-header-light">
+			<!-- <div class="um-header-light">
 				<div class="sera">
 					<div class="s-box" onclick="opensearch()">
 						<i class="iconfont icon-search"> </i>
@@ -20,7 +20,7 @@
 						</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="um-content">
 				<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
 					<p class="pl10 title pr10">
@@ -66,7 +66,7 @@
 				id:'search',
 				url:'html/fastReport/search.html',
 				pageParam:{
-					source:"program"
+				source:"program"
 				}
 
 			});
@@ -84,7 +84,7 @@
 					showTime: true
 				}, function(ret, err) {
 					//通常在这里从服务器加载数据，t
-					getData(10);
+					getData(10,fra_total.searchValue);
 					_endNum=10;
 				});
 				summer.setRefreshFooterInfo({
@@ -98,29 +98,32 @@
 				}, function(ret, err) {
 					//通常在这里从服务器加载数据，
 					_endNum+=10;
-					getData(_endNum);
+					getData(_endNum,fra_total.searchValue);
 				});
 			}
-			function getData(end){
-				fra_total.getData(end);
+			function getData(end,searchValue){
+				fra_total.getData(end,searchValue);
+				fra_total.searchValue=searchValue;
 			}
 			var fra_total= new Vue({
 				el:'#fra_total',
 				data(){
 				return {
-				dataList:''
+					dataList:'',
+					searchValue:''
 				}
 				},
 				mounted(){
 				},
 			methods:{	
-					getData(end){
+					getData(end,searchValue){
 						ajaxRequest({
 					        type: 'post',
 					        url: 'appservice/promc/projectList',
 					        param: {
 					        	 "PAGE_BEGIN":"1",
 							    "PAGE_END":end,
+							    "CR_BECR_NAME":searchValue?searchValue:""
 					        }
 					    }, function (res) {
 							//alert(res);

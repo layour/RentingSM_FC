@@ -1,41 +1,10 @@
-/*********************************** Global Variable&&Constant Define ***********************************/
-var G__CACHE_KEY_CONTACTS_DEPARTMENT_LIST = "__CACHE_CONTACTS_DEPARTMENT_LIST";
-var G__Cache_Duration = 100000;
-var g_data;
-var _array=[];
+ 
 /*********************************** Summer Lifecycle Handler Define ***********************************/
 summerready = function(){
 	$('#header').css('padding-top','40px')
-	setTimeout(function (){	
-		summer.popupKeyboard();
-		document.getElementById("search").focus();
-	}, 500);
-	getCache();
 	bindEvents();
 }
-
-
-/*********************************** Init Method Define ***********************************/
-function initData(){
-	for(var i=0;i<g_data.length;i++){
-		for(var j=0;j<g_data[i].list.length;j++){
-			_array.push({name:g_data[i].list[j].name,id:g_data[i].list[j].id,groupname:g_data[i].groupname,userid:g_data[i].list[j].userid,tenantid:g_data[i].list[j].tenantid})
-		}	
-	}	
-}
-
-/*********************************** Private Method Define ***********************************/
-function getCache(){
-	g_data=common.cacheManager.getCache(G__CACHE_KEY_CONTACTS_DEPARTMENT_LIST);
-	if(!g_data){
-	    common.ajaxRequest("addresslist/query/list","get","application/x-www-form-urlencoded",{},function(data){
-			if(data.success == true){
-				g_data=common.cacheManager.setCache(G__CACHE_KEY_CONTACTS_DEPARTMENT_LIST,data.result,G__Cache_Duration);
-	        }
-	    });
-    }
-    initData();	
-}
+ 
 
 function total(){
 	var _data=[];

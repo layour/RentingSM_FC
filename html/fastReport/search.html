@@ -7,35 +7,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="../../css/mint.css">
-		<link rel="stylesheet" href="css/search.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/mint.css">
+	<link rel="stylesheet" href="css/fraCommon.css">
+	<link rel="stylesheet" href="css/search.css">
 		
   </head>
 <body>
-	<script id="listTemp" type="text/x-dot-template">
-        {{for (var i=0;i<it.length;i++){}}
-            <div class="list border" onclick="setLocal(this)" data-id="{{=it[i].id}}" data-userid="{{=it[i].userid}}" data-tenantid="{{=it[i].tenantid}}">
-                <dl >
-                    <dt><span></span><span>{{=it[i].name}}</span></dt>
-                    <dd>{{=it[i].groupname}}</dd>
-                </dl>
-            </div>
-        {{}}}
-    </script>
-    <div id="wrap" class="um-win">	
+    <div id="search" class="um-win">	
        <div class="bar bar-nav um-header" id="header">
         	<form action="javascript:void(0);">
-        		<i class="iconfont icon-nav_search"> </i>
-        		<input class="search" id="search" type="search" name="search" autofocus="autofocus" placeholder="请输入您要搜索内容"/>
+        		<i class="iconfont icon-nav_search pl10 pr5"> </i>
+        		<input class="search" id="search" type="search" v-model="searchDate" name="search" autofocus="autofocus" placeholder="请输入您要搜索内容"/>
         	</form>
         	<span onclick="closeWin();">取消</span>
         </div>	
-        <div id="main" class="um-content">
-        	<div>
-        		
-        	</div>
-        	<div class="empty"></div>  
+        <div   class="um-content">
+        	 
         </div>
     </div>
 </body>
@@ -44,6 +32,38 @@
 <script src="../../js/vue.js" ></script>
 <script src="../../js/mint.js" ></script>
 <script src="../../js/font.js" ></script>
+<script src="../../js/common.js" ></script>
 <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-<script type="text/javascript" src="js/search.js"></script>
+<script>
+	summerready=function(){
+		$('#header').css('padding-top','40px')
+		 var top = $summer.offset($summer.byId('header')).h;
+		 bindEvents();
+	    summer.openFrame({
+	        id: 'fra_search',
+	        url: 'html/fastReport/fra_search.html',
+	        bounces: true,
+	        position: {
+	            top: top,
+				bottom: 0,
+	            left: 0,
+	            right: 0
+	        }
+	    });
+	}
+	function bindEvents(){
+			$('.search').on('input propertychange focus',total);
+		}
+	function total(){
+		var searchData=$(this).val();
+		if(searchData.length>0){
+			summer.execScript({
+			    winId: "search",
+			    frameId:"fra_search",
+			    script: "getData('10','"+searchData+"')"
+			});
+		}
+		
+	}
+</script>
 </html>
