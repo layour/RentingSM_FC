@@ -1,4 +1,7 @@
 /*less模块*/
+body {
+  color: #333;
+}
 i {
   color: #DBDBDB;
 }
@@ -88,6 +91,17 @@ input::-webkit-input-placeholder {
 }
 .pickerColor > p span:last-child {
   float: right;
+}
+#pickerDealer .um-input-group.pr span {
+  width: 35px;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  margin-left: 10px;
+  font-size: 14px;
+  display: none;
+}
+#pickerDealer .um-input-group.pr span.active {
+  display: block;
 }
 #pickerDealer .dealerList {
   background: #ffffff;

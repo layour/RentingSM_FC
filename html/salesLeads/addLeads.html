@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="./index.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="addLeads" v-cloak>
+			<div class="um-content addLeads">
+				<ul>
+          <li class="title"><span></span>基本信息</li>
+          <li><b>*</b>姓名 <span><input type="text" name="uname" v-model="name" placeholder="请输入姓名"></span></li>
+          <li><b>*</b>来源 <span><i class="icon iconfont icon-enter"></i></span></li>
+          <li><b>*</b>线索池 <span><i class="icon iconfont icon-enter"></i></span></li>
+          <li>名片 <span><i class="icon iconfont icon-enter"></i></span></li>
+          <li>公司 <span><input type="text" name="uname" v-model="name" placeholder="请输入公司"></span></li>
+          <li>线索详情 <span><input type="text" name="uname" v-model="name" placeholder="请输入线索详情"></span></li>
+          <li>手机号 <span><input type="text" name="uname" v-model="name" placeholder="请输入手机号"></span></li>
+          <li>购车预算 <span><input type="text" name="uname" v-model="name" placeholder="请输入购车预算"></span></li>
+          <li>线索城市 <span><i class="icon iconfont icon-enter"></i></span></li>
+          <li>品牌 <span><input type="text" name="uname" v-model="name" placeholder="请输入品牌"></span></li>
+          <li>车系 <span><input type="text" name="uname" v-model="name" placeholder="请输入车系"></span></li>
+          <li>车型名称 <span><input type="text" name="uname" v-model="name" placeholder="请输入车型名称"></span></li>
+				</ul>
+			</div>
+
+		</div>
+    <script src="../../js/summer.js" ></script>
+    <script src="../../js/jquery.min.js" ></script>
+    <script src="../../js/font.js" ></script>
+    <script src="../../js/vue.js" ></script>
+    <script src="../../js/mint.js" ></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script>
+				var addLeads=new Vue({
+					el:'#addLeads',
+					data(){
+						return{
+							name:''
+						}
+					},
+					created(){
+
+					},
+					methods:{
+
+					}
+				});
+		</script>
+	</body>
+</html>

@@ -1,3 +1,6 @@
+body {
+  color: #333;
+}
 i {
   color: #DBDBDB;
 }
@@ -12,6 +15,10 @@ input::-webkit-input-placeholder {
   float: left;
   width: 50%;
   text-align: center;
+}
+.salesBriefing i {
+  font-size: 36px;
+  color: #039BE5;
 }
 .um-footer > button {
   height: .88rem;

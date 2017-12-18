@@ -12,6 +12,40 @@ out:index.min.css,sourcemap:false,compress:true;
     background: @grayBlue;
   }
 }
+.addLeads{
+  ul{
+      background: @white;
+    li{
+      padding:0 .56rem;
+      height: .88rem;
+      line-height: .88rem;
+      border-bottom:1px solid @borderColor;
+      font-size: 14px;
+      color:@fontColor;
+      position: relative;
+      >b{
+        color:@red;
+        position: absolute;
+        left:.3rem;
+        top:.05rem;
+      }
+      >span{
+        position: absolute;
+        right: .56rem;
+        top:0;
+        input{
+          height:.8rem;
+          outline: none;
+          border:none;
+          min-width: 2.3rem;
+          // border-bottom: 1px solid @borderColor;
+          text-align: right;
+
+        }
+      }
+    }
+  }
+}
 .salesList{
   ul{
     font-size: 14px;
@@ -25,6 +59,39 @@ out:index.min.css,sourcemap:false,compress:true;
         right:.56rem;
         top:.4rem;
       }
+    }
+  }
+}
+.salesDetail{
+  section{
+    font-size: 13px;
+    background: @white;
+    padding:.2rem .56rem;
+    // color: @grayColor;
+    margin-bottom: .2rem;
+    .red{color:@red;}
+
+  }
+  ul{
+    background: @white;
+    li{
+      padding:0 .56rem;
+      height: .88rem;
+      line-height: .88rem;
+      font-size: 16px;
+      border-bottom: 1px solid @borderColor;
+    }
+  }
+  .title{
+    font-size:18px;
+    font-weight: bold;
+    span{
+      border-left: 3px solid #039BE5;
+      padding-right: 3px;
+      display: inline-block;
+      height: .32rem;
+      position: relative;
+      top:.03rem;
     }
   }
 }

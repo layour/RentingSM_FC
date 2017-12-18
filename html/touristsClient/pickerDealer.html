@@ -18,65 +18,55 @@
 	<body>
 		<div class="um-win" id="pickerDealer">
 			<div class="um-content addCar">
-        <div class="um-input-group pr">
+        <div class="um-input-group pr" id='search'>
           <i class="icon iconfont icon-nav_search"></i>
-          <input type="search" class="form-control"  placeholder="搜索">
-          <!-- <i class="um-input-clear ti-close"></i> -->
-          <!-- <button class='btn btn-inline btn-sm'>搜索</button> -->
+          <input type="search" name="search" class="form-control"  placeholder="搜索">
+					<span onclick="satartSearch('all')">取消</span>
         </div>
-        <ul class="dealerList">
-          <li @click="pickerAcc" v-for="(item,index) in dealerList" :key="index">{{item}}</li>
-        </ul>
-        <mt-popup v-model="popupVisible" position="bottom">
-          <!-- <p>选择经销商收款账户</p> -->
-          <ul>
-            <li v-for="(it,i) in accList" @click="pickerIt($event,it)" class="pr" :key="i">
-              <p>{{it.name}}</p>
-              <p>{{it.acc}}</p>
-              <p>{{it.addr}}</p>
-              <p>开户行号：{{it.number}}</p>
-              <i class="icon iconfont icon-right"></i>
-            </li>
-          </ul>
-					<p><span class="fl" @click="pickerAcc">	取消</span><span class="fr"  @click="pickerDealer">	确定</span></p>
-        </mt-popup>
       </div>
     </div>
     <script>
-      $(function(){
-        new Vue({
-          el:'#pickerDealer',
-          data(){
-            return {
-              popupVisible:false,
-              dealerList:['石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店'],
-							accList:[
-								{name:"石家庄4S店裕华分店/对公",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213},
-								{name:"郑冬秋/对私",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213}
-							],
-							item:[]
-            }
-          },
-					methods:{
-						pickerAcc(){
-							this.popupVisible=!this.popupVisible;
-						},
-						pickerIt(e,item){
-							$(e.currentTarget).addClass('active').siblings('li').removeClass('active')
-							this.item=item
-						},
-						pickerDealer(){
-							this.popupVisible=false;
-							summer.setStorage('pickerDealer',JSON.stringify(this.item));
-							summer.execScript({
-							    winId: 'addCar',
-							    script: 'getDealer()'
-							});
-							summer.closeWin();
-						}
-					}
-        })
-      })
+			summerready=function(){
+				var top = $summer.offset($summer.byId('search')).h;
+				bindEvents();
+				summer.openFrame({
+					id: 'pickerDealerContent',
+	        url: 'html/touristsClient/pickerDealer_content.html',
+	        bounces: true,
+	        position: {
+	            top: top,
+				      bottom: 0,
+	            left: 0,
+	            right: 0
+	        }
+				})
+			}
+			function bindEvents(){
+					$('.form-control').on('input propertychange focus',satartSearch);
+			}
+			function satartSearch(val){
+				if(val=='all'){
+					$(".form-control").val('');
+					$(".form-control").addClass('active').siblings('span').removeClass('active');
+					summer.execScript({
+								winId: "pickerDealer",
+								frameId:"pickerDealerContent",
+								script: "getData('')"
+					});
+					return
+				}
+				var searchData=$(".form-control").val();
+				if(searchData){
+					$(".form-control").removeClass('active').siblings('span').addClass('active');
+					summer.execScript({
+								winId: "pickerDealer",
+								frameId:"pickerDealerContent",
+								script: "getData('"+searchData+"')"
+					});
+				}else{
+					$(".form-control").addClass('active').siblings('span').removeClass('active')
+				}
+			}
     </script>
   </body>
 </html>

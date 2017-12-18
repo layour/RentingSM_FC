@@ -18,8 +18,14 @@
 	<body>
 		<div class="um-win" id="salesDetail" v-cloak>
 			<div class="um-content salesDetail">
+				<section>
+					<p class="title"><span></span>{{name}}</p>
+					<p>电话 </p>
+					<p>销售线索详情 </p>
+					<p>状态 <span class='red'>未分配</span></p>
+				</section>
 				<ul>
-          <li><sapn></sapn>基本信息</li>
+          <li class="title"><span></span>基本信息</li>
           <li>姓名 <span class="fr">{{name}}</span></li>
           <li>来源 <span class="fr">{{name}}</span></li>
           <li>线索池 <span class="fr">{{name}}</span></li>
@@ -38,9 +44,7 @@
           <!-- <li>跟进状态 <span class="fr">{{name}}</span></li> -->
 				</ul>
 			</div>
-      <div class="um-footer" id="footer">
-        <button type="button" name="button"  style="height:.88rem;background:#039BE5;">导出简报</button>
-      </div>
+      
 		</div>
 		<script>
 				var salesDetail=new Vue({

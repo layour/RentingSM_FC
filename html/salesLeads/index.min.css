@@ -1,3 +1,6 @@
+body {
+  color: #333;
+}
 i {
   color: #DBDBDB;
 }
@@ -14,6 +17,36 @@ input::-webkit-input-placeholder {
   border-radius: 5px;
   background: #039BE5;
 }
+.addLeads ul {
+  background: #ffffff;
+}
+.addLeads ul li {
+  padding: 0 .56rem;
+  height: .88rem;
+  line-height: .88rem;
+  border-bottom: 1px solid #EFEFEF;
+  font-size: 14px;
+  color: #333;
+  position: relative;
+}
+.addLeads ul li > b {
+  color: red;
+  position: absolute;
+  left: .3rem;
+  top: .05rem;
+}
+.addLeads ul li > span {
+  position: absolute;
+  right: .56rem;
+  top: 0;
+}
+.addLeads ul li > span input {
+  height: .8rem;
+  outline: none;
+  border: none;
+  min-width: 2.3rem;
+  text-align: right;
+}
 .salesList ul {
   font-size: 14px;
   background: #ffffff;
@@ -27,4 +60,35 @@ input::-webkit-input-placeholder {
   position: absolute;
   right: .56rem;
   top: .4rem;
+}
+.salesDetail section {
+  font-size: 13px;
+  background: #ffffff;
+  padding: .2rem .56rem;
+  margin-bottom: .2rem;
+}
+.salesDetail section .red {
+  color: red;
+}
+.salesDetail ul {
+  background: #ffffff;
+}
+.salesDetail ul li {
+  padding: 0 .56rem;
+  height: .88rem;
+  line-height: .88rem;
+  font-size: 16px;
+  border-bottom: 1px solid #EFEFEF;
+}
+.salesDetail .title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.salesDetail .title span {
+  border-left: 3px solid #039BE5;
+  padding-right: 3px;
+  display: inline-block;
+  height: .32rem;
+  position: relative;
+  top: .03rem;
 }

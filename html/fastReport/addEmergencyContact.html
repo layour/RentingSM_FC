@@ -7,12 +7,6 @@
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<style>
 			.addContact>ul li{
 				background:#fff;
@@ -141,6 +135,13 @@
 				<button class="btn um-btn-primary" style="background:#039BE5;height:.88rem;padding:5px 12px" @click="save">保存</button>
 			</div>
     </div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
         var vueTemplate=new Vue({
           el:'#addContact',
@@ -164,8 +165,35 @@
 						  ]
             }
           },
-					mounted(){},
+					create(){
+						var that=this
+						summerready=function(){
+							alert(1111)
+							if(summer.pageParam.id){
+								that.getData(summer.pageParam.id)
+							}
+						}
+					},
+					mounted(){
+						alert(222222)
+						this.getData(1)
+					},
 					methods:{
+						getData(id){
+							ajaxRequest({
+								type:'get',
+								url:'project/prjlinkman/initList.do',
+								param:{
+									page:1,
+									pagesize:15,
+									prjId:id
+								}
+							},function(res){
+								console.log(res);
+							},function(err){
+								alert(err);
+							})
+						},
 						deleteItem(i){
 							this.addContactList.splice(i,1)
 						},
