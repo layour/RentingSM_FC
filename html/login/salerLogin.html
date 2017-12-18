@@ -59,10 +59,12 @@
 				timeout: 5000
 			}; //设置5秒超时
 			// 华科
+			 /*http://122.49.7.88:8080/honor/appservice/login/carLogin?loginName=admin&password=HKSDMTExMTExEFASD*/
 			summer.ajax({
 				type:"get",
 				url:"http://122.49.7.88:8080/honor/appservice/login/carLogin?loginName="+ workNum +"&password=HKSD"+ psw +"EFASD"
 			},function (response){
+				console.log(response);
 				summer.hideProgress();
 				var Data;
 				if (Object.prototype.toString.call(response.data) === '[object String]') {
@@ -71,12 +73,15 @@
 					Data = response.data;
 				}
 				console.log(Data);
-				switch (Data.success) {
+				switch (Data.flag) {
 					case "1":
 						summer.toast({msg:"登陆成功"});
-						var token = Data.token;
-						var loginName = Data.loginName;
-						var name = Data.name;
+						var token = Data.datas.token;
+						var loginName = Data.datas.loginName;
+						var name = Data.datas.name;
+						console.log(token);
+						console.log(loginName);
+						console.log(name);
 						var userinfo = {
 							token:token,
 							loginName:loginName,
