@@ -22,43 +22,83 @@
                 <img src="../../img/banner.png" alt="">
             </div>
             <ul class="repayList">
-                <li>
+                <li v-for = "(k, index) in items" @click="checkIt(index)">
                     <div class="l-con">
-                        <span class="choose">
-                            <i class="iconfont icon-yes"></i>
+                        <span
+							class="choose"
+							v-bind:class="[k.checked ? 'borderNone' : 'borderActive']"
+						>
+                            <i
+	                            v-bind:class="[k.checked ? '' : 'iconNone']"
+                            	class="iconfont icon-yes"
+                            ></i>
                         </span>
-                        <span class="repayDate">还款日12/27</span>
-                        <span class="money">￥3819.23</span>
-                        <span class="car">别克昂科威2017豪华型</span>
+                        <span class="repayDate">还款日{{k.date}}</span>
+                        <span class="money">￥{{k.money}}</span>
+                        <span class="car">{{k.car}}</span>
                     </div>
-                    <div class="r-con">剩余<span>0</span>天</div>
-                </li>
-                <li>
-                    <div class="l-con">
-                        <span class="choose">
-                            <i class="iconfont icon-yes"></i>
-                        </span>
-                        <span class="repayDate">还款日12/27</span>
-                        <span class="money">￥3819.23</span>
-                        <span class="car">别克昂科威2017豪华型</span>
-                    </div>
-                    <div class="r-con">剩余<span>0</span>天</div>
+                    <div class="r-con">剩余<span>{{k.surplus}}</span>天</div>
                 </li>
             </ul>
 		</div>
         <div class="um-footer">
             <div class="footer-l">
                 <span>还款金额： </span>
-                <i>￥3819.23</i>
+                <i>￥{{total}}</i>
             </div>
-            <div class="footer-r">还款</div>
+            <div
+				class="footer-r"
+				v-bind:class="[this.submit ? '' : 'disabled']"
+				@click="toSubmit"
+			>还款</div>
 		</div>
 	</div>
 	<script type="text/javascript">
+		// 数据
+		var stockData = [
+			{
+				date:"12/27",
+				money:"3819.23",
+				car:"别克昂科威2017豪华型",
+				surplus:"12",
+				checked:false
+			},
+			{
+				date:"12/28",
+				money:"3819.23",
+				car:"别克昂科威2017豪华型",
+				surplus:"0",
+				checked:false
+			},
+			{
+				date:"12/29",
+				money:"3819.23",
+				car:"别克昂科威2017豪华型",
+				surplus:"2",
+				checked:false
+			}
+		];
         var stock = new Vue({
             el:'#index',
 			data:{
-
+				items:stockData,
+				total:"0.00",
+				submit:false
+			},
+			methods:{
+				checkIt:function (index){
+					this.items[index].checked = !this.items[index].checked;
+					this.submit = this.items.some((e) => {
+						return e.checked == true;
+					});
+					if (this.items[index].checked) {
+						this.total = parseFloat(this.total) + parseFloat(this.items[index].money);
+						this.total = Math.floor(this.total * 100) / 100;
+					} else {
+						this.total = parseFloat(this.total) - parseFloat(this.items[index].money);
+						this.total = Math.floor(this.total * 100) / 100;
+					}
+				}
 			}
         });
 	</script>
