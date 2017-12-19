@@ -220,14 +220,20 @@
 					type:'actionBar',
 					actionBar: {
 						title: "拜访记录",
-						titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						backgroundColor: "#039be5",
 						leftItem:{
 							image: "img/back.png",
 							method:"",//返回按钮自定义事件
 							text:"返回",
-							textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems:[{
+							type:"text",
+							text:"新建",
+							textColor:"#ffffff",
+							method:"newVisit()"
+						}]
 					}
 				})
 			}
