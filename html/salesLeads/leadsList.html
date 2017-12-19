@@ -6,106 +6,90 @@
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="../../css/mint.css">
 		<link rel="stylesheet" href="./index.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="salesList">
+			<div class="um-content salesList">
+				<div class="um-input-group pr" id='search'>
+					<i class="icon iconfont icon-nav_search"></i>
+					<input type="text" name="search" class="form-control"  placeholder="搜索">
+					<span onclick="satartSearch('all')">取消</span>
+				</div>
+			</div>
+
+		</div>
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-	</head>
-	<body>
-		<div class="um-win" id="salesList" v-cloak>
-			<div class="um-content salesList">
-				<h1 class="tc">搜索还没做</h1>
-				<ul>
-					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
-            <p>{{item.name}}</p>
-            <p><span>公司</span><template v-if="item.company">{{item.company}}</template><template v-else>未填写</template></p>
-            <p><span>电话</span><template v-if="item.phone">{{item.phone}}</template><template v-else>未填写</template></p>
-            <span class="ps">
-              <b v-if="item.status==1">已分配</b>
-              <b v-if="item.status==0">未分配</b>
-              <i class="icon iconfont icon-enter"></i>
-            </span>
-					</li>
-				</ul>
-			</div>
-      <div class="um-footer" id="footer">
-        <button type="button" @click="addNew" name="button">新建销售线索</button>
-      </div>
-		</div>
 		<script>
-				var salesList=new Vue({
-					el:'#salesList',
-					data(){
-						return{
-							list:[
-                {id:1,name:"赵六",company:'',phone:'13146829922',status:1},
-                {id:1,name:"赵六",company:'天行者科技',phone:'',status:0},
-              ]
-
-						}
-					},
-					created(){
-
-					},
-					methods:{
-            goDetail(id){
-              summer.openWin({
-                id:'leadsDetail',
-                url:'html/salesLeads/leadsDetail.html',
-                create:false,
-                type:'actionBar',
-                pageParam:{carId:id},
-                actionBar: {
-                  title: "销售线索详情",
-                  titleColor: "#ffffff",
-                  backgroundColor: "#039BE5",
-                  leftItem:{
-                      image: "img/back.png",
-                      method:'',
-                      text:"返回",
-                      textColor:"#ffffff"
-                  },
-                  rightItems:[{
-                    type:"text",
-                    text:"保存",
-                    textColor:"#ffffff" ,
-                    method:"save()"
-                  }]
-                }
-              })
-            },
-						addNew(){
-							summer.openWin({
-                id:'addLeads',
-                url:'html/salesLeads/addLeads.html',
-                create:false,
-                type:'actionBar',
-                pageParam:{carId:id},
-                actionBar: {
-                  title: "新建线索",
-                  titleColor: "#ffffff",
-                  backgroundColor: "#039BE5",
-                  leftItem:{
-                      image: "img/back.png",
-                      method:'',
-                      text:"返回",
-                      textColor:"#ffffff"
-                  },
-                  rightItems:[{
-                    type:"text",
-                    text:"提交",
-                    textColor:"#ffffff" ,
-                    method:"save()"
-                  }]
-                }
-              })
-						}
-					}
+		summerready=function(){
+			var top = $summer.offset($summer.byId('search')).h;
+			bindEvents();
+			summer.openFrame({
+				id: 'leadsListContent',
+				url: 'html/salesLeads/leadsList_content.html',
+				bounces: true,
+				position: {
+						top: top,
+						bottom: 0,
+						left: 0,
+						right: 0
+				}
+			})
+		}
+		function bindEvents(){
+				$('.form-control').on('input propertychange',satartSearch);
+		}
+		function satartSearch(val){
+			if(val=='all'){
+				$(".form-control").val('');
+				$(".form-control").addClass('active').siblings('span').removeClass('active');
+				summer.execScript({
+							winId: "leadsList",
+							frameId:"leadsListContent",
+							script: "getData('')"
 				});
+				return
+			}
+			var searchData=$(".form-control").val();
+			if(searchData){
+				$(".form-control").removeClass('active').siblings('span').addClass('active');
+				summer.execScript({
+							winId: "leadsList",
+							frameId:"leadsListContent",
+							script: "getData('"+searchData+"')"
+				});
+			}else{
+				$(".form-control").addClass('active').siblings('span').removeClass('active')
+			}
+		}
+		function 	addLeads(){
+			summer.openWin({
+				id:'addLeads',
+				url:'html/salesLeads/addLeads.html',
+				create:false,
+				type:'actionBar',
+				actionBar: {
+					title: "新建线索",
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039be5",
+					leftItem:{
+						image: "img/back.png",
+						method:"",//返回按钮自定义事件
+						text:"返回",
+						textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems:[{
+						type:"text",
+						text:"提交",
+						textColor:"#ffffff" ,
+						method:"save()"
+					}]
+				}
+			})
+		}
 		</script>
 	</body>
 </html>

@@ -44,10 +44,10 @@
           <!-- <li>跟进状态 <span class="fr">{{name}}</span></li> -->
 				</ul>
 			</div>
-      
+
 		</div>
 		<script>
-				var salesDetail=new Vue({
+				var salesDetailVue=new Vue({
 					el:'#salesDetail',
 					data(){
 						return{
@@ -58,8 +58,14 @@
 
 					},
 					methods:{
+						save(){
+							summer.closeWin()
+						}
 					}
 				});
+				function save(){
+					salesDetailVue.save()
+				}
 		</script>
 	</body>
 </html>

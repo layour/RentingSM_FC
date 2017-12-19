@@ -34,7 +34,10 @@ out:index.min.css,sourcemap:false,compress:true;
         right: .56rem;
         top:0;
         input{
-          height:.8rem;
+          height:.7rem;
+          line-height:.7rem;
+          margin: .09rem 0;
+          font-size: 14px;
           outline: none;
           border:none;
           min-width: 2.3rem;
@@ -92,6 +95,43 @@ out:index.min.css,sourcemap:false,compress:true;
       height: .32rem;
       position: relative;
       top:.03rem;
+    }
+  }
+}
+.um-input-group{
+  padding:.16rem;
+  height:.88rem;
+  line-height:.6rem;
+  background:@bgColor;
+  font-size: 14px;
+  *{
+    height:.6rem;
+    line-height:.6rem;
+  }
+  input{
+    background: @white;
+    border-radius: .1rem;
+    font-size: 14px;
+    // text-indent: .4rem;
+    padding:0 0 0 .6rem;
+  }
+  .icon-nav_search{
+      left:.3rem;
+      position: absolute;
+      top:.15rem;
+      z-index: 1;
+  }
+}
+.um-input-group.pr{
+  span{
+    width:35px;
+    height:0.6rem;
+    line-height:0.6rem;
+    margin-left:10px;
+    font-size:14px;
+    display: none;
+    &.active{
+      display: block;
     }
   }
 }

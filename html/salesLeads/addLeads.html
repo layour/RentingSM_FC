@@ -37,7 +37,7 @@
     <script src="../../js/mint.js" ></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
-				var addLeads=new Vue({
+				var addLeadsVue=new Vue({
 					el:'#addLeads',
 					data(){
 						return{
@@ -48,9 +48,14 @@
 
 					},
 					methods:{
-
+						save(){
+							summer.closeWin()
+						}
 					}
 				});
+				function save(){
+					addLeadsVue.save()
+				}
 		</script>
 	</body>
 </html>

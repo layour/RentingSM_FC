@@ -45,7 +45,7 @@
 								<dd>付款申请</dd>
 							</dl>
 						</li>
-						<li>
+						<li onclick="openQuotedPrice()">
 							<dl>
 								<dt class="iconfont icon-vote" style = "color:#c79644"></dt>
 								<dd>报价测算器</dd>
@@ -79,7 +79,7 @@
 				</h2>
 				<div class="crm_con">
 					<ul class="crm_list">
-						<li>
+						<li onclick="openLeads()">
 							<dl>
 								<dt class="iconfont icon-friends" style = "color:#88d27c"></dt>
 								<dd>销售线索</dd>
@@ -103,7 +103,7 @@
 								<dd>客户</dd>
 							</dl>
 						</li>
-						<li>
+						<li onclick="openBriefing()">
 							<dl>
 								<dt class="iconfont icon-version" style = "color:#403b3a"></dt>
 								<dd>销售简报</dd>
@@ -147,6 +147,70 @@
 				var name = userinfo ? userinfo.name : "张帅经理";
 				$('.container').find('p').text(name);
 			};
+			// 销售线索
+			function openLeads(){
+				summer.openWin({
+					id:'leadsList',
+					url:'html/salesLeads/leadsList.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "销售线索",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems:[{
+							type:"text",
+							text:"新建",
+							textColor:"#ffffff" ,
+							method:"addLeads()"
+						}]
+					}
+				})
+			}
+			function openBriefing(){
+				summer.openWin({
+					id:'briefing',
+					url:'html/salesBriefing/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "销售简报",
+						titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				})
+			}
+			function openQuotedPrice(){
+				summer.openWin({
+					id:'quotedPriceDetail',
+					url:'html/priceCalculation/quotedPriceDetail.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "报价测算",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				})
+			}
 			//拜访记录
 			function openVisitRecord(){
 				summer.openWin({
