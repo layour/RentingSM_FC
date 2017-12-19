@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+			<link rel="stylesheet" href="../../css/mint.css">
+	</head>
+	<style>
+ 		p.title{
+ 		  color:#333;
+ 		  font-size:0.32rem;
+ 		  line-height:0.8rem;
+ 		  background-color:#f6f6f6;	
+ 		}
+			input::-webkit-input-placeholder {
+					color: #DEDEDE;
+					font-size: 0.28rem;
+			}
+			.topheader{
+				height:180px;
+				background-image:url("img/cardBgc.png");
+				background-repeat:no-repeat;
+				background-size:100% 100%;
+			}
+			.topheader img{
+				 margin-top:0.8rem;
+				 width:2.8rem;
+				 height:1.8rem;
+			}
+			.mint-field-core{
+				text-align: right;
+			}
+			.mint-cell-wrapper{
+				color:#333;
+				font-size:0.28rem;
+			}
+			.mint-cell{
+				min-height:40px;
+				height:0.88rem;
+				color:#333;
+				font-size:0.28rem;
+			}
+			div.item{
+				line-height:0.88rem;
+				background:#ffffff;
+				border-bottom:1px solid #f7f7f7;
+				font-size:0.28rem;
+
+			}
+			div.item span{
+				color:#666;
+			}
+			div.item span.red{
+				color:red;
+			}
+			div.item span i{
+				color:#dbdbdb;
+			}
+			.pickerColor {
+			  width: 100%;
+			  z-index: 10;
+			  background: #ffffff;
+			}
+			.pickerColor > p {
+			  line-height: .88rem;
+		    padding:0  .56rem;
+		    color: #039BE5;
+		    border-top: 1px solid #E0E0E0;
+			}
+			.pickerColor > p span {
+			  color: #34aadc;
+			}
+			.mint-cell-wrapper{
+				background-size:100% 0px;
+				border-bottom:1px solid #f7f7f7;
+			}
+			.pickerColor > p span:last-child {
+			  float: right;
+			}
+			.item .first{
+
+				color:#333;
+			}
+			.item .second{
+				color:#9e9e9e;
+			}
+	</style>
+	<body>
+		<div class="um-win" id="app" v-cloak>
+			<div class="um-content">
+				 <p class="pl10 title">拜访信息</p> 
+				<div @click="surePickerSex" class="item">
+						<p class="pl10 pr10 tr">
+							<span class="fl"><span class="um-red red pr5">*</span>客户名称</span>
+							 <span class=""><span v-if='message.sex' class="first">{{message.sex}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
+				 <div @click="sureDateConfirm" class="item">
+					<p class="pl10 pr10 tr">
+						<span class="fl">计划日期</span>
+					         <span class=""><span v-if='message.dateBirth' class="first">{{message.dateBirth}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					</p>
+				</div>
+				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
+				<mt-field label="手机号" placeholder="请输入您的手机号码"  v-model="message.phone"></mt-field>
+				<mt-field label="负责人" placeholder="请输入您的负责人"   v-model="message.phoneAddress"></mt-field>
+				<div @click="surePickerMarrige" class="item">
+						<p class="pl10 pr10">
+							婚姻状况 <span class="fr"><span v-if='message.marrige' class="first">{{message.marrige}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
+			</div>
+			<div >
+				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
+						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+						<p>
+							<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
+						</p>
+				</mt-popup>
+			   <mt-popup v-model="pickerMarrigeStatus" position='bottom' class="pickerColor">
+						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
+						<p>
+							<span class="" @click="surePickerMarrige">取消</span><span class="" @click="surePickerMarrige('confirm')">确定</span>
+						</p>
+				</mt-popup>
+						 <mt-datetime-picker
+						 		ref="picker"
+							  v-model="pickerValue"
+							  type="date"
+								cancel-text='取消'
+								confirm-text='确定'
+								:start-date='new Date("1950-01-01")'
+								:end-date="noweDate"
+							  @confirm="handleConfirm"
+							  >
+						</mt-datetime-picker>
+			</div>
+		</div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script>
+					var newCreateCustom=new Vue({
+			el: '#app',
+			data() {
+				return {
+					cardShow : false,
+					cardUrl : "",
+					pickerVisible : "",
+					pickerDate : "",
+					pickerValue : new Date(),
+					surePicekerDateVal : '',
+					pickerSexStatus : false,
+					pickerDateStatus : false,
+					pickerMarrigeStatus : false,
+					pickerSex : "",
+					pickerMarrige : "",
+					noweDate : new Date(),
+					slots1 : [{
+						flex : 1,
+						values : ['男', '女'],
+						defaultIndex : 0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					slots2 : [{
+						flex : 1,
+						values : ['未婚', '已婚'],
+						defaultIndex : 0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					message : {
+						username : '',
+						card : '',
+						sex : '',
+						address : '',
+						phone : '',
+						phoneAddress : '',
+						marrige : '',
+						dateBirth : ''
+					}
+				}
+			}, 
+			methods: { 
+			    handleClick: function() {
+					this.$toast('Hello world!')
+				}, 
+				cardIdentify:function() {
+					var _self = this;
+					PersonScan.scan({}, function(args) {
+						console.log(args);
+						_self.message.username = args.name;
+						_self.message.card = args.id;
+						_self.message.sex = args.sex;
+						_self.message.dateBirth = args.birth_date;
+						_self.message.address = args.address;
+						 CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name,callback:function(arg){
+					      	 _self.cardUrl=arg.target;
+					      	 _self.cardShow = true;
+					      }});
+					}, function(args) {
+						console.log(args);
+					});
+				}, 
+				successCallBack:function(args) {
+					console.log(args);
+				}, 
+				onValuesChange1:function(picker, values) {
+					this.pickerSex = values[0];
+				}, 
+				surePickerSex:function(param) {
+					this.pickerSexStatus = !this.pickerSexStatus;
+					if (param == 'confirm') {
+						this.message.sex = this.pickerSex;
+					}
+				}, 
+				onValuesChange2:function(picker, values) {
+					this.pickerMarrige = values[0];
+				}, 
+				surePickerMarrige:function(param) {
+					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
+					if (param == 'confirm') {
+						this.message.marrige = this.pickerMarrige;
+						if (this.message.marrige == "未婚") {
+							summer.setWinAttr({
+								actionBar : {
+									title : "客户信息",
+									titleColor : "#ffffff",
+									backgroundColor : "#039be5",
+									rightItems : [{
+										type : "text",
+										text : "保存",
+										textColor : "#ffffff",
+										method : "savePerson()" //自定义事件
+									}]
+								}
+							});
+						} else {
+							summer.setWinAttr({
+								actionBar : {
+									title : "客户信息",
+									titleColor : "#ffffff",
+									backgroundColor : "#039be5",
+									rightItems : [{
+										type : "text",
+										text : "下一步",
+										textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										method : "nextStopAction()" //在打开的window中自定义事件
+									}]
+								}
+							});
+						}
+					}
+				}, 
+				sureDateConfirm:function() {
+					this.pickerDateStatus = !this.pickerDateStatus;
+					this.$refs.picker.open();
+				}, 
+				handleConfirm:function(pickerValue) {
+					this.pickerValue = pickerValue;
+					this.message.dateBirth = getFormatDate(pickerValue)
+					function getFormatDate(date) {
+						var date = new Date(date),
+						    seperator1 = "-";
+						var year = date.getFullYear(),
+						    month = date.getMonth() + 1,
+						    strDate = date.getDate();
+						if (month >= 1 && month <= 9) {
+							month = "0" + month;
+						}
+						if (strDate >= 0 && strDate <= 9) {
+							strDate = "0" + strDate;
+						}
+						return year + month + strDate;
+					}
+
+				}, 
+				messageTest:function(){
+					 var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  //身份证校验
+					 var phoneCard=/^[1][3,4,5,7,8,9][0-9]{9}$/;
+					if(this.message.username==""){
+						summer.toast({msg:"姓名不能为空"});
+						return false;
+					}else if(this.message.card==""||regCard.test(this.message.card)===false){
+						summer.toast({msg:"请输入正确的身份证号"});
+						return false;
+					}else if(this.message.sex==""){
+						summer.toast({msg:"性别不能为空"});
+						return false;
+					}else if(this.message.dateBirth==""){
+						summer.toast({msg:"出生年月不能为空"});
+						return false;
+					}else if(this.message.address==""){
+						summer.toast({msg:"住址不能为空"});
+						return false;
+					}else if(this.message.phone==""){
+						summer.toast({msg:"手机号不能为空"});
+						return false;
+					}else if(!phoneCard.test(this.message.phone)){
+						summer.toast({msg:"手机号格式不正确"});
+						return false;
+					}else if( this.message.marrige==""){
+						summer.toast({msg:"请选择婚姻状况"});
+						return false;
+					}
+					return true;
+				},
+				savePerson:function() {
+					 if(!this.messageTest()){
+					 	return;
+					 };
+					 //此处ajax请求
+					summer.openWin({
+						id : 'setProject',
+						url : 'html/fastReport/setProject.html',
+						create : false,
+						type : 'actionBar',
+						isKeep:false,
+						pageParam:{
+							source:"customer"
+						},
+						actionBar : {
+							title : "快捷报单",
+							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor : "#039be5",
+							leftItem : {
+								image : "img/back.png",
+								method : "", //返回按钮自定义事件
+								text : "返回",
+								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems : [{
+								type : "text",
+								text : "下一步",
+								textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method : "nextStopInput()" //在打开的window中自定义事件
+							}]
+						}
+					});
+				}, 
+				nextStopAction:function() {
+					 if(!this.messageTest()){
+					 	return;
+					 };
+					  //此处ajax请求
+					summer.openWin({
+						id : 'newCreateCustom2',
+						url : 'html/fastReport/newCreateCustom2.html',
+						create : false,
+						type : 'actionBar',
+						isKeep:false,
+						actionBar : {
+							title : "配偶信息",
+							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor : "#039be5",
+							leftItem : {
+								image : "img/back.png",
+								method : "", //返回按钮自定义事件
+								text : "返回",
+								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems : [{
+								type : "text",
+								text : "保存",
+								textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method : "saveAllPerMessage()" //在打开的window中自定义事件
+							}]
+						}
+					});
+				}, 
+				openPicker:function() {
+					this.$refs.picker.open();
+				}
+			}
+			})
+			function savePerson() {
+				newCreateCustom.savePerson();
+			}
+			function nextStopAction() {
+				newCreateCustom.nextStopAction();
+			}
+
+			summerready = function() {
+				var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
+				summer.getPermission(params, function(args) {
+					//alert(args); //成功返回OK
+				}, function(args) {
+					//alert(args); //失败返回illegal access
+				})
+			}
+
+			function newVisit(){
+				summer.openWin({
+					id:'newVisit',
+					url:'html/visitRecord/newVisit.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "选择客户",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+								image: "",
+								method:"",//返回按钮自定义事件
+								text:"取消",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						 rightItems:[{
+					          type:"text",
+					          text:"保存",
+					          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					          method:"saveVisit()" //在打开的window中自定义事件
+					      }]
+					}
+				});
+		  }
+				
+			 
+	 
+		</script>
+	</body>
+</html>

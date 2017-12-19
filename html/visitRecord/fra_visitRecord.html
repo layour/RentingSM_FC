@@ -7,51 +7,91 @@
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<script src="../../js/font.js" ></script>
-		<link rel="stylesheet" href="css/fraCommon.css">
+		<style>
+			.customList:first-child{
+	margin-top:0px;
+}
+.customList{
+	 position: relative;
+	 margin-top:0.2rem;
+}
+	.customList p.title{
+	font-size:0.32rem;
+	color:#039be5;
+	line-height:0.88rem;
+	border-bottom:1px solid #f7f7f7;
+}
+.customList p.title span{
+	color:#424242;
+	
+}
+ 
+.customList p.select{
+	line-height:0.88rem;
+	color:#424242;
+	font-size:0.24rem;
+	border-bottom:1px solid #f6f6f6;
+	
+	
+	 
+}
+.customList p.select span{
+	border-right:1px solid #f6f6f6;
+}
+.customList p.select span:active{
+	 background:#f6f6f6;
+}
+.customList p.select span:last-child{
+	border-right:0px solid #f6f6f6;
+}
+.customList p.time .manager{
+	font-size:0.36rem;
+}
+.customList .center{
+	padding:0.3rem 0.2rem;
+	border-bottom:1px solid #f7f7f7;
+	font-size:0.28rem;
+	color:#424242;
+}
+.customList .center p.status span{
+	padding-right:0.7rem;
+}
+/*.customList .center:after{
+	content: "";
+	display: inline-block;
+	width: 0.24rem;
+	height: 0.24rem;
+	border-right: 1px solid #dbdbdb;
+	border-bottom: 1px solid #dbdbdb;
+	transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);	 
+	-moz-transform: rotate(-45deg);	 
+	-webkit-transform: rotate(-45deg);  
+	-o-transform: rotate(-45deg);
+	position: absolute;
+	right: 0.6rem;
+	top:1.4rem;
+}*/
+.customList .center:active{
+	background:#f4f4f4;
+}
+		</style>
 	</head>
 	<body>
-		<div class="um-frame" id="fra_total" v-cloak>
-			<!-- <div class="um-header-light">
-				<div class="sera">
-					<div class="s-box" onclick="opensearch()">
-						<i class="iconfont icon-search"> </i>
-						<p class="txt">
-							输入客户名称/关键词
-						</p>
-					</div>
-				</div>
-			</div> -->
+		<div class="um-frame" id="fra_visitRecord" v-cloak>
 			<div class="um-content">
 				<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
 					<p class="pl10 title pr10">
-						{{item.CR_BECR_NAME}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span>
-					</p>
+						{{item.name}} 
 					<div class="center"   @click="openDetail(item.ID)">
-						<p class="type pl10">
-							<span>{{item.CR_BECR_TYPE}} </span> | <span>{{item.PLATFORM}}</span>
-						</p>
-						<p class="type card pl10 status">
-							{{item.LEASE_CODE}} <span class="fr">{{item.STATUS}}</span>
+						<p class="time pl10 pr10">
+							<span>创建时间：<span>{{item.planTime}}</span></span><span class="status fr">{{item.status}}</span>
 						</p>
 						<p class="time pl10 pr10">
-							<span>创建时间：<span>{{item.creatTime}}</span></span>
+							<span>负责人：<span>{{item.leader}}</span></span>
 						</p>
 					</div>
-					<p class=" select um-box" >
-						<span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-						<span class="um-bf1  tc" @click="submit(item.ID)"><i class="iconfont icon-submit mr5"></i>提交</span>
-						<span class="um-bf1   tc" @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
-						<span class="um-bf1  tc" @click="openOpacity(item.ID,item.LEASE_CODE)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<!-- <p class=" select um-box"  v-else-if="item.status=='审核中'">
-						<span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<p class=" select um-box"  v-else-if="item.status=='已驳回'">
-						<span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-						<span class="um-bf1   tc"  @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
-						<span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<p v-else  ></p> -->
 				</div>
 			</div>
 		</div>
@@ -61,19 +101,40 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
-		function opensearch(){
-			summer.openWin({
-				id:'search',
-				url:'html/fastReport/search.html',
-				pageParam:{
-				source:"program"
-				}
-
-			});
-		}
 			var _endNum=10;
 			summerready=function(){
-				getData(10);
+				//getData(10)
+				fra_visitRecord.dataList=[{
+					name:"张三",
+					planTime:"2017-09-08",
+					leader:"张飞",
+					status:"未完成",
+					id:"100"
+				},{
+					name:"张三",
+					planTime:"2017-09-08",
+					leader:"张飞",
+					status:"未完成",
+					id:"100"
+				},{
+					name:"张三",
+					planTime:"2017-09-08",
+					leader:"张飞",
+					status:"未完成",
+					id:"100"
+				},{
+					name:"张三",
+					planTime:"2017-09-08",
+					leader:"张飞",
+					status:"未完成",
+					id:"100"
+				},{
+					name:"张三",
+					planTime:"2017-09-08",
+					leader:"张飞",
+					status:"未完成",
+					id:"100"
+				}];
 				summer.setRefreshHeaderInfo({
 					visible: true,
 					loadingImg: 'img/refresh.png',
@@ -84,7 +145,8 @@
 					showTime: true
 				}, function(ret, err) {
 					//通常在这里从服务器加载数据，t
-					getData(10,fra_total.searchValue);
+				//	getData(10);
+				summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
 					_endNum=10;
 				});
 				summer.setRefreshFooterInfo({
@@ -97,33 +159,31 @@
 					showTime: true
 				}, function(ret, err) {
 					//通常在这里从服务器加载数据，
-					_endNum+=10;
-					getData(_endNum,fra_total.searchValue);
+				//_endNum+=10;
+				//getData(_endNum);
+				 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
 				});
 			}
-			function getData(end,searchValue){
-				fra_total.getData(end,searchValue);
-				fra_total.searchValue=searchValue;
+			function getData(end){
+				fra_total.getData(end);
 			}
-			var fra_total= new Vue({
-				el:'#fra_total',
+			var fra_visitRecord= new Vue({
+				el:'#fra_visitRecord',
 				data(){
 				return {
-					dataList:'',
-					searchValue:''
+				dataList:''
 				}
 				},
 				mounted(){
 				},
 			methods:{	
-					getData(end,searchValue){
+					getData(end){
 						ajaxRequest({
 					        type: 'post',
 					        url: 'appservice/promc/projectList',
 					        param: {
 					        	 "PAGE_BEGIN":"1",
 							    "PAGE_END":end,
-							    "CR_BECR_NAME":searchValue?searchValue:""
 					        }
 					    }, function (res) {
 							//alert(res);
