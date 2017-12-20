@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="./index.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="riskTrack">
+			<div class="um-content riskTrack">
+				<div  id='changeState'>
+					<button onclick="changeState('repayment',this)" class="active">还款提醒</button><button onclick="changeState('expected',this)">逾期催收</button>
+				</div>
+			</div>
+
+		</div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script>
+		summerready=function(){
+			var top = $summer.offset($summer.byId('changeState')).h;
+			summer.openFrame({
+				id: 'riskTrackContent',
+				url: 'html/riskTracking/riskTrack_content.html',
+				bounces: true,
+				position: {
+						top: top,
+						bottom: 0,
+						left: 0,
+						right: 0
+				}
+			})
+		}
+		function changeState(val,target){
+				$(target).addClass('active').siblings('.active').removeClass('active');
+				summer.execScript({
+							winId: "riskTracking",
+							frameId:"riskTrackContent",
+							script: "getData('"+val+"')"
+				});
+		}
+		</script>
+	</body>
+</html>

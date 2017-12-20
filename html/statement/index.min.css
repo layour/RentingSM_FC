@@ -1,1 +1,10 @@
-body{color:#333}i{color:#DBDBDB}input::-webkit-input-placeholder{color:#DEDEDE;font-size:14px}
+body {
+  color: #333;
+}
+i {
+  color: #DBDBDB;
+}
+input::-webkit-input-placeholder {
+  color: #DEDEDE;
+  font-size: 14px;
+}

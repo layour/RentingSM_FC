@@ -51,19 +51,19 @@
 								<dd>报价测算器</dd>
 							</dl>
 						</li>
-						<li>
+						<li onclick="openPayTab()">
 							<dl>
 								<dt class="iconfont icon-search1" style = "color:#88d27c"></dt>
 								<dd>支付表查询</dd>
 							</dl>
 						</li>
-						<li>
+						<li  onclick="openRiskTracking()">
 							<dl>
 								<dt class="iconfont icon-leave_leave" style = "color:#403b3a"></dt>
 								<dd>逾期罚息</dd>
 							</dl>
 						</li>
-						<li>
+						<li onclick="openStatement()">
 							<dl>
 								<dt class="iconfont icon-send_blog" style = "color:#c79644"></dt>
 								<dd>对账还款</dd>
@@ -147,6 +147,66 @@
 				var name = userinfo ? userinfo.name : "张帅经理";
 				$('.container').find('p').text(name);
 			};
+			// 支付表查询
+			function openPayTab(){
+				summer.openWin({
+					id:'payTable',
+					url:'html/payTableQuery/payTableList.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "支付表查询",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				})
+			}
+			// 风险跟踪
+			function openRiskTracking(){
+				summer.openWin({
+					id:'riskTracking',
+					url:'html/riskTracking/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "风险跟踪",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				})
+			}
+			// 对账单
+			function openStatement(){
+				summer.openWin({
+					id:'statement',
+					url:'html/statement/statementList.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "客户对账单",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				})
+			}
 			// 销售线索
 			function openLeads(){
 				summer.openWin({
@@ -173,6 +233,7 @@
 					}
 				})
 			}
+			// 销售简报
 			function openBriefing(){
 				summer.openWin({
 					id:'briefing',
@@ -181,13 +242,13 @@
 					type:'actionBar',
 					actionBar: {
 						title: "销售简报",
-						titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						backgroundColor: "#039be5",
 						leftItem:{
 							image: "img/back.png",
 							method:"",//返回按钮自定义事件
 							text:"返回",
-							textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						}
 					}
 				})
