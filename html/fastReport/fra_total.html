@@ -27,7 +27,7 @@
 	{{item.cstNm}}<span class="status fr">
 	<i class="iconfont icon-customer mr5"></i>{{item.cstMgrNm}}</span>
 					</p>
-					<div class="center"   @click="openDetail(item.ID)">
+					<div class="center"   @click="openDetail(item.id)">
 						<p class="type pl10">
 							<span>{{item.cstId.cstTypCdNm}} </span> | <span>{{}}</span>
 						</p>
@@ -39,10 +39,10 @@
 						</p>
 					</div>
 					<p class=" select um-box" >
-						<span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-						<span class="um-bf1  tc" @click="submit(item.ID)"><i class="iconfont icon-submit mr5"></i>提交</span>
-						<span class="um-bf1   tc" @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
-						<span class="um-bf1  tc" @click="openOpacity(item.ID,item.LEASE_CODE)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
+						<span class="um-bf1   tc" @click="upload(item.id)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
+						<span class="um-bf1  tc" @click="submit(item.id)"><i class="iconfont icon-submit mr5"></i>提交</span>
+						<span class="um-bf1   tc" @click="edit(item.id)"><i class="iconfont icon-modify mr5"></i>修改</span>
+						<span class="um-bf1  tc" @click="openOpacity(item.id,item.LEASE_CODE)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
 					</p>
 					<!-- <p class=" select um-box"  v-else-if="item.status=='审核中'">
 						<span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
@@ -132,7 +132,7 @@
 					               		fra_total.dataList=JSON.parse(res.data).datas.list;
 					               }else{
 					                 //var initArray=JSON.parse(JSON.stringify(fra_total.dataList));
-					               		fra_total.dataList=fra_total.dataList.concat(res.data.datas.list);
+					               		fra_total.dataList=fra_total.dataList.concat(JSON.parse(res.data).datas.list);
 					               }
 					           		
 					           		console.log(fra_total.dataList);

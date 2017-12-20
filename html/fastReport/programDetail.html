@@ -215,6 +215,7 @@
 	</body>
 	<script src="../../js/summer.js" ></script>		
 	<script src="../../js/jquery.min.js" ></script>
+	<script src="../../js/vue.js" ></script>
 	<script src="../../js/common.js" ></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	<script>
@@ -224,35 +225,29 @@
 		};
 		var programDetail=new Vue({
 			el:'#programDetail',
-			data() {",
+			data() {
+				return {
+				   dataList:"",
 				}
 			},
 			created() {
-				return {
-				   dataList:"
+				
 
 			},
 			 methods: {
 				 getData(id){
 				 	ajaxRequest({
 					        type: 'get',
-					        url: 'appservice/promc/projectList',
+					        url: 'honor/appservice/project/prjbscinfo/getById.do',
 					        param: {
-					        	 "pageNo":pageNum,
-							    "pageSize":10,
+					        	 "id":id,
 					        }
 					    }, function (res) {
 							//alert(res);
 					    	 summer.hideProgress();
-					           if(res.data.flag==1){
-					               if(flag){
-					               		fra_total.dataList=res.data.datas.list;
-					               }else{
-					                 //var initArray=JSON.parse(JSON.stringify(fra_total.dataList));
-					               		fra_total.dataList=fra_total.dataList.concat(res.data.datas.list);
-					               }
-					           		
-					           		console.log(fra_total.dataList);
+					         if(res.status==200){
+					               		programDetail.dataList=eval('(' + res.data + ')');
+					           		console.log(programDetail.dataList);
 					           }
 						    }, function (err) {
 								alert(err);
@@ -263,7 +258,8 @@
 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
 			                 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
 			            })
-				 },
+				 }
+				 }
 			});
 		$(function () {			 
         		 /*导航更换js*/
