@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="./index.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="statementList">
+			<div class="um-content statementList">
+				<div class="um-input-group pr" id='search'>
+					<i class="icon iconfont icon-nav_search"></i>
+					<input type="text" name="search" class="form-control"  placeholder="搜索">
+					<span onclick="satartSearch('all')">取消</span>
+				</div>
+			</div>
+
+		</div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script>
+		summerready=function(){
+			var top = $summer.offset($summer.byId('search')).h;
+			bindEvents();
+			summer.openFrame({
+				id: 'statementListContent',
+				url: 'html/statement/statementList_content.html',
+				bounces: true,
+				position: {
+						top: top,
+						bottom: 0,
+						left: 0,
+						right: 0
+				}
+			})
+		}
+		function bindEvents(){
+				$('.form-control').on('input propertychange',satartSearch);
+		}
+		function satartSearch(val){
+			if(val=='all'){
+				$(".form-control").val('');
+				$(".form-control").addClass('active').siblings('span').removeClass('active');
+				summer.execScript({
+							winId: "statement",
+							frameId:"statementListContent",
+							script: "getData('')"
+				});
+				return
+			}
+			var searchData=$(".form-control").val();
+			if(searchData){
+				$(".form-control").removeClass('active').siblings('span').addClass('active');
+				summer.execScript({
+							winId: "statement",
+							frameId:"statementListContent",
+							script: "getData('"+searchData+"')"
+				});
+			}else{
+				$(".form-control").addClass('active').siblings('span').removeClass('active')
+			}
+		}
+
+		</script>
+	</body>
+</html>
