@@ -1,3 +1,104 @@
 // "out":"index.min.css","sourcemap":false,"compress":true
 
 @import "../../css/comment.less";
+.statementList{
+  ul{
+    font-size: 14px;
+    background: @white;
+    li{
+      border-bottom: 1px solid @borderColor;
+      position: relative;
+      padding: .2rem .56rem;
+      overflow: hidden;
+      p{
+        line-height: .5rem;
+      }
+      div{
+        border-top: 1px solid @borderColor;
+        border-bottom: 1px solid @borderColor;
+        p:last-child{
+          color:@aaa;
+        }
+      }
+      button{
+        background: @grayBlue;
+        color:@white;
+        height: .6rem;
+        padding:0 .3rem;
+        border: none;
+        outline: none;
+        border-radius: .1rem;
+        margin-top: .2rem;
+      }
+    }
+  }
+}
+.statementDetail{
+  ul{
+    background: @white;
+    margin-bottom: .4rem;
+    li{
+      padding:0 .56rem;
+      height: .88rem;
+      line-height: .88rem;
+      font-size: 16px;
+      border-bottom: 1px solid @borderColor;
+      &.bgLi{
+        background: @bgColor;
+        height: .6rem;
+        line-height: .6rem;
+        text-align: center;
+        font-size: 14px;
+      }
+      &.title{
+        font-size:18px;
+        font-weight: bold;
+        span{
+          border-left: 3px solid #039BE5;
+          padding-right: 3px;
+          display: inline-block;
+          height: .32rem;
+          position: relative;
+          top:.03rem;
+        }
+      }
+    }
+  }
+}
+.um-input-group{
+  padding:.16rem;
+  height:.88rem;
+  line-height:.6rem;
+  background:@bgColor;
+  font-size: 14px;
+  *{
+    height:.6rem;
+    line-height:.6rem;
+  }
+  input{
+    background: @white;
+    border-radius: .1rem;
+    font-size: 14px;
+    // text-indent: .4rem;
+    padding:0 0 0 .6rem;
+  }
+  .icon-nav_search{
+      left:.3rem;
+      position: absolute;
+      top:.15rem;
+      z-index: 1;
+  }
+}
+.um-input-group.pr{
+  span{
+    width:35px;
+    height:0.6rem;
+    line-height:0.6rem;
+    margin-left:10px;
+    font-size:14px;
+    display: none;
+    &.active{
+      display: block;
+    }
+  }
+}
