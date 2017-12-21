@@ -8,80 +8,65 @@
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<link rel="stylesheet" href="./index.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="statementDetail" v-cloak>
+			<div class="um-content statementDetail">
+				<table>
+					<tr>
+						<td class="first"><i class="icon iconfont icon-user"></i></td>
+						<td>
+							<p>{{name}}</p>
+							<p>{{number}}</p>
+						</td>
+					</tr>
+				</table>
+				<section>
+					<p>来款时间</p>
+					<div>
+						<p>
+							<span @click="openPicker('start')" :class="{default:!startDate}"><template v-if="!startDate" class="default">请选择开始日期</template><template v-else>{{startDate}}</template></span>
+							<b>至</b>
+							<span  @click="openPicker('end')" :class="{default:!endDate}"><template v-if="!endDate">请选择开始日期</template><template v-else>{{endDate}}</template></span>
+						</p>
+						<p>	例：2016年01月01日</p>
+					</div>
+					<button class="fr">查询</button>
+				</section>
+			</div>
+
+			<mt-datetime-picker  ref="picker"  type="date"  v-model="pickerValue"
+				cancel-text='取消'
+				confirm-text='确定'
+				:start-date='startdata'
+				:end-date='enddata'
+				@confirm="handleConfirm"
+				year-format="{value} 年"
+				month-format="{value} 月"
+				date-format="{value} 日">
+			</mt-datetime-picker>
+		</div>
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-	</head>
-	<body>
-		<div class="um-win" id="salesDetail" v-cloak>
-			<div class="um-content statementDetail">
-				<ul>
-          <li class="title"><span></span>基本信息</li>
-          <li>客服信息 <span class="fr">{{name}}</span></li>
-          <li>合同号 <span class="fr">{{name}}</span></li>
-          <li>项目类型 <span class="fr">{{name}}</span></li>
-          <li>业务模式 <span class="fr">{{name}}</span></li>
-          <li>所属机构 <span class="fr">{{name}}</span></li>
-          <li>客户经理 <span class="fr">{{name}}</span></li>
-				</ul>
-        <ul>
-          <li class="title"><span></span>车辆信息</li>
-          <li>车型 <span class="fr">{{name}}</span></li>
-          <li>颜色 <span class="fr">{{name}}</span></li>
-          <li>成交价 <span class="fr">{{name}}</span></li>
-        </ul>
-        <ul>
-          <li class="title"><span></span>报价方案</li>
-          <li>方案名称 <span class="fr">{{name}}</span></li>
-          <li>租赁物总价值 <span class="fr">{{name}}</span></li>
-          <li>合同额 <span class="fr">{{name}}</span></li>
-          <li>首付比例 <span class="fr">{{name}}</span></li>
-          <li>首期租金 <span class="fr">{{name}}</span></li>
-          <li>保证金 <span class="fr">{{name}}</span></li>
-          <li>咨询费比例 <span class="fr">{{name}}</span></li>
-          <li>咨询费 <span class="fr">{{name}}</span></li>
-          <li>年利率 <span class="fr">{{name}}</span></li>
-          <li>租赁期数 <span class="fr">{{name}}</span></li>
-          <li>支付方式 <span class="fr">{{name}}</span></li>
-        </ul>
-        <ul>
-          <li class="title"><span></span>付款通知(收款方)</li>
-					<li>收款方类型 <span class="fr">{{name}}</span></li>
-					<li>收款单位 <span class="fr">{{name}}</span></li>
-					<li>账户类型 <span class="fr">{{name}}</span></li>
-					<li>开户行 <span class="fr">{{name}}</span></li>
-					<li>开户行行号 <span class="fr">{{name}}</span></li>
-					<li>收款账号 <span class="fr">{{name}}</span></li>
-        </ul>
-				<ul>
-          <li class="title"><span></span>支付清单</li>
-					<li class="bgLi">其他费用</li>
-					<li>留购价 <span class="fr">{{name}}</span></li>
-					<li>管理费 <span class="fr">{{name}}</span></li>
-					<li>保险金 <span class="fr">{{name}}</span></li>
-					<li>首期租金 <span class="fr">{{name}}</span></li>
-					<li class="bgLi">合计</li>
-					<li>租金 <span class="fr">{{name}}</span></li>
-					<li>本金 <span class="fr">{{name}}</span></li>
-					<li>利息 <span class="fr">{{name}}</span></li>
-					<template v-for="(item,index) in list">
-						<li class="bgLi">期数{{index+1}}</li>
-						<li>租金: &yen;{{item.money}} <span class="fr">本金: &yen;{{item.hasMoney}}</span></li>
-						<li>利息: &yen;{{item.rateMoney}} <span class="fr">剩余本金: &yen;{{item.lastMoney}}</span></li>
-					</template>
-				</ul>
-			</div>
-
-		</div>
 		<script>
 				var salesDetailVue=new Vue({
-					el:'#salesDetail',
+					el:'#statementDetail',
 					data(){
 						return{
 							name:'张六',
+							number:'2016-VO3242',
+							startDate:"",
+							endDate:"",
+							startdata:new Date("1990-01-01"),
+							enddata:new Date(),
+							state:'',
+							pickerValue:'',
+							count:1,
               list:[
                 {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
                 {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
@@ -98,7 +83,39 @@
 
 					},
 					methods:{
-
+						handleConfirm(value){
+							this.pickerValue=value;
+							console.log(value);
+							if(this.state=='start'){
+								this.startDate=getFormatDate(value)
+							}else if(this.state=='end'){
+								this.endDate=getFormatDate(value)
+							}
+							function getFormatDate(date){
+								var date=new Date(date), seperator1 = "-";
+								var year = date.getFullYear(), month = date.getMonth() + 1, strDate = date.getDate();
+								if (month >= 1 && month <= 9) {
+									month = "0" + month;
+								}
+								if (strDate >= 0 && strDate <= 9) {
+									strDate = "0" + strDate;
+								}
+							 return  year +'年' + month +'月'+ strDate;
+						 }
+						},
+						openPicker(val) {
+							this.state=val
+							if(this.count=='1'){
+								this.handleConfirm(new Date());
+								this.count=0;
+							}
+							// if(val=='start'){
+							// 	if(this.endDate){this.enddata=new Date(this.endDate)}
+							// }else if (val=='end') {
+							// 	if(this.startDate){this.startdata=new Date(this.startDate)}
+							// }
+							this.$refs.picker.open();
+						},
 					}
 				});
 		</script>

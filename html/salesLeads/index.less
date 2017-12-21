@@ -33,6 +33,9 @@
         position: absolute;
         right: .56rem;
         top:0;
+        &.default{
+          color:@grayColor;
+        }
         input{
           height:.7rem;
           line-height:.7rem;
@@ -132,6 +135,32 @@
     display: none;
     &.active{
       display: block;
+    }
+  }
+}
+.pickerPrice{
+  // position:fixed;
+  // left:0;
+  // bottom:0;
+  width:100%;
+  // z-index: 100;
+  background: @white;
+  border-top:1px solid @borderColor;
+  .picker-slot{
+    font-size: 14px;
+    color:@grayColor;
+  }
+  .picker-item.picker-selected{
+    font-size: 22px;
+    color:@fontColor;
+  }
+  >p{
+    padding:0 .56rem;
+    line-height: .88rem;
+    border-top: 1px solid @E0;
+    font-size: 14px;
+    span{
+      color:@grayBlue;
     }
   }
 }
