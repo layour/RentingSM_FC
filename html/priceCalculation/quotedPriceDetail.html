@@ -283,10 +283,6 @@
 									this.quoted.contractTerm=this.quoted.term.substring(0,i);
 								}else if(this.pickerType=='payType'){
 									this.quoted.payType=this.pickerVal
-								}else if(this.pickerType=='bail') {
-									this.quoted.bailType=this.pickerVal
-									var number=this.bailTypeReset();
-									this.quoted.bail=this.quoted.bailRate*number*0.01
 								}
 							}else if(item){
 								this.pickerType=item;

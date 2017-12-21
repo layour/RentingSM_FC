@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="./index.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="payTableList" v-cloak>
+			<div class="um-content payTableList">
+				<ul>
+					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
+            <p>{{item.name}} <span v-if="item.state=='0'">作废</span></p>
+            <div>
+              <p>{{item.number}}</p>
+              <p>创建时间:{{item.date}}<span class="fr">客户经理{{item.custerName}}</span></p>
+            </div>
+            <button class="fr" @click="goDetail(item.id)">支付明细</button>
+					</li>
+				</ul>
+			</div>
+      <!-- <div class="um-footer" id="footer">
+        <button type="button" @click="addNew" name="button">新建销售线索</button>
+      </div> -->
+		</div>
+    <script src="../../js/summer.js" ></script>
+    <script src="../../js/jquery.min.js" ></script>
+    <script src="../../js/font.js" ></script>
+    <script src="../../js/vue.js" ></script>
+    <script src="../../js/mint.js" ></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script>
+				var payTableListVue=new Vue({
+					el:'#payTableList',
+					data(){
+						return{
+							list:[
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'',number:'CNCAHP13146829922-2',status:1},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:1},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:1},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:1},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
+                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
+              ],
+							searchVal:'',
+							currentPage:1
+
+						}
+					},
+					created(){
+
+					},
+					methods:{
+						getData(){
+							alert(this.searchVal)
+							alert(this.currentPage)
+							this.$nextTick(function(){
+ 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+ 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+ 			        })
+						},
+            goDetail(id){
+              summer.openWin({
+                id:'payTableDetail',
+                url:'html/payTableQuery/payTableDetail.html',
+                create:false,
+                type:'actionBar',
+                pageParam:{id:id},
+                actionBar: {
+                  title: "支付表明细",
+                  titleColor: "#ffffff",
+                  backgroundColor: "#039BE5",
+                  leftItem:{
+                      image: "img/back.png",
+                      method:'',
+                      text:"返回",
+                      textColor:"#ffffff"
+                  }
+                }
+              })
+            }
+
+					}
+				});
+				function getData(val){
+					payTableListVue.searchVal=val
+					payTableListVue.getData();
+				}
+				summerready=function(){
+					summer.setRefreshHeaderInfo({
+						visible: true,
+						loadingImg: 'img/refresh.png',
+						bgColor: '#ffffff',
+						textColor: '#aaaaaa',
+						textDown: '下拉刷新...',
+						textUp: '松开刷新...',
+						showTime: true
+					}, function(ret, err) {
+						//通常在这里从服务器加载数据，t
+						payTableListVue.getData();
+					});
+					summer.setRefreshFooterInfo({
+						visible: true,
+						loadingImg: 'img/refresh.png',
+						bgColor: '#ffffff',
+						textColor: '#aaaaaa',
+						textDown: '上拉刷新...',
+						textUp: '松开刷新...',
+						showTime: true
+					}, function(ret, err) {
+						//通常在这里从服务器加载数据，
+						payTableListVue.currentPage+=1;
+						payTableListVue.getData();
+					});
+				}
+		</script>
+	</body>
+</html>

@@ -4,12 +4,18 @@
 .statementList{
   ul{
     font-size: 14px;
-    background: @white;
     li{
       border-bottom: 1px solid @borderColor;
       position: relative;
       padding: .2rem .56rem;
       overflow: hidden;
+      background: @white;
+      margin-bottom: .4rem;
+      >p{
+        font-weight:bold;
+        height: .6rem;
+        line-height: .6rem;
+      }
       p{
         line-height: .5rem;
       }
@@ -34,6 +40,63 @@
   }
 }
 .statementDetail{
+  font-size: 14px;
+  table{
+    width: 100%;
+    margin-bottom: .2rem;
+    td{
+      background: @white;
+      padding:.2rem 0 .2rem .56rem;
+      &.first{width:.6rem;}
+      i{
+        color:@grayBlue;
+        font-size: 21px;
+      }
+      p{
+        line-height: .4rem;
+        &:last-child{color:@aaa;}
+      }
+    }
+  }
+  section{
+    background: @white;
+    margin: 0 .2rem;
+    overflow: hidden;
+    padding:.2rem;
+    >div{
+      p{
+        height: .6rem;
+        line-height: .6rem;
+        b{
+          font-weight: normal;
+          padding: 0 .2rem;
+        }
+        span{
+          height: .4rem;
+          line-height: .4rem;
+          width: 2.5rem;
+          display: inline-block;
+          vertical-align: middle;
+          border-radius: 5px;
+          text-align: center;
+          border: 1px solid @borderColor;
+          &.default{
+            color:@aaa;
+          }
+        }
+      }
+    }
+    button{
+      background: @grayBlue;
+      color:@white;
+      height: .6rem;
+      padding:0 .3rem;
+      border: none;
+      outline: none;
+      border-radius: .1rem;
+      margin-top: .2rem;
+    }
+  }
   ul{
     background: @white;
     margin-bottom: .4rem;
