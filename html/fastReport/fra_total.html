@@ -1,278 +1,283 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<script src="../../js/font.js" ></script>
-		<link rel="stylesheet" href="css/fraCommon.css">
-	</head>
-	<body>
-		<div class="um-frame" id="fra_total" v-cloak>
-			<div class="um-header-light">
-				<div class="sera">
-					<div class="s-box" onclick="opensearch()">
-						<i class="iconfont icon-search"> </i>
-						<p class="txt">
-							输入客户名称/关键词
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="um-content">
-				<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
-					<p class="pl10 title pr10">
-	{{item.cstNm}}<span class="status fr">
-	<i class="iconfont icon-customer mr5"></i>{{item.cstMgrNm}}</span>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<script src="../../js/font.js"></script>
+	<link rel="stylesheet" href="css/fraCommon.css">
+</head>
+
+<body>
+	<div class="um-frame" id="fra_total" v-cloak>
+		<div class="um-header-light">
+			<div class="sera">
+				<div class="s-box" onclick="opensearch()">
+					<i class="iconfont icon-search"> </i>
+					<p class="txt">
+						输入客户名称/关键词
 					</p>
-					<div class="center"   @click="openDetail(item.id)">
-						<p class="type pl10">
-							<span>{{item.cstId.cstTypCdNm}} </span> | <span>{{}}</span>
-						</p>
-						<p class="type card pl10 status">
-							{{item.lsCntNo}} <span class="fr">{{}}</span>
-						</p>
-						<p class="time pl10 pr10">
-							<span>创建时间：<span>{{item.createDate}}</span></span>
-						</p>
-					</div>
-					<p class=" select um-box" >
-						<span class="um-bf1   tc" @click="upload(item.id)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-						<span class="um-bf1  tc" @click="submit(item.id)"><i class="iconfont icon-submit mr5"></i>提交</span>
-						<span class="um-bf1   tc" @click="edit(item.id)"><i class="iconfont icon-modify mr5"></i>修改</span>
-						<span class="um-bf1  tc" @click="openOpacity(item.id,item.LEASE_CODE)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<!-- <p class=" select um-box"  v-else-if="item.status=='审核中'">
-						<span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<p class=" select um-box"  v-else-if="item.status=='已驳回'">
-						<span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-						<span class="um-bf1   tc"  @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
-						<span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<p v-else  ></p> -->
 				</div>
 			</div>
 		</div>
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/common.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script>
-		function opensearch(){
+		<div class="um-content">
+			<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
+				<p class="pl10 title pr10">
+					{{item.cstNm}}<span class="status fr">
+					<i class="iconfont icon-customer mr5"></i>{{item.cstMgrNm}}</span>
+				</p>
+				<div class="center" @click="openDetail(item.id)">
+					<p class="type pl10">
+						<span>{{item.cstId?item.cstId.cstTypCdNm:"  "}} </span> | <span>{{item.bizTypNm}}</span>
+					</p>
+					<p class="type card pl10 status">
+						{{item.lsCntNo}} <span class="fr">{{item.prjStsCdNm}}</span>
+					</p>
+					<p class="time pl10 pr10">
+						<span>创建时间：<span>{{item.createDate}}</span></span>
+					</p>
+				</div>
+				<p class=" select um-box" v-if="item.prjStsCdNm=='未评审'">
+					<span class="um-bf1   tc" @click="upload(item.id)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
+					<span class="um-bf1  tc" @click="submit(item.id)"><i class="iconfont icon-submit mr5"></i>提交</span>
+					<span class="um-bf1   tc" @click="edit(item.id)"><i class="iconfont icon-modify mr5"></i>修改</span>
+					<span class="um-bf1  tc" @click="openOpacity(item.id,item.LEASE_CODE)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
+				</p>
+				<p v-else></p>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script>
+		function opensearch() {
 			summer.openWin({
-				id:'search',
-				url:'html/fastReport/search.html',
-				pageParam:{
-					source:"program"
+				id: 'search',
+				url: 'html/fastReport/search.html',
+				pageParam: {
+					source: "program"
 				}
 
 			});
 		}
-			var _endNum=1;
-			summerready=function(){
-				getData(1,true)
-				summer.setRefreshHeaderInfo({
-					visible: true,
-					loadingImg: 'img/refresh.png',
-					bgColor: '#ffffff',
-					textColor: '#aaaaaa',
-					textDown: '下拉刷新...',
-					textUp: '松开刷新...',
-					showTime: true
-				}, function(ret, err) {
-					//通常在这里从服务器加载数据，t
-					getData(1,true);
-					_endNum=1;
-				});
-				summer.setRefreshFooterInfo({
-					visible: true,
-					loadingImg: 'img/refresh.png',
-					bgColor: '#ffffff',
-					textColor: '#aaaaaa',
-					textDown: '上拉刷新...',
-					textUp: '松开刷新...',
-					showTime: true
-				}, function(ret, err) {
-					//通常在这里从服务器加载数据，
-					_endNum+=1;
-					getData(_endNum,false);
-				});
-			}
-			function getData(end,flag){
-				fra_total.getData(end,flag);
-			}
-			var fra_total= new Vue({
-				el:'#fra_total',
-				data(){
-				return {
-				dataList:''
+		var _endNum = 1;
+		summerready = function() {
+			getData(1, true)
+			summer.setRefreshHeaderInfo({
+				visible: true,
+				loadingImg: 'img/refresh.png',
+				bgColor: '#ffffff',
+				textColor: '#aaaaaa',
+				textDown: '下拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				//通常在这里从服务器加载数据，t
+				getData(1, true);
+				_endNum = 1;
+			});
+			summer.setRefreshFooterInfo({
+				visible: true,
+				loadingImg: 'img/refresh.png',
+				bgColor: '#ffffff',
+				textColor: '#aaaaaa',
+				textDown: '上拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				//通常在这里从服务器加载数据，
+				_endNum += 1;
+				if (_endNum > fra_total.totalPage) {
+					summer.toast({
+						msg: "没有更多了"
+					});
+					  summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+					return;
 				}
-				},
-				mounted(){
-				},
-			methods:{	
-					getData(pageNum,flag){
-						ajaxRequest({
-					        type: 'get',
-					        url: 'honor/appservice/project/prjbscinfo/initList.do',
-					        param: {
-					        	 "pageNo":pageNum,
-							    "pageSize":10,
-							    "prjStsCd":""
-					        }
-					    }, function (res) {
-							//alert(res);
-					    	 summer.hideProgress();
-					           if(res.status==200){
-					               if(flag){
-					               		fra_total.dataList=JSON.parse(res.data).datas.list;
-					               }else{
-					                 //var initArray=JSON.parse(JSON.stringify(fra_total.dataList));
-					               		fra_total.dataList=fra_total.dataList.concat(JSON.parse(res.data).datas.list);
-					               }
-					           		
-					           		console.log(fra_total.dataList);
-					           }
-						    }, function (err) {
-								alert(err);
-						    	 console.log(err);
-							   	 summer.hideProgress();
-							});
-						 this.$nextTick(function(){
-						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
-			                 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
-			            })
-					},
-					openOpacity(id,code){
-						console.log(id);
-							summer.openFrame({
-								id: 'Opacity',
-								url: 'html/fastReport/Opacity.html',
-								position: {
-									top: 0,
-									left: 0,
-									bottom: 0,
-									right: 0
-								},
-								opaque: false,
-								pageParam:{
-									id:id,
-									code:code,
-									frameId:"fra_total"
-								}
-							})
-					},
-					openDetail(id){
-						console.log(id);
-						summer.openWin({
-							id:'programDetail',
-							url:'html/fastReport/programDetail.html',
-							create:false,
-							type:'actionBar',
-							actionBar: {
-								title: "项目查看",
-								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								backgroundColor: "#039be5",
-								leftItem:{
-									image: "img/back.png",
-									method:"",//返回按钮自定义事件
-									text:"返回",
-									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								}
-							},
-							pageParam:{
-								id:id
+				getData(_endNum, false);
+			});
+		}
+
+		function getData(end, flag) {
+			fra_total.getData(end, flag);
+		}
+		var fra_total = new Vue({
+			el: '#fra_total',
+			data() {
+				return {
+					dataList: '',
+					totalPage: ""
+				}
+			},
+			mounted() {},
+			methods: {
+				getData(pageNum, flag) {
+					let self = this;
+					ajaxRequest({
+						type: 'get',
+						url: 'honor/appservice/project/prjbscinfo/initList.do',
+						param: {
+							"pageNo": pageNum,
+							"pageSize": 10,
+							"prjStsCd": ""
+						}
+					}, function(res) {
+						//alert(res);
+						summer.hideProgress();
+						if (res.status == 200) {
+							self.totalPage = JSON.parse(res.data).datas.last;
+							if (flag) {
+								self.dataList = JSON.parse(res.data).datas.list;
+							} else {
+								//var initArray=JSON.parse(JSON.stringify(self.dataList));
+								self.dataList = self.dataList.concat(JSON.parse(res.data).datas.list);
 							}
-						});
-					},
-				upload(id){
+
+							console.log(self.dataList);
+						}
+					}, function(err) {
+						//alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+					this.$nextTick(function() {
+						summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
+						summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+					})
+				},
+				openOpacity(id, code) {
+					console.log(id);
+					summer.openFrame({
+						id: 'Opacity',
+						url: 'html/fastReport/Opacity.html',
+						position: {
+							top: 0,
+							left: 0,
+							bottom: 0,
+							right: 0
+						},
+						opaque: false,
+						pageParam: {
+							id: id,
+							code: code,
+							frameId: "fra_total"
+						}
+					})
+				},
+				openDetail(id) {
+					console.log(id);
 					summer.openWin({
-						id:'uploadImg',
-						url:'html/fastReport/uploadImg.html',
-						create:false,
-						type:'actionBar',
+						id: 'programDetail',
+						url: 'html/fastReport/programDetail.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "项目查看",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						},
+						pageParam: {
+							id: id
+						}
+					});
+				},
+				upload(id) {
+					summer.openWin({
+						id: 'uploadImg',
+						url: 'html/fastReport/uploadImg.html',
+						create: false,
+						type: 'actionBar',
 						actionBar: {
 							title: "资料上传",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							backgroundColor: "#039be5",
-							leftItem:{
+							leftItem: {
 								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							},
-							rightItems:[{
-								type:"text",
-								text:"保存",
-								textColor:"#ffffff" ,
-								method:"save()"
+							rightItems: [{
+								type: "text",
+								text: "保存",
+								textColor: "#ffffff",
+								method: "save()"
 							}]
 						},
-						pageParam:{
-							id:id,
-							source:"programSelect"
+						pageParam: {
+							id: id,
+							source: "programSelect"
 						}
 					});
 				},
-				submit(id){
+				submit(id) {
 					summer.openWin({
-						id:'submitSure',
-						url:'html/fastReport/submitSure.html',
-						create:false,
-						type:'actionBar',
+						id: 'submitSure',
+						url: 'html/fastReport/submitSure.html',
+						create: false,
+						type: 'actionBar',
 						actionBar: {
 							title: "提交确认",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							backgroundColor: "#039be5",
-							leftItem:{
+							leftItem: {
 								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							}
 						},
-						pageParam:{
-							id:id,
-							source:"programSelect"
+						pageParam: {
+							id: id,
+							source: "programSelect"
 						}
 					});
 				},
-				edit(id){
+				edit(id) {
 					summer.openWin({
-						id:'setProject',
-						url:'html/fastReport/setProject.html',
-						create:false,
-						type:'actionBar',
+						id: 'setProject',
+						url: 'html/fastReport/setProject.html',
+						create: false,
+						type: 'actionBar',
 						actionBar: {
 							title: "快捷报单",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							backgroundColor: "#039be5",
-							leftItem:{
+							leftItem: {
 								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							},
-							rightItems : [{
-							type : "text",
-							text : "下一步",
-							textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							method : "nextStopInput()" //在打开的window中自定义事件
+							rightItems: [{
+								type: "text",
+								text: "下一步",
+								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method: "nextStopInput()" //在打开的window中自定义事件
 							}]
 						},
-						pageParam:{
-							id:id,
-							source:"programSelect"
+						pageParam: {
+							id: id,
+							source: "programSelect"
 						}
 					});
 				}
 			}
 
 		});
-		</script>
-	</body>
+	</script>
+</body>
+
 </html>
