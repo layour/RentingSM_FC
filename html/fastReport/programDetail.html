@@ -134,8 +134,8 @@
 				 <div class="list listContent">
 				 	<p class="title pl10">车辆信息</p>
 				 	<p class="pl10 pr10">车型<span class="fr">{{dataList.prjBscInfo.prjEquBscInfo.equNm}}</span></p>
-				 	<p class="pl10 pr10">颜色<span class="fr">{{dataList.prjBscInfo.prjEqiDtlCar.carcl}}</span></p>
-				 	<p class="pl10 pr10">成交价<span class="fr">{{dataList.prjBscInfo.prjQuatPrps}}待定字段</span></p>
+				 	<p class="pl10 pr10">颜色<span class="fr">{{dataList.prjBscInfo.prjEqiDtlCar.carCl}}</span></p>
+				 	<p class="pl10 pr10">成交价<span class="fr">待定字段</span></p>
 
 				 </div>
 				 <div class="list listContent">
@@ -144,13 +144,15 @@
 				 	<p class="pl10 pr10">租赁物总价值<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.contAmt}} </span></p>
 				 	<p class="pl10 pr10">合同额<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.totLsItmAmt}} </span></p>
 				 	<p class="pl10 pr10">首付比例<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.hirePct}}%</span></p>
-				 	<p class="pl10 pr10">首期租金<span class="fr">计算</span></p>
-				 	<p class="pl10 pr10">保证金<span class="fr">￥1500.00</span></p>
-				 	<p class="pl10 pr10">咨询费比例<span class="fr">6%</span></p>
-				 	<p class="pl10 pr10">咨询费<span class="fr">￥30,000.00</span></p>
-				 	<p class="pl10 pr10">年利率<span class="fr">7.6%</span></p>
-				 	<p class="pl10 pr10">租赁期数<span class="fr">36</span></p>
-				 	<p class="pl10 pr10">支付方式<span class="fr">期末等额本息</span></p>
+				 	<p class="pl10 pr10">首期租金<span class="fr">{{parseInt(dataList.prjBscInfo.prjQuatPrps.totLsItmAmt)*0.01*parseInt(dataList.prjBscInfo.prjQuatPrps.hirePct)}}</span></p>
+				 	<p class="pl10 pr10">保证金<span class="fr">{{parseInt(dataList.prjBscInfo.prjQuatPrps.totLsItmAmt)*0.01*parseInt(dataList.prjBscInfo.prjQuatPrps.bailPct)}}</span></p>
+				 	<p class="pl10 pr10">咨询费比例<span class="fr">待定字段</span></p>
+				 	<p class="pl10 pr10">咨询费<span class="fr">待定字段</span></p>
+				 	<p class="pl10 pr10">年利率<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.annIntRatePct}}%</span></p>
+				 	<p class="pl10 pr10">租赁期数<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.lsPd}}</span></p>
+
+				 	<p class="pl10 pr10">支付方式<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.payWay}}</span></p>
+
 				 </div>
 
                	</div>
@@ -245,7 +247,6 @@
 					        	 "id":id,
 					        }
 					    }, function (res) {
-							//alert(res);
 					    	 summer.hideProgress();
 					         if(res.status==200){
 					              programDetail.dataList=JSON.parse(res.data).datas;
