@@ -135,16 +135,16 @@
 				 	<p class="title pl10">车辆信息</p>
 				 	<p class="pl10 pr10">车型<span class="fr">{{dataList.prjBscInfo.prjEquBscInfo.equNm}}</span></p>
 				 	<p class="pl10 pr10">颜色<span class="fr">{{dataList.prjBscInfo.prjEqiDtlCar.carcl}}</span></p>
-				 	<p class="pl10 pr10">合同价<span class="fr">{{dataList.prjBscInfo.prjQuatPrps}}</span></p>
+				 	<p class="pl10 pr10">成交价<span class="fr">{{dataList.prjBscInfo.prjQuatPrps}}待定字段</span></p>
 
 				 </div>
 				 <div class="list listContent">
 				 	<p class="title pl10">报价方案</p>
 				 	<p class="pl10 pr10">方案名称<span class="fr">{{dataList.schName}}</span></p>
-				 	<p class="pl10 pr10">租赁物总价值<span class="fr">￥200,000.00</span></p>
-				 	<p class="pl10 pr10">合同额<span class="fr">￥200,000.00</span></p>
-				 	<p class="pl10 pr10">首付比例<span class="fr">44%</span></p>
-				 	<p class="pl10 pr10">首期租金<span class="fr">￥22,000.00</span></p>
+				 	<p class="pl10 pr10">租赁物总价值<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.contAmt}} </span></p>
+				 	<p class="pl10 pr10">合同额<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.totLsItmAmt}} </span></p>
+				 	<p class="pl10 pr10">首付比例<span class="fr">{{dataList.prjBscInfo.prjQuatPrps.hirePct}}%</span></p>
+				 	<p class="pl10 pr10">首期租金<span class="fr">计算</span></p>
 				 	<p class="pl10 pr10">保证金<span class="fr">￥1500.00</span></p>
 				 	<p class="pl10 pr10">咨询费比例<span class="fr">6%</span></p>
 				 	<p class="pl10 pr10">咨询费<span class="fr">￥30,000.00</span></p>
@@ -248,7 +248,7 @@
 							//alert(res);
 					    	 summer.hideProgress();
 					         if(res.status==200){
-					              programDetail.dataList=eval('(' + res.data + ')');
+					              programDetail.dataList=JSON.parse(res.data).datas;
 					           	  console.log(programDetail.dataList);
 					           }
 						    }, function (err) {
