@@ -60,24 +60,24 @@
 				date:"12/27",
 				money:"3819.23",
 				car:"别克昂科威2017豪华型",
-				surplus:"12",
-				checked:false
+				surplus:"12"
 			},
 			{
 				date:"12/28",
 				money:"3819.23",
 				car:"别克昂科威2017豪华型",
-				surplus:"0",
-				checked:false
+				surplus:"0"
 			},
 			{
 				date:"12/29",
 				money:"3819.23",
 				car:"别克昂科威2017豪华型",
-				surplus:"2",
-				checked:false
+				surplus:"2"
 			}
 		];
+		stockData.forEach((e) => {
+			e.checked = false;
+		});
         var stock = new Vue({
             el:'#index',
 			data:{
@@ -98,6 +98,31 @@
 						this.total = parseFloat(this.total) - parseFloat(this.items[index].money);
 						this.total = Math.floor(this.total * 100) / 100;
 					}
+				},
+				toSubmit:function (){
+					if (this.submit) {
+						console.log(1);
+					}
+				},
+				// 进个人中心
+				personal:function (){
+					summer.openWin({
+						id:'personal',
+						url:'html/personalCenter/index.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "个人中心",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						}
+					});
 				}
 			}
         });

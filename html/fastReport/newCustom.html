@@ -33,8 +33,8 @@
 		}
 		.s-box .icon-sousuo:before{
 			font-size:0.28rem;
-			color:rgba(136,153,170,1);	
-		}	
+			color:rgba(136,153,170,1);
+		}
 		.customList:first-child{
 			margin-top:0px;
 		}
@@ -42,10 +42,7 @@
 			 position: relative;
 			 margin-top:0.2rem;
 		}
-		.customList:active{
-			background:#f6f6f6;
-		}
-		.customList p.title{
+			.customList p.title{
 			font-size:0.32rem;
 			color:#039be5;
 			line-height:0.88rem;
@@ -53,9 +50,9 @@
 		}
 		.customList p.title span{
 			color:#424242;
-			
+
 		}
-		 
+
 		.customList p.select{
 			line-height:0.88rem;
 			color:#424242;
@@ -74,7 +71,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="um-win" id="newCustom">
+		<div class="um-frame" id="newCustom">
 			<div class="um-header-light">
 				<div class="sera">
 						<div class="s-box" onclick="opensearch()">
@@ -86,25 +83,25 @@
 				</div>
 			</div>
 			<div class="um-content" id="content">
-			   <div class="list customList um-bgc-white" v-for="(item,index) in dataSource" @click="completeCustom()">
-			       <p class="pl20 title pr20">{{item.name}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.manager}}</span></p>
-			       <div class="center" >
-			       		<p class="type pl10"><span>{{item.personType}} </span> | <span> {{item.taskType}}</span> </p>
-			      		<p class="time pl10 pr10"><span>创建时间：<span>{{item.creatTime}}</span></span></p>
-			       </div>
-			    </div>
+				 <div class="list customList um-bgc-white" v-for="(item,index) in dataSource">
+ 			       <p class="pl20 title pr20">{{item.CLIENT_NAME}}<span class="status fr"></p>
+ 			       <div class="center"  >
+ 			       		<p class="type pl10"><span>手机号 :</span> <span>{{item.CLIENT_MOBILE}}</span> </p>
+ 			      		<p class="time pl10 pr10"><span>地址：<span>{{item.CLIENT_ADDR}}</span></span></p>
+ 			       </div>
+ 			    </div>
 			</div>
 		</div>
 	</body>
-	<script src="../../js/summer.js" ></script>		
+	<script src="../../js/summer.js" ></script>
 	<script src="../../js/jquery.min.js" ></script>
 	<script src="../../js/common.js" ></script>
 	<script src="../../js/vue.js" ></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	<script>
-		var _endNum=10;
+		var _endNum=1;
 		summerready=function(){
-			getData(10)
+			getData(1,true)
 				summer.setRefreshHeaderInfo({
 					visible: true,
 					loadingImg: 'img/refresh.png',
@@ -115,8 +112,8 @@
 					showTime: true
 				}, function(ret, err) {
 					//通常在这里从服务器加载数据，t
-					getData(10);
-					_endNum=10;
+					getData(1,true);
+					_endNum=1;
 				});
 				summer.setRefreshFooterInfo({
 					visible: true,
@@ -128,71 +125,58 @@
 					showTime: true
 				}, function(ret, err) {
 					//通常在这里从服务器加载数据，
-					_endNum+=10;
-					getData(_endNum);
+					_endNum+=1;
+					if (_endNum > newCustom.totalPage) {
+						summer.toast({
+							msg: "没有更多了"
+						});
+						  summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+						return;
+					}
+					getData(_endNum,false);
 				});
 		}
-		function getData(end){
-				newCustom.getData(end);
+		function getData(end,flag){
+				newCustom.getData(end,flag);
 		}
 		var newCustom=new Vue({
 			el:"#newCustom",
 			data(){
 				return{
-					dataSource:[{
-						name:"张三",
-						personType:"自然人",
-						taskType:"形式售后回租",
-						programNum:"312329197605205638",
-						status:"审核中",
-						manager:"张飞",
-						programId:"100",
-						creatTime:"2016-09-21"
-					},{
-						name:"张三2",
-						personType:"自然人",
-						taskType:"形式售后回租",
-						programNum:"312329197605205638",
-						status:"审核中",
-						manager:"张飞",
-						programId:"101",
-						creatTime:"2016-09-21"
-					},{
-						name:"张三3",
-						personType:"自然人",
-						taskType:"形式售后回租",
-						programNum:"312329197605205638",
-						status:"审核中",
-						manager:"张飞",
-						programId:"102",
-						creatTime:"2016-09-21"
-					}]
+					dataSource:"",
+					totalPage:''
 				}
 			},
 			mounted(){
-				summer.hideProgress();
+			  //	summer.hideProgress();
 			},
 			methods:{
-				getData(end){
+				getData(end,flag){
 					var self=this;
 						ajaxRequest({
 					        type: 'post',
 					        url: 'appservice/custaccdetail/getCustacclist',
 					        param: {
-								    "EMPLOYEE_NAME":"蒋晓冬",
-								    "ORG_CHILDREN":"",
-								    "PAGE_BEGIN":1,
-								    "PAGE_END":end,
+								    "pageNo":end,
+								    "pageSize":10,
 								    "SYSUSERFLAG":1
 					        }
 					    }, function (res) {
 							//alert(res);
 					    	 summer.hideProgress();
 					           if(res.data.flag==1){
-					           		self.dataSource=res.data.datas.custmerlist;
-					           		if(self.dataSource.length<1){
-					           			createNull("content", "../../img/empty.png")
-					           		}
+					           		self.dataSource=res.data.datas.list;
+										self.totalPage = res.data.datas.last;
+										if (flag) {
+											if(self.dataSource.length<1){
+						           			createNull("content", "../../img/empty.png")
+						           		}else{
+												self.dataSource = res.data.datas.list;
+											}
+										} else {
+												self.dataSource=self.dataSource.concat(res.data.datas.list);
+										}
+
 					           		console.log(self.dataSource);
 					           }
 						    }, function (err) {

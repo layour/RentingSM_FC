@@ -7,10 +7,10 @@
  */
 // 福昌测试地址
 window.G_COMMON_URL = "http://122.49.7.88:8080/";
-function getToken() {
+function userId() {
 	var userinfo = summer.getStorage("userinfo");
-	var token = userinfo ? userinfo.token : "";
-	return token;
+	var userId = userinfo ? userinfo.userId : "";
+	return userId;
 }
 var CommonUtil = {
 	//图片加水印
@@ -89,12 +89,12 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 		return false;
 	}
 	//设置超时
-	// window.cordovaHTTP.settings = {
-	// 	timeout : 5000
-	// };
-	if (getToken()) {
+	window.cordovaHTTP.settings = {
+		timeout : 5000
+	};
+	if (userId()) {
 		paramData = paramObj.param;
-		paramData.TOKEN = getToken();
+		paramData.EMPLOYEE_ID = userId();
 	} else {
 		paramData = paramObj.param;
 	}
