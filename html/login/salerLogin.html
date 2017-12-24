@@ -87,11 +87,13 @@
 						var userName = userData.EMPLOYEE_NAME;
 						var JOB_NAME = userData.JOB_NAME;
 						var ORG_NAME = userData.ORG_NAME;
+						var EMPLOYEE_ID = userData.EMPLOYEE_ID;
 						var userinfo = {
 							userId:userId,
 							userName:userName,
 							JOB_NAME:JOB_NAME,
-							ORG_NAME:ORG_NAME
+							ORG_NAME:ORG_NAME,
+							EMPLOYEE_ID:EMPLOYEE_ID
 						};
 						summer.setStorage("userinfo",userinfo);
 						summer.openWin({
