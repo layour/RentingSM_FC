@@ -46,7 +46,7 @@
 						<b class="company">400-1800-852</b>
 					</div>
 				</li>
-				<li>
+				<li onclick="update()">
 					<strong>新</strong>
 					<span class="iconfont icon-version"></span>
 					<i>版本更新</i>
@@ -112,6 +112,43 @@
 						method:"uploadHr()"
 					}]
 				}
+			});
+		};
+		function update(){
+			summer.showProgress();
+            summer.ajax({
+				type: "post",
+				url: "http://122.49.7.88:8080/appservice/appsys/getNewapp",
+				param:{
+                    "version":"1",
+                	"appFlag":"1",
+                	"sysCd":"11002"
+				},
+				header : {
+			        "Content-Type" : "application/json"
+			    }
+			}, function(response) {
+				summer.hideProgress();
+                var Data;
+				if (Object.prototype.toString.call(response.data) === '[object String]') {
+					Data = JSON.parse(response.data);
+				} else {
+					Data = response.data;
+				}
+				switch (Data.flag) {
+					case 1:
+						summer.toast({msg:"成功"});
+						break;
+					case 0:
+						summer.toast({msg:"请求失败"});
+						break;
+					default:
+						summer.toast({msg:"请求失败"});
+				}
+			}, function(error) {
+				summer.hideProgress();
+				console.log(error);
+				summer.toast({msg:"系统内部异常"});
 			});
 		};
 	</script>
