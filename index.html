@@ -144,11 +144,35 @@
 		<script>
 			summerready = function (){
 				var userinfo = summer.getStorage("userinfo");
-				var name = userinfo ? userinfo.userName : "张帅经理";
+				var name = userinfo.userName ? userinfo.userName : "游客";
 				$('.container').find('p').text(name);
+			};
+			// 判断用户是否登陆
+			function isLogin(){
+				if (!summer.getStorage("userinfo").EMPLOYEE_ID) {
+					summer.toast({msg:"请先登录"});
+					var os = $summer.os;
+					if (os == "android") {
+						summer.openWin({
+							"id" : 'root',
+							"url" : 'login.html',
+							"isKeep" : false
+						});
+						summer.closeToWin({
+							id : "login"
+						});
+					} else {
+						cordova.exec(null, null, "FrameManager", "initializeWin", [{
+							"id": 'root',
+							"url": 'login.html'
+						}]);
+					}
+				}
+				return;
 			};
 			// 支付表查询
 			function openPayTab(){
+				isLogin();
 				summer.openWin({
 					id:'payTable',
 					url:'html/payTableQuery/payTableList.html',
@@ -169,6 +193,7 @@
 			}
 			// 风险跟踪
 			function openRiskTracking(){
+				isLogin();
 				summer.openWin({
 					id:'riskTracking',
 					url:'html/riskTracking/index.html',
@@ -189,6 +214,7 @@
 			}
 			// 对账单
 			function openStatement(){
+				isLogin();
 				summer.openWin({
 					id:'statement',
 					url:'html/statement/statementList.html',
@@ -209,6 +235,7 @@
 			}
 			// 销售线索
 			function openLeads(){
+				isLogin();
 				summer.openWin({
 					id:'leadsList',
 					url:'html/salesLeads/leadsList.html',
@@ -235,6 +262,7 @@
 			}
 			// 销售简报
 			function openBriefing(){
+				isLogin();
 				summer.openWin({
 					id:'briefing',
 					url:'html/salesBriefing/index.html',
@@ -254,6 +282,7 @@
 				})
 			}
 			function openQuotedPrice(){
+				isLogin();
 				summer.openWin({
 					id:'quotedPrice',
 					url:'html/priceCalculation/quotedPriceList.html',
@@ -274,6 +303,7 @@
 			}
 			//拜访记录
 			function openVisitRecord(){
+				isLogin();
 				summer.openWin({
 					id:'visitRecord',
 					url:'html/visitRecord/visitRecord.html',
@@ -299,6 +329,7 @@
 				})
 			}
 			function openAddCar(){
+				isLogin();
 				summer.openWin({
 					id:'setProject',
 					url:'html/fastReport/setProject.html',
@@ -318,6 +349,7 @@
 				})
 			}
 			function openFastReport(){
+				isLogin();
 				summer.openWin({
 					id:'programSelect',
 					url:'html/fastReport/programSelect.html',
@@ -344,6 +376,7 @@
 			}
 			// 付款列表
 			function openPayList(){
+				isLogin();
 				summer.openWin({
 					id:'payList',
 					url:'html/repayApply/payList/index.html',
@@ -364,6 +397,7 @@
 			}
 			// 我的
 			function showUserInfo(){
+				isLogin();
 				summer.openWin({
 					id:'mine',
 					url:'html/mine/index.html',
