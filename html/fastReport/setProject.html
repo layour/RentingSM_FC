@@ -78,7 +78,7 @@
 						添加车辆
 						<span class="frp"> <i class="addCar icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div> </a>
-					<a href="javascript:void(0);"  id="version" onclick="checkVersion('quotedPrice')">
+					<a href="javascript:void(0);"  id="version" onclick="checkVersion('quotedPriceDetail')">
 					<div class="um-list-item-bodys">
 						报价方案
 						<span class="frp"> <i class="price icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
@@ -98,11 +98,11 @@
 						担保人
 						<span class="frp"> <i class="sponsor icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div> </a>
-					<a href="javascript:void(0);"  id="version" onclick="checkVersion('remark')">
+					<!-- <a href="javascript:void(0);"  id="version" onclick="checkVersion('remark')">
 					<div class="um-list-item-bodys">
 						备注留言
 						<span class="frp"> <i class="remark icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
+					</div> </a> -->
 				</div>
 			</div>
 			<!-- <div class="um-footer"id="footer">
@@ -142,9 +142,9 @@
 				if (param == 'addCar') {
 					url = "html/touristsClient/addCar.html";
 					title = '添加车辆';
-				} else if (param == 'quotedPrice') {
-					url = "html/priceCalculation/quotedPriceList.html";
-					title = "选择报价方案"
+				} else if (param == 'quotedPriceDetail') {
+					url = "html/priceCalculation/quotedPriceDetail.html";
+					title = "报价"
 					summer.openWin({
 						id : id,
 						url : url,

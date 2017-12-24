@@ -8,21 +8,16 @@
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<link rel="stylesheet" href="./car.min.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
 		<div class="um-win" id="pickerDealer">
 			<div class="um-content addCar">
         <ul class="dealerList">
-          <li @click="pickerAcc" v-for="(item,index) in dealerList" :key="index">{{item}}</li>
+          <!-- <li @click="pickerAcc" v-for="(item,index) in dealerList" :key="index">{{item}}</li> -->
+          <li @click="sureSupplier(item)" v-for="(item,index) in dealerList" :key="index">{{item.SUPPLIERS_NAME}}</li>
         </ul>
-        <mt-popup v-model="popupVisible" position="bottom">
-          <!-- <p>选择经销商收款账户</p> -->
+        <!-- <mt-popup v-model="popupVisible" position="bottom">
+          <p>选择经销商收款账户</p>
           <ul>
             <li v-for="(it,i) in accList" @click="pickerIt($event,it)" class="pr" :key="i">
               <p>{{it.name}}</p>
@@ -33,36 +28,61 @@
             </li>
           </ul>
 					<p><span class="fl" @click="pickerAcc">	取消</span><span class="fr"  @click="pickerDealer">	确定</span></p>
-        </mt-popup>
+        </mt-popup> -->
       </div>
     </div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
     	var pickerDealerVue=new Vue({
           el:'#pickerDealer',
           data(){
             return {
               popupVisible:false,
-              dealerList:['石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店'],
-							accList:[
-								{name:"石家庄4S店裕华分店/对公",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213},
-								{name:"郑冬秋/对私",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213}
-							],
+							dealerList:[],
+              // dealerList:['石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店','石家庄XX4S店','眉山XX4S店','沃尔沃XX4S店'],
+							// accList:[
+							// 	{name:"石家庄4S店裕华分店/对公",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213},
+							// 	{name:"郑冬秋/对私",acc:'6578463876546578',addr:'建行深圳科技园支行',number:897213}
+							// ],
 							item:[],
 							searchVal:'',
 							currentPage:1
             }
           },
 					created(){
-						this.getData();
 					},
 					methods:{
 						getData(){
-							alert(this.searchVal)
-							alert(this.currentPage)
-							this.$nextTick(function(){
- 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
- 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
- 			        })
+							// alert(this.searchVal)
+							// alert(this.currentPage)
+							var _this=this
+							if(_this.searchVal){
+								ajaxRequest({
+									type:'POST',
+									url:'appservice/foundproject/querySupplierByName',
+									param:{
+										SUPPLIERS_NAME:_this.searchVal
+									}
+								},function(res){
+									console.log("res",res);
+									_this.dealerList=res.data.datas
+								},function(err){
+									console.log("err",err);
+								})
+							}else{
+								_this.dealerList=[]
+							}
+
+							// this.$nextTick(function(){
+							//  	 summer.refreshHeaderLoadDone();
+ 			       //   summer.refreshFooterLoadDone();
+ 			       //  })
 						},
 						pickerAcc(){
 							this.popupVisible=!this.popupVisible;
@@ -79,6 +99,14 @@
 							    script: 'getDealer()'
 							});
 							summer.closeWin();
+						},
+						sureSupplier(item){
+							summer.setStorage('pickerDealer',JSON.stringify(item));
+							summer.execScript({
+							    winId: 'addCar',
+							    script: 'getDealer()'
+							});
+							summer.closeWin();
 						}
 					}
         })
@@ -86,33 +114,34 @@
 					pickerDealerVue.searchVal=val
 					pickerDealerVue.getData();
 				}
-				summerready=function(){
-					summer.setRefreshHeaderInfo({
-						visible: true,
-						loadingImg: 'img/refresh.png',
-						bgColor: '#ffffff',
-						textColor: '#aaaaaa',
-						textDown: '下拉刷新...',
-						textUp: '松开刷新...',
-						showTime: true
-					}, function(ret, err) {
-						//通常在这里从服务器加载数据，t
-						pickerDealerVue.getData();
-					});
-					summer.setRefreshFooterInfo({
-						visible: true,
-						loadingImg: 'img/refresh.png',
-						bgColor: '#ffffff',
-						textColor: '#aaaaaa',
-						textDown: '上拉刷新...',
-						textUp: '松开刷新...',
-						showTime: true
-					}, function(ret, err) {
-						//通常在这里从服务器加载数据，
-						pickerDealerVue.currentPage+=1;
-						pickerDealerVue.getData();
-					});
-				}
+				// summerready=function(){
+				// 	pickerDealerVue.getData();
+				// 	summer.setRefreshHeaderInfo({
+				// 		visible: true,
+				// 		loadingImg: 'img/refresh.png',
+				// 		bgColor: '#ffffff',
+				// 		textColor: '#aaaaaa',
+				// 		textDown: '下拉刷新...',
+				// 		textUp: '松开刷新...',
+				// 		showTime: true
+				// 	}, function(ret, err) {
+				// 		//通常在这里从服务器加载数据，t
+				// 		pickerDealerVue.getData();
+				// 	});
+				// 	summer.setRefreshFooterInfo({
+				// 		visible: true,
+				// 		loadingImg: 'img/refresh.png',
+				// 		bgColor: '#ffffff',
+				// 		textColor: '#aaaaaa',
+				// 		textDown: '上拉刷新...',
+				// 		textUp: '松开刷新...',
+				// 		showTime: true
+				// 	}, function(ret, err) {
+				// 		//通常在这里从服务器加载数据，
+				// 		pickerDealerVue.currentPage+=1;
+				// 		pickerDealerVue.getData();
+				// 	});
+				// }
     </script>
   </body>
 </html>

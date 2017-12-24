@@ -89,9 +89,9 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 		return false;
 	}
 	//设置超时
-	window.cordovaHTTP.settings = {
-		timeout : 5000
-	};
+	// window.cordovaHTTP.settings = {
+	// 	timeout : 5000
+	// };
 	if (getToken()) {
 		paramData = paramObj.param;
 		paramData.TOKEN = getToken();

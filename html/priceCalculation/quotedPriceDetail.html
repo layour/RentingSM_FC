@@ -34,6 +34,14 @@
 							{{quoted.contractTerm}}&nbsp;个月
 						</span>
 					</li>
+					<li @click="surePicker('termType')">
+						<b>期满处理方式</b>
+						<span>
+							<b v-if="quoted.termType">{{quoted.termType}}</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
+						</span>
+					</li>
 					<li>
 						<b>租赁年利率</b>
 						<span>
@@ -81,12 +89,12 @@
 						</span>
 
 					</li>
-					<li class='spec input'>
+					<!-- <li class='spec input'>
 						<b>GPS费</b>
 						<span>
 							<input type="text" @input="checkVal('gps')" placeholder="请输入GPS费" name="gps" v-model="quoted.gps">&nbsp;元
 						</span>
-					</li>
+					</li> -->
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
 					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
 					<li><b>期数</b><span>{{resultData.term}}</span></li>
@@ -176,8 +184,9 @@
             return {
 							termList:['3个月','6个月','12个月','18个月','24个月','48个月'],
 							// termType:['月'],
-							payTypeList:['期末等额本息','期末不等额'],
+							payTypeList:['期末等额本息','期末平息'],
 							bailList:["融资额","首期款"],
+							termTypeList:['期满处','里方式'],
 							pickerStatus:false,
 							bailStatue:false,
 							firstPayStatu:false,
@@ -188,6 +197,7 @@
 							quoted:{
 								allPrice:'20000.00',
 								term:'', //租赁期数
+								termType:'',
 								contractTerm:'',
 								rate:50,
 								payType:'',
@@ -224,6 +234,9 @@
 							if(this.pickerType=='term'){
 								pickerObj.values=this.termList;
 								i=this.termList.indexOf(this.quoted.term);
+							}else if(this.pickerType=='termType'){
+								pickerObj.values=this.termTypeList;
+								i=this.termTypeList.indexOf(this.quoted.termType);
 							}else if(this.pickerType=='payType'){
 								pickerObj.values=this.payTypeList;
 								i=this.payTypeList.indexOf(this.quoted.payType);
@@ -281,6 +294,8 @@
 									this.quoted.term=this.pickerVal
 									var i=this.quoted.term.indexOf("个");
 									this.quoted.contractTerm=this.quoted.term.substring(0,i);
+								}else if(this.pickerType=='termType'){
+									this.quoted.termType=this.pickerVal
 								}else if(this.pickerType=='payType'){
 									this.quoted.payType=this.pickerVal
 								}

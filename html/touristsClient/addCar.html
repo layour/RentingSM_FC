@@ -26,23 +26,25 @@
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
-					<tr>
-						<td>车辆状况</td>
-						<td>
-							<button @click="changCarStatus($event,'new')" class='btn btn-inline btn-sm active'>新车</button><button @click="changCarStatus($event,'old')" class="btn btn-inline btn-sm">二手车</button>
-						</td>
-					</tr>
-					<tr @click="pickerModels">
-            <td>选择车型</td>
+					<tr @click="pickerCompany">
+            <td>厂商</td>
             <td>
-							<span v-if='carModels'>{{carModels}}</span><span class="grayColor"  v-else>请选择</span>
+							<span v-if='company'>{{company}}</span><span class="grayColor" v-else>请选择</span>
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
 					<tr @click="surePickerColor">
-            <td>车身颜色</td>
+            <td>车辆状况</td>
+            <!-- <td>车辆颜色</td> -->
             <td>
 							<span v-if='color'>{{color}}</span><span  class="grayColor" v-else>请选择</span>
+							<i class="icon iconfont icon-enter"></i>
+						</td>
+          </tr>
+					<tr @click="pickerModels">
+            <td>选择车型</td>
+            <td>
+							<span v-if='carModels'>{{carModels}}</span><span class="grayColor"  v-else>请选择</span>
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
@@ -71,18 +73,19 @@
 					data(){
 						return{
 							dealer:'',
+							company:'',
 							carStatus:'new',
 							carModels:'',
 							color:'',
 							guidePrice:'',
-							holdPrice:'',
+							holdPrice:'100',
 							pickerColorStatus:false,
 							pickedColor:'',
 							slots: [
 								{
 									flex: 1,
-									values: ['白色', '黑色', '蓝色', '红色', '其他', '紫色'],
-									defaultIndex:2,
+									values: ['中重卡','轻卡','二手车'],
+									defaultIndex:0,
 									className: 'slot1',
 									textAlign: 'center'
 								}
@@ -121,6 +124,31 @@
 						      }
 								}
 							})
+						},
+						pickerCompany(){
+							var dealer=summer.getStorage('pickerDealer');
+							if(dealer){
+								summer.openWin({
+									id:'pickerCompany',
+									url:'html/touristsClient/pickCompany.html',
+									create:false,
+									type:'actionBar',
+									pageParam:{id:JSON.parse(dealer).SUPPLIERS_ID},
+									actionBar: {
+										title: "选择厂商",
+										titleColor: "#ffffff",
+										backgroundColor: "#039BE5",
+										leftItem:{
+												image: "img/back.png",
+												method:'',
+												text:"返回",
+												textColor:"#ffffff"
+										}
+									}
+								})
+							}else{
+								summer.toast({msg:'请先选择经销商'})
+							}
 						},
 						pickerModels(){
 							summer.openWin({
@@ -165,8 +193,16 @@
 				});
 				function getDealer(){
 					var dealer=summer.getStorage('pickerDealer');
+					console.log(dealer);
 					if(dealer){
-						addCar.dealer=JSON.parse(dealer).name;
+						addCar.dealer=JSON.parse(dealer).SUPPLIERS_NAME;
+					}
+				}
+				function getCompany(){
+					var company=summer.getStorage('pickerCompany');
+					console.log(company);
+					if(company){
+						addCar.company=JSON.parse(company).COMPANY_NAME;
 					}
 				}
 				function getModels(){
