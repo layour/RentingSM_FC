@@ -124,19 +124,21 @@
                		 <div class="list listContent">
 
 				 	<p class="title">基本信息</p>
-				 	<p class="pl10 pr10">客户信息<span class="fr">{{dataList.prjBscInfo.cstNm}}</span></p>
-				 	<p class="pl10 pr10">合同号<span class="fr">{{dataList.prjBscInfo.lsCntNo}}</span></p>
-				 	<p class="pl10 pr10">项目类型<span class="fr">{{dataList.prjBscInfo.prjTypCdNm}}</span></p>
-				 	<p class="pl10 pr10">业务模式<span class="fr">{{dataList.prjBscInfo.bizTypNm}}</span></p>
-				 	<p class="pl10 pr10">所属门店<span class="fr">{{dataList.prjBscInfo.cstStore}}</span></p>
-				 	<p class="pl10 pr10">客户经理<span class="fr">{{dataList.prjBscInfo.cstMgrNm}}</span></p>
+				 	<p class="pl10 pr10">客户信息<span class="fr">{{dataList.ProjectObj.CLIENT_NAME}}</span></p>
+				 	<p class="pl10 pr10">项目编号<span class="fr">{{dataList.ProjectObj.LEASE_CODE}}</span></p>
+				 	<p class="pl10 pr10">业务模式<span class="fr">{{dataList.ProjectObj.PLATFORM}}</span></p>
+				 	<!--<p class="pl10 pr10">所属门店<span class="fr">{{dataList.ProjectObj.PLATFORM}}</span></p>-->
+				 	<p class="pl10 pr10">客户经理<span class="fr">{{dataList.ProjectObj.EMPLOYEE_NAME}}</span></p>
 				 </div>
-				 <div class="list listContent">
-				 	<p class="title pl10">车辆信息</p>
-				 	<p class="pl10 pr10">车型<span class="fr">{{dataList.prjBscInfo.prjEquBscInfo.equNm}}</span></p>
-				 	<p class="pl10 pr10">颜色<span class="fr">{{dataList.prjBscInfo.prjEqiDtlCar.carCl}}</span></p>
-				 	<p class="pl10 pr10">成交价<span class="fr">待定字段</span></p>
-
+				 <div class="list listContent"  v-for="(item,index) in dataList.EquipObj">
+				 	<p class="title pl10">车辆信息{{index+1}}</p>
+					<p class="pl10 pr10">经销商<span class="fr">{{item.SUPPLIERS_NAME}}</span></p>
+						<p class="pl10 pr10">厂商<span class="fr">{{item.COMPANY_NAME}}</span></p>
+							<p class="pl10 pr10">品牌<span class="fr">{{item.PRODUCT_NAME}}</span></p>
+							<p class="pl10 pr10">数量<span class="fr">{{item.AMOUNT}}</span></p>
+				 	<p class="pl10 pr10">车型<span class="fr">{{item.CATENA_NAME}}</span></p>
+				 	<!--<p class="pl10 pr10">颜色<span class="fr">{{dataList.prjBscInfo.prjEqiDtlCar.carCl}}</span></p>-->
+				 	<p class="pl10 pr10">成交价<span class="fr">{{item.TOTAL_PRICE}}</span></p>
 				 </div>
 				 <div class="list listContent">
 				 	<p class="title pl10">报价方案</p>
@@ -240,17 +242,18 @@
 			},
 			 methods: {
 				 getData(id){
+					 let self=this;
 				 	ajaxRequest({
-					        type: 'get',
-					        url: 'honor/appservice/project/prjbscinfo/getById.do',
+					        type: 'post',
+					        url: 'appservice/foundproject/loadProjectPage',
 					        param: {
-					        	 "id":id,
+					        	 "PROJECT_ID":id,
 					        }
 					    }, function (res) {
 					    	 summer.hideProgress();
-					         if(res.status==200){
-					              programDetail.dataList=JSON.parse(res.data).datas;
-					           	  console.log(programDetail.dataList);
+					         if(res.data.flag==1){
+					              self.dataList=res.data.datas;
+					           	  console.log(self.dataList);
 					           }
 						    }, function (err) {
 								alert(err);

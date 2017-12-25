@@ -23,22 +23,21 @@
 				</div>
 			</div>
 		</div>
-		<div class="um-content">
+		<div class="um-content" id="content">
 			<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
 				<p class="pl10 title pr10">
 					{{item.CR_BECR_NAME}}<span class="status fr">
 					<i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span>
 				</p>
-				<div class="center" @click="openDetail(item.id)">
+				<div class="center" @click="openDetail(item.ID)">
 					<p class="type pl10">
 						<span>{{item.CR_BECR_TYPE}} </span> | <span>{{item.PLATFORM}}</span>
 					</p>
 					<p class="type card pl10 status">
-						{{item.LEASE_CODE
-}} <span class="fr">{{item.STATUS}}</span>
+						{{item.LEASE_CODE}} <span class="fr">{{item.STATUS}}</span>
 					</p>
 					<p class="time pl10 pr10">
-						<span>创建时间：<span>无字段</span></span>
+						<span>创建时间：<span>{{item.CREATE_TIME}}</span></span>
 					</p>
 				</div>
 				<p class=" select um-box" v-if="item.STATUS=='未评审'">
@@ -134,9 +133,12 @@
 						if (res.data.flag == 1) {
 							self.totalPage = res.data.datas.last;
 							if (flag) {
-								self.dataList = res.data.datas.list;
+								if(res.data.datas.list.length<1){
+									createNull("content", "../../img/empty.png")
+								}else{
+									self.dataList = res.data.datas.list;
+								}
 							} else {
-								//var initArray=JSON.parse(JSON.stringify(self.dataList));
 								self.dataList = self.dataList.concat(res.data.datas.list);
 							}
 
