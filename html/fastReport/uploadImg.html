@@ -115,6 +115,7 @@
     </div>
     <script>
 				summerready = function() {
+					uploadVue.id=summer.pageParam.id;
 					var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
 					summer.getPermission(params, function(args) {
 						//alert(args); //成功返回OK
@@ -135,7 +136,8 @@
 								otherImg:'',
 							},
 							popupVisible:false,
-							status:''
+							status:'',
+							id:''
             }
           },
 					mounted(){
@@ -231,10 +233,13 @@
 									{fileURL:that.list.otherImg,type:"image/jpeg",name:"imgs"}
 								],
 						    params : {
-						        a : 1   //参数
+						        PROJECT_ID: that.id,   //参数
+										EMPLOYEE_ID:'',
+										FILE_BYTE:'',
+										FILE_NAME:''
 						    },
 						    // headers :{},
-						    SERVER : "http://***",
+						    SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
 						    timeout : 10
 							}, "multiUploadCallback()", "multiUploadErrCallback()");
 

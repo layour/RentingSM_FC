@@ -8,10 +8,21 @@
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<style>
-			.addContact>ul li{
+			/*.addContact>ul li{
 				background:#fff;
 				margin-bottom: .2rem;
 				height: 1.76rem;
+			}*/
+			ul{
+				background: #fff;
+			}
+			ul li{
+				text-align: left;
+				padding:0 .56rem;
+				line-height: .88rem;
+				border-top:1px solid #EFEFEF;
+				color:#333;
+				font-size: 14px;
 			}
 			.inDiv{display: inline-block;}
 			.mint-cell-swipe{
@@ -76,8 +87,12 @@
 				color:#333;
 				font-size: 14px;
 			}
+			i{color:#DBDBDB;}
+			span.grayColor{
+				color:#DEDEDE;
+			}
 			input::-webkit-input-placeholder {
-					color: @grayColor;
+					color: #DEDEDE;
 					font-size: 14px;
 			}
 			input{
@@ -94,13 +109,31 @@
 				color: #fff;
 				background:#039BE5;
 			}
+			.addCar table{width:100%;background:#ffffff}.addCar table tr{border-bottom:1px solid #EFEFEF}.addCar table tr td{line-height:.88rem;padding-left:.56rem;color:#333;font-size:14px}.addCar table tr td:first-child{overflow:hidden;white-space:nowrap}.addCar table tr td:last-child{text-align:right;padding:0 .88rem 0 0;position:relative;line-height:.4rem}.addCar table tr td:last-child span{padding-right:.1rem;padding:.2rem 0}.addCar table tr td:last-child span.grayColor{color:#DEDEDE}.addCar table tr td:last-child>i{vertical-align:middle;position:absolute;right:.56rem;top:50%;-webkit-transform:translate(0, -50%);transform:translate(0, -50%)}.addCar table tr td input{border:none;height:.7rem;text-align:right;line-height:.7rem;outline:none;margin-top:.09rem;font-size:14px;width:100%;}
 		</style>
 	</head>
 	<body>
 		<div class="um-win" id="addContact" v-cloak>
-			<div class="um-content addContact">
-				<ul>
-					<li v-for="(item,index) in addContactList" :key='index'>
+			<div class="um-content addContact addCar">
+				<table>
+					<tr>
+						<td>紧急联系人</td>
+						<td><input type="text" name="name" class='fr' maxlength='6' v-model="name" placeholder='请输入真实姓名'></td>
+					</tr>
+					<tr>
+						<td>电话</td>
+						<td><input type="number" class='fr' name="phone" v-model="phone" placeholder='请输入号码'></td>
+					</tr>
+					<tr>
+						<td>省市</td>
+						<td><span v-if='addr'>{{addr}}</span><span class="grayColor" v-else>请选择</span>
+						<i class="icon iconfont icon-enter"></i></td>
+					</tr>
+					<tr>
+						<td>详细地址</td>
+						<td><input type="text" class='fr' name="addres" v-model="addresDetail" placeholder='请输入详细地址'></td>
+					</tr>
+					<!-- <li v-for="(item,index) in addContactList" :key='index'>
 						<template v-if="addContactList.length==1">
 							<div class="inDiv" style="padding:.4rem 1rem; .4rem 0;">
 								<p class="title">{{item.name}}</p>
@@ -115,8 +148,8 @@
 									<a href=""><i class="icon iconfont icon-call"></i></a>
 								</div>
 						</mt-cell-swipe>
-					</li>
-				</ul>
+					</li> -->
+				</table>
       </div>
 			<div class="um-footer"id="footer">
 				<mt-popup v-model="addStatus" v-if="addStatus" position="bottom" class="add">
@@ -156,6 +189,8 @@
 							],
 							name:'',
 							phone:'',
+							addr:'',
+							addresDetail:'',
 							swipeArr:[
 						    {
 						      content: '删除',
@@ -168,14 +203,13 @@
 					create(){
 						var that=this
 						summerready=function(){
-							alert(1111)
 							if(summer.pageParam.id){
 								that.getData(summer.pageParam.id)
 							}
 						}
 					},
 					mounted(){
-						alert(222222)
+
 						this.getData(1)
 					},
 					methods:{
@@ -215,11 +249,26 @@
 						},
 						save(){
 							//发请求
-							summer.execScript({
-							    winId: "setProject",
-							    script: "addRight('emergencyContract')"
-							});
-							summer.closeWin()
+							var _this=this;
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/customer',
+								param:{
+									EMERGENCY_NAME:_this.name,
+									EMERGENCY_PHONE:_this.phone,
+									EMERGENCY_ADDR:_this.addr
+								}
+							},function(res){
+								console.log("res",res);
+								summer.execScript({
+										winId: "setProject",
+										script: "addRight('emergencyContract')"
+								});
+								summer.closeWin()
+							},function(err){
+								console.log("err",err);
+							})
+
 						}
 					}
         });

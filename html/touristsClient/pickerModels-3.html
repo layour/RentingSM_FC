@@ -6,42 +6,57 @@
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="./car.min.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
 		<div class="um-win" id="pickerModels-3">
 			<div class="um-content pickerModels">
         <ul class="modelsList">
           <li v-for="(it,index) in modelsList" @click="pickerModels(it)" :key="index">
-						{{it}}
+						{{it.NAME}}
 					</li>
         </ul>
       </div>
     </div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
-      $(function(){
-        new Vue({
+				summerready=function() {
+					pickerModelsVue3.id=summer.pageParam.id;
+					pickerModelsVue3.getData();
+				}
+        var pickerModelsVue3=new Vue({
           el:'#pickerModels-3',
           data(){
             return {
 							id:'',
-              modelsList:['2016款 君越 改款 28T精英型','2016款 君越 28T 豪华型','2016款 君越 30H 精英型', '2016款 君越 30H 豪华型']
+              modelsList:[]
             }
           },
 					mounted(){
-						var that=this
-						summerready=function(){
-							that.id=summer.pageParam.id
-							//	http
-						}
 					},
 					methods:{
+						getData(){
+							var _this=this;
+							console.log(this.id);
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/foundproject/queryCarBySeries',
+								param:{
+									CATENA_ID:_this.id
+								}
+							},function(res){
+								console.log("res",res);
+								_this.modelsList=res.data.datas
+							},function(err){
+								console.log("err",err);
+							})
+						},
 						pickerModels(it){
-							summer.setStorage('pickerModels',it);
+							summer.setStorage('pickerModels3',JSON.stringify(it));
 							summer.execScript({
 							    winId: 'addCar',
 							    script: 'getModels()'
@@ -52,8 +67,6 @@
 						}
 					}
         })
-
-      })
     </script>
   </body>
 </html>

@@ -151,23 +151,29 @@
 							}
 						},
 						pickerModels(){
-							summer.openWin({
-								id:'pickerModels',
-								url:'html/touristsClient/pickerModels.html',
-								create:false,
-								type:'actionBar',
-								actionBar: {
-						      title: "选择车型",
-						      titleColor: "#ffffff",
-						      backgroundColor: "#039BE5",
-						      leftItem:{
-						          image: "img/back.png",
-						          method:'',
-						          text:"返回",
-						          textColor:"#ffffff"
-						      }
-								}
-							})
+							var company=summer.getStorage('pickerCompany');
+							if(company){
+								summer.openWin({
+									id:'pickerModels',
+									url:'html/touristsClient/pickerModels.html',
+									create:false,
+									type:'actionBar',
+									pageParam:{id:JSON.parse(company).COMPANY_ID},
+									actionBar: {
+							      title: "选择车型",
+							      titleColor: "#ffffff",
+							      backgroundColor: "#039BE5",
+							      leftItem:{
+							          image: "img/back.png",
+							          method:'',
+							          text:"返回",
+							          textColor:"#ffffff"
+							      }
+									}
+								})
+							}else {
+								summer.toast({msg:'请先选择厂商'})
+							}
 						},
 						changCarStatus(e,status){
 							$(e.currentTarget).addClass('active').siblings('.active').removeClass('active');
@@ -206,9 +212,9 @@
 					}
 				}
 				function getModels(){
-					var models=summer.getStorage('pickerModels');
+					var models=summer.getStorage('pickerModels3');
 					if(models){
-						addCar.carModels=models;
+						addCar.carModels=JSON.parse(summer.getStorage('pickerModels1')).PRODUCT_NAME+JSON.parse(summer.getStorage('pickerModels2')).CATENA_NAME+JSON.parse(models).NAME;
 					}
 				}
 				function save(){

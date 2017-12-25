@@ -3,72 +3,100 @@
 	<head>
 		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 		<meta charset="UTF-8">
-		<title>添加车辆</title>
+		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="./car.min.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
-		<div class="um-win" id="pickerModels">
-			<div class="um-content">
-				<div class="um-input-group pr">
+		<div class="um-win" id="pickerModels" v-cloak>
+			<div class="um-content addCar">
+				<div class="um-input-group pr" id='search'>
           <i class="icon iconfont icon-nav_search"></i>
-          <input type="search" class="form-control"  placeholder="搜索">
+          <input type="text" name="search" class="form-control"  placeholder="搜索">
+					<span onclick="satartSearch('all')">取消</span>
         </div>
-				<mt-index-list>
+				<ul class="dealerList companyList">
+          <li @click="pickerCarModels(item)" v-for="(item,index) in modelsList" :key="index">{{item.PRODUCT_NAME}}</li>
+        </ul>
+				<!-- <mt-index-list>
 					<mt-index-section v-for="(item,index) in modelsList" :key="index" :index="index">
 						<div v-for="(it,i) in item"  @click="pickerCarModels(it)"  :key="i">
 							<mt-cell  :title="it.name"></mt-cell>
 						</div>
  					</mt-index-section>
-				</mt-index-list>
+				</mt-index-list> -->
       </div>
     </div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
-      $(function(){
-        new Vue({
+				summerready=function() {
+					bindEvents();
+					console.log(summer.pageParam.id);
+					pickerModelsVue.id=summer.pageParam.id;
+					pickerModelsVue.getData('');
+				}
+				function bindEvents(){
+						$('.form-control').on('input propertychange',satartSearch);
+				}
+				function satartSearch(val){
+					if(val=='all'){
+						$(".form-control").val('');
+						$(".form-control").addClass('active').siblings('span').removeClass('active');
+	          pickerModelsVue.getData('')
+						return
+					}
+					var searchData=$(".form-control").val();
+					if(searchData){
+						$(".form-control").removeClass('active').siblings('span').addClass('active');
+					}else{
+						$(".form-control").addClass('active').siblings('span').removeClass('active')
+					}
+	        pickerModelsVue.getData(searchData)
+				}
+        var pickerModelsVue=new Vue({
           el:'#pickerModels',
           data(){
             return {
-              modelsList:{
-								'A':[{name:'奥迪',id:10},{name:"阿斯顿·马丁",id:11}],
-								'B':[{name:'本田',id:20},{name:"别克",id:21},{name:"宝马",id:22},{name:"奔驰",id:23}],
-								'C':[{name:'长安',id:30},{name:"长城",id:31}],
-								'D':[{name:'长安',id:30},{name:"长城",id:31}],
-								'E':[{name:'长安',id:30},{name:"阿斯顿·马丁",id:31}],
-								'F':[{name:'长安',id:30},{name:"长城",id:31}],
-								'G':[{name:'长安',id:30},{name:"长城",id:31}],
-								'H':[{name:'长安',id:30},{name:"阿斯顿·马丁",id:31}],
-								'I':[{name:'长安',id:30},{name:"长城",id:31}],
-								'J':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
-								'K':[{name:'长安',id:30},{name:"长城",id:31}],
-								'L':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
-								'M':[{name:'长安',id:30},{name:"长城",id:31}],
-								'N':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
-								'O':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
-								'P':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
-								'Q':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
-								'R':[{name:'阿斯顿·马丁',id:30},{name:"长城",id:31}],
-							}
+              modelsList:[],
+							id:''
             }
           },
 					methods:{
+						getData(val){
+							var _this=this;
+							console.log(this.id);
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/foundproject/queryCarBrand',
+								param:{
+									BRAND_NAME:val,
+									COMPANY_ID:_this.id
+								}
+							},function(res){
+								console.log("res",res);
+								_this.modelsList=res.data.datas
+							},function(err){
+								console.log("err",err);
+							})
+						},
 						pickerCarModels(it){
+							summer.setStorage('pickerModels1',JSON.stringify(it));
 							summer.openWin({
 								id:'pickerModels-2',
 								url:'html/touristsClient/pickerModels-2.html',
 								create:false,
 								type:'actionBar',
-								pageParam:{carId:it.id},
+								pageParam:{id:it.PRODUCT_ID},
 								actionBar: {
-						      title: it.name,
+						      title: it.PRODUCT_NAME,
 						      titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						      backgroundColor: "#039BE5",
 						      leftItem:{
@@ -82,7 +110,6 @@
 						}
 					}
         })
-      })
     </script>
   </body>
 </html>

@@ -6,49 +6,65 @@
 		<title></title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="./car.min.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
 		<div class="um-win" id="pickerModels-2">
 			<div class="um-content pickerModels">
         <ul class="modelsList">
           <li v-for="(it,index) in modelsList" @click="pickerModels(it)" :key="index">
-						{{it.name}}
+						{{it.CATENA_NAME}}
 					</li>
         </ul>
       </div>
     </div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
-      $(function(){
-        new Vue({
+			summerready=function() {
+				pickerModelsVue2.id=summer.pageParam.id;
+				console.log(pickerModelsVue2.id,summer.pageParam.id);
+				pickerModelsVue2.getData();
+			}
+      var pickerModelsVue2=new Vue({
           el:'#pickerModels-2',
           data(){
             return {
-							id:'q',
-              modelsList:[{name:'凯悦',id:1},{name:'君威',id:2},{name:'英朗',id:3},{name:'昂科拉',id:4}]
+							id:'',
+              modelsList:[]
             }
           },
 					mounted(){
-						var that=this
-						summerready=function(){
-							that.id=summer.pageParam.carId
-							//	http
-						}
 					},
 					methods:{
+						getData(){
+							var _this=this;
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/foundproject/queryCarByBrand',
+								param:{
+									PRODUCT_ID:_this.id
+								}
+							},function(res){
+								console.log("res",res);
+								_this.modelsList=res.data.datas
+							},function(err){
+								console.log("err",err);
+							})
+						},
 						pickerModels(it){
+							summer.setStorage('pickerModels2',JSON.stringify(it));
 							summer.openWin({
 								id:'pickerModels-3',
 								url:'html/touristsClient/pickerModels-3.html',
 								create:false,
 								type:'actionBar',
-								pageParam:{id:it.id},
+								pageParam:{id:it.CATENA_ID},
 								actionBar: {
-						      title: it.name,
+						      title: it.CATENA_NAME,
 						      titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						      backgroundColor: "#039BE5",
 						      leftItem:{
@@ -62,8 +78,6 @@
 						}
 					}
         })
-
-      });
     </script>
   </body>
 </html>

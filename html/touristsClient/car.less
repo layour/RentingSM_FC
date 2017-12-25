@@ -11,24 +11,35 @@
     tr{
       border-bottom:1px solid @borderColor;
       td{
-        height:.88rem;
+        // height:.88rem;
         line-height:.88rem;
         padding-left:.56rem;
         color:@fontColor;
         font-size:14px;
+        &:first-child{
+          overflow:hidden;
+          white-space:nowrap;
+        }
         &:last-child{
           text-align:right;
-          padding-left: 0;
-          padding-right: .56rem;
-
+          padding:0 .88rem 0 0;
+          position:relative;
+          line-height: .4rem;
           span{
             padding-right: .1rem;
+            // line-height: .3rem;
+            padding:.2rem 0;
             &.grayColor{
               color:@grayColor;
             }
           }
           >i{
             vertical-align: middle;
+            position: absolute;
+            right: .56rem;
+            top:50%;
+            -webkit-transform:translate(0,-50%);
+            transform:translate(0,-50%);
           }
         }
         input{
@@ -100,19 +111,6 @@
   }
 }
 #pickerDealer{
-  .um-input-group.pr{
-    span{
-      width:35px;
-    	height:0.6rem;
-    	line-height:0.6rem;
-    	margin-left:10px;
-    	font-size:14px;
-      display: none;
-      &.active{
-        display: block;
-      }
-    }
-  }
   .mint-popup{
     width:100%;
     >p{
@@ -179,6 +177,19 @@
   //   border-top-right-radius: .3rem;
   //   border-bottom-right-radius: .3rem;
   // }
+}
+.um-input-group.pr{
+  span{
+    width:35px;
+    height:0.6rem;
+    line-height:0.6rem;
+    margin-left:10px;
+    font-size:14px;
+    display: none;
+    &.active{
+      display: block;
+    }
+  }
 }
 .modelsList,.mint-indexlist{
   border-top:1px solid @borderColor;
