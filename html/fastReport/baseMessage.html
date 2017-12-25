@@ -76,9 +76,13 @@
 				</mt-popup>
 			</div>
 		</div>
+		<script src="../../js/common.js" ></script>
 		<script>
 		  summerready=function(){
 			  var baseData=summer.pageParam.baseData;
+			  let _customId=summer.pageParam.customId;
+			  baseMessage.totalData=baseData;
+			  baseMessage.customId=_customId;
 			  baseData.AreaList.map((e,i) =>{
 					baseMessage.slots2[0].values.push(e.AREA_NAME);
 			  })
@@ -115,7 +119,9 @@
 						defaultIndex : 0,
 						className : 'slot2',
 						textAlign : 'center'
-					}]
+					}],
+					totalData:"",
+					customId:""
 				}
 			},
 			created() {
@@ -156,14 +162,47 @@
 						summer.toast({msg:"请选择项目类型"});
 						return;
 					}else if(this.taskStyle==""){
-						summer.toast({msg:"请选择业务类型"});
+						summer.toast({msg:"请选择省份"});
 						return;
 					}
-					summer.execScript({
-					    winId: "setProject",
-					    script: "addRight('baseMessage')"
+					//此时需要调后端的ajax请求数据
+					let _programStyle=this.programStyle;
+					let _area_id=this.taskStyle;
+					let PLATFORM_TYPE,AREAID;
+					let customId=this.customId;
+					baseMessage.totalData.business.map((e,i)=>{
+						if(e.FLAG==_programStyle){
+							PLATFORM_TYPE=baseMessage.totalData.business[i].CODE;
+						}
 					});
-					summer.closeWin()
+					baseMessage.totalData.AreaList.map((e,i)=>{
+						if(e.AREA_NAME==_area_id){
+							AREAID=baseMessage.totalData.AreaList[i].AREA_ID;
+						}
+					});
+					ajaxRequest({
+						  type: 'post',
+						  url: 'appservice/foundproject/saveProject',
+						  param: {
+								 "AREA_ID":AREAID,
+								 "PLATFORM_TYPE":PLATFORM_TYPE,
+								 "CLIENT_ID":customId
+						  }
+					 }, function (res) {
+							  if(res.data.flag==1){
+								  console.log(res);
+								  let projectId=res.data.datas.PROJECT_ID;
+									summer.execScript({
+									    winId: "setProject",
+									    script: "addRight('baseMessage','"+projectId+"')"
+									});
+									summer.closeWin()
+							  }
+						 }, function (err) {
+							alert(err);
+							 console.log(err);
+								 summer.hideProgress();
+						});
 				}
 			}
 			});

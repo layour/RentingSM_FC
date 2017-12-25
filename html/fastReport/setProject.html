@@ -114,6 +114,7 @@
 			summerready = function() {
 				var sourceId = summer.pageParam.source;
 				var customId=summer.pageParam.id;
+				setProgect.customId=customId;
    		 	setProgect.getData(customId);
 				$("." + sourceId).addClass('active').siblings('i').addClass("active");
 			}
@@ -129,7 +130,9 @@
 							phone:'',
 							phoneAddress:''
 						},
-						baseMessageData:""
+						baseMessageData:"",
+						customId:"",
+						project_Id:""
 					}
 				},
 				methods: {
@@ -162,7 +165,8 @@
 					openBaseMessage(data){
 							console.log(data);
 						let self=this;
-						baseData=JSON.parse(JSON.stringify(self.baseMessageData));
+						let baseData=JSON.parse(JSON.stringify(self.baseMessageData));
+						let _customId=self.customId;
 						summer.openWin({
 							id : "baseMessage",
 							url : "html/fastReport/baseMessage.html",
@@ -186,7 +190,8 @@
 								}]
 							},
 							pageParam:{
-								baseData:baseData
+								baseData:baseData,
+								customId:_customId
 							}
 						})
 					}
@@ -352,8 +357,11 @@
 				});
 			}
 
-			function addRight(param) {
+			function addRight(param,projectId) {
 				$("." + param).addClass('active').siblings('i').addClass("active");
+				if(projectId){
+					setProgect.project_Id=projectId;
+				}
 			}
 		</script>
 	</body>
