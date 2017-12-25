@@ -150,7 +150,6 @@
 			// 判断用户是否登陆
 			function isLogin(){
 				if (!summer.getStorage("userinfo").EMPLOYEE_ID) {
-					summer.toast({msg:"请先登录"});
 					var os = $summer.os;
 					if (os == "android") {
 						summer.openWin({
@@ -167,254 +166,268 @@
 							"url": 'login.html'
 						}]);
 					}
+					summer.toast({msg:"请先登录"});
+					return false;
+				} else {
+					return true;
 				}
-				return;
 			};
 			// 支付表查询
 			function openPayTab(){
-				isLogin();
-				summer.openWin({
-					id:'payTable',
-					url:'html/payTableQuery/payTableList.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "支付表查询",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'payTable',
+						url:'html/payTableQuery/payTableList.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "支付表查询",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				})
+					})
+				}
 			}
 			// 风险跟踪
 			function openRiskTracking(){
-				isLogin();
-				summer.openWin({
-					id:'riskTracking',
-					url:'html/riskTracking/index.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "风险跟踪",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'riskTracking',
+						url:'html/riskTracking/index.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "风险跟踪",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				})
+					})
+				}
 			}
 			// 对账单
 			function openStatement(){
-				isLogin();
-				summer.openWin({
-					id:'statement',
-					url:'html/statement/statementList.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "客户对账单",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'statement',
+						url:'html/statement/statementList.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "客户对账单",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				})
+					})
+				}
 			}
 			// 销售线索
 			function openLeads(){
-				isLogin();
-				summer.openWin({
-					id:'leadsList',
-					url:'html/salesLeads/leadsList.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "销售线索",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						},
-						rightItems:[{
-							type:"text",
-							text:"新建",
-							textColor:"#ffffff" ,
-							method:"addLeads()"
-						}]
-					}
-				})
+				if (isLogin()) {
+					summer.openWin({
+						id:'leadsList',
+						url:'html/salesLeads/leadsList.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "销售线索",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems:[{
+								type:"text",
+								text:"新建",
+								textColor:"#ffffff" ,
+								method:"addLeads()"
+							}]
+						}
+					})
+				}
 			}
 			// 销售简报
 			function openBriefing(){
-				isLogin();
-				summer.openWin({
-					id:'briefing',
-					url:'html/salesBriefing/index.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "销售简报",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'briefing',
+						url:'html/salesBriefing/index.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "销售简报",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				})
+					})
+				}
 			}
 			function openQuotedPrice(){
-				isLogin();
-				summer.openWin({
-					id:'quotedPrice',
-					url:'html/priceCalculation/quotedPriceList.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "报价测算",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'quotedPrice',
+						url:'html/priceCalculation/quotedPriceList.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "报价测算",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				})
+					})
+				}
 			}
 			//拜访记录
 			function openVisitRecord(){
-				isLogin();
-				summer.openWin({
-					id:'visitRecord',
-					url:'html/visitRecord/visitRecord.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "拜访记录",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						},
-						rightItems:[{
-							type:"text",
-							text:"新建",
-							textColor:"#ffffff",
-							method:"newVisit()"
-						}]
-					}
-				})
+				if (isLogin()) {
+					summer.openWin({
+						id:'visitRecord',
+						url:'html/visitRecord/visitRecord.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "拜访记录",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems:[{
+								type:"text",
+								text:"新建",
+								textColor:"#ffffff",
+								method:"newVisit()"
+							}]
+						}
+					})
+				}
 			}
 			function openAddCar(){
-				isLogin();
-				summer.openWin({
-					id:'setProject',
-					url:'html/fastReport/setProject.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "快捷报单",
-						titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'setProject',
+						url:'html/fastReport/setProject.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "快捷报单",
+							titleColor: "#000000", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#000000"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				})
+					})
+				}
 			}
 			function openFastReport(){
-				isLogin();
-				summer.openWin({
-					id:'programSelect',
-					url:'html/fastReport/programSelect.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "项目查询",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						},
-						rightItems:[{
-									type:"text",
-									text:"新建",
-									textColor:"#ffffff" ,
-									method:"newCustom()"
-								}]
-					}
-				});
+				if (isLogin()) {
+					summer.openWin({
+						id:'programSelect',
+						url:'html/fastReport/programSelect.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "项目查询",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems:[{
+								type:"text",
+								text:"新建",
+								textColor:"#ffffff" ,
+								method:"newCustom()"
+							}]
+						}
+					});
+				}
 			}
 			// 付款列表
 			function openPayList(){
-				isLogin();
-				summer.openWin({
-					id:'payList',
-					url:'html/repayApply/payList/index.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "付款申请",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'payList',
+						url:'html/repayApply/payList/index.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "付款申请",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 			// 我的
 			function showUserInfo(){
-				isLogin();
-				summer.openWin({
-					id:'mine',
-					url:'html/mine/index.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "我的资料",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-							image: "img/back.png",
-							method:"",//返回按钮自定义事件
-							text:"返回",
-							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				if (isLogin()) {
+					summer.openWin({
+						id:'mine',
+						url:'html/mine/index.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "我的资料",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 
 			//Android返回键监听
