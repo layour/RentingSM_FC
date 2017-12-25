@@ -9,7 +9,7 @@
 window.G_COMMON_URL = "http://122.49.7.88:8080/";
 function userId() {
 	var userinfo = summer.getStorage("userinfo");
-	var userId = userinfo ? userinfo.userId : "";
+	var userId = userinfo ? userinfo.EMPLOYEE_ID : "";
 	return userId;
 }
 var CommonUtil = {

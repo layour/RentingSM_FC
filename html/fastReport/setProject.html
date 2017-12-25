@@ -285,9 +285,10 @@
 			}
 
 			function openSponsor() {
+				let projectId=setProgect.project_Id;
 				summer.openWin({
-					id : 'mySponsor',
-					url : 'html/fastReport/mySponsor.html',
+					id : 'newSponsor',
+					url : 'html/fastReport/newSponsor.html',
 					create : false,
 					type : 'actionBar',
 					actionBar : {
@@ -304,9 +305,12 @@
 							type : "text",
 							text : "添加",
 							textColor : "#ffffff",
-							method : "addSponsor()"
+							method : "complete()"
 						}]
 
+					},
+					pageParam:{
+						projectId:projectId
 					}
 				});
 			}
