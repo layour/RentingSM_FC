@@ -68,7 +68,7 @@
 						客户信息
 						<span class="frp"> <i class="customer icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div> </a>
-					<a href="javascript:void(0);"  onclick="checkVersion('baseMessage')">
+					<a href="javascript:void(0);"  @click="openBaseMessage(baseMessageData)">
 					<div class="um-list-item-bodys">
 						项目基础信息
 						<span class="frp"> <i class="baseMessage icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
@@ -109,21 +109,27 @@
 			<button class="btn um-btn-primary" onclick="checkVersion('submitSure')">下一步</button>
 			</div> -->
 		</div>
+			<script src="../../js/common.js"></script>
 		<script>
 			summerready = function() {
 				var sourceId = summer.pageParam.source;
+				var customId=summer.pageParam.id;
+   		 	setProgect.getData(customId);
 				$("." + sourceId).addClass('active').siblings('i').addClass("active");
 			}
-			new Vue({
+			var setProgect=new Vue({
 				el: '#app',
-				data:{
-					message:{
-						username:'',
-						card:'',
-						sex:'',
-						address:'',
-						phone:'',
-						phoneAddress:''
+				data(){
+					return{
+						message:{
+							username:'',
+							card:'',
+							sex:'',
+							address:'',
+							phone:'',
+							phoneAddress:''
+						},
+						baseMessageData:""
 					}
 				},
 				methods: {
@@ -132,6 +138,57 @@
 					},
 					openPicker() {
 						this.$refs.picker.open();
+					},
+					getData(id){
+						let self=this;
+						ajaxRequest({
+							  type: 'post',
+							  url: 'appservice/foundproject/addProject',
+							  param: {
+									 "CLIENT_ID":id,
+							  }
+						 }, function (res) {
+							 summer.hideProgress();
+								  if(res.data.flag==1){
+									  self.baseMessageData=res.data.datas;
+										console.log(self.baseMessageData);
+								  }
+							 }, function (err) {
+								alert(err);
+								 console.log(err);
+									 summer.hideProgress();
+							});
+					},
+					openBaseMessage(data){
+							console.log(data);
+						let self=this;
+						baseData=JSON.parse(JSON.stringify(self.baseMessageData));
+						summer.openWin({
+							id : "baseMessage",
+							url : "html/fastReport/baseMessage.html",
+							create : false,
+							type : 'actionBar',
+							actionBar : {
+								title : '基本信息',
+								titleColor : "#ffffff",
+								backgroundColor : "#039BE5",
+								leftItem : {
+									image : "img/back.png",
+									method : "",
+									text : "返回",
+									textColor : "#ffffff"
+								},
+								rightItems : [{
+									type : "text",
+									text : "完成",
+									textColor : "#ffffff",
+									method : "save()"
+								}]
+							},
+							pageParam:{
+								baseData:baseData
+							}
+						})
 					}
 				}
 			})
@@ -169,9 +226,6 @@
 				} else if (param == 'remark') {
 					url = "html/fastReport/remark.html";
 					title = '备注';
-				} else if (param == 'baseMessage') {
-					url = "html/fastReport/baseMessage.html";
-					title = '基本信息';
 				}
 
 				summer.openWin({

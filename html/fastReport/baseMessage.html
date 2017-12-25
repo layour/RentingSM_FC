@@ -27,11 +27,11 @@
 					</li>
 					<li @click="surePickerTask">
 						<p class="pl10 pr10 tr ">
-							<span class="fl">业务类型</span>
+							<span class="fl">省份</span>
 							<span class="right"><span v-if='taskStyle'  class="first">{{taskStyle}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
-					<li>
+			<!--		<li>
 						<p class="pl10 pr10 tr" style="line-height:0.88rem;">
 							<span class="fl">合同签署方式</span>
 							<span class="isGroup">
@@ -55,12 +55,12 @@
 									</span>
 							</span>
 						</p>
-					</li>
+					</li>-->
 				</ul>
-				
-				
+
+
 			</div>
-			
+
 			<div class="um-footer">
 				<mt-popup v-model="pickerProgramStatus" position='bottom' class="pickerColor">
 						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
@@ -77,6 +77,15 @@
 			</div>
 		</div>
 		<script>
+		  summerready=function(){
+			  var baseData=summer.pageParam.baseData;
+			  baseData.AreaList.map((e,i) =>{
+					baseMessage.slots2[0].values.push(e.AREA_NAME);
+			  })
+			  baseData.business.map((e,i) =>{
+					baseMessage.slots1[0].values.push(e.FLAG);
+			  })
+		  }
 			function save(){
 				baseMessage.save();
 			}
@@ -95,14 +104,14 @@
 					pickerTask:'',
 					slots1 : [{
 						flex : 1,
-						values : ['大客户业务', '个人业务', '对公业务'],
+						values : [],
 						defaultIndex :0,
 						className : 'slot1',
 						textAlign : 'center'
 					}],
 					slots2 : [{
 						flex : 1,
-						values : ['形式售后回租', '形式回租'],
+						values : [],
 						defaultIndex : 0,
 						className : 'slot2',
 						textAlign : 'center'
