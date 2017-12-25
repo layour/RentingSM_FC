@@ -94,7 +94,7 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 	};
 	if (userId()) {
 		paramData = paramObj.param;
-		paramData.EMPLOYEE_ID ="11357";
+		paramData.EMPLOYEE_ID = userId();
 	} else {
 		paramData = paramObj.param;
 	}
