@@ -13,6 +13,7 @@
 		<script src="../../js/font.js" ></script>
 		<script src="../../js/vue.js" ></script>
 		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
@@ -34,14 +35,14 @@
 							{{quoted.contractTerm}}&nbsp;个月
 						</span>
 					</li>
-					<li @click="surePicker('termType')">
+					<!-- <li @click="surePicker('termType')">
 						<b>期满处理方式</b>
 						<span>
 							<b v-if="quoted.termType">{{quoted.termType}}</b>
 							<b v-else class="default">请选择</b>
 							<i class="icon iconfont icon-enter"></i>
 						</span>
-					</li>
+					</li> -->
 					<li>
 						<b>租赁年利率</b>
 						<span>
@@ -173,11 +174,16 @@
 					<p><span class="fl" @click="pickerBail">取消</span><span class="fr" @click="sureBail">确定</span></p>
 				</mt-popup>
 				<template v-else>
-					<button style="height:.88rem;background:#039BE5;">测算</button>
+					<button @click="quotedTest" style="height:.88rem;background:#039BE5;">测算</button>
 				</template>
 			</div>
     </div>
     <script>
+			summerready=function(){
+				quotedVue.PROJECT_ID=summer.pageParam.id;
+				console.log(quotedVue.PROJECT_ID,summer.pageParam.id);
+				quotedVue.getData();
+			}
       var quotedVue=new Vue({
           el:'#quotedPriceDetail',
           data(){
@@ -194,19 +200,20 @@
 							bailToRate:true,
 							pickerType:'payType',
 							pickerVal:'',
+							PROJECT_ID:'',
 							quoted:{
-								allPrice:'20000.00',
+								allPrice:'12000',
 								term:'', //租赁期数
 								termType:'',
 								contractTerm:'',
-								rate:50,
+								rate:0.1,
 								payType:'',
 								firstPayRate:'', //待定首付比例
 								sureFirstPayRate:'', //选择的首付比例
 								firstPay:'',
 								sureFirstPay:'',
 								bail:'', //保证金
-								sureBail:'', //保证金
+								lastBail:'', //保证金
 								bailRate:'',  //保证金比例
 								sureBailRate:'',  //保证金比例
 								bailType:'融资额',  //选择的保证金类型
@@ -216,9 +223,9 @@
 								sureBail:'',
 							},
 							resultData:{
-								firstPrice:'134000.00',
-								termPrice:'4873.32',
-								term:23
+								firstPrice:'',
+								termPrice:'',
+								term:''
 							}
             }
           },
@@ -249,6 +256,41 @@
 						}
 					},
 					methods:{
+						getData(){
+							var _this=this
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/foundproject/queryProjectScheme',
+								param:{PROJECT_ID:_this.PROJECT_ID}
+							},function(res){
+								console.log("res",res);
+								var data=res.data.datas
+								if(data){
+									_this.quoted.allPrice=data.LEASE_TOPRIC
+									_this.quoted.term=data.LEASE_TERM+"个"+data.LEASE_PERIOD
+									_this.quoted.contractTerm=data.LEASE_TERM
+									_this.quoted.rate=data.YEAR_INTEREST
+									_this.quoted.payType=data.PAY_WAY
+
+									_this.quoted.sureFirstPayRate=data.START_PERCENT
+									_this.quoted.sureFirstPay=data.FIRST_MONEY
+
+									_this.quoted.lastBail=data.DEPOSIT_MONEY
+									_this.quoted.sureBailType=data.LEASE_SUBFIRENT
+									_this.quoted.sureBailRate=data.BAIL_PERCENT
+
+									_this.quoted.consultingFee=data.POUNDAGE_PRICE
+									// _this.quoted.sureBail=data.DEPOSIT_MONEY
+
+									_this.resultData.firstPrice=data.FIRST_MONEY
+									_this.resultData.termPrice=data.MONTH_RENT
+									_this.resultData.term=data.LEASE_TERM
+								}
+							},function(err){
+								console.log("err",err);
+							})
+
+						},
 						sureBail(){
 							this.quoted.lastBail=this.quoted.bail
 							this.quoted.sureBailRate=this.quoted.bailRate
@@ -379,13 +421,64 @@
 							}
 
 						},
+						quotedTest(){
+							var _this=this;
+							var params={
+								LEASE_SUBFIRENT:_this.quoted.allPrice,
+								YEAR_INTEREST:_this.quoted.rate,
+								LEASE_TERM:_this.quoted.contractTerm,
+								PAY_WAY:_this.quoted.payType,
+								LEASE_PERIOD:'月',
+							};
+							console.log(JSON.stringify(params),{LEASE_SUBFIRENT:_this.quoted.allPrice,
+							YEAR_INTEREST:_this.quoted.rate,
+							LEASE_TERM:_this.quoted.contractTerm},_this.quoted.allPrice,_this.quoted.rate);
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/foundproject/projectQuotationPMTTest',
+								param:params
+							},function(res){
+								console.log("res",res);
+								_this.resultData.firstPrice=_this.quoted.firstPay
+								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
+								_this.resultData.termPrice=res.data.datas.periodNum
+							},function(err){
+								console.log("err",err);
+							})
+
+						},
 						save(){
 							// http
-							summer.execScript({
-							    winId: "setProject",
-							    script: "addRight('price')"
-							});
-							summer.closeToWin({id:'setProject'})
+							var _this=this
+							var param={
+								LEASE_SUBFIRENT:_this.quoted.allPrice,
+								LEASE_TERM:_this.quoted.contractTerm,
+								LEASE_PERIOD:'月',
+								YEAR_INTEREST:_this.quoted.rate,
+								PAY_WAY:_this.quoted.payType,
+								FIRST_MONEY:_this.quoted.sureFirstPay,
+								START_PERCENT:_this.quoted.sureFirstPayRate,
+								DEPOSIT_MONEY:_this.quoted.lastBail,
+								BAIL_PERCENT:_this.quoted.sureBailRate,
+								// '':_this.quoted.sureBailType, 保证金方式
+								POUNDAGE_PRICE:_this.quoted.consultingFee,
+								// LEASE_SUBFIRENT:_this.quoted.sureBail, 保险保证金
+							};
+							console.log(JSON.stringify(param));
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/foundproject/projectQuotationPMTTest',
+								param:param
+							},function(res){
+								console.log("res",res);
+								summer.execScript({
+								    winId: "setProject",
+								    script: "addRight('price')"
+								});
+								summer.closeToWin({id:'setProject'})
+							},function(err){
+								console.log("err",err);
+							})
 						}
 					}
         })
