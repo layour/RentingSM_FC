@@ -133,7 +133,7 @@
 							  @confirm="handleConfirm"
 							  >
 						</mt-datetime-picker>
- 
+
 			</div>
 		</div>
 		<script src="../../js/summer.js" ></script>
@@ -184,11 +184,31 @@
 						dateBirth : ''
 					}
 				}
-			}, 
-			methods: { 
+			},
+			methods: {
+				getData(projectId,clintId){
+					let self=this;
+					ajaxRequest({
+						  type: 'post',
+						  url: 'appservice/foundproject/loadProjectPage',
+						  param: {
+								 "PROJECT_ID":projectId,
+						  }
+					 }, function (res) {
+						 summer.hideProgress();
+							  if(res.data.flag==1){
+								  //self.baseMessageData=res.data.datas;
+									//console.log(self.baseMessageData);
+							  }
+						 }, function (err) {
+							alert(err);
+							 console.log(err);
+								 summer.hideProgress();
+						});
+				},
 			    handleClick: function() {
 					this.$toast('Hello world!')
-				}, 
+				},
 				cardIdentify:function() {
 					var _self = this;
 					PersonScan.scan({}, function(args) {
@@ -205,22 +225,22 @@
 					}, function(args) {
 						console.log(args);
 					});
-				}, 
+				},
 				successCallBack:function(args) {
 					console.log(args);
-				}, 
+				},
 				onValuesChange1:function(picker, values) {
 					this.pickerSex = values[0];
-				}, 
+				},
 				surePickerSex:function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
 						this.message.sex = this.pickerSex;
 					}
-				}, 
+				},
 				onValuesChange2:function(picker, values) {
 					this.pickerMarrige = values[0];
-				}, 
+				},
 				surePickerMarrige:function(param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
@@ -255,11 +275,11 @@
 							});
 						}
 					}
-				}, 
+				},
 				sureDateConfirm:function() {
 					this.pickerDateStatus = !this.pickerDateStatus;
 					this.$refs.picker.open();
-				}, 
+				},
 				handleConfirm:function(pickerValue) {
 					this.pickerValue = pickerValue;
 					this.message.dateBirth = getFormatDate(pickerValue)
@@ -278,7 +298,7 @@
 						return year + month + strDate;
 					}
 
-				}, 
+				},
 				messageTest:function(){
 					 var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  //身份证校验
 					 var phoneCard=/^[1][3,4,5,7,8,9][0-9]{9}$/;
@@ -341,7 +361,7 @@
 							}]
 						}
 					});
-				}, 
+				},
 				nextStopAction:function() {
 					 if(!this.messageTest()){
 					 	return;
@@ -371,7 +391,7 @@
 							}]
 						}
 					});
-				}, 
+				},
 				openPicker:function() {
 					this.$refs.picker.open();
 				}
@@ -385,6 +405,11 @@
 			}
 
 			summerready = function() {
+					let projectId=summer.pageParam.projectId;
+					let clintId=summer.pageParam.clintId;
+				if (projectId&&clintId) {
+						newCreateCustom.getData(projectId,clintId);
+				}
 				var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
 				summer.getPermission(params, function(args) {
 					//alert(args); //成功返回OK

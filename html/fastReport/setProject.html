@@ -361,6 +361,8 @@
 			}
 
 			function openNewCreateCustom() {
+				var  projectId=setProgect.project_Id;
+				var clintId=setProgect.customId;
 				summer.openWin({
 					id:'newCreateCustom',
 					url:'html/fastReport/newCreateCustom.html',
@@ -382,6 +384,10 @@
 					          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 					          method:"nextStopAction()" //在打开的window中自定义事件
 					      }]
+					},
+					pageParam:{
+						projectId:projectId,
+						clintId:clintId
 					}
 				});
 			}
