@@ -57,12 +57,13 @@
 						},
 						pickerModels(it){
 							summer.setStorage('selectArea',JSON.stringify(it));
+							let fromSelect=summer.getStorage("selectFrom");
 							summer.execScript({
-							    winId: 'emergencyContract',
+							    winId: fromSelect,
 							    script: 'getAddr()'
 							});
 							summer.closeToWin({
-								id:'emergencyContract'
+								id:fromSelect
 							})
 						}
 					}
