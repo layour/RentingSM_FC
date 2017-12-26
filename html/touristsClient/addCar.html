@@ -102,15 +102,6 @@
 									className: 'slot1',
 									textAlign: 'center'
 								}
-							],
-							slots2: [
-								{
-									flex: 1,
-									values: [],
-									defaultIndex:0,
-									className: 'slot2',
-									textAlign: 'center'
-								}
 							]
 						}
 					},
@@ -127,22 +118,35 @@
 								}
 							},function(res){
 								console.log("res",res);
-
-							},function(err){
-								console.log("err",err);
-							})
-							ajaxRequest({
-								type:'POST',
-								url:'appservice/customer/datadictionary',
-								param:{
-									DATATYPE:'设备单位'
+								if(res.data.datas.EquipObj[0]){
+									var data=res.data.datas.EquipObj[0];
+									_this.dealer=data.SUPPLIERS_NAME;
+									_this.company=data.COMPANY_NAME;
+									_this.color=data.CAR_TYPE;
+									_this.carModels=data.PRODUCT_NAME+" "+data.CATENA_NAME+" "+data.SPEC_NAME;
+									_this.guidePrice=data.UNIT_PRICE;
+									_this.holdPrice=data.STAYBUY_PRICE;
+									summer.setStorage('pickerDealer',JSON.stringify({SUPPLIERS_NAME:data.SUPPLIERS_NAME,SUPPLIERS_ID:data.SUPPLIERS_ID}))
+									summer.setStorage('pickerCompany',JSON.stringify({COMPANY_NAME:data.COMPANY_NAME,COMPANY_ID:data.COMPANY_ID}))
+									summer.setStorage('pickerModels1',JSON.stringify({PRODUCT_NAME:data.PRODUCT_NAME,PRODUCT_ID:data.PRODUCT_ID}))
+									summer.setStorage('pickerModels2',JSON.stringify({CATENA_NAME:data.CATENA_NAME,CATENA_ID:data.CATENA_ID}))
+									summer.setStorage('pickerModels3',JSON.stringify({NAME:data.SPEC_NAME,ID:data.SPEC_ID}))
 								}
-							},function(res){
-								console.log("设备单位",res);
-
 							},function(err){
 								console.log("err",err);
 							})
+							// ajaxRequest({
+							// 	type:'POST',
+							// 	url:'appservice/customer/datadictionary',
+							// 	param:{
+							// 		DATATYPE:'设备单位'
+							// 	}
+							// },function(res){
+							// 	console.log("设备单位",res);
+							//
+							// },function(err){
+							// 	console.log("err",err);
+							// })
 							ajaxRequest({
 								type:'POST',
 								url:'appservice/customer/datadictionary',
@@ -150,7 +154,7 @@
 									DATATYPE:'车辆类型'
 								}
 							},function(res){
-								_this.slots=res.data.datas
+								_this.slots[0].values=res.data.datas
 								console.log("车辆类型",res);
 
 							},function(err){
@@ -246,7 +250,7 @@
 						surePickerColor(param){
 							this.pickerColorStatus=!this.pickerColorStatus;
 							if(param=='confirm'){
-								this.color=this.pickedColor;
+								this.color=this.pickedColor.FLAG;
 							}
 						},
 						save(){
@@ -269,12 +273,12 @@
 							param.SPEC_NAME=JSON.parse(summer.getStorage('pickerModels3')).NAME;
 							param.SPEC_ID=JSON.parse(summer.getStorage('pickerModels3')).ID;
 
-							param.UNITTEST=this.unit;
+							param.UNITTEST='1';
 							param.UNIT_PRICE=this.guidePrice;
 							param.TOTAL_PRICE=this.guidePrice;
 							param.AMOUNT=1;
 							param.STAYBUY_PRICE=this.holdPrice;
-
+							console.log("param",JSON.stringify(param));
 							ajaxRequest({
 								type:'POST',
 								url:'appservice/foundproject/saveProject',
