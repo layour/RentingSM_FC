@@ -107,6 +107,9 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 			"Content-Type" : "application/json"
 		}
 	}, function(response) {
+		 if (Object.prototype.toString.call(response.data) === '[object String]') {
+				response.data = JSON.parse(response.data);
+		 }
 		successCallback(response);
 	}, function(response) {
 		//此处还需要和后端沟通，统一失败状态码，统一处理
