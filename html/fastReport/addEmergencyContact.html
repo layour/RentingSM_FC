@@ -118,55 +118,27 @@
 				<table>
 					<tr>
 						<td>紧急联系人</td>
-						<td><input type="text" name="name" class='fr' maxlength='6' v-model="name" placeholder='请输入真实姓名'></td>
+						<td><input type="text" name="name" class='fr' maxlength='6' v-model="datas.EMERGENCY_NAME" placeholder='请输入真实姓名'></td>
 					</tr>
 					<tr>
 						<td>电话</td>
-						<td><input type="number" class='fr' name="phone" v-model="phone" placeholder='请输入号码'></td>
+						<td><input type="number" class='fr' name="phone" v-model="datas.EMERGENCY_PHONE" placeholder='请输入号码'></td>
 					</tr>
 					<tr>
-						<td>省市</td>
-						<td><span v-if='addr'>{{addr}}</span><span class="grayColor" v-else>请选择</span>
+						<td>关系类型</td>
+						<td><input type="text" class='fr' name="phone" v-model="datas.EMERGENCY_RELATIONSHIP" placeholder='请输入和客户的关系'></td>
+					</tr>
+					<tr @click="selectAddr">
+						<td>省市县</td>
+						<td><span>{{datas.ADDR_PROVINCE}} {{datas.ADDR_CITY}} {{datas.ADDR_COUNTY}}</span>
 						<i class="icon iconfont icon-enter"></i></td>
 					</tr>
 					<tr>
 						<td>详细地址</td>
-						<td><input type="text" class='fr' name="addres" v-model="addresDetail" placeholder='请输入详细地址'></td>
+						<td><input type="text" class='fr' name="addres" v-model="datas.EMERGENCY_ADDR" placeholder='请输入详细地址'></td>
 					</tr>
-					<!-- <li v-for="(item,index) in addContactList" :key='index'>
-						<template v-if="addContactList.length==1">
-							<div class="inDiv" style="padding:.4rem 1rem; .4rem 0;">
-								<p class="title">{{item.name}}</p>
-								<p class="normal">{{item.phone}}</p>
-							</div>
-							<div  class="fr one inDiv">
-								<a href=""><i class="icon iconfont icon-call"></i></a>
-							</div>
-						</template>
-						<mt-cell-swipe :title="item.name" :label="item.phone" :right="[{content: '&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'1.76rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index)}]" v-else>
-								<div class="fr">
-									<a href=""><i class="icon iconfont icon-call"></i></a>
-								</div>
-						</mt-cell-swipe>
-					</li> -->
 				</table>
       </div>
-			<div class="um-footer"id="footer">
-				<mt-popup v-model="addStatus" v-if="addStatus" position="bottom" class="add">
-					<ul>
-						<li>
-							<span>紧急联系人</span>
-							<input type="text" name="name" class='fr' maxlength='6' v-model="name" placeholder='请输入真实姓名'>
-						</li>
-						<li>
-							<span>电话</span>
-							<input type="number" class='fr' name="phone" v-model="phone" placeholder='请输入号码'>
-						</li>
-					</ul>
-					<p><span  @click="addItem">取消</span><span class="fr" @click="sureAdd">确定</span></p>
-				</mt-popup>
-				<button class="btn um-btn-primary" style="background:#039BE5;height:.88rem;padding:5px 12px" @click="save">保存</button>
-			</div>
     </div>
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
@@ -176,88 +148,78 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
+				summerready=function(){
+					vueTemplate.datas.CLIENT_ID=summer.pageParam.id
+					console.log(vueTemplate.datas.CLIENT_ID);
+					vueTemplate.getData()
+				}
         var vueTemplate=new Vue({
           el:'#addContact',
           data(){
             return {
-							addStatus:false,
-							addContactList:[
-								{name:"张自忠",phone:'13146829922'},
-								{name:"秦始皇",phone:'18646829984'},
-								{name:"秦始皇",phone:'18646829984'},
-								{name:"秦始皇",phone:'18646829984'}
-							],
-							name:'',
-							phone:'',
-							addr:'',
-							addresDetail:'',
-							swipeArr:[
-						    {
-						      content: '删除',
-						      style: { background: 'red', color: '#fff' },
-						      handler: () => this.$messagebox('delete')
-						    }
-						  ]
+							datas:{
+								ID:'',
+								CLIENT_ID:'',
+								EMERGENCY_NAME:'',
+								EMERGENCY_PHONE:'',
+								EMERGENCY_RELATIONSHIP:'',
+								ADDR_PROVINCE:'',
+								ADDR_CITY:'',
+								ADDR_COUNTY:'',
+								EMERGENCY_ADDR:''
+							}
             }
           },
-					create(){
-						var that=this
-						summerready=function(){
-							if(summer.pageParam.id){
-								that.getData(summer.pageParam.id)
-							}
-						}
-					},
-					mounted(){
-
-						this.getData(1)
-					},
 					methods:{
-						getData(id){
+						getData(){
+							var _this=this;
 							ajaxRequest({
-								type:'get',
-								url:'project/prjlinkman/initList.do',
+								type:'POST',
+								url:'appservice/customer/getEmergency',
 								param:{
-									page:1,
-									pagesize:15,
-									prjId:id
+									CLIENT_ID:_this.datas.CLIENT_ID
 								}
 							},function(res){
 								console.log(res);
+								if(res.data.datas){	_this.datas=res.data.datas}
+
 							},function(err){
 								alert(err);
 							})
 						},
-						deleteItem(i){
-							this.addContactList.splice(i,1)
-						},
-						addItem(){
-							this.addStatus=!this.addStatus
-						},
-						sureAdd(){
-							if(!this.name){
-								summer.toast({msg:'请输入联系人姓名'})
-								return
-							}
-							var reg=/^1[3|4|5|6|8][0-9]\d{4,8}$/
-							if(!reg.test(this.phone)){
-								summer.toast({msg:'手机号码格式有误'})
-								return
-							}
-							this.addContactList.push({name:this.name,phone:this.phone})
-							this.addStatus=false
+						selectAddr(){
+							summer.openWin({
+								id:'selectProvince',
+								url:'html/fastReport/selectProvince.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+						      title:'选择省',
+						      titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						      backgroundColor: "#039BE5",
+						      leftItem:{
+						          image: "img/back.png",
+						          method:'',//返回按钮自定义事件
+						          text:"返回",
+						          textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						      }
+								}
+							})
 						},
 						save(){
 							//发请求
 							var _this=this;
+							console.log(_this.datas);
+							if(!this.datas.EMERGENCY_NAME){summer.toast({msg:'请输入姓名'});return}
+							var reg=/^1[345678][0-9]{9}$/;
+							if(!reg.test(this.datas.EMERGENCY_PHONE)){summer.toast({msg:'请输入正确的手机号'});return}
+							if(!this.datas.EMERGENCY_RELATIONSHIP){summer.toast({msg:'请输入关系类型'});return}
+							if(!this.datas.ADDR_COUNTY){summer.toast({msg:'请输入省市县'});return}
+							if(!this.datas.EMERGENCY_ADDR){summer.toast({msg:'请输入详细地址'});return}
 							ajaxRequest({
 								type:'POST',
-								url:'appservice/customer',
-								param:{
-									EMERGENCY_NAME:_this.name,
-									EMERGENCY_PHONE:_this.phone,
-									EMERGENCY_ADDR:_this.addr
-								}
+								url:'appservice/customer/saveEmergencyInfo',
+								param:_this.datas
 							},function(res){
 								console.log("res",res);
 								summer.execScript({
@@ -272,10 +234,14 @@
 						}
 					}
         });
-				function addEmergencyContract(){
-					vueTemplate.addItem()
+				function save(){
+					vueTemplate.save()
 				}
-
+				function getAddr(){
+					vueTemplate.datas.ADDR_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+					vueTemplate.datas.ADDR_CITY=JSON.parse(summer.getStorage('selectCity')).AREA_NAME
+					vueTemplate.datas.ADDR_COUNTY=JSON.parse(summer.getStorage('selectArea')).AREA_NAME
+				}
     </script>
   </body>
 </html>

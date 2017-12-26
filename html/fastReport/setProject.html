@@ -288,6 +288,7 @@
 					url : "html/fastReport/addEmergencyContact.html",
 					create : false,
 					type : 'actionBar',
+					pageParam:{id:setProgect.customId},
 					actionBar : {
 						title : '添加紧急联系人',
 						titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
@@ -300,9 +301,9 @@
 						},
 						rightItems : [{
 							type : "text",
-							text : "添加",
+							text : "保存",
 							textColor : "#ffffff",
-							method : "addEmergencyContract()"
+							method : "save()"
 						}]
 					}
 				})

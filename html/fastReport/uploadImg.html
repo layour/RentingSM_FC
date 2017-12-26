@@ -77,33 +77,33 @@
 					<li @click="openPopup('apply')">
 						<div><img v-if="list.applyImg" :src="list.applyImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
-						<p>融资租赁申请表</p>
+						<p>申请人身份证</p>
 					</li>
 					<li @click="openPopup('marry')">
 						<div><img v-if="list.marryImg"  :src="list.marryImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
-						<p>结婚证明</p>
+						<p>机动车驾驶证</p>
 					</li>
 					<li @click="openPopup('residence')">
 						<div><img v-if="list.residenceImg"  :src="list.residenceImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
-						<p>户口证明</p>
+						<p>车辆合格证</p>
 
 					</li>
 					<li @click="openPopup('assets')">
 						<div><img v-if="list.assetsImg"  :src="list.assetsImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
-						<p>资产证明</p>
+						<p>客户面谈记录表</p>
 					</li>
 					<li @click="openPopup('Interview')">
 						<div><img v-if="list.InterviewImg"  :src="list.InterviewImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
-						<p>面谈信息表</p>
+						<p>资信调查报告</p>
 					</li>
 					<li @click="openPopup('other')">
 						<div><img v-if="list.otherImg"  :src="list.otherImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
-						<p>其他</p>
+						<p>现场照片</p>
 					</li>
 				</ul>
       </div>
@@ -161,26 +161,65 @@
 									// $summer.alert(args);
 								//  alert(args.imgPath);
 									if(that.status=='apply'){
-										that.list.applyImg=args.imgPath;
 										CommonUtil.watermark({
 											srcImage:args.compressImgPath,
 											targetImage:args.compressImgPath,
-											name:'融资租赁申请表',
+											name:'申请人身份证',
 											callback:function(arg){
 													that.list.applyImg=arg.target;
-													alert(arg.target)
+													// $summer.alert(arg.target)
 											 }
 										});
 									}else if(that.status=='marry'){
-										that.list.marryImg=args.compressImgPath
+										// that.list.marryImg=args.compressImgPath
+										CommonUtil.watermark({
+											srcImage:args.compressImgPath,
+											targetImage:args.compressImgPath,
+											name:'机动车驾驶证',
+											callback:function(arg){
+													that.list.marryImg=arg.target;
+											 }
+										});
 									}else if(that.status=='residence'){
-										that.list.residenceImg=args.compressImgPath
+										// that.list.residenceImg=args.compressImgPath
+										CommonUtil.watermark({
+											srcImage:args.compressImgPath,
+											targetImage:args.compressImgPath,
+											name:'车辆合格证',
+											callback:function(arg){
+													that.list.residenceImg=arg.target;
+											 }
+										});
 									}else if(that.status=='assets'){
-										that.list.assetsImg=args.compressImgPath
+										// that.list.assetsImg=args.compressImgPath
+										CommonUtil.watermark({
+											srcImage:args.compressImgPath,
+											targetImage:args.compressImgPath,
+											name:'客户面谈记录表',
+											callback:function(arg){
+													that.list.assetsImg=arg.target;
+											 }
+										});
 									}else if(that.status=='Interview'){
-										that.list.InterviewImg=args.compressImgPath
+										// that.list.InterviewImg=args.compressImgPath
+										CommonUtil.watermark({
+											srcImage:args.compressImgPath,
+											targetImage:args.compressImgPath,
+											name:'资信调查报告',
+											callback:function(arg){
+													that.list.InterviewImg=arg.target;
+											 }
+										});
 									}else if(that.status=='other'){
-										that.list.otherImg=args.compressImgPath
+										// that.list.otherImg=args.compressImgPath
+										CommonUtil.watermark({
+											srcImage:args.compressImgPath,
+											targetImage:args.compressImgPath,
+											name:'现场照片',
+											callback:function(arg){
+													that.list.otherImg=arg.target;
+											 }
+										});
 									}
 								}
 							});
@@ -196,26 +235,64 @@
 							      // $summer.alert(args);
 							      // alert(args.imgPath);
 										if(that.status=='apply'){
-											that.list.applyImg=args.imgPath;
 											CommonUtil.watermark({
 												srcImage:args.compressImgPath,
 												targetImage:args.compressImgPath,
-												name:'融资租赁申请表',
+												name:'申请人身份证',
 												callback:function(arg){
-													alert(arg)
+													// $summer.alert(arg)
 														that.list.applyImg=arg.target;
 												 }
 											});
 										}else if(that.status=='marry'){
-											that.list.marryImg=args.compressImgPath
+											CommonUtil.watermark({
+												srcImage:args.compressImgPath,
+												targetImage:args.compressImgPath,
+												name:'机动车驾驶证',
+												callback:function(arg){
+														that.list.marryImg=arg.target;
+												 }
+											});
 										}else if(that.status=='residence'){
-											that.list.residenceImg=args.compressImgPath
+											// that.list.residenceImg=args.compressImgPath
+											CommonUtil.watermark({
+												srcImage:args.compressImgPath,
+												targetImage:args.compressImgPath,
+												name:'车辆合格证',
+												callback:function(arg){
+														that.list.residenceImg=arg.target;
+												 }
+											});
 										}else if(that.status=='assets'){
-											that.list.assetsImg=args.compressImgPath
+											// that.list.assetsImg=args.compressImgPath
+											CommonUtil.watermark({
+												srcImage:args.compressImgPath,
+												targetImage:args.compressImgPath,
+												name:'客户面谈记录表',
+												callback:function(arg){
+														that.list.assetsImg=arg.target;
+												 }
+											});
 										}else if(that.status=='Interview'){
-											that.list.InterviewImg=args.compressImgPath
+											// that.list.InterviewImg=args.compressImgPath
+											CommonUtil.watermark({
+												srcImage:args.compressImgPath,
+												targetImage:args.compressImgPath,
+												name:'资信调查报告',
+												callback:function(arg){
+														that.list.InterviewImg=arg.target;
+												 }
+											});
 										}else if(that.status=='other'){
-											that.list.otherImg=args.compressImgPath
+											// that.list.otherImg=args.compressImgPath
+											CommonUtil.watermark({
+												srcImage:args.compressImgPath,
+												targetImage:args.compressImgPath,
+												name:'现场照片',
+												callback:function(arg){
+														that.list.otherImg=arg.target;
+												 }
+											});
 										}
 							    }
 							});
@@ -234,7 +311,6 @@
 								],
 						    params : {
 						        PROJECT_ID: that.id,   //参数
-										EMPLOYEE_ID:'',
 										FILE_BYTE:'',
 										FILE_NAME:''
 						    },
