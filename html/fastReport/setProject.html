@@ -1,406 +1,436 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="../../css/mint.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<style>
-			.um-list {
-				border: none;
-			}
-			.um-list a {
-				display: block;
-				line-height: .88rem;
-				height: .88rem;
-				position: relative;
-			}
-			.um-list .um-list-item-bodys {
-				align-self: center;
-				line-height: .88rem;
-				height: .88rem;
-				padding: 0;
-				font-size: 0.32rem;
-				color: #333;
-				padding-left: 0.56rem;
-				padding-right: .44rem;
-				border-bottom: 1px solid #EFEFEF;
-			}
-			.frp {
-				position: absolute;
-				right: .6rem;
-				top: 0;
-			}
-			.um-list a.um-list-item:before {
-				display: none;
-			}
-			i {
-				color: #DBDBDB;
-			}
-			.iconfont.icon-right {
-				font-size: 20px;
-				color: #039BE5;
-				display: none;
-			}
-			.iconfont.icon-right.active {
-				display: inline-block;
-			}
-			.iconfont.icon-enter.active {
-				display: none;
-			}
-		</style>
 
-	</head>
-	<body>
-		<div class="um-win" id="app"  v-cloak>
-			<div class="um-content">
-				<div class="um-list">
-					<a href="javascript:void(0);" onclick="openNewCreateCustom()">
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/mint.css">
+	<style>
+		.um-list {
+			border: none;
+		}
+
+		.um-list a {
+			display: block;
+			line-height: .88rem;
+			height: .88rem;
+			position: relative;
+		}
+
+		.um-list .um-list-item-bodys {
+			align-self: center;
+			line-height: .88rem;
+			height: .88rem;
+			padding: 0;
+			font-size: 0.32rem;
+			color: #333;
+			padding-left: 0.56rem;
+			padding-right: .44rem;
+			border-bottom: 1px solid #EFEFEF;
+		}
+
+		.frp {
+			position: absolute;
+			right: .6rem;
+			top: 0;
+		}
+
+		.um-list a.um-list-item:before {
+			display: none;
+		}
+
+		i {
+			color: #DBDBDB;
+		}
+
+		.iconfont.icon-right {
+			font-size: 20px;
+			color: #039BE5;
+			display: none;
+		}
+
+		.iconfont.icon-right.active {
+			display: inline-block;
+		}
+
+		.iconfont.icon-enter.active {
+			display: none;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div class="um-win" id="app" v-cloak>
+		<div class="um-content">
+			<div class="um-list">
+				<a href="javascript:void(0);" onclick="openNewCreateCustom()">
 					<div class="um-list-item-bodys">
 						客户信息
 						<span class="frp"> <i class="customer icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
-					<a href="javascript:void(0);"  @click="openBaseMessage(baseMessageData)">
+					</div>
+				</a>
+				<a href="javascript:void(0);" @click="openBaseMessage(baseMessageData)">
 					<div class="um-list-item-bodys">
 						项目基础信息
 						<span class="frp"> <i class="baseMessage icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
-					<a href="javascript:void(0);" onclick="checkVersion('addCar')">
+					</div>
+				</a>
+				<a href="javascript:void(0);" onclick="checkVersion('addCar')">
 					<div class="um-list-item-bodys">
 						添加车辆
 						<span class="frp"> <i class="addCar icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
-					<a href="javascript:void(0);"  id="version" onclick="checkVersion('quotedPriceDetail')">
+					</div>
+				</a>
+				<a href="javascript:void(0);" id="version" onclick="checkVersion('quotedPriceDetail')">
 					<div class="um-list-item-bodys">
 						报价方案
 						<span class="frp"> <i class="price icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
-					<a href="javascript:void(0);"  id="version" onclick="checkVersion('uploadImg')">
+					</div>
+				</a>
+				<a href="javascript:void(0);" id="version" onclick="checkVersion('uploadImg')">
 					<div class="um-list-item-bodys">
 						上传评审资料
 						<span class="frp"> <i class="uploadImg icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
-					<a href="javascript:void(0);"  id="version" onclick="addContact()">
+					</div>
+				</a>
+				<a href="javascript:void(0);" id="version" onclick="addContact()">
 					<div class="um-list-item-bodys">
 						紧急联系人
 						<span class="frp"> <i class="emergencyContract icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
-					<a href="javascript:void(0);"  id="version"	onclick="openSponsor()">
+					</div>
+				</a>
+				<a href="javascript:void(0);" id="version" onclick="openSponsor()">
 					<div class="um-list-item-bodys">
 						担保人
 						<span class="frp"> <i class="sponsor icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
-					</div> </a>
-					<!-- <a href="javascript:void(0);"  id="version" onclick="checkVersion('remark')">
+					</div>
+				</a>
+				<!-- <a href="javascript:void(0);"  id="version" onclick="checkVersion('remark')">
 					<div class="um-list-item-bodys">
 						备注留言
 						<span class="frp"> <i class="remark icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div> </a> -->
-				</div>
 			</div>
-			<!-- <div class="um-footer"id="footer">
+		</div>
+		<!-- <div class="um-footer"id="footer">
 			<button class="btn um-btn-primary" onclick="checkVersion('submitSure')">下一步</button>
 			</div> -->
-		</div>
-			<script src="../../js/common.js"></script>
-		<script>
-			summerready = function() {
-				var sourceId = summer.pageParam.source;
-				var customId=summer.pageParam.id;
-				var __projectid=summer.pageParam.projectId;
-				console.log(summer.pageParam.projectId);
-				if (sourceId=="programList") {
-					setProgect.getProjectId(__projectid);
-					setProgect.project_Id=__projectid;
-				}
-				setProgect.customId=customId;
-   		 	setProgect.getData(customId);
-				$("." + sourceId).addClass('active').siblings('i').addClass("active");
+	</div>
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/mint.js"></script>
+	<script src="../../js/font.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/common.js"></script>
+	<script>
+		summerready = function() {
+			var sourceId = summer.pageParam.source;
+			var customId = summer.pageParam.id;
+			var __projectid = summer.pageParam.projectId;
+			console.log(summer.pageParam.projectId);
+			if (sourceId == "programList") {
+				setProgect.getProjectId(__projectid);
+				setProgect.project_Id = __projectid;
 			}
-			var setProgect=new Vue({
-				el: '#app',
-				data(){
-					return{
-						message:{
-							username:'',
-							card:'',
-							sex:'',
-							address:'',
-							phone:'',
-							phoneAddress:''
-						},
-						baseMessageData:"",
-						customId:"",
-						project_Id:""
-					}
-				},
-				methods: {
-					handleClick: function() {
-						this.$toast('Hello world!')
+			setProgect.customId = customId;
+			setProgect.getData(customId);
+			$("." + sourceId).addClass('active').siblings('i').addClass("active");
+		}
+		var setProgect = new Vue({
+			el: '#app',
+			data() {
+				return {
+					message: {
+						username: '',
+						card: '',
+						sex: '',
+						address: '',
+						phone: '',
+						phoneAddress: ''
 					},
-					openPicker() {
-						this.$refs.picker.open();
-					},
-					getData(id){
-						let self=this;
-						ajaxRequest({
-							  type: 'post',
-							  url: 'appservice/foundproject/addProject',
-							  param: {
-									 "CLIENT_ID":id,
-							  }
-						 }, function (res) {
-							 summer.hideProgress();
-								  if(res.data.flag==1){
-									  self.baseMessageData=res.data.datas;
-										console.log(self.baseMessageData);
-								  }
-							 }, function (err) {
-								alert(err);
-								 console.log(err);
-									 summer.hideProgress();
-							});
-					},
-					getProjectId(__projectid){
-						let self=this;
-						ajaxRequest({
-							  type: 'post',
-							  url: 'appservice/foundproject/loadProjectPage',
-							  param: {
-									 "PROJECT_ID":__projectid,
-							  }
-						 }, function (res) {
-							 summer.hideProgress();
-								  if(res.data.flag==1){
-									  	self.customId=res.data.datas.ProjectObj.CLIENT_ID;
-								  }
-							 }, function (err) {
-								alert(err);
-								 console.log(err);
-									 summer.hideProgress();
-							});
-					},
-					openBaseMessage(data){
-							console.log(data);
-						let self=this;
-						let baseData=JSON.parse(JSON.stringify(self.baseMessageData));
-						let _customId=self.customId;
-						summer.openWin({
-							id : "baseMessage",
-							url : "html/fastReport/baseMessage.html",
-							create : false,
-							type : 'actionBar',
-							actionBar : {
-								title : '基本信息',
-								titleColor : "#ffffff",
-								backgroundColor : "#039BE5",
-								leftItem : {
-									image : "img/back.png",
-									method : "",
-									text : "返回",
-									textColor : "#ffffff"
-								},
-								rightItems : [{
-									type : "text",
-									text : "完成",
-									textColor : "#ffffff",
-									method : "save()"
-								}]
-							},
-							pageParam:{
-								baseData:baseData,
-								customId:_customId
-							}
-						})
-					}
+					baseMessageData: "",
+					customId: "",
+					project_Id: ""
 				}
-			})
-			function checkVersion(param) {
-				var id = param,
-				    url = '',
-				    title = '';
-				if (param == 'addCar') {
-					url = "html/touristsClient/addCar.html";
-					title = '添加车辆';
-				} else if (param == 'quotedPriceDetail') {
-					url = "html/priceCalculation/quotedPriceDetail.html";
-					title = "报价"
+			},
+			methods: {
+				handleClick: function() {
+					this.$toast('Hello world!')
+				},
+				openPicker() {
+					this.$refs.picker.open();
+				},
+				getData(id) {
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/foundproject/addProject',
+						param: {
+							"CLIENT_ID": id,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							self.baseMessageData = res.data.datas;
+							console.log(self.baseMessageData);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				},
+				getProjectId(__projectid) {
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/foundproject/loadProjectPage',
+						param: {
+							"PROJECT_ID": __projectid,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							self.customId = res.data.datas.ProjectObj.CLIENT_ID;
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				},
+				openBaseMessage(data) {
+					console.log(data);
+					let self = this;
+					let baseData = JSON.parse(JSON.stringify(self.baseMessageData));
+					let _customId = self.customId;
 					summer.openWin({
-						id : id,
-						url : url,
-						create : false,
-						type : 'actionBar',
-						actionBar : {
-							title : title,
-							titleColor : "#ffffff",
-							backgroundColor : "#039BE5",
-							leftItem : {
-								image : "img/back.png",
-								method : "", //返回按钮自定义事件
-								text : "返回",
-								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
+						id: "baseMessage",
+						url: "html/fastReport/baseMessage.html",
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: '基本信息',
+							titleColor: "#ffffff",
+							backgroundColor: "#039BE5",
+							leftItem: {
+								image: "img/back.png",
+								method: "",
+								text: "返回",
+								textColor: "#ffffff"
+							},
+							rightItems: [{
+								type: "text",
+								text: "完成",
+								textColor: "#ffffff",
+								method: "save()"
+							}]
+						},
+						pageParam: {
+							baseData: baseData,
+							customId: _customId
 						}
 					})
-					return
-				} else if (param == 'uploadImg') {
-					url = "html/fastReport/uploadImg.html";
-					title = '资料上传';
-				} else if (param == 'remark') {
-					url = "html/fastReport/remark.html";
-					title = '备注';
 				}
-				if(!setProgect.project_Id){
-					summer.toast({msg:'请先完善项目基础信息'});
-					return
-				}
+			}
+		})
+
+		function checkVersion(param) {
+			var id = param,
+				url = '',
+				title = '';
+			if (param == 'addCar') {
+				url = "html/touristsClient/addCar.html";
+				title = '添加车辆';
+			} else if (param == 'quotedPriceDetail') {
+				url = "html/priceCalculation/quotedPriceDetail.html";
+				title = "报价"
 				summer.openWin({
-					id : id,
-					url : url,
-					create : false,
-					type : 'actionBar',
-					pageParam:{id:setProgect.project_Id,CLIENT_ID:setProgect.customId},
-					actionBar : {
-						title : title,
-						titleColor : "#ffffff",
-						backgroundColor : "#039BE5",
-						leftItem : {
-							image : "img/back.png",
-							method : "",
-							text : "返回",
-							textColor : "#ffffff"
-						},
-						rightItems : [{
-							type : "text",
-							text : "保存",
-							textColor : "#ffffff",
-							method : "save()"
-						}]
-					}
-				})
-			}
-
-			function addContact() {
-				summer.openWin({
-					id : 'emergencyContract',
-					url : "html/fastReport/addEmergencyContact.html",
-					create : false,
-					type : 'actionBar',
-					pageParam:{id:setProgect.customId},
-					actionBar : {
-						title : '添加紧急联系人',
-						titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor : "#039BE5",
-						leftItem : {
-							image : "img/back.png",
-							method : "", //返回按钮自定义事件
-							text : "返回",
-							textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						},
-						rightItems : [{
-							type : "text",
-							text : "保存",
-							textColor : "#ffffff",
-							method : "save()"
-						}]
-					}
-				})
-			}
-
-			function openSponsor() {
-				let projectId=setProgect.project_Id;
-				let clientId=setProgect.customId
-				if (!projectId) {
-					summer.toast({msg:"请先完善项目基本信息"});
-					return;
-				} else {
-					summer.openWin({
-						id : 'newSponsor',
-						url : 'html/fastReport/newSponsor.html',
-						create : false,
-						type : 'actionBar',
-						actionBar : {
-							title : "添加担保人",
-							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor : "#039BE5",
-							leftItem : {
-								image : "img/back.png",
-								method : "", //返回按钮自定义事件
-								text : "返回",
-								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
-							rightItems : [{
-								type : "text",
-								text : "保存",
-								textColor : "#ffffff",
-								method : "complete()"
-							}]
-
-						},
-						pageParam:{
-							projectId:projectId
-							clientId:clientId
-						}
-					});
-				}
-
-			}
-
-			function nextStopInput() {
-			 	//完成接口
-				summer.execScript({
-					 winId: "programSelect",
-					 frameId:"fra_total",
-					 script: "getData('1','true')"
-				});
-				summer.closeToWin({id:"programSelect"});
-			}
-
-			function openNewCreateCustom() {
-				var  projectId=setProgect.project_Id;
-				var clintId=setProgect.customId;
-				summer.openWin({
-					id:'newCreateCustom',
-					url:'html/fastReport/newCreateCustom.html',
-					create:false,
-					type:'actionBar',
+					id: id,
+					url: url,
+					create: false,
+					type: 'actionBar',
 					actionBar: {
-						title: "客户信息",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						},
-						 rightItems:[{
-					          type:"text",
-					          text:"下一步",
-					          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					          method:"nextStopAction()" //在打开的window中自定义事件
-					      }]
+						title: title,
+						titleColor: "#ffffff",
+						backgroundColor: "#039BE5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				})
+				return
+			} else if (param == 'uploadImg') {
+				url = "html/fastReport/uploadImg.html";
+				title = '资料上传';
+			} else if (param == 'remark') {
+				url = "html/fastReport/remark.html";
+				title = '备注';
+			}
+			if (!setProgect.project_Id) {
+				summer.toast({
+					msg: '请先完善项目基础信息'
+				});
+				return
+			}
+			summer.openWin({
+				id: id,
+				url: url,
+				create: false,
+				type: 'actionBar',
+				pageParam: {
+					id: setProgect.project_Id,
+					CLIENT_ID: setProgect.customId
+				},
+				actionBar: {
+					title: title,
+					titleColor: "#ffffff",
+					backgroundColor: "#039BE5",
+					leftItem: {
+						image: "img/back.png",
+						method: "",
+						text: "返回",
+						textColor: "#ffffff"
 					},
-					pageParam:{
-						projectId:projectId,
-						clintId:clintId
+					rightItems: [{
+						type: "text",
+						text: "保存",
+						textColor: "#ffffff",
+						method: "save()"
+					}]
+				}
+			})
+		}
+
+		function addContact() {
+			summer.openWin({
+				id: 'emergencyContract',
+				url: "html/fastReport/addEmergencyContact.html",
+				create: false,
+				type: 'actionBar',
+				pageParam: {
+					id: setProgect.customId
+				},
+				actionBar: {
+					title: '添加紧急联系人',
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039BE5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems: [{
+						type: "text",
+						text: "保存",
+						textColor: "#ffffff",
+						method: "save()"
+					}]
+				}
+			})
+		}
+
+		function openSponsor() {
+			let projectId = setProgect.project_Id;
+			let clientId = setProgect.customId
+			if (!projectId) {
+				summer.toast({
+					msg: "请先完善项目基本信息"
+				});
+				return;
+			} else {
+				summer.openWin({
+					id: 'newSponsor',
+					url: 'html/fastReport/newSponsor.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "添加担保人",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039BE5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems: [{
+							type: "text",
+							text: "保存",
+							textColor: "#ffffff",
+							method: "complete()"
+						}]
+
+					},
+					pageParam: {
+						projectId: projectId,
+						clientId: clientId
 					}
 				});
 			}
 
-			function addRight(param,projectId) {
-				$("." + param).addClass('active').siblings('i').addClass("active");
-				if(projectId){
-					setProgect.project_Id=projectId;
+		}
+
+		function nextStopInput() {
+			//完成接口
+			summer.execScript({
+				winId: "programSelect",
+				frameId: "fra_total",
+				script: "getData('1','true')"
+			});
+			summer.closeToWin({
+				id: "programSelect"
+			});
+		}
+
+		function openNewCreateCustom() {
+			var projectId = setProgect.project_Id;
+			var clintId = setProgect.customId;
+			summer.openWin({
+				id: 'newCreateCustom',
+				url: 'html/fastReport/newCreateCustom.html',
+				create: false,
+				type: 'actionBar',
+				actionBar: {
+					title: "客户信息",
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039be5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems: [{
+						type: "text",
+						text: "下一步",
+						textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						method: "nextStopAction()" //在打开的window中自定义事件
+					}]
+				},
+				pageParam: {
+					projectId: projectId,
+					clintId: clintId
 				}
+			});
+		}
+
+		function addRight(param, projectId) {
+			$("." + param).addClass('active').siblings('i').addClass("active");
+			if (projectId) {
+				setProgect.project_Id = projectId;
 			}
-		</script>
-	</body>
+		}
+	</script>
+</body>
+
 </html>

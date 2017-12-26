@@ -7,15 +7,11 @@
 	<title></title>
 	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 	<link rel="stylesheet" href="../../css/font-icons.css">
-	<script src="../../js/summer.js"></script>
-	<script src="../../js/jquery.min.js"></script>
-	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
-	<script src="../../js/font.js"></script>
 </head>
 <style>
 	.um-content {
 		height: 0.88rem;
-		background-color: #fff
+		background-color: #fff;
 	}
 	.um-content .headertitle {
 		height: 0.88rem;
@@ -56,6 +52,10 @@
 			</ul>
 		</div>
 	</div>
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js"></script>
 	<script>
 		function newCustom() {
 			summer.openWin({
@@ -83,7 +83,7 @@
 			});
 		}
 		summerready = function() {
-			summer.showProgress();
+		//	summer.showProgress();
 			var top = $summer.offset($summer.byId('header')).h;
 			summer.openFrameGroup({
 				id: 'group1',
@@ -130,12 +130,12 @@
 		$(function(){
 			$(".headertitle").on("click", '.tabbar', function(e) {
 				$(this).addClass("active").siblings().removeClass("active");
-				var tar = $(this).attr("data-index")
+				var tar = $(this).attr("data-index");
 				summer.setFrameGroupAttr({
 					id: 'group1',
 					index: tar
-				});
-			});
+				})
+			})
 		});
 	</script>
 </body>
