@@ -249,11 +249,20 @@
 			} else if (param == 'quotedPriceDetail') {
 				url = "html/priceCalculation/quotedPriceDetail.html";
 				title = "报价"
+				if(!$(".addCar").hasClass('active')){
+					summer.toast({
+						msg: '请先添加车辆信息'
+					});
+					return
+				}
 				summer.openWin({
 					id: id,
 					url: url,
 					create: false,
 					type: 'actionBar',
+					pageParam: {
+						id: setProgect.project_Id
+					},
 					actionBar: {
 						title: title,
 						titleColor: "#ffffff",
@@ -263,7 +272,13 @@
 							method: "", //返回按钮自定义事件
 							text: "返回",
 							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						}
+						},
+						rightItems: [{
+							type: "text",
+							text: "保存",
+							textColor: "#ffffff",
+							method: "save()"
+						}]
 					}
 				})
 				return

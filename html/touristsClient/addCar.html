@@ -35,7 +35,7 @@
 						</td>
           </tr>
 					<tr @click="surePickerColor">
-            <td>车辆状况</td>
+            <td>车辆种类</td>
             <!-- <td>车辆颜色</td> -->
             <td>
 							<span v-if='color'>{{color}}</span><span  class="grayColor" v-else>请选择</span>
@@ -122,7 +122,10 @@
 									var data=res.data.datas.EquipObj[0];
 									_this.dealer=data.SUPPLIERS_NAME;
 									_this.company=data.COMPANY_NAME;
+
 									_this.color=data.CAR_TYPE;
+									_this.colorId=data.CAR_TYPE_name;
+
 									_this.carModels=data.PRODUCT_NAME+" "+data.CATENA_NAME+" "+data.SPEC_NAME;
 									_this.guidePrice=data.UNIT_PRICE;
 									_this.holdPrice=data.STAYBUY_PRICE;
@@ -251,6 +254,7 @@
 							this.pickerColorStatus=!this.pickerColorStatus;
 							if(param=='confirm'){
 								this.color=this.pickedColor.FLAG;
+								this.colorId=this.pickedColor.DATA_ID;
 							}
 						},
 						save(){
@@ -265,7 +269,7 @@
 							param.SUPPLIERS_ID=JSON.parse(summer.getStorage('pickerDealer')).SUPPLIERS_ID;
 							param.COMPANY_NAME=JSON.parse(summer.getStorage('pickerCompany')).COMPANY_NAME;
 							param.COMPANY_ID=JSON.parse(summer.getStorage('pickerCompany')).COMPANY_ID;
-							param.CAR_TYPE=this.color;
+							param.CAR_TYPE=this.colorId;
 							param.PRODUCT_NAME=JSON.parse(summer.getStorage('pickerModels1')).PRODUCT_NAME;
 							param.PRODUCT_ID=JSON.parse(summer.getStorage('pickerModels1')).PRODUCT_ID;
 							param.CATENA_NAME=JSON.parse(summer.getStorage('pickerModels2')).CATENA_NAME;
