@@ -249,7 +249,11 @@
 						_self.message.dateBirth = args.birth_date;
 						_self.message.address = args.address;
 						 CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name,callback:function(arg){
-					      	 _self.cardUrl=arg.target;
+							 if (!arg.target) {
+									_self.cardUrl=arg.watermarkFile;
+							 } else {
+								 _self.cardUrl=arg.target;
+							 }
 					      	 _self.cardShow = true;
 					      }});
 					}, function(args) {
