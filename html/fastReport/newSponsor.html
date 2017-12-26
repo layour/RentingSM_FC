@@ -157,7 +157,8 @@
 					      		address:'',
 					      		phone:'',
 					      		dateBirth:'',
-									projectId:''
+									projectId:'',
+									clientId:""
 					      	}
 						}
 		      },
@@ -273,7 +274,7 @@
 							  param: {
 								  "NATU_IDCARD_ADDRESS": self.message.address,
 							    "PROJECT_ID":  self.message.projectId,
-							    "CLIENT_ID": "165175739",
+							    "CLIENT_ID": self.message.clientId,
 							    "NATU_MOBILE": self.message.phone,
 							    "GUARANTOR_TYPE": "1",
 							    "UNIT_NAME": self.message.username,
@@ -305,10 +306,12 @@
 		    }
 		    summerready=function(){
 				 let ProjectId=summer.pageParam.projectId;
+				 let clientId=summer.pageParam.clientId;
 				 if(ProjectId){
 					 newSponsor.getData(ProjectId);
 				 }
 				 newSponsor.message.projectId=ProjectId;
+				 newSponsor.message.clientId=clientId;
 		    	  var params = ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
 					summer.getPermission(params,  function(args){
 					    //alert(args); //成功返回OK

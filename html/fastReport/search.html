@@ -20,7 +20,7 @@
         		<i class="iconfont icon-nav_search pl10 pr5"> </i>
         		<input class="search" id="search" type="search" v-model="searchDate" name="search" autofocus="autofocus" placeholder="请输入您要搜索内容"/>
         	</form>
-        	<span onclick="closeWin();">取消</span>
+        	<span onclick="closeWin()">取消</span>
         </div>
         <div   class="um-content">
 
@@ -51,6 +51,9 @@
 	        }
 	    });
 	}
+   function closeWin(){
+      summer.closeWin();
+   }
 	function bindEvents(){
 			$('.search').on('input propertychange focus',total);
 		}
