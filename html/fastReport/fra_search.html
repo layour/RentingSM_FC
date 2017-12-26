@@ -22,7 +22,7 @@
 				</div>
 			</div> -->
 			<div class="um-content">
-				<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
+			<!--	<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
 					<p class="pl10 title pr10">
 						{{item.CR_BECR_NAME}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span>
 					</p>
@@ -43,16 +43,7 @@
 						<span class="um-bf1   tc" @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
 						<span class="um-bf1  tc" @click="openOpacity(item.ID,item.LEASE_CODE)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
 					</p>
-					<!-- <p class=" select um-box"  v-else-if="item.status=='审核中'">
-						<span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<p class=" select um-box"  v-else-if="item.status=='已驳回'">
-						<span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
-						<span class="um-bf1   tc"  @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
-						<span class="um-bf1  tc"  @click="openOpacity(item.ID)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
-					</p>
-					<p v-else  ></p> -->
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<script src="../../js/summer.js" ></script>
@@ -115,7 +106,7 @@
 				},
 				mounted(){
 				},
-			methods:{	
+			methods:{
 					getData(end,searchValue){
 						ajaxRequest({
 					        type: 'post',
