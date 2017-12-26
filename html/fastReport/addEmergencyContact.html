@@ -188,6 +188,7 @@
 							})
 						},
 						selectAddr(){
+							summer.setStorage("selectFrom","emergencyContract");
 							summer.openWin({
 								id:'selectProvince',
 								url:'html/fastReport/selectProvince.html',
@@ -203,7 +204,7 @@
 						          text:"返回",
 						          textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						      }
-								}
+							}
 							})
 						},
 						save(){

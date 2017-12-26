@@ -102,6 +102,12 @@
 				</div>
 				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
 				<mt-field label="手机号" placeholder="请输入您的手机号码"  v-model="message.phone"></mt-field>
+				 <div  class="item">
+				<p class="pl10 pr10 tr" @click="selectAddr">
+					<span class="fl">省市县</span>
+					 <span class=""> <span  class="first">{{message.ADDR_PROVINCE}} {{message.ADDR_CITY}} {{message.ADDR_COUNTY}}</span> <i class="icon iconfont icon-enter"></i></span>
+				</p>
+			</div>
 				<mt-field label="通讯地址" placeholder="请输入您的通讯地址"   v-model="message.phoneAddress"></mt-field>
 				<div @click="surePickerMarrige" class="item">
 						<p class="pl10 pr10">
@@ -181,8 +187,12 @@
 						phone : '',
 						phoneAddress : '',
 						marrige : '',
-						dateBirth : ''
+						dateBirth : '',
+						ADDR_PROVINCE:'',
+						ADDR_CITY:'',
+						ADDR_COUNTY:'',
 					}
+
 				}
 			},
 			methods: {
@@ -205,6 +215,26 @@
 							 console.log(err);
 								 summer.hideProgress();
 						});
+				},
+				selectAddr(){
+					summer.setStorage("selectFrom","newCreateCustom");
+					summer.openWin({
+						id:'selectProvince',
+						url:'html/fastReport/selectProvince.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+						title:'选择省',
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039BE5",
+						leftItem:{
+							 image: "img/back.png",
+							 method:'',//返回按钮自定义事件
+							 text:"返回",
+							 textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+						}
+					})
 				},
 			    handleClick: function() {
 					this.$toast('Hello world!')
@@ -403,7 +433,11 @@
 			function nextStopAction() {
 				newCreateCustom.nextStopAction();
 			}
-
+			function getAddr(){
+				newCreateCustom.message.ADDR_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+				newCreateCustom.message.ADDR_CITY=JSON.parse(summer.getStorage('selectCity')).AREA_NAME
+				newCreateCustom.message.ADDR_COUNTY=JSON.parse(summer.getStorage('selectArea')).AREA_NAME
+			}
 			summerready = function() {
 					let projectId=summer.pageParam.projectId;
 					let clintId=summer.pageParam.clintId;

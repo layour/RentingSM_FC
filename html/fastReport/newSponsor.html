@@ -203,7 +203,13 @@
 					       _self.message.dateBirth=args.birth_date;
 					      _self.message.address=args.address;
 					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name,callback:function(arg){
-					      	 _self.cardUrl=arg.target;
+								    //alert(JSON.stringify(arg));
+								  	 _self.cardUrl=arg.target;
+								/* if ($summer.os=="android") {
+								 		 _self.cardUrl=arg.target;
+								 } else {
+									_self.cardUrl=arg.watermarkFile;
+								 }*/
 					      	 _self.cardShow = true;
 					      }});
 					},function(args){
