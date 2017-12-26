@@ -10,7 +10,6 @@
 	<script src="../../js/font.js"></script>
 	<link rel="stylesheet" href="css/fraCommon.css">
 </head>
-
 <body>
 	<div class="um-frame" id="fra_total" v-cloak>
 		<div class="um-header-light">
@@ -97,13 +96,12 @@
 					summer.toast({
 						msg: "没有更多了"
 					});
-					  summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+					summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
 					return;
 				}
 				getData(_endNum, false);
 			});
 		}
-
 		function getData(end, flag) {
 			fra_total.getData(end, flag);
 		}
@@ -139,9 +137,9 @@
 						if (Data.flag == 1) {
 							self.totalPage = Data.datas.last;
 							if (flag) {
-								if(Data.datas.list.length<1){
+								if (Data.datas.list.length < 1) {
 									createNull("content", "../../img/empty.png")
-								}else{
+								} else {
 									self.dataList = Data.datas.list;
 								}
 							} else {
@@ -182,39 +180,16 @@
 				openDetail(id) {
 					console.log(id);
 					summer.openWin({
-						id : 'setProject',
-						url : 'html/fastReport/setProject.html',
-						create : false,
-						type : 'actionBar',
-						pageParam:{
-							source:"programList",
-							projectId:id
-						},
-						actionBar : {
-							title : "快捷报单",
-							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor : "#039be5",
-							leftItem : {
-								image : "img/back.png",
-								method : "", //返回按钮自定义事件
-								text : "返回",
-								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
-							rightItems : [{
-								type : "text",
-								text : "完成",
-								textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								method : "nextStopInput()" //在打开的window中自定义事件
-							}]
-						}
-					});
-				/*	summer.openWin({
-						id: 'programDetail',
-						url: 'html/fastReport/programDetail.html',
+						id: 'setProject',
+						url: 'html/fastReport/setProject.html',
 						create: false,
 						type: 'actionBar',
+						pageParam: {
+							source: "programList",
+							projectId: id
+						},
 						actionBar: {
-							title: "项目查看",
+							title: "快捷报单",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							backgroundColor: "#039be5",
 							leftItem: {
@@ -222,12 +197,35 @@
 								method: "", //返回按钮自定义事件
 								text: "返回",
 								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
-						},
-						pageParam: {
-							id: id
+							},
+							rightItems: [{
+								type: "text",
+								text: "完成",
+								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method: "nextStopInput()" //在打开的window中自定义事件
+							}]
 						}
-					});*/
+					});
+					/*	summer.openWin({
+							id: 'programDetail',
+							url: 'html/fastReport/programDetail.html',
+							create: false,
+							type: 'actionBar',
+							actionBar: {
+								title: "项目查看",
+								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								backgroundColor: "#039be5",
+								leftItem: {
+									image: "img/back.png",
+									method: "", //返回按钮自定义事件
+									text: "返回",
+									textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								}
+							},
+							pageParam: {
+								id: id
+							}
+						});*/
 				},
 				upload(id) {
 					summer.openWin({

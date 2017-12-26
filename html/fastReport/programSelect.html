@@ -1,143 +1,143 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/font-icons.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script src="../../js/font.js" ></script>
-	</head>
-	<style>
-		 
-		.um-content{
-		   height: 0.88rem;
-		   background-color: #fff
-		}
-		.um-content .headertitle{
-		   height: 0.88rem;
-		   display: flex;
-		   display: -webkit-flex;
-		   justify-content: space-around;
-		}
-		.um-content .headertitle li{
-		   width: 100%;
-		   text-align: center;
-		   line-height: 0.88rem;
-		   font-size:0.32rem;
-		   color:#424242;
-		}
-		.um-content .headertitle li.active{
-		   border-bottom: 0.05rem solid #039BE5;
-		}
-	</style>
-	<body>
-		<div class="um-win" id="index">
-			<div class="um-content">
-				 <ul class=" headertitle  um-box" id="header">
-                    <li class="tabbar  active  tc" data-index="0"  >
-                            全部
-                    </li>
-                    <li class="tabbar   tc" data-index="1">
-                            待提交
-                    </li>
-                    <li class="tabbar  tc" data-index="2"  >
-                            审核中
-                    </li>
-                    <li class="tabbar  tc" data-index="3">
-                            已驳回
-                    </li>
-                    <li class="tabbar  tc" data-index="4">
-                            评审结束
-                    </li>
-                </div>
-			</div>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/font-icons.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js"></script>
+</head>
+<style>
+	.um-content {
+		height: 0.88rem;
+		background-color: #fff
+	}
+	.um-content .headertitle {
+		height: 0.88rem;
+		display: flex;
+		display: -webkit-flex;
+		justify-content: space-around;
+	}
+	.um-content .headertitle li {
+		width: 100%;
+		text-align: center;
+		line-height: 0.88rem;
+		font-size: 0.32rem;
+		color: #424242;
+	}
+	.um-content .headertitle li.active {
+		border-bottom: 0.05rem solid #039BE5;
+	}
+</style>
+<body>
+	<div class="um-win" id="index">
+		<div class="um-content">
+			<ul class=" headertitle  um-box" id="header">
+				<li class="tabbar  active  tc" data-index="0">
+					全部
+				</li>
+				<li class="tabbar   tc" data-index="1">
+					待提交
+				</li>
+				<li class="tabbar  tc" data-index="2">
+					审核中
+				</li>
+				<li class="tabbar  tc" data-index="3">
+					已驳回
+				</li>
+				<li class="tabbar  tc" data-index="4">
+					评审结束
+				</li>
+			</ul>
 		</div>
-		<script>
-			function newCustom(){
+	</div>
+	<script>
+		function newCustom() {
 			summer.openWin({
-					id:'newCustom',
-					url:'html/fastReport/newCustom.html',
-					create:false,
-					type:'actionBar',
-					actionBar: {
-						title: "选择客户",
-						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor: "#039be5",
-						leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						},
-						 rightItems:[{
-					          type:"text",
-					          text:"添加",
-					          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					          method:"newCreateCustom()" //在打开的window中自定义事件
-					      }]
-					}
-				});
+				id: 'newCustom',
+				url: 'html/fastReport/newCustom.html',
+				create: false,
+				type: 'actionBar',
+				actionBar: {
+					title: "选择客户",
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039be5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems: [{
+						type: "text",
+						text: "添加",
+						textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						method: "newCreateCustom()" //在打开的window中自定义事件
+					}]
+				}
+			});
 		}
-			summerready=function(){
+		summerready = function() {
 			summer.showProgress();
-				
-				  var top = $summer.offset($summer.byId('header')).h;
-				  summer.openFrameGroup({
-				    id: 'group1',
-				    background: '#ffffff',
-				    scrollEnabled: false,
-				    position: {
-				        top: top,
-				        bottom: 0,
-				        left: 0,
-				        right: 0
-				    },
-				    index: 0,
-				    frames: [{
-				        id: 'fra_total',
-				        url: 'html/fastReport/fra_total.html',
-				        bgColor: '#ffffff',
-				        hidden: false
-				    }, {
-				        id: 'fra_toSubmit',
-				        url: 'html/fastReport/fra_toSubmit.html',
-				        bgColor: '#ffffff',
-				        hidden: true
-				    }, {
-				        id: 'fra_examine',
-				        url: 'html/fastReport/fra_examine.html',
-				        bgColor: '#ffffff',
-				        hidden: true
-				    },{
-				        id: 'fra_hasReject',
-				        url: 'html/fastReport/fra_hasReject.html',
-				        bgColor: '#ffffff',
-				        hidden: true
-				    },{
-				        id: 'fra_hasOver',
-				        url: 'html/fastReport/fra_hasOver.html',
-				        bgColor: '#ffffff',
-				        hidden: true
-				    }],
-				}, function(ret, err) {
-				    var index = ret.index;
+			var top = $summer.offset($summer.byId('header')).h;
+			summer.openFrameGroup({
+				id: 'group1',
+				background: '#ffffff',
+				scrollEnabled: false,
+				position: {
+					top: top,
+					bottom: 0,
+					left: 0,
+					right: 0
+				},
+				index: 0,
+				frames: [{
+					id: 'fra_total',
+					url: 'html/fastReport/fra_total.html',
+					bgColor: '#ffffff',
+					hidden: false
+				}, {
+					id: 'fra_toSubmit',
+					url: 'html/fastReport/fra_toSubmit.html',
+					bgColor: '#ffffff',
+					hidden: true
+				}, {
+					id: 'fra_examine',
+					url: 'html/fastReport/fra_examine.html',
+					bgColor: '#ffffff',
+					hidden: true
+				}, {
+					id: 'fra_hasReject',
+					url: 'html/fastReport/fra_hasReject.html',
+					bgColor: '#ffffff',
+					hidden: true
+				}, {
+					id: 'fra_hasOver',
+					url: 'html/fastReport/fra_hasOver.html',
+					bgColor: '#ffffff',
+					hidden: true
+				}],
+			}, function(ret, err) {
+				var index = ret.index;
+			});
+
+		}
+		$(function(){
+			$(".headertitle").on("click", '.tabbar', function(e) {
+				$(this).addClass("active").siblings().removeClass("active");
+				var tar = $(this).attr("data-index")
+				summer.setFrameGroupAttr({
+					id: 'group1',
+					index: tar
 				});
-				
-			}
-			$(function() {
-				$(".headertitle").on("click", '.tabbar', function(e) {
-					$(this).addClass("active").siblings().removeClass("active");
-					var tar = $(this).attr("data-index")
-					summer.setFrameGroupAttr({    
-						id : 'group1',
-						index : tar
-					});
-				});
+			});
 		});
-		</script>
-	</body>
+	</script>
+</body>
+
 </html>
