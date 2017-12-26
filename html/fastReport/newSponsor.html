@@ -156,7 +156,8 @@
 					      		sex:'',
 					      		address:'',
 					      		phone:'',
-					      		dateBirth:''
+					      		dateBirth:'',
+									projectId:''
 					      	}
 						}
 		      },
@@ -242,13 +243,30 @@
 					 };
 					 var message= JSON.stringify(this.message);
 					 console.log(message);
-					/* summer.execScript({
-					    winId: "mySponsor",
-					    script: "addSponsor('nihao')"
-					});
-					 summer.closeWin();*/
-
-
+					 let self=this;
+					ajaxRequest({
+							  type: 'post',
+							  url: 'appservice/customer/saveGuarantee',
+							  param: {
+								  "NATU_IDCARD_ADDRESS": self.message.address,
+							    "PROJECT_ID":  self.message.projectId,
+							    "CLIENT_ID": "165175739",
+							    "NATU_MOBILE": self.message.phone,
+							    "GUARANTOR_TYPE": "1",
+							    "UNIT_NAME": self.message.username,
+							    "NATU_IDCARD": self.message.card,
+							  }
+						 }, function (res) {
+							 summer.hideProgress();
+								if(res.data.flag==1){
+									  self.dataList=res.data.datas;
+									  console.log(self.dataList);
+								  }
+							 }, function (err) {
+								alert(err);
+								 console.log(err);
+									 summer.hideProgress();
+							});
 					 summer.execScript({
 					    winId: "mySponsor",
 					    script: "addSponsor1('"+message+"')"
@@ -267,7 +285,8 @@
 		    }
 		    summerready=function(){
 				 let ProjectId=summer.pageParam.projectId;
-		    	var params = ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
+				 newSponsor.message.projectId=ProjectId;
+		    	  ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
 					summer.getPermission(params,  function(args){
 					    //alert(args); //成功返回OK
 					}, function(args){

@@ -114,6 +114,11 @@
 			summerready = function() {
 				var sourceId = summer.pageParam.source;
 				var customId=summer.pageParam.id;
+				var __projectid=summer.pageParam.projectId;
+				if (sourceId=="programList") {
+					setProgect.getProjectId(__projectid);
+					setProgect.project_Id=__projectid;
+				}
 				setProgect.customId=customId;
    		 	setProgect.getData(customId);
 				$("." + sourceId).addClass('active').siblings('i').addClass("active");
@@ -155,6 +160,25 @@
 								  if(res.data.flag==1){
 									  self.baseMessageData=res.data.datas;
 										console.log(self.baseMessageData);
+								  }
+							 }, function (err) {
+								alert(err);
+								 console.log(err);
+									 summer.hideProgress();
+							});
+					},
+					getProjectId(__projectid){
+						let self=this;
+						ajaxRequest({
+							  type: 'post',
+							  url: 'appservice/foundproject/loadProjectPage',
+							  param: {
+									 "PROJECT_ID":__projectid,
+							  }
+						 }, function (res) {
+							 summer.hideProgress();
+								  if(res.data.flag==1){
+									  	self.customId=res.data.datas.ProjectObj.CLIENT_ID;
 								  }
 							 }, function (err) {
 								alert(err);
