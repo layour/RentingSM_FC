@@ -311,33 +311,39 @@
 
 			function openSponsor() {
 				let projectId=setProgect.project_Id;
-				summer.openWin({
-					id : 'newSponsor',
-					url : 'html/fastReport/newSponsor.html',
-					create : false,
-					type : 'actionBar',
-					actionBar : {
-						title : "添加担保人",
-						titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						backgroundColor : "#039BE5",
-						leftItem : {
-							image : "img/back.png",
-							method : "", //返回按钮自定义事件
-							text : "返回",
-							textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						},
-						rightItems : [{
-							type : "text",
-							text : "添加",
-							textColor : "#ffffff",
-							method : "complete()"
-						}]
+				if (!projectId) {
+					summer.toast({msg:"请先完善项目基本信息"});
+					return;
+				} else {
+					summer.openWin({
+						id : 'newSponsor',
+						url : 'html/fastReport/newSponsor.html',
+						create : false,
+						type : 'actionBar',
+						actionBar : {
+							title : "添加担保人",
+							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor : "#039BE5",
+							leftItem : {
+								image : "img/back.png",
+								method : "", //返回按钮自定义事件
+								text : "返回",
+								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems : [{
+								type : "text",
+								text : "保存",
+								textColor : "#ffffff",
+								method : "complete()"
+							}]
 
-					},
-					pageParam:{
-						projectId:projectId
-					}
-				});
+						},
+						pageParam:{
+							projectId:projectId
+						}
+					});
+				}
+
 			}
 
 			function nextStopInput() {

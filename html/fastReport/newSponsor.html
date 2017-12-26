@@ -281,22 +281,19 @@
 							  }
 						 }, function (res) {
 							 summer.hideProgress();
+							 summer.toast({msg:"保存成功"});
 								if(res.data.flag==1){
-									  self.dataList=res.data.datas;
-									  console.log(self.dataList);
+										summer.execScript({
+										  winId: "setProject",
+										  script: "addRight('sponsor')"
+										 });
+										 summer.closeWin();
 								  }
 							 }, function (err) {
 								alert(err);
 								 console.log(err);
 									 summer.hideProgress();
 							});
-					 summer.execScript({
-					    winId: "mySponsor",
-					    script: "addSponsor1('"+message+"')"
-					});
-
-				summer.closeWin();
-
 				},
 		        openPicker:function() {
 			        this.$refs.picker.open();
