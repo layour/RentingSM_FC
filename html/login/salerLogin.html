@@ -55,6 +55,13 @@
 				return;
 			}*/
 			summer.showProgress();
+			if (!summer.netAvailable()) {
+				summer.hideProgress();
+				summer.toast({
+					msg : "网络异常，请检查网络"
+				});
+				return false;
+			}
 			window.cordovaHTTP.settings = {
 				timeout: 5000
 			}; //设置5秒超时
