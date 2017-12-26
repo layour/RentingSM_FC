@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../touristsClient/car.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="pickerModels-3">
+			<div class="um-content pickerModels">
+        <ul class="modelsList">
+          <li v-for="(it,index) in modelsList" @click="pickerModels(it)" :key="index">
+						{{it.AREA_NAME}}
+					</li>
+        </ul>
+      </div>
+    </div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+    <script>
+				summerready=function() {
+					pickerModelsVue4.id=summer.pageParam.id;
+					pickerModelsVue4.getData();
+				}
+        var pickerModelsVue4=new Vue({
+          el:'#pickerModels-3',
+          data(){
+            return {
+							id:'',
+              modelsList:[]
+            }
+          },
+					mounted(){
+					},
+					methods:{
+						getData(){
+							var _this=this;
+							console.log(this.id);
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/foundproject/queryProjectCity',
+								param:{
+									AREA_ID:_this.id
+								}
+							},function(res){
+								console.log("res",res);
+								_this.modelsList=res.data.datas
+							},function(err){
+								console.log("err",err);
+							})
+						},
+						pickerModels(it){
+							summer.setStorage('selectArea',JSON.stringify(it));
+							summer.execScript({
+							    winId: 'emergencyContract',
+							    script: 'getAddr()'
+							});
+							summer.closeToWin({
+								id:'emergencyContract'
+							})
+						}
+					}
+        })
+    </script>
+  </body>
+</html>
