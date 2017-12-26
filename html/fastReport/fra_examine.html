@@ -123,26 +123,30 @@
 					   param: {
 						   "pageNo": pageNum,
 						   "pageSize": 10,
-						   "STATUS": "2"
+						   "STATUS": ""
 					   }
 				   }, function(res) {
-					   //alert(res);
-					   summer.hideProgress();
-					   if (res.data.flag == 1) {
-						   self.totalPage = res.data.datas.last;
-						   if (flag) {
-								if(res.data.datas.list.length<1){
-									createNull("content", "../../img/empty.png")
-								}else{
-									self.dataList = res.data.datas.list;
-								}
-						   } else {
-							   //var initArray=JSON.parse(JSON.stringify(self.dataList));
-							   self.dataList = self.dataList.concat(res.data.datas.list);
-						   }
+						summer.hideProgress();
+ 					  var Data;
+ 					  if (Object.prototype.toString.call(res.data) === '[object String]') {
+ 						  Data = JSON.parse(res.data);
+ 					  } else {
+ 						  Data = res.data;
+ 					  }
+ 					  if (Data.flag == 1) {
+ 						  self.totalPage = Data.datas.last;
+ 						  if (flag) {
+ 							  if(Data.datas.list.length<1){
+ 								  createNull("content", "../../img/empty.png")
+ 							  }else{
+ 								  self.dataList = Data.datas.list;
+ 							  }
+ 						  } else {
+ 							  self.dataList = self.dataList.concat(Data.datas.list);
+ 						  }
 
-						   console.log(self.dataList);
-					   }
+ 						  console.log(self.dataList);
+ 					  }
 				   }, function(err) {
 					   //alert(err);
 					   console.log(err);
@@ -179,7 +183,6 @@
 						  url : 'html/fastReport/setProject.html',
 						  create : false,
 						  type : 'actionBar',
-						  isKeep:false,
 						  pageParam:{
 							  source:"programList",
 							  projectId:id

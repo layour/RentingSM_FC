@@ -180,6 +180,7 @@
 							AREAID=baseMessage.totalData.AreaList[i].AREA_ID;
 						}
 					});
+					summer.showProgress();
 					ajaxRequest({
 						  type: 'post',
 						  url: 'appservice/foundproject/saveProject',
@@ -192,6 +193,8 @@
 							  if(res.data.flag==1){
 								  console.log(res);
 								  let projectId=res.data.datas.PROJECT_ID;
+								  summer.hideProgress();
+								  summer.toast({msg:"保存成功"});
 									summer.execScript({
 									    winId: "setProject",
 									    script: "addRight('baseMessage','"+projectId+"')"
