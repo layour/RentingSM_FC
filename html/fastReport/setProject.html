@@ -133,10 +133,10 @@
 			var customId = summer.pageParam.id;
 			var __projectid = summer.pageParam.projectId;
 			console.log(summer.pageParam.projectId);
-			if (sourceId == "programList") {
+		/*	if (sourceId == "programList") {
 				setProgect.getProjectId(__projectid);
 				setProgect.project_Id = __projectid;
-			}
+			}*/
 			setProgect.customId = customId;
 			setProgect.getData(customId);
 			$("." + sourceId).addClass('active').siblings('i').addClass("active");
