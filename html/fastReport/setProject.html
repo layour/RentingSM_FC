@@ -132,6 +132,7 @@
 			var sourceId = summer.pageParam.source;
 			var customId = summer.pageParam.id;
 			var __projectid = summer.pageParam.projectId;
+			setProgect.project_Id = __projectid;
 			console.log(summer.pageParam.projectId);
 		/*	if (sourceId == "programList") {
 				setProgect.getProjectId(__projectid);
@@ -395,14 +396,54 @@
 		}
 		function nextStopInput() {
 			//完成接口
-			summer.execScript({
+			/*summer.execScript({
 				winId: "programSelect",
 				frameId: "fra_total",
 				script: "getData('1','true')"
 			});
 			summer.closeToWin({
 				id: "programSelect"
-			});
+			});*/
+			if(!$(".baseMessage").hasClass('active')){
+				summer.toast({msg:"请完善项目基本信息"});
+				return;
+			}else if(!$(".addCar").hasClass('active')){
+				summer.toast({msg:"请添加车辆"});
+				return;
+			}else if(!$(".price").hasClass('active')){
+				summer.toast({msg:"请完善报价方案"});
+				return;
+			}else if(!$(".uploadImg").hasClass('active')){
+				summer.toast({msg:"请上传评审资料"});
+				return;
+			}else if(!$(".emergencyContract").hasClass('active')){
+				summer.toast({msg:"请添加紧急联系人"});
+				return;
+			}else if(!$(".sponsor").hasClass('active')){
+				summer.toast({msg:"请添加担保人"});
+				return;
+			}
+			summer.openWin({
+					id : "submitSure",
+					url : "html/fastReport/submitSure.html",
+					create : false,
+					type : 'actionBar',
+					actionBar : {
+						title : "提交确认",
+						titleColor : "#ffffff",
+						backgroundColor : "#039BE5",
+						leftItem : {
+							image : "img/back.png",
+							method : "",
+							text : "返回",
+							textColor : "#ffffff"
+						}
+					},
+					pageParam:{
+						project_Id:	setProgect.project_Id
+					}
+
+				})
 		}
 
 		function openNewCreateCustom() {

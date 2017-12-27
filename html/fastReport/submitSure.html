@@ -1,122 +1,182 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<style>
-			.listContent{
-			 background:#fff;
-			}
-			.listContent p.title{
-				color:#333;
-				padding:0 .42rem;
-				font-size:18px;
-				font-weight: bold;
-			}
-			.listContent p{
-				line-height:0.9rem;
-				padding:0 .56rem;
-				border-bottom:1px solid #EFEFEF;
-				color:#333;
-				font-size:14px;
-			}
-			.title span{
-				border-left: 3px solid #039BE5;
-				padding-right: 3px;
-				display: inline-block;
-				height: .32rem;
-				position: relative;
-				top:.03rem;
-			}
-			.um-footer{
-				padding: 0 .6rem;
-			}
-			.um-footer button{
-				border: none;
-				outline: none;
-				color: #fff;
-				background:#039BE5;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="um-win" id="submit" v-cloak>
-			<div class="um-content pb30">
-				 <div class="list listContent">
-				 	<p class="title pl10"><span></span>基本信息</p>
-				 	<p class="">客户信息<span class="fr">{{data.userName}}</span></p>
-				 	<p class="">合同号<span class="fr">CN976666788KYR</span></p>
-				 	<p class="">项目类型<span class="fr">大客户业务</span></p>
-				 	<p class="">业务模式<span class="fr">形式售后回租</span></p>
-				 	<p class="">所属机构<span class="fr">汽车金融事业部</span></p>
-				 	<p class="">客户经理<span class="fr">张自忠</span></p>
-				 </div>
-				 <div class="list listContent">
-				 	<p class="title pl10"><span></span>车辆信息</p>
-				 	<p class="">车型<span class="fr">2016款  昂科威 28T 精英型</span></p>
-				 	<p class="">颜色<span class="fr">珍珠白</span></p>
-				 	<p class="">成交价<span class="fr">200000</span></p>
-				 </div>
-				 <div class="list listContent">
-				 	<p class="title pl10"><span></span>报价方案</p>
-				 	<p class="">方案名称<span class="fr">2016款  昂科威 28T 精英型</span></p>
-				 	<p class="">租赁物总价值<span class="fr">珍珠白</span></p>
-				 	<p class="">合同额<span class="fr">200000</span></p>
-				 	<p>首付比列<span class="fr">200000</span></p>
-				 	<p>首期租金<span class="fr">200000</span></p>
-				 	<p>保证金<span class="fr">200000</span></p>
-				 	<p>咨询费比例<span class="fr">200000</span></p>
-				 	<p>咨询费<span class="fr">200000</span></p>
-				 	<p>年利率<span class="fr">200000</span></p>
-				 	<p>租赁期数<span class="fr">200000</span></p>
-				 	<p>支付方式<span class="fr">200000</span></p>
-				 </div>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<style>
+		.listContent {
+			background: #fff;
+		}
+
+		.listContent p.title {
+			color: #333;
+			padding: 0 .42rem;
+			font-size: 18px;
+			font-weight: bold;
+		}
+
+		.listContent p {
+			line-height: 0.9rem;
+			padding: 0 .56rem;
+			border-bottom: 1px solid #EFEFEF;
+			color: #333;
+			font-size: 14px;
+		}
+
+		.title span {
+			border-left: 3px solid #039BE5;
+			padding-right: 3px;
+			display: inline-block;
+			height: .32rem;
+			position: relative;
+			top: .03rem;
+		}
+
+		.um-footer {
+			padding: 0 .6rem;
+		}
+
+		.um-footer button {
+			border: none;
+			outline: none;
+			color: #fff;
+			background: #039BE5;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="um-win" id="submit" v-cloak>
+		<div class="um-content pb30">
+			<div class="list listContent">
+				<p class="title pl10"><span></span>基本信息</p>
+				<p class="">客户信息<span class="fr">{{dataList?dataList.ProjectObj.CLIENT_NAME:""}}</span></p>
+				<p class="">合同号<span class="fr">{{dataList?dataList.ProjectObj.LEASE_CODE:""}}</span></p>
+				<!--<p class="">项目类型<span class="fr">大客户业务</span></p>-->
+				<p class="">业务模式<span class="fr">{{dataList?dataList.ProjectObj.PLATFORM:""}}</span></p>
+				<!--<p class="">所属机构<span class="fr">汽车金融事业部</span></p>-->
+				<p class="">客户经理<span class="fr">{{dataList?dataList.ProjectObj.EMPLOYEE_NAME:""}}</span></p>
 			</div>
-			<div class="um-footer">
-				 <button class="btn"  @click="opensubmitFinanl">提交评审</button>
+			<div class="list listContent" v-for="(item,index) in dataList.EquipObj">
+				<p class="title pl10"><span></span>车辆信息{{(dataList.EquipObj.length>1)?index+1:""}}</p>
+				<p class="">经销商<span class="fr">{{item.SUPPLIERS_NAME}}</span></p>
+				<p class="">厂商<span class="fr">{{item.COMPANY_NAME}}</span></p>
+				<p class="">品牌<span class="fr">{{item.PRODUCT_NAME}}</span></p>
+				<p class="">数量<span class="fr">{{item.AMOUNT}}</span></p>
+				<p class="">车型<span class="fr">{{item.CATENA_NAME}}</span></p>
+				<!--<p class="pl10 pr10">颜色<span class="fr">{{dataList.prjBscInfo.prjEqiDtlCar.carCl}}</span></p>-->
+				<p class="pl10 pr10">成交价<span class="fr">{{item.TOTAL_PRICE}}</span></p>
+			</div>
+			<div class="list listContent">
+				<p class="title pl10"><span></span>报价方案</p>
+				<p>租赁物总价值<span class="fr">{{dataSchemeList.TOTAL_MONTH_PRICE}} </span></p>
+				<p>合同额<span class="fr">{{dataSchemeList.LEASE_TOPRIC}} </span></p>
+				<p>首付比例<span class="fr">{{dataSchemeList.START_PERCENT}}%</span></p>
+				<p>首期租金<span class="fr">{{dataSchemeList.FIRST_MONEY}}</span></p>
+				<p>保证金<span class="fr">{{dataSchemeList.DEPOSIT_MONEY}}</span></p>
+				<!--<p class="pl10 pr10">咨询费比例<span class="fr">{{dataSchemeList.TOTAL_MONTH_PRICE}}</span></p>-->
+				<p>咨询费<span class="fr">{{dataSchemeList.POUNDAGE_PRICE}}</span></p>
+				<p>年利率<span class="fr">{{dataSchemeList.YEAR_INTEREST}}%</span></p>
+				<p>租赁期数<span class="fr">{{dataSchemeList.LEASE_TERM}}月</span></p>
+				<p>支付方式<span class="fr">{{dataSchemeList.PAY_WAY}}</span></p>
 			</div>
 		</div>
-		<script>
-			$(function(){
-				new Vue({
-					el:'#submit',
-					data(){
-						return {
-							data:{
-								userName:"徐毅"
+		<div class="um-footer">
+			<button class="btn" @click="opensubmitFinanl">提交评审</button>
+		</div>
+	</div>
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/font.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script>
+		var submitSure = new Vue({
+			el: '#submit',
+			data() {
+				return {
+					data: {
+						userName: "徐毅",
+					},
+					dataList:"",
+					dataSchemeList: "",
+					project_id: ""
+				}
+			},
+			methods: {
+				getData(id) {
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/foundproject/loadProjectPage',
+						param: {
+							"PROJECT_ID": id,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							self.dataList = res.data.datas;
+							self.getSchemeData(self.project_id);
+							console.log(self.dataList);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+
+				},
+				getSchemeData(id) {
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/foundproject/queryProjectScheme',
+						param: {
+							"PROJECT_ID": id,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							self.dataSchemeList = res.data.datas.scheme;
+							console.log(self.dataSchemeList);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				},
+				opensubmitFinanl() {
+					summer.openWin({
+						id: 'finanlSubmit',
+						url: 'html/fastReport/finanlSubmit.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "提交评审",
+							titleColor: "#ffffff",
+							backgroundColor: "#039BE5",
+							leftItem: {
+								image: "img/back.png",
+								method: '',
+								text: "返回",
+								textColor: "#ffffff"
 							}
 						}
-					},
-					methods:{
-						opensubmitFinanl(){
-							summer.openWin({
-								id:'finanlSubmit',
-								url:'html/fastReport/finanlSubmit.html',
-								create:false,
-								type:'actionBar',
-								actionBar: {
-									title: "提交评审",
-									titleColor: "#ffffff",
-									backgroundColor: "#039BE5",
-									leftItem:{
-											image: "img/back.png",
-											method:'',
-											text:"返回",
-											textColor:"#ffffff"
-									}
-								}
-							});
-						}
-					}
-				})
-			})
-		</script>
-	</body>
+					});
+				}
+			}
+		});
+		summerready = function() {
+			var project_Id = summer.pageParam.project_Id;
+			submitSure.project_id = project_Id;
+			submitSure.getData(project_Id);
+		};
+	</script>
+</body>
+
 </html>
