@@ -299,16 +299,15 @@
 						},
 						save(){
 							//http
-							var that=this;
+							var that=this,imgArr=[];
+							if(that.list.applyImg){imgArr.push({fileURL:that.list.applyImg,type:"image/jpeg",name:"img1"})}
+							if(that.list.marryImg){imgArr.push({fileURL:that.list.marryImg,type:"image/jpeg",name:"img2"})}
+							if(that.list.residenceImg){imgArr.push({fileURL:that.list.residenceImg,type:"image/jpeg",name:"img3"})}
+							if(that.list.assetsImg){imgArr.push({fileURL:that.list.assetsImg,type:"image/jpeg",name:"img4"})}
+							if(that.list.InterviewImg){imgArr.push({fileURL:that.list.InterviewImg,type:"image/jpeg",name:"img5"})}
+							if(that.list.otherImg){imgArr.push({fileURL:that.list.otherImg,type:"image/jpeg",name:"img6"})}
 							summer.multiUpload({
-						    fileArray : [
-									{fileURL:that.list.applyImg,type:"image/jpeg",name:"img1"},
-									{fileURL:that.list.marryImg,type:"image/jpeg",name:"img2"},
-									{fileURL:that.list.residenceImg,type:"image/jpeg",name:"img3"},
-									{fileURL:that.list.assetsImg,type:"image/jpeg",name:"img4"},
-									{fileURL:that.list.InterviewImg,type:"image/jpeg",name:"img5"},
-									{fileURL:that.list.otherImg,type:"image/jpeg",name:"img6"}
-								],
+						    fileArray : imgArr,
 						    params : {
 						        PROJECT_ID: that.id  //参数
 						    },
