@@ -250,7 +250,7 @@
 							this.popupVisible=false
 							var that=this
 							summer.openPhotoAlbum({
-									compressionRatio:0.5,
+									// compressionRatio:0.5,
 									type : "multiple",
 							    callback : function (args){
 							     console.log(JSON.stringify(args))
@@ -277,6 +277,7 @@
 										}
 
 										var length=args.imgPath.length,uploadImgArr=[];
+										summer.showProgress();
 										for(var i=0;i<length;i++){
 											compress(args.imgPath[i])
 										}
@@ -342,6 +343,7 @@
 				}
 				function multiUploadCallback(ret){
 						alert("成功"+ JSON.stringify(ret));
+						summer.hideProgress();
 						// summer.execScript({
 						// 		winId: "setProject",
 						// 		script: "addRight('uploadImg')"
