@@ -266,9 +266,8 @@
 								param:{PROJECT_ID:_this.PROJECT_ID}
 							},function(res){
 								console.log("res",res);
-								var data;
-								if(res.data.datas){
-									data=res.data.datas.scheme
+								var data=res.data.datas.scheme
+								if(data){
 									_this.SCHEME_ID=data.ID
 									_this.quoted.allPrice=data.LEASE_TOPRIC
 									_this.quoted.term=data.LEASE_TERM+"个月"
@@ -285,6 +284,8 @@
 									_this.resultData.firstPrice=data.FIRST_MONEY
 									_this.resultData.termPrice=data.MONTH_RENT
 									_this.resultData.term=data.LEASE_TERM
+								}else{
+									_this.quoted.allPrice=res.data.datas.pri.LEASE_TOPRIC
 								}
 							},function(err){
 								console.log("err",err);
