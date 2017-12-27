@@ -132,6 +132,7 @@
 			var sourceId = summer.pageParam.source;
 			var customId = summer.pageParam.id;
 			var __projectid = summer.pageParam.projectId;
+			setProgect.project_Id = __projectid;
 			console.log(summer.pageParam.projectId);
 		/*	if (sourceId == "programList") {
 				setProgect.getProjectId(__projectid);
@@ -395,14 +396,35 @@
 		}
 		function nextStopInput() {
 			//完成接口
-			summer.execScript({
+			/*summer.execScript({
 				winId: "programSelect",
 				frameId: "fra_total",
 				script: "getData('1','true')"
 			});
 			summer.closeToWin({
 				id: "programSelect"
-			});
+			});*/
+			summer.openWin({
+					id : "submitSure",
+					url : "html/fastReport/submitSure.html",
+					create : false,
+					type : 'actionBar',
+					actionBar : {
+						title : "提交确认",
+						titleColor : "#ffffff",
+						backgroundColor : "#039BE5",
+						leftItem : {
+							image : "img/back.png",
+							method : "",
+							text : "返回",
+							textColor : "#ffffff"
+						}
+					},
+					pageParam:{
+						project_Id:	setProgect.project_Id
+					}
+
+				})
 		}
 
 		function openNewCreateCustom() {
