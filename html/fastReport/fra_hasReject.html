@@ -178,18 +178,13 @@
 					})
 				},
 				openDetail(id) {
-					console.log(id);
 					summer.openWin({
-						id: 'setProject',
-						url: 'html/fastReport/setProject.html',
+						id: 'programDetail',
+						url: 'html/fastReport/programDetail.html',
 						create: false,
 						type: 'actionBar',
-						pageParam: {
-							source: "programList",
-							projectId: id
-						},
 						actionBar: {
-							title: "快捷报单",
+							title: "项目查看",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							backgroundColor: "#039be5",
 							leftItem: {
@@ -197,15 +192,12 @@
 								method: "", //返回按钮自定义事件
 								text: "返回",
 								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
-							rightItems: [{
-								type: "text",
-								text: "完成",
-								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								method: "nextStopInput()" //在打开的window中自定义事件
-							}]
+							}
+						},
+						pageParam: {
+							id: id
 						}
-					})
+					});
 				},
 				upload(id) {
 					summer.openWin({
