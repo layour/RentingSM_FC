@@ -75,33 +75,33 @@
 			<div class="um-content uploadImg">
 				<ul>
 					<li @click="openPopup('apply')">
-						<div><img v-if="list.applyImg" :src="list.applyImg" alt="">
+						<div><img v-if="applyImg" :src="applyImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>申请人身份证</p>
 					</li>
 					<li @click="openPopup('marry')">
-						<div><img v-if="list.marryImg"  :src="list.marryImg" alt="">
+						<div><img v-if="marryImg"  :src="marryImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>机动车驾驶证</p>
 					</li>
 					<li @click="openPopup('residence')">
-						<div><img v-if="list.residenceImg"  :src="list.residenceImg" alt="">
+						<div><img v-if="residenceImg"  :src="residenceImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>车辆合格证</p>
 
 					</li>
 					<li @click="openPopup('assets')">
-						<div><img v-if="list.assetsImg"  :src="list.assetsImg" alt="">
+						<div><img v-if="assetsImg"  :src="assetsImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>客户面谈记录表</p>
 					</li>
 					<li @click="openPopup('Interview')">
-						<div><img v-if="list.InterviewImg"  :src="list.InterviewImg" alt="">
+						<div><img v-if="InterviewImg"  :src="InterviewImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>资信调查报告</p>
 					</li>
 					<li @click="openPopup('other')">
-						<div><img v-if="list.otherImg"  :src="list.otherImg" alt="">
+						<div><img v-if="otherImg"  :src="otherImg" alt="">
 						<i v-else class="icon iconfont icon-add"></i></div>
 						<p>现场照片</p>
 					</li>
@@ -116,6 +116,7 @@
     <script>
 				summerready = function() {
 					uploadVue.id=summer.pageParam.id;
+					uploadVue.getData();
 					var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
 					summer.getPermission(params, function(args) {
 						//alert(args); //成功返回OK
@@ -127,23 +128,42 @@
           el:'#uploadImg',
           data(){
             return {
-							list:{
-								applyImg:'',
-								marryImg:'',
-								residenceImg:'',
-								assetsImg:'',
-								InterviewImg:'',
-								otherImg:'',
-							},
+							applyImg:'',
+							marryImg:'',
+							residenceImg:'',
+							assetsImg:'',
+							InterviewImg:'',
+							otherImg:'',
+
 							popupVisible:false,
 							status:'',
-							id:''
+							id:'',
+							name:'',
+							type:'立项',
+							customerType:'承租人自然人',
+							fileName:''
             }
           },
 					mounted(){
 
 					},
 					methods:{
+						getData(){
+							var _this=this;
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/business/getFileByProject',
+								param:{
+									PROJECT_ID: _this.id
+								}
+							},function(res){
+								console.log(JSON.stringify(res));
+
+
+							},function(err){
+								alert(err);
+							})
+						},
 						openPopup(param){
 							this.popupVisible=true
 							this.status=param
@@ -166,58 +186,58 @@
 											targetImage:args.compressImgPath,
 											name:'申请人身份证',
 											callback:function(arg){
-													that.list.applyImg=arg.target;
+													that.applyImg=arg.target;
 													// $summer.alert(arg.target)
 											 }
 										});
 									}else if(that.status=='marry'){
-										// that.list.marryImg=args.compressImgPath
+										// that.marryImg=args.compressImgPath
 										CommonUtil.watermark({
 											srcImage:args.compressImgPath,
 											targetImage:args.compressImgPath,
 											name:'机动车驾驶证',
 											callback:function(arg){
-													that.list.marryImg=arg.target;
+													that.marryImg=arg.target;
 											 }
 										});
 									}else if(that.status=='residence'){
-										// that.list.residenceImg=args.compressImgPath
+										// that.residenceImg=args.compressImgPath
 										CommonUtil.watermark({
 											srcImage:args.compressImgPath,
 											targetImage:args.compressImgPath,
 											name:'车辆合格证',
 											callback:function(arg){
-													that.list.residenceImg=arg.target;
+													that.residenceImg=arg.target;
 											 }
 										});
 									}else if(that.status=='assets'){
-										// that.list.assetsImg=args.compressImgPath
+										// that.assetsImg=args.compressImgPath
 										CommonUtil.watermark({
 											srcImage:args.compressImgPath,
 											targetImage:args.compressImgPath,
 											name:'客户面谈记录表',
 											callback:function(arg){
-													that.list.assetsImg=arg.target;
+													that.assetsImg=arg.target;
 											 }
 										});
 									}else if(that.status=='Interview'){
-										// that.list.InterviewImg=args.compressImgPath
+										// that.InterviewImg=args.compressImgPath
 										CommonUtil.watermark({
 											srcImage:args.compressImgPath,
 											targetImage:args.compressImgPath,
 											name:'资信调查报告',
 											callback:function(arg){
-													that.list.InterviewImg=arg.target;
+													that.InterviewImg=arg.target;
 											 }
 										});
 									}else if(that.status=='other'){
-										// that.list.otherImg=args.compressImgPath
+										// that.otherImg=args.compressImgPath
 										CommonUtil.watermark({
 											srcImage:args.compressImgPath,
 											targetImage:args.compressImgPath,
 											name:'现场照片',
 											callback:function(arg){
-													that.list.otherImg=arg.target;
+													that.otherImg=arg.target;
 											 }
 										});
 									}
@@ -231,81 +251,78 @@
 							var that=this
 							summer.openPhotoAlbum({
 									compressionRatio:0.5,
+									type : "multiple",
 							    callback : function (args){
-							      // $summer.alert(args);
+							     console.log(JSON.stringify(args))
 							      // alert(args.imgPath);
 										if(that.status=='apply'){
-											CommonUtil.watermark({
-												srcImage:args.compressImgPath,
-												targetImage:args.compressImgPath,
-												name:'申请人身份证',
-												callback:function(arg){
-													// $summer.alert(arg)
-														that.list.applyImg=arg.target;
-												 }
-											});
+											that.customerType="承租人自然人"
+											that.name="申请人身份证"
 										}else if(that.status=='marry'){
-											CommonUtil.watermark({
-												srcImage:args.compressImgPath,
-												targetImage:args.compressImgPath,
-												name:'机动车驾驶证',
-												callback:function(arg){
-														that.list.marryImg=arg.target;
-												 }
-											});
+											that.customerType="承租人自然人"
+											that.name="机动车驾驶证"
 										}else if(that.status=='residence'){
-											// that.list.residenceImg=args.compressImgPath
-											CommonUtil.watermark({
-												srcImage:args.compressImgPath,
-												targetImage:args.compressImgPath,
-												name:'车辆合格证',
-												callback:function(arg){
-														that.list.residenceImg=arg.target;
-												 }
-											});
+											that.customerType="承租人自然人"
+											that.name="融资租赁业务客户客户面谈记录表"
 										}else if(that.status=='assets'){
-											// that.list.assetsImg=args.compressImgPath
-											CommonUtil.watermark({
-												srcImage:args.compressImgPath,
-												targetImage:args.compressImgPath,
-												name:'客户面谈记录表',
-												callback:function(arg){
-														that.list.assetsImg=arg.target;
-												 }
-											});
+											that.customerType="承租人自然人"
+											that.name="现场照片"
 										}else if(that.status=='Interview'){
-											// that.list.InterviewImg=args.compressImgPath
-											CommonUtil.watermark({
-												srcImage:args.compressImgPath,
-												targetImage:args.compressImgPath,
-												name:'资信调查报告',
-												callback:function(arg){
-														that.list.InterviewImg=arg.target;
-												 }
-											});
+											that.customerType="担保人自然人"
+											that.name="保证人身份证"
 										}else if(that.status=='other'){
-											// that.list.otherImg=args.compressImgPath
+											that.customerType="担保人自然人"
+											that.name="调查人员及保证人合影照片"
+
+										}
+
+										var length=args.imgPath.length,uploadImgArr=[];
+										for(var i=0;i<length;i++){
+											compress(args.imgPath[i])
+										}
+										function compress(i){
 											CommonUtil.watermark({
-												srcImage:args.compressImgPath,
-												targetImage:args.compressImgPath,
-												name:'现场照片',
-												callback:function(arg){
-														that.list.otherImg=arg.target;
+												srcImage:args.imgPath[i],
+												targetImage:args.imgPath[i],
+												name:that.name,
+												callback:function(res){
+													console.log("压缩后的"+res)
+														uploadImgArr.push({fileURL:res.target,type:"image/jpeg",name:that.name+i});
+														if(i=0){that.fileName+=that.name+i}else{that.fileName+="#"+that.name+i}
+														if(i<length-1){
+															compress(arg.imgPath[i+1])
+														}else{
+															var dataParams={
+																	PROJECT_ID: that.id,
+																	TPM_BUSINESS_PLATE:that.type,
+																	TPM_CUSTOMER_TYPE:that.customerType,
+																	TPM_TYPE:that.name,
+																	FILE_NAME:that.fileName
+															};
+															console.log("上传的参数"+dataParams,"文件数组"+uploadImgArr);
+															summer.multiUpload({
+																fileArray : uploadImgArr,
+																params : dataParams,
+																// headers :{"Content-Type" : "application/json"},
+																SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
+																timeout : 10
+															}, "multiUploadCallback()", "multiUploadErrCallback()");
+														}
 												 }
 											});
 										}
-							    }
+									}
 							});
 						},
 						save(){
 							//http
 							var that=this,imgArr=[];
-							if(that.list.applyImg){imgArr.push({fileURL:that.list.applyImg,type:"image/jpeg",name:"img1"})}
-							if(that.list.marryImg){imgArr.push({fileURL:that.list.marryImg,type:"image/jpeg",name:"img2"})}
-							if(that.list.residenceImg){imgArr.push({fileURL:that.list.residenceImg,type:"image/jpeg",name:"img3"})}
-							if(that.list.assetsImg){imgArr.push({fileURL:that.list.assetsImg,type:"image/jpeg",name:"img4"})}
-							if(that.list.InterviewImg){imgArr.push({fileURL:that.list.InterviewImg,type:"image/jpeg",name:"img5"})}
-							if(that.list.otherImg){imgArr.push({fileURL:that.list.otherImg,type:"image/jpeg",name:"img6"})}
+							if(that.applyImg){imgArr.push({fileURL:that.applyImg,type:"image/jpeg",name:"img1"})}
+							if(that.marryImg){imgArr.push({fileURL:that.marryImg,type:"image/jpeg",name:"img2"})}
+							if(that.residenceImg){imgArr.push({fileURL:that.residenceImg,type:"image/jpeg",name:"img3"})}
+							if(that.assetsImg){imgArr.push({fileURL:that.assetsImg,type:"image/jpeg",name:"img4"})}
+							if(that.InterviewImg){imgArr.push({fileURL:that.InterviewImg,type:"image/jpeg",name:"img5"})}
+							if(that.otherImg){imgArr.push({fileURL:that.otherImg,type:"image/jpeg",name:"img6"})}
 							summer.multiUpload({
 						    fileArray : imgArr,
 						    params : {
@@ -325,11 +342,11 @@
 				}
 				function multiUploadCallback(ret){
 						alert("成功"+ JSON.stringify(ret));
-						summer.execScript({
-								winId: "setProject",
-								script: "addRight('uploadImg')"
-						});
-						summer.closeWin()
+						// summer.execScript({
+						// 		winId: "setProject",
+						// 		script: "addRight('uploadImg')"
+						// });
+						// summer.closeWin()
 				}
 				function multiUploadErrCallback(err){
 						alert("失败"+ JSON.stringify(err));
