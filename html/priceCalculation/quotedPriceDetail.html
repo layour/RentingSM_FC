@@ -49,7 +49,7 @@
 							<input type="text" v-model="quoted.rate" @input="rateCheck" name='rate' placeholder="请输入年利率">&nbsp;%
 						</span>
 					</li>
-					<li class='spec' @click="surePicker('payType')">
+					<li class='spec' @click="surePickerpayType('payType')">
 						<b>支付方式</b>
 						<span>
 							<b v-if="quoted.payType">{{quoted.payType}}</b>
@@ -107,6 +107,10 @@
 				<mt-popup v-model="pickerStatus" v-if="pickerStatus" position="bottom" class="pickerPrice">
 					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
 					<p><span class="fl" @click="surePicker">取消</span><span class="fr" @click="surePicker('','confirm')">确定</span></p>
+				</mt-popup>
+				<mt-popup v-model="pickerPayTypeStatus" class="pickerPrice" v-else-if="pickerPayTypeStatus" position='bottom' >
+					<mt-picker value-key="FLAG" :slots="payTypeSlots" @change="onPayTypeChange"></mt-picker>
+					<p><span class="fl" @click="surePickerpayType">取消</span><span class="fr" @click="surePickerpayType('confirm')">确定</span></p>
 				</mt-popup>
 				<mt-popup v-model="firstPayStatu" class="firstPayCont" v-else-if="firstPayStatu" position="bottom">
 					<ul v-if="moneyToRate">
@@ -190,10 +194,18 @@
             return {
 							termList:['3个月','6个月','12个月','18个月','24个月','48个月'],
 							// termType:['月'],
-							payTypeList:['期末等额本息','期末平息'],
+							payTypeSlots:[{
+								flex: 1,
+								values: [],
+								defaultIndex:0,
+								className: 'slot1',
+								textAlign: 'center'
+							}],
+							payTypeList:[],
 							bailList:["融资额","首期款"],
 							termTypeList:['期满处','里方式'],
 							pickerStatus:false,
+							pickerPayTypeStatus:false,
 							bailStatue:false,
 							firstPayStatu:false,
 							moneyToRate:true,
@@ -202,7 +214,7 @@
 							pickerVal:'',
 							PROJECT_ID:'',
 							quoted:{
-								allPrice:'10000',
+								allPrice:'',
 								term:'', //租赁期数
 								termType:'',
 								contractTerm:'',
@@ -266,6 +278,7 @@
 								param:{PROJECT_ID:_this.PROJECT_ID}
 							},function(res){
 								console.log("res",res);
+								_this.payTypeSlots[0].values=res.data.datas.paywaylist
 								var data=res.data.datas.scheme
 								if(data){
 									_this.SCHEME_ID=data.ID
@@ -285,12 +298,23 @@
 									_this.resultData.termPrice=data.MONTH_RENT
 									_this.resultData.term=data.LEASE_TERM
 								}else{
-									_this.quoted.allPrice=res.data.datas.pri.LEASE_TOPRIC
+									if(res.data.datas.prj.LEASE_TOPRIC){
+										_this.quoted.allPrice=res.data.datas.prj.LEASE_TOPRIC
+									}else{
+										_this.quoted.allPrice=summer.getStorage("contractPrice")
+									}
 								}
 							},function(err){
 								console.log("err",err);
 							})
 
+						},
+						surePickerpayType(val){
+							this.pickerPayTypeStatus=!this.pickerPayTypeStatus
+							if(val=='confirm'){
+								this.quoted.payType=this.pickerVal
+								console.log(this.quoted.payType)
+							}
 						},
 						sureBail(){
 							this.quoted.lastBail=this.quoted.bail
@@ -328,8 +352,10 @@
 						},
 						onValuesChange(picker,values) {
 							this.pickerVal=values[0];
-							console.log(this.pickerVal)
 				    },
+						onPayTypeChange(picker,values){
+							this.pickerVal=values[0].FLAG;
+						},
 						surePicker(item,status){
 							this.pickerStatus=!this.pickerStatus;
 							if(status=='confirm'){
@@ -442,6 +468,7 @@
 								param:params
 							},function(res){
 								console.log("res",res);
+								summer.toast({msg:"测算完成"});
 								_this.testData=res.data.datas
 								_this.resultData.firstPrice=_this.quoted.sureFirstPay
 								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
@@ -457,6 +484,7 @@
 								summer.toast({msg:'请先测算报价'})
 								return
 							}
+							summer.showProgress();
 							var _this=this
 							var param={
 								PROJECT_ID:_this.PROJECT_ID,
@@ -485,6 +513,8 @@
 								param:param
 							},function(res){
 								console.log("res",JSON.stringify(res));
+								summer.hideProgress();
+								summer.toast({msg:"保存成功"});
 								summer.execScript({
 								    winId: "setProject",
 								    script: "addRight('price')"

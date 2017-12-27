@@ -311,7 +311,7 @@
 																fileArray : uploadImgArr,
 																params : dataParams,
 																// headers :{"Content-Type" : "application/json"},
-																SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
+																SERVER : "http://122.49.7.88:8080/appservice/business/newUploadloadFiles",
 																timeout : 10
 															}, "multiUploadCallback()", "multiUploadErrCallback()");
 														}
@@ -323,23 +323,27 @@
 						},
 						save(){
 							//http
-							var that=this,imgArr=[];
-							if(that.applyImg){imgArr.push({fileURL:that.applyImg,type:"image/jpeg",name:"img1"})}
-							if(that.marryImg){imgArr.push({fileURL:that.marryImg,type:"image/jpeg",name:"img2"})}
-							if(that.residenceImg){imgArr.push({fileURL:that.residenceImg,type:"image/jpeg",name:"img3"})}
-							if(that.assetsImg){imgArr.push({fileURL:that.assetsImg,type:"image/jpeg",name:"img4"})}
-							if(that.InterviewImg){imgArr.push({fileURL:that.InterviewImg,type:"image/jpeg",name:"img5"})}
-							if(that.otherImg){imgArr.push({fileURL:that.otherImg,type:"image/jpeg",name:"img6"})}
-							summer.multiUpload({
-						    fileArray : imgArr,
-						    params : {
-						        PROJECT_ID: that.id  //参数
-						    },
-						    // headers :{},
-						    SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
-						    timeout : 10
-							}, "multiUploadCallback()", "multiUploadErrCallback()");
-
+							// var that=this,imgArr=[];
+							// if(that.applyImg){imgArr.push({fileURL:that.applyImg,type:"image/jpeg",name:"img1"})}
+							// if(that.marryImg){imgArr.push({fileURL:that.marryImg,type:"image/jpeg",name:"img2"})}
+							// if(that.residenceImg){imgArr.push({fileURL:that.residenceImg,type:"image/jpeg",name:"img3"})}
+							// if(that.assetsImg){imgArr.push({fileURL:that.assetsImg,type:"image/jpeg",name:"img4"})}
+							// if(that.InterviewImg){imgArr.push({fileURL:that.InterviewImg,type:"image/jpeg",name:"img5"})}
+							// if(that.otherImg){imgArr.push({fileURL:that.otherImg,type:"image/jpeg",name:"img6"})}
+							// summer.multiUpload({
+						  //   fileArray : imgArr,
+						  //   params : {
+						  //       PROJECT_ID: that.id  //参数
+						  //   },
+						  //   // headers :{},
+						  //   SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
+						  //   timeout : 10
+							// }, "multiUploadCallback()", "multiUploadErrCallback()");
+							summer.execScript({
+									winId: "setProject",
+									script: "addRight('uploadImg')"
+							});
+							summer.closeWin()
 
 						}
 					}
