@@ -182,7 +182,6 @@
     <script>
 			summerready=function(){
 				quotedVue.PROJECT_ID=summer.pageParam.id;
-				console.log(quotedVue.PROJECT_ID,summer.pageParam.id);
 				quotedVue.getData();
 			}
       var quotedVue=new Vue({
@@ -259,6 +258,7 @@
 					},
 					methods:{
 						getData(){
+							console.log("PROJECT_ID",this.PROJECT_ID);
 							var _this=this
 							ajaxRequest({
 								type:'POST',
@@ -266,14 +266,15 @@
 								param:{PROJECT_ID:_this.PROJECT_ID}
 							},function(res){
 								console.log("res",res);
-								var data=res.data.datas
-								if(data){
-									_this.SCHEME_ID=res.data.datas.ID
+								var data;
+								if(res.data.datas){
+									data=res.data.datas.scheme
+									_this.SCHEME_ID=data.ID
 									_this.quoted.allPrice=data.LEASE_TOPRIC
 									_this.quoted.term=data.LEASE_TERM+"个月"
 									_this.quoted.contractTerm=data.LEASE_TERM
 									_this.quoted.rate=data.YEAR_INTEREST
-									_this.quoted.payType=data.PAY_WAY
+									_this.quoted.payType=data.PAY_WAY_NM
 									_this.quoted.sureFirstPayRate=data.START_PERCENT
 									_this.quoted.sureFirstPay=data.FIRST_MONEY
 									_this.quoted.lastBail=data.DEPOSIT_MONEY
@@ -479,10 +480,10 @@
 							console.log(JSON.stringify(param));
 							ajaxRequest({
 								type:'POST',
-								url:'appservice/foundproject/projectQuotationPMTTest',
+								url:'appservice/foundproject/saveProjectScheme',
 								param:param
 							},function(res){
-								console.log("res",res);
+								console.log("res",JSON.stringify(res));
 								summer.execScript({
 								    winId: "setProject",
 								    script: "addRight('price')"
