@@ -130,7 +130,7 @@
 					</tr>
 					<tr @click="selectAddr">
 						<td>省市县</td>
-						<td><span>{{datas.ADDR_PROVINCE}} {{datas.ADDR_CITY}} {{datas.ADDR_COUNTY}}</span>
+						<td><span>{{datas.ADDR_PROVINCE_NM}} {{datas.ADDR_CITY_NM}}  </span>
 						<i class="icon iconfont icon-enter"></i></td>
 					</tr>
 					<tr>
@@ -164,8 +164,9 @@
 								EMERGENCY_PHONE:'',
 								EMERGENCY_RELATIONSHIP:'',
 								ADDR_PROVINCE:'',
+								ADDR_PROVINCE_NM:'',
 								ADDR_CITY:'',
-								ADDR_COUNTY:'',
+								ADDR_CITY_NM:'',
 								EMERGENCY_ADDR:''
 							}
             }
@@ -242,9 +243,12 @@
 					vueTemplate.save()
 				}
 				function getAddr(){
-					vueTemplate.datas.ADDR_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
-					vueTemplate.datas.ADDR_CITY=JSON.parse(summer.getStorage('selectCity')).AREA_NAME
-					vueTemplate.datas.ADDR_COUNTY=JSON.parse(summer.getStorage('selectArea')).AREA_NAME
+					vueTemplate.datas.ADDR_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_ID
+					vueTemplate.datas.ADDR_CITY=JSON.parse(summer.getStorage('selectCity')).AREA_ID
+
+					vueTemplate.datas.ADDR_PROVINCE_NM=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+					vueTemplate.datas.ADDR_PROVINCE_NM=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+				//	vueTemplate.datas.ADDR_COUNTY=JSON.parse(summer.getStorage('selectArea')).AREA_ID
 				}
     </script>
   </body>

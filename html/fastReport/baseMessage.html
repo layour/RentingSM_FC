@@ -23,7 +23,7 @@
 					<li >
 						<p class="pl10 pr10 tr" @click="selectAddr">
 							<span class="fl">省市县</span>
-							 <span class=""> <span  class="first">{{ADDR_PROVINCE}} {{ADDR_CITY}} {{ADDR_COUNTY}}</span> <i class="icon iconfont icon-enter"></i></span>
+							 <span class=""> <span  class="first">{{AREA_ID_NM}} {{CITY_ID_NM}}  </span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
 			<!--		<li>
@@ -63,12 +63,6 @@
 							<span class="fl" @click="surePickerProgram">取消</span><span class="fr" @click="surePickerProgram('confirm')">确定</span>
 						</p>
 				</mt-popup>
-				<mt-popup v-model="pickerTaskStatus" position='bottom' class="pickerColor">
-						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
-						<p>
-							<span class="fl" @click="surePickerTask">取消</span><span class="fr" @click="surePickerTask('confirm')">确定</span>
-						</p>
-				</mt-popup>
 			</div>
 		</div>
 		<script src="../../js/summer.js" ></script>
@@ -84,17 +78,15 @@
 			  let _customId=summer.pageParam.customId;
 			  baseMessage.totalData=baseData;
 			  baseMessage.customId=_customId;
-			  baseData.AreaList.map((e,i) =>{
-					baseMessage.slots2[0].values.push(e.AREA_NAME);
-			  })
 			  baseData.business.map((e,i) =>{
 					baseMessage.slots1[0].values.push(e.FLAG);
 			  })
 		  }
 		  function getAddr(){
-			  baseMessage.ADDR_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
-			  baseMessage.ADDR_CITY=JSON.parse(summer.getStorage('selectCity')).AREA_NAME
-			  baseMessage.ADDR_COUNTY=JSON.parse(summer.getStorage('selectArea')).AREA_NAME
+			  baseMessage.AREA_ID=JSON.parse(summer.getStorage('selectProvince')).AREA_ID
+			  baseMessage.CITY_ID=JSON.parse(summer.getStorage('selectCity')).AREA_ID
+			  baseMessage.AREA_ID_NM=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+			  baseMessage.CITY_ID_NM=JSON.parse(summer.getStorage('selectCity')).AREA_NAME
 		  }
 			function save(){
 				baseMessage.save();
@@ -106,12 +98,9 @@
 					contractStatus : 'electron',
 					GroupStatus : 'no',
 					programStyle : '',
-					taskStyle:'',
 					holdPrice : 100,
 					pickerProgramStatus:false,
-					pickerTaskStatus:false,
 					pickerProgram:'',
-					pickerTask:'',
 					slots1 : [{
 						flex : 1,
 						values : [],
@@ -119,18 +108,12 @@
 						className : 'slot1',
 						textAlign : 'center'
 					}],
-					slots2 : [{
-						flex : 1,
-						values : [],
-						defaultIndex : 0,
-						className : 'slot2',
-						textAlign : 'center'
-					}],
 					totalData:"",
 					customId:"",
-					ADDR_PROVINCE:'',
-					ADDR_CITY:'',
-					ADDR_COUNTY:'',
+					AREA_ID:"",
+					CITY_ID:"",
+					AREA_ID_NM:"",
+					CITY_ID_NM:""
 				}
 			},
 			created() {
@@ -171,52 +154,41 @@
 				onValuesChange1(picker, values) {
 					this.pickerProgram = values[0];
 				},
-				onValuesChange2(picker, values) {
-					this.pickerTask = values[0];
-				},
 				surePickerProgram(param) {
 					this.pickerProgramStatus = !this.pickerProgramStatus;
 					if (param == 'confirm') {
 						this.programStyle = this.pickerProgram;
 					}
 				},
-				surePickerTask(param) {
-					this.pickerTaskStatus = !this.pickerTaskStatus;
-					if (param == 'confirm') {
-						this.taskStyle = this.pickerTask;
-					}
-				},
 				save() {
+					let self=this;
 					if(this.programStyle==""){
 						summer.toast({msg:"请选择项目类型"});
 						return;
-					}else if(this.ADDR_COUNTY==""){
+					}else if(this.CITY_ID==""){
 						summer.toast({msg:"请选择省市"});
 						return;
 					}
 					//此时需要调后端的ajax请求数据
 					let _programStyle=this.programStyle;
 					let _area_id=this.taskStyle;
-					let PLATFORM_TYPE,AREAID;
+					let PLATFORM_TYPE;
 					let customId=this.customId;
 					baseMessage.totalData.business.map((e,i)=>{
 						if(e.FLAG==_programStyle){
 							PLATFORM_TYPE=baseMessage.totalData.business[i].CODE;
 						}
 					});
-					baseMessage.totalData.AreaList.map((e,i)=>{
-						if(e.AREA_NAME==_area_id){
-							AREAID=baseMessage.totalData.AreaList[i].AREA_ID;
-						}
-					});
+
 					summer.showProgress();
 					ajaxRequest({
 						  type: 'post',
 						  url: 'appservice/foundproject/saveProject',
 						  param: {
-								 "AREA_ID":AREAID,
+								 "AREA_ID":self.AREA_ID,
 								 "PLATFORM_TYPE":PLATFORM_TYPE,
-								 "CLIENT_ID":customId
+								 "CLIENT_ID":customId,
+								 "CITY_ID":self.CITY_ID
 						  }
 					 }, function (res) {
 							  if(res.data.flag==1){
