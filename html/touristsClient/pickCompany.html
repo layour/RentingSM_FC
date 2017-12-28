@@ -78,7 +78,12 @@
   									}
   								},function(res){
   									console.log("res",res);
-  									_this.companyList=res.data.datas
+										if(res.data.datas.length==0){
+											createNull("pickerCompany")
+										}else{
+											_this.companyList=res.data.datas
+										}
+
   								},function(err){
   									console.log("err",err);
   								})

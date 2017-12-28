@@ -50,7 +50,11 @@
 								}
 							},function(res){
 								console.log("res",res);
-								_this.modelsList=res.data.datas
+								if(res.data.datas.length==0){
+									createNull("pickerModels-2")
+								}else {
+									_this.modelsList=res.data.datas
+								}
 							},function(err){
 								console.log("err",err);
 							})
