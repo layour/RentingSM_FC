@@ -114,6 +114,21 @@
 							婚姻状况 <span class="fr"><span v-if='message.marrige' class="first">{{message.marrige}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
+				<div @click="surePickerIsNative" class="item">
+						<p class="pl10 pr10">
+							是否本地人 <span class="fr"><span v-if='message.isNative' class="first">{{message.isNative}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
+				<div @click="surePickerTransport" class="item">
+						<p class="pl10 pr10">
+							运输货物 <span class="fr"><span v-if='message.transport' class="first">{{message.transport}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
+				<div @click="surePickerHouse" class="item">
+						<p class="pl10 pr10">
+							住房情况 <span class="fr"><span v-if='message.house' class="first">{{message.house}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						</p>
+				</div>
 			</div>
 			<div >
 				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
@@ -126,6 +141,24 @@
 						<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
 						<p>
 							<span class="" @click="surePickerMarrige">取消</span><span class="" @click="surePickerMarrige('confirm')">确定</span>
+						</p>
+				</mt-popup>
+				<mt-popup v-model="pickerIsNativeStatus" position='bottom' class="pickerColor">
+						<mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
+						<p>
+							<span class="" @click="surePickerIsNative">取消</span><span class="" @click="surePickerIsNative('confirm')">确定</span>
+						</p>
+				</mt-popup>
+				<mt-popup v-model="pickerTransportStatus" position='bottom' class="pickerColor">
+						<mt-picker :slots="slots4" @change="onValuesChange4"></mt-picker>
+						<p>
+							<span class="" @click="surePickerTransport">取消</span><span class="" @click="surePickerTransport('confirm')">确定</span>
+						</p>
+				</mt-popup>
+				<mt-popup v-model="pickerHouseStatus" position='bottom' class="pickerColor">
+						<mt-picker :slots="slots5" @change="onValuesChange5"></mt-picker>
+						<p>
+							<span class="" @click="surePickerHouse">取消</span><span class="" @click="surePickerHouse('confirm')">确定</span>
 						</p>
 				</mt-popup>
 						 <mt-datetime-picker
@@ -162,6 +195,12 @@
 					pickerSexStatus : false,
 					pickerDateStatus : false,
 					pickerMarrigeStatus : false,
+					pickerIsNativeStatus:false,
+					pickerTransportStatus:false,
+					pickerHouseStatus:false,
+					pickerIsNative:"",
+					pickerTransport:"",
+					pickerHouse:"",
 					pickerSex : "",
 					pickerMarrige : "",
 					noweDate : new Date(),
@@ -174,7 +213,28 @@
 					}],
 					slots2 : [{
 						flex : 1,
-						values : ['未婚', '已婚'],
+						values : ['未婚', '已婚','离婚','丧偶','未说明的婚姻状况'],
+						defaultIndex : 0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					slots3 : [{
+						flex : 1,
+						values : ['自主开发', '公司推荐','客户咨询'],
+						defaultIndex : 0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					slots4 : [{
+						flex : 1,
+						values : ['城市渣土运输', '钢材运输','港口运输','轿运物流','快递运输','矿产运输','矿山开采及工程建设运输','冷链物流','农副产品运输','日用工业品运输','散装罐运输','砂石运输','危险品运输','专用车','其它运输'],
+						defaultIndex : 0,
+						className : 'slot1',
+						textAlign : 'center'
+					}],
+					slots5 : [{
+						flex : 1,
+						values : ['自置', '按揭','亲属楼宇','集体宿舍','租房','共有住宅','其它'],
 						defaultIndex : 0,
 						className : 'slot1',
 						textAlign : 'center'
@@ -188,6 +248,9 @@
 						phoneAddress : '',
 						marrige : '',
 						dateBirth : '',
+						isNative:'',
+						transport:'',
+						house:'',
 						ADDR_PROVINCE:'',
 						ADDR_CITY:'',
 						ADDR_COUNTY:'',
@@ -308,6 +371,33 @@
 								}
 							});
 						}
+					}
+				},
+				onValuesChange3:function(picker, values) {
+					this.pickerIsNative = values[0];
+				},
+				surePickerIsNative:function(param) {
+					this.pickerIsNativeStatus = !this.pickerIsNativeStatus;
+					if (param == 'confirm') {
+						this.message.isNative = this.pickerIsNative;
+					}
+				},
+				onValuesChange4:function(picker, values) {
+					this.pickerTransport = values[0];
+				},
+				surePickerTransport:function(param) {
+					this.pickerTransportStatus = !this.pickerTransportStatus;
+					if (param == 'confirm') {
+						this.message.transport = this.pickerTransport;
+					}
+				},
+				onValuesChange5:function(picker, values) {
+					this.pickerHouse = values[0];
+				},
+				surePickerHouse:function(param) {
+					this.pickerHouseStatus = !this.pickerHouseStatus;
+					if (param == 'confirm') {
+						this.message.house = this.pickerHouse;
 					}
 				},
 				sureDateConfirm:function() {
