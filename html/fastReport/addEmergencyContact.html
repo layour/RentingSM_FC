@@ -217,12 +217,15 @@
 							if(!this.datas.EMERGENCY_RELATIONSHIP){summer.toast({msg:'请输入关系类型'});return}
 							if(!this.datas.ADDR_COUNTY){summer.toast({msg:'请输入省市县'});return}
 							if(!this.datas.EMERGENCY_ADDR){summer.toast({msg:'请输入详细地址'});return}
+							summer.showProgress();
 							ajaxRequest({
 								type:'POST',
 								url:'appservice/customer/saveEmergencyInfo',
 								param:_this.datas
 							},function(res){
 								console.log("res",res);
+								summer.hideProgress();
+								summer.toast({msg:"保存成功"});
 								summer.execScript({
 										winId: "setProject",
 										script: "addRight('emergencyContract')"

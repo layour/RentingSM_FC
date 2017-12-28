@@ -179,7 +179,7 @@
 								compressionRatio:0.5,
 								callback : function(args){
 									// $summer.alert(args);
-								//  alert(args.imgPath);
+
 									if(that.status=='apply'){
 										CommonUtil.watermark({
 											srcImage:args.compressImgPath,
@@ -250,48 +250,54 @@
 							this.popupVisible=false
 							var that=this
 							summer.openPhotoAlbum({
-									compressionRatio:0.5,
+									// compressionRatio:0.5,
 									type : "multiple",
 							    callback : function (args){
-							     console.log(JSON.stringify(args))
-							      // alert(args.imgPath);
+							     console.log(JSON.stringify(args));
 										if(that.status=='apply'){
 											that.customerType="承租人自然人"
 											that.name="申请人身份证"
+											that.applyImg=args.imgPaths[0].imgPath
 										}else if(that.status=='marry'){
 											that.customerType="承租人自然人"
 											that.name="机动车驾驶证"
+											that.marryImg=args.imgPaths[0].imgPath
 										}else if(that.status=='residence'){
 											that.customerType="承租人自然人"
 											that.name="融资租赁业务客户客户面谈记录表"
+											that.residenceImg=args.imgPaths[0].imgPath
 										}else if(that.status=='assets'){
 											that.customerType="承租人自然人"
 											that.name="现场照片"
+											that.assetsImg=args.imgPaths[0].imgPath
 										}else if(that.status=='Interview'){
 											that.customerType="担保人自然人"
 											that.name="保证人身份证"
+											that.InterviewImg=args.imgPaths[0].imgPath
 										}else if(that.status=='other'){
 											that.customerType="担保人自然人"
 											that.name="调查人员及保证人合影照片"
-
+											that.otherImg=args.imgPaths[0].imgPath
 										}
 
-										var length=args.imgPath.length,uploadImgArr=[];
-										for(var i=0;i<length;i++){
-											compress(args.imgPath[i])
-										}
+										var length=args.imgPaths.length,uploadImgArr=[];
+										console.log("开始压缩"+length,uploadImgArr);
+										summer.showProgress();
+										compress(0);
 										function compress(i){
 											CommonUtil.watermark({
-												srcImage:args.imgPath[i],
-												targetImage:args.imgPath[i],
+												srcImage:args.imgPaths[i].imgPath,
+												targetImage:args.imgPaths[i].imgPath,
 												name:that.name,
 												callback:function(res){
-													console.log("压缩后的"+res)
+													console.log(i+"压缩后的"+res.target)
 														uploadImgArr.push({fileURL:res.target,type:"image/jpeg",name:that.name+i});
-														if(i=0){that.fileName+=that.name+i}else{that.fileName+="#"+that.name+i}
+														if(i==0){that.fileName=that.name+i}else{that.fileName+="#"+that.name+i}
 														if(i<length-1){
-															compress(arg.imgPath[i+1])
+															console.log("第"+i+"次回掉");
+															compress(i+1)
 														}else{
+															console.log(i,"开始上传",that.fileName);
 															var dataParams={
 																	PROJECT_ID: that.id,
 																	TPM_BUSINESS_PLATE:that.type,
@@ -299,12 +305,13 @@
 																	TPM_TYPE:that.name,
 																	FILE_NAME:that.fileName
 															};
-															console.log("上传的参数"+dataParams,"文件数组"+uploadImgArr);
+															console.log("上传的参数"+JSON.stringify(dataParams))
+															console.log("文件数组"+JSON.stringify(uploadImgArr));
 															summer.multiUpload({
 																fileArray : uploadImgArr,
 																params : dataParams,
 																// headers :{"Content-Type" : "application/json"},
-																SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
+																SERVER : "http://122.49.7.88:8080/appservice/business/newUploadloadFiles",
 																timeout : 10
 															}, "multiUploadCallback()", "multiUploadErrCallback()");
 														}
@@ -316,23 +323,27 @@
 						},
 						save(){
 							//http
-							var that=this,imgArr=[];
-							if(that.applyImg){imgArr.push({fileURL:that.applyImg,type:"image/jpeg",name:"img1"})}
-							if(that.marryImg){imgArr.push({fileURL:that.marryImg,type:"image/jpeg",name:"img2"})}
-							if(that.residenceImg){imgArr.push({fileURL:that.residenceImg,type:"image/jpeg",name:"img3"})}
-							if(that.assetsImg){imgArr.push({fileURL:that.assetsImg,type:"image/jpeg",name:"img4"})}
-							if(that.InterviewImg){imgArr.push({fileURL:that.InterviewImg,type:"image/jpeg",name:"img5"})}
-							if(that.otherImg){imgArr.push({fileURL:that.otherImg,type:"image/jpeg",name:"img6"})}
-							summer.multiUpload({
-						    fileArray : imgArr,
-						    params : {
-						        PROJECT_ID: that.id  //参数
-						    },
-						    // headers :{},
-						    SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
-						    timeout : 10
-							}, "multiUploadCallback()", "multiUploadErrCallback()");
-
+							// var that=this,imgArr=[];
+							// if(that.applyImg){imgArr.push({fileURL:that.applyImg,type:"image/jpeg",name:"img1"})}
+							// if(that.marryImg){imgArr.push({fileURL:that.marryImg,type:"image/jpeg",name:"img2"})}
+							// if(that.residenceImg){imgArr.push({fileURL:that.residenceImg,type:"image/jpeg",name:"img3"})}
+							// if(that.assetsImg){imgArr.push({fileURL:that.assetsImg,type:"image/jpeg",name:"img4"})}
+							// if(that.InterviewImg){imgArr.push({fileURL:that.InterviewImg,type:"image/jpeg",name:"img5"})}
+							// if(that.otherImg){imgArr.push({fileURL:that.otherImg,type:"image/jpeg",name:"img6"})}
+							// summer.multiUpload({
+						  //   fileArray : imgArr,
+						  //   params : {
+						  //       PROJECT_ID: that.id  //参数
+						  //   },
+						  //   // headers :{},
+						  //   SERVER : "http://122.49.7.88:8080/appservice/business/uploadloadFile",
+						  //   timeout : 10
+							// }, "multiUploadCallback()", "multiUploadErrCallback()");
+							summer.execScript({
+									winId: "setProject",
+									script: "addRight('uploadImg')"
+							});
+							summer.closeWin()
 
 						}
 					}
@@ -341,7 +352,10 @@
 					uploadVue.save()
 				}
 				function multiUploadCallback(ret){
-						alert("成功"+ JSON.stringify(ret));
+
+						console.log("成功"+ JSON.stringify(ret));
+						summer.hideProgress();
+						summer.toast({msg:"上传成功"});
 						// summer.execScript({
 						// 		winId: "setProject",
 						// 		script: "addRight('uploadImg')"
@@ -349,6 +363,7 @@
 						// summer.closeWin()
 				}
 				function multiUploadErrCallback(err){
+					console.log("失败"+ JSON.stringify(err));
 						alert("失败"+ JSON.stringify(err));
 				}
     </script>

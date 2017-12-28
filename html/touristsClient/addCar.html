@@ -123,7 +123,7 @@
 									_this.dealer=data.SUPPLIERS_NAME;
 									_this.company=data.COMPANY_NAME;
 
-									_this.color=data.CAR_TYPE_NM;
+									_this.color=data.CAR_NAME;
 									_this.colorId=data.CAR_TYPE;
 
 									_this.carModels=data.PRODUCT_NAME+" "+data.CATENA_NAME+" "+data.SPEC_NAME;
@@ -254,7 +254,7 @@
 							this.pickerColorStatus=!this.pickerColorStatus;
 							if(param=='confirm'){
 								this.color=this.pickedColor.FLAG;
-								this.colorId=this.pickedColor.DATA_ID;
+								this.colorId=this.pickedColor.CODE;
 							}
 						},
 						save(){
@@ -263,6 +263,7 @@
 								return
 							}
 							var param={};
+							summer.showProgress();
 							param.PROJECT_ID=this.PROJECT_ID;
 							param.CLIENT_ID=this.CLIENT_ID;
 							param.SUPPLIERS_NAME=JSON.parse(summer.getStorage('pickerDealer')).SUPPLIERS_NAME;
@@ -283,12 +284,16 @@
 							param.AMOUNT=1;
 							param.STAYBUY_PRICE=this.holdPrice;
 							console.log("param",JSON.stringify(param));
+							var _this=this;
 							ajaxRequest({
 								type:'POST',
 								url:'appservice/foundproject/saveProject',
 								param:param
 							},function(res){
 								console.log("res",res);
+								summer.setStorage("contractPrice",_this.guidePrice)
+								summer.hideProgress();
+								summer.toast({msg:"保存成功"});
 								summer.execScript({
 								    winId: "setProject",
 								    script: "addRight('addCar')"
