@@ -50,41 +50,67 @@
     </style>
 	</head>
 	<body>
-		<div class="um-win" id="projectImgList" v-cloak>
+		<div class="um-win" id="projectImgListBigCar" v-cloak>
 			<div class="um-content addCar">
-        <div class="um-list-item-bodys" @click="openContWin('uId','申请人身份证','承租人自然人','立项')">
-          申请人身份证
+				<div class="um-list-item-bodys">申请人</div>
+        <div class="um-list-item-bodys" @click="openContWin('uShouQuan','金融信用信息基础数据库授权书','承租人自然人','立项')">
+          金融信用信息基础数据库授权书（个人）
+          <span class="frp"> <i class="uShouQuan icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        </div>
+        <div class="um-list-item-bodys" @click="openContWin('uId','申请人及配偶身份证','承租人自然人','立项')">
+          申请人及配偶身份证
           <span class="frp"> <i class="uId icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
         </div>
-        <div class="um-list-item-bodys" @click="openContWin('carId','机动车驾驶证','承租人自然人','立项')">
+        <div class="um-list-item-bodys" @click="openContWin('uJieHun','结婚证','承租人自然人','立项')">
+          结婚证(如有）
+          <span class="frp"> <i class="uJieHun icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        </div>
+        <div class="um-list-item-bodys" @click="openContWin('uHouse','居住证明','承租人自然人','立项')">
+          居住证明
+          <span class="frp"> <i class="uHouse icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        </div>
+        <div class="um-list-item-bodys" @click="openContWin('uCar','机动车驾驶证','承租人自然人','立项')">
           机动车驾驶证
-          <span class="frp"> <i class="carId icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+          <span class="frp"> <i class="uCar icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
         </div>
-        <div class="um-list-item-bodys" @click="openContWin('customerId','融资租赁业务客户客户面谈记录表','承租人自然人','立项')">
-          融资租赁业务客户客户面谈记录表
-          <span class="frp"> <i class="customerId icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        <div class="um-list-item-bodys" @click="openContWin('uMoney','资产证明','承租人自然人','立项')">
+          资产证明
+          <span class="frp"> <i class="uMoney icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
         </div>
-        <div class="um-list-item-bodys" @click="openContWin('imgId','现场照片','承租人自然人','立项')">
-          现场照片
-          <span class="frp"> <i class="imgId icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        <div class="um-list-item-bodys" @click="openContWin('uXianChuang','现场考察照片','承租人自然人','立项')">
+          现场考察照片
+          <span class="frp"> <i class="uXianChuang icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
         </div>
-        <div class="um-list-item-bodys" @click="openContWin('promId','保证人身份证','担保人自然人','立项')">
-          保证人身份证
-          <span class="frp"> <i class="promId icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+				<div class="um-list-item-bodys">担保人</div>
+        <div class="um-list-item-bodys" @click="openContWin('cShouQuan','金融信用信息基础数据库授权书','担保人自然人','立项')">
+          金融信用信息基础数据库授权书（个人）
+          <span class="frp"> <i class="cShouQuan icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
         </div>
-        <div class="um-list-item-bodys" @click="openContWin('twoId','调查人员及保证人合影照片','担保人自然人','立项')">
+        <div class="um-list-item-bodys" @click="openContWin('cId','保证人及配偶身份证','担保人自然人','立项')">
+          保证人及配偶身份证
+          <span class="frp"> <i class="cId icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        </div>
+        <div class="um-list-item-bodys" @click="openContWin('cJieHun','结婚证','担保人自然人','立项')">
+          结婚证(如有）
+          <span class="frp"> <i class="cJieHun icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        </div>
+        <div class="um-list-item-bodys" @click="openContWin('cDanBao','担保能力证明','担保人自然人','立项')">
+          担保能力证明
+          <span class="frp"> <i class="cDanBao icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        </div>
+        <div class="um-list-item-bodys" @click="openContWin('cHeYin','调查人员及保证人合影照片','担保人自然人','立项')">
           调查人员及保证人合影照片
-          <span class="frp"> <i class="twoId icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+          <span class="frp"> <i class="cHeYin icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
         </div>
 
 			</div>
 		</div>
 		<script>
 				summerready=function(){
-					projectImgList.projectId=summer.pageParam.id
+					projectImgListBigCar.projectId=summer.pageParam.id
 				}
-				var projectImgList=new Vue({
-					el:'#projectImgList',
+				var projectImgListBigCar=new Vue({
+					el:'#projectImgListBigCar',
 					data(){
 						return{
               projectId:''

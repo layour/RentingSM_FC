@@ -262,6 +262,7 @@
 								summer.toast({msg:'请填写车辆的所有信息'})
 								return
 							}
+							summer.setStorage('carType',this.color)
 							var param={};
 							summer.showProgress();
 							param.PROJECT_ID=this.PROJECT_ID;

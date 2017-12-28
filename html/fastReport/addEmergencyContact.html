@@ -182,7 +182,18 @@
 								}
 							},function(res){
 								console.log(res);
-								if(res.data.datas){	_this.datas=res.data.datas}
+								if(res.data.datas){
+										_this.datas.ID=res.data.datas.ID
+										_this.datas.CLIENT_ID=res.data.datas.CLIENT_ID
+										_this.datas.EMERGENCY_NAME=res.data.datas.EMERGENCY_NAME
+										_this.datas.EMERGENCY_PHONE=res.data.datas.EMERGENCY_PHONE
+										_this.datas.EMERGENCY_RELATIONSHIP=res.data.datas.EMERGENCY_RELATIONSHIP
+										_this.datas.ADDR_PROVINCE=res.data.datas.ADDR_PROVINCE
+										_this.datas.ADDR_PROVINCE_NM=res.data.datas.ADDR_PROVINCE_NM
+										_this.datas.ADDR_CITY=res.data.datas.ADDR_CITY
+										_this.datas.ADDR_CITY_NM=res.data.datas.ADDR_CITY_NM
+										_this.datas.EMERGENCY_ADDR=res.data.datas.EMERGENCY_ADDR
+									}
 
 							},function(err){
 								alert(err);
@@ -216,7 +227,7 @@
 							var reg=/^1[345678][0-9]{9}$/;
 							if(!reg.test(this.datas.EMERGENCY_PHONE)){summer.toast({msg:'请输入正确的手机号'});return}
 							if(!this.datas.EMERGENCY_RELATIONSHIP){summer.toast({msg:'请输入关系类型'});return}
-							if(!this.datas.ADDR_COUNTY){summer.toast({msg:'请输入省市县'});return}
+							if(!this.datas.ADDR_CITY){summer.toast({msg:'请输入省市县'});return}
 							if(!this.datas.EMERGENCY_ADDR){summer.toast({msg:'请输入详细地址'});return}
 							summer.showProgress();
 							ajaxRequest({
@@ -243,11 +254,13 @@
 					vueTemplate.save()
 				}
 				function getAddr(){
+					console.log(summer.getStorage('selectProvince'));
 					vueTemplate.datas.ADDR_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_ID
 					vueTemplate.datas.ADDR_CITY=JSON.parse(summer.getStorage('selectCity')).AREA_ID
 
 					vueTemplate.datas.ADDR_PROVINCE_NM=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
-					vueTemplate.datas.ADDR_PROVINCE_NM=JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+					vueTemplate.datas.ADDR_CITY_NM=JSON.parse(summer.getStorage('selectCity')).AREA_NAME
+					console.log(vueTemplate.datas.ADDR_PROVINCE_NM);
 				//	vueTemplate.datas.ADDR_COUNTY=JSON.parse(summer.getStorage('selectArea')).AREA_ID
 				}
     </script>

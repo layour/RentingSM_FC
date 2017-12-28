@@ -384,7 +384,7 @@
 								this.quoted.firstPayRate=''
 								this.quoted.firstPay=''
 							}else {
-								this.quoted.firstPay=this.quoted.firstPayRate*this.quoted.allPrice
+								this.quoted.firstPay=parseFloat(this.quoted.firstPayRate*this.quoted.allPrice*0.01).toFixed(2)
 								if(!this.quoted.firstPay){this.quoted.firstPay=''}
 							}
 
@@ -406,7 +406,7 @@
 							}else {
 								if(!this.quoted.bailRate){this.quoted.bail='';return}
 								var number=this.bailTypeReset();
-								this.quoted.bail=this.quoted.bailRate*number
+								this.quoted.bail=parseFloat(this.quoted.bailRate*number*0.01).toFixed(2)
 							}
 						},
 						bailTypeReset(){
@@ -449,7 +449,7 @@
 
 						},
 						quotedTest(){
-							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.quoted.sureFirstPayRate){
+							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee){
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}

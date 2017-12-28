@@ -139,6 +139,7 @@
 				setProgect.project_Id = __projectid;
 			}*/
 			setProgect.customId = customId;
+			setProgect.carName = summer.pageParam.carName;
 			setProgect.getData(customId);
 			$("." + sourceId).addClass('active').siblings('i').addClass("active");
 		}
@@ -156,7 +157,8 @@
 					},
 					baseMessageData: "",
 					customId: "",
-					project_Id: ""
+					project_Id: "",
+					carName:''
 				}
 			},
 			methods: {
@@ -284,7 +286,14 @@
 				})
 				return
 			} else if (param == 'uploadImg') {
-				url = "html/fastReport/uploadImgList.html";
+				var carType=setProgect.carName||summer.getStorage('carType');
+				if(carType=="重卡"){
+					id="uploadImgListBigCar"
+					url = "html/fastReport/uploadImgListBigCar.html";
+				}else{
+					id="uploadImg"
+					url = "html/fastReport/uploadImgList.html";
+				}
 				title = '资料上传';
 			} else if (param == 'remark') {
 				url = "html/fastReport/remark.html";
