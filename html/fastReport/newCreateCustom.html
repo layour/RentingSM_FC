@@ -110,23 +110,23 @@
 			</div>
 				<mt-field label="通讯地址" placeholder="请输入您的通讯地址"   v-model="message.phoneAddress"></mt-field>
 				<div @click="surePickerMarrige" class="item">
-						<p class="pl10 pr10">
-							婚姻状况 <span class="fr"><span v-if='message.marrige' class="first">{{message.marrige}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10  um-box">
+								<span class="um-bf1">婚姻状况</span> <span class="um-bf1 tr"><span v-if='message.marrige' class="first">{{message.marrige}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 				<div @click="surePickerIsNative" class="item">
-						<p class="pl10 pr10">
-							是否本地人 <span class="fr"><span v-if='message.isNative' class="first">{{message.isNative}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10 um-box">
+							<span class="um-bf1">是否本地人</span> <span class="um-bf1 tr"><span v-if='message.isNative' class="first">{{message.isNative}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 				<div @click="surePickerTransport" class="item">
-						<p class="pl10 pr10">
-							运输货物 <span class="fr"><span v-if='message.transport' class="first">{{message.transport}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10 um-box">
+							<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.transport' class="first">{{message.transport}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 				<div @click="surePickerHouse" class="item">
-						<p class="pl10 pr10">
-							住房情况 <span class="fr"><span v-if='message.house' class="first">{{message.house}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+						<p class="pl10 pr10 um-box">
+							<span class="um-bf1">住房情况</span> <span class="um-bf1 tr"><span v-if='message.house' class="first">{{message.house}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 				</div>
 			</div>
