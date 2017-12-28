@@ -11,13 +11,13 @@
 			/*遮罩层*/
 			.overlay {
 				background-color: rgba(0, 0, 0, 0.5);
-				 
+
 			}
 			html {
 				background-color: rgba(0, 0, 0, 0.5);
 			}
-			 
-			 
+
+
 			.middle{
 				width:80%;
 				height:130px;
@@ -70,7 +70,6 @@
             		<p class="um-box action"><span class="um-bf1 tc cancleChoose" onclick="cancleChoose()" >取消</span><span class="um-bf1 tc makeSure" onclick="makeSure()" >确定</span></p>
             	</div>
             </div>
-             
         </div>
     </body>
     <script src="../../js/jquery.min.js"></script>
@@ -90,19 +89,19 @@
 	  	summer.toast({msg:"确定"});
 	  	ajaxRequest({
 					type: 'post',
-					url: 'appservice/promc/procadisable',
+					url: 'appservice/promc/prodisable',
 					param: {
 					"PROJECT_ID":programId,
 					"LEASE_CODE":programCode,
 					}
 				}, function (res) {
 					console.log(res);
-					if(res.data.datas.feiflag==1){
+					if(res.data.flag==1){
 						summer.toast({msg:"删除成功"});
 						summer.execScript({
 						    winId: "programSelect",
 						    frameId:frameId,
-						    script: "getData('10')"
+						    script: "getData('1','true')"
 						});
 						closeOpacity();
 					}
@@ -114,7 +113,7 @@
 		function closeOpacity() {
 			 summer.closeFrame({id:"Opacity"});
 		}
-		
-		 
+
+
     </script>
 </html>
