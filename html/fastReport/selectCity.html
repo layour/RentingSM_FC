@@ -57,7 +57,15 @@
 						},
 						pickerModels(it){
               summer.setStorage('selectCity',JSON.stringify(it));
-							summer.openWin({
+				  let fromSelect=summer.getStorage("selectFrom");
+				  summer.execScript({
+						winId: fromSelect,
+						script: 'getAddr()'
+				  });
+				  summer.closeToWin({
+					  id:fromSelect
+				  })
+							/*summer.openWin({
 								id:'selectArea',
 								url:'html/fastReport/selectArea.html',
 								create:false,
@@ -74,7 +82,7 @@
 						          textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						      }
 								}
-							})
+							})*/
 						}
 					}
         })
