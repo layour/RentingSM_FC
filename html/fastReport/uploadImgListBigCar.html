@@ -52,7 +52,7 @@
 	<body>
 		<div class="um-win" id="projectImgListBigCar" v-cloak>
 			<div class="um-content addCar">
-				<div class="um-list-item-bodys">申请人</div>
+				<div class="um-list-item-bodys" style="font-size:18px;font-weight:bold;">申请人</div>
         <div class="um-list-item-bodys" @click="openContWin('uShouQuan','金融信用信息基础数据库授权书','承租人自然人','立项')">
           金融信用信息基础数据库授权书（个人）
           <span class="frp"> <i class="uShouQuan icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
@@ -81,7 +81,11 @@
           现场考察照片
           <span class="frp"> <i class="uXianChuang icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
         </div>
-				<div class="um-list-item-bodys">担保人</div>
+        <div class="um-list-item-bodys" @click="openVideo('uVideo','面签视频材料','承租人自然人','立项')">
+          面签视频材料
+          <span class="frp"> <i class="uXianChuang icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+        </div>
+				<div class="um-list-item-bodys" style="margin-top:20px;font-size:18px;font-weight:bold;">担保人</div>
         <div class="um-list-item-bodys" @click="openContWin('cShouQuan','金融信用信息基础数据库授权书','担保人自然人','立项')">
           金融信用信息基础数据库授权书（个人）
           <span class="frp"> <i class="cShouQuan icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
@@ -150,8 +154,42 @@
         					}]
         				}
         			})
-            }
-          }
+            },
+						openVideo(val,title,customerType,type){
+							var _this=this;
+							summer.openWin({
+								id: val,
+								url: "html/fastReport/uploadImg.html",
+								create: false,
+								type: 'actionBar',
+								pageParam: {
+									PROJECT_ID: _this.projectId,
+									TPM_TYPE:title,
+									TPM_CUSTOMER_TYPE:customerType,
+									TPM_BUSINESS_PLATE:type,
+									CLASS_NAME:val
+								},
+								actionBar: {
+									title: title,
+									titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+									backgroundColor: "#039BE5",
+									leftItem: {
+										image: "img/back.png",
+										method: "", //返回按钮自定义事件
+										text: "返回",
+										textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+									},
+									rightItems: [{
+										type: "text",
+										text: "保存",
+										textColor: "#ffffff",
+										method: "videoSave()"
+									}]
+								}
+							})
+						}
+          },
+
 				});
         function addRight(param) {
     			$("." + param).addClass('active').siblings('i').addClass("active");

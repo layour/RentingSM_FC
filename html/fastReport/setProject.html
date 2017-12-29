@@ -143,10 +143,11 @@
 			setProgect.getData(customId);
 			$("." + sourceId).addClass('active').siblings('i').addClass("active");
 			//从后台判断有没有填写 为了调试上传图片 暂时加上车辆的 start
-			if(sourceId){
+			if(summer.pageParam.isEdit){
+				$(".customer").addClass('active').siblings('i').addClass("active");
 				$(".addCar").addClass('active').siblings('i').addClass("active");
 				$(".baseMessage").addClass('active').siblings('i').addClass("active");
-				summer.setStorage('carType',"轻卡")
+				summer.setStorage('carType',"重卡")
 			}
 
 			//从后台判断有没有填写 为了调试上传图片 暂时加上车辆的 over

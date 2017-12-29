@@ -82,22 +82,30 @@
 		<div class="um-win" id="uploadImg" v-cloak>
 			<div class="um-content uploadImg">
 				<ul>
-					<li v-for="(item,index) in oldImgList" :key="index">
-						<div @click="openPopup" ><img v-if="item.PATH" :src="item.PATH" alt="">
-						<i v-else class="icon iconfont icon-add"></i></div>
-						<img class="close" @click="deleteOld(item.ID,index)" src="../../img/close.png" alt="">
-						<p>{{param.TPM_TYPE}}</p>
-					</li>
-					<li v-for="(item,index) in imgList" :key="index">
-						<div @click="openPopup"><img v-if="item" :src="item" alt="">
-						<i v-else class="icon iconfont icon-add"></i></div>
-						<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
-						<p>{{param.TPM_TYPE}}</p>
-					</li>
-					<li @click="openPopup" v-if="imgList.length<9">
-						<div><i  class="icon iconfont icon-add"></i></div>
-						<p>{{param.TPM_TYPE}}</p>
-					</li>
+					<template v-if="!isVideo">
+						<li v-for="(item,index) in oldImgList" :key="index">
+							<div @click="openPopup" ><img v-if="item.PATH" :src="item.PATH" alt="">
+							<i v-else class="icon iconfont icon-add"></i></div>
+							<img class="close" @click="deleteOld(item.ID,index)" src="../../img/close.png" alt="">
+							<p>{{param.TPM_TYPE}}</p>
+						</li>
+						<li v-for="(item,index) in imgList" :key="index">
+							<div @click="openPopup"><img v-if="item" :src="item" alt="">
+							<i v-else class="icon iconfont icon-add"></i></div>
+							<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
+							<p>{{param.TPM_TYPE}}</p>
+						</li>
+						<li @click="openPopup" v-if="!isVideo&&imgList.length<9">
+							<div><i  class="icon iconfont icon-add"></i></div>
+							<p>{{param.TPM_TYPE}}</p>
+						</li>
+					</template>
+					<template>
+						<li @click="takeVideo">
+							<div><img v-if="videoUrl" :src="videoImg" alt=""><i v-else class="icon iconfont icon-add"></i></div>
+							<p>{{param.TPM_TYPE}}</p>
+						</li>
+					</template>
 				</ul>
       </div>
 			<mt-popup v-model="popupVisible" position="bottom">
@@ -117,6 +125,7 @@
     <script>
 				summerready = function() {
 					uploadVue.param=summer.pageParam;
+					if(summer.pageParam.video){uploadVue.isVideo=true}
 					console.log("param",JSON.stringify(uploadVue.param));
 					uploadVue.getData();
 					var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
@@ -135,7 +144,10 @@
 							param:{},
 							oldImgList:[],
 							imgList:[],
-							uploadImgArr:[]
+							uploadImgArr:[],
+							isVideo:false,
+							videoUrl:'',
+							videoImg:''
             }
           },
 					methods:{
@@ -240,6 +252,21 @@
 										}
 									}
 							});
+						},
+						takeVideo(){
+							var _this=this
+							cordova.require("summer-plugin-video.Video").open({}, function(res) {
+							    if (res.type == 1) {
+							        //视频
+							        _this.videoUrl= res.path;
+
+							    } else if (res.type == 2) {
+
+							    }
+							})
+						},
+						videoSave(){
+							console.log("shangchuan");
 						},
 						save(){
 								var that=this
