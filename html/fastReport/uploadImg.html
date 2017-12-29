@@ -167,12 +167,8 @@
 								summer.showProgress();
 								ajaxRequest({
 									type:'POST',
-									url:'appservice/business/deleteFileByProject',
+									url:'appservice/business/deleteFile',
 									param:{
-										PROJECT_ID: _this.param.PROJECT_ID,
-										TPM_BUSINESS_PLATE:_this.param.TPM_BUSINESS_PLATE,
-										TPM_CUSTOMER_TYPE:_this.param.TPM_CUSTOMER_TYPE,
-										TPM_TYPE:_this.param.TPM_TYPE,
 										ID:id
 									}
 								},function(res){
@@ -224,8 +220,8 @@
 										}
 										console.log("开始添加水印"+length);
 										summer.showProgress();
-										compress(0);
-										function compress(i){
+										compressImg(0);
+										function compressImg(i){
 											CommonUtil.watermark({
 												srcImage:args.imgPaths[i].imgPath,
 												targetImage:args.imgPaths[i].imgPath,
@@ -235,7 +231,7 @@
 														that.imgList.push(res.target);
 														if(i<length-1){
 															console.log("第"+i+"次回掉");
-															compress(i+1)
+															compressImg(i+1)
 														}else{
 															summer.hideProgress();
 														}
