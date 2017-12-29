@@ -25,6 +25,7 @@
   <import id="cordova-plugin-amap" type="web" ref="cordova"> 
     <parameter>AMAP_KEY=509c705cf6786d61f4a62913efb94029</parameter> 
   </import> 
+  <import id="summer-plugin-video" type="web" ref="cordova"/> 
 </application>
 <!--
 【屏幕显示方向】
