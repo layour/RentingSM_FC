@@ -12,7 +12,7 @@
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="../../js/font.js"></script>
-	<script src="base64.js" charset="utf-8"></script>
+	<script src="../../js/base64.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
 					</dd>
 				</dl>
 				<p class="forget">忘记密码？</p>
-				<button type="button" class="loginBtn" onclick="toLogin()">快速体验</button>
+				<button type="button" class="loginBtn" onclick="toLogin()">销售登陆</button>
 			</form>
 		</div>
 	</div>
@@ -46,14 +46,14 @@
 			var psw = $('.psw').val();
 			var base = new Base64();
 			psw = base.encode(psw);//ODg4ODg4
-			/*if (workNum == '') {
+			if (workNum == '') {
 				summer.toast({msg:"工号不得为空"});
 				return;
 			}
 			if (psw == '') {
 				summer.toast({msg:"密码不得为空"});
 				return;
-			}*/
+			}
 			summer.showProgress();
 			if (!summer.netAvailable()) {
 				summer.hideProgress();
@@ -123,46 +123,10 @@
 						});
 						break;
 					case 0:
-						// summer.toast({msg:"用户名或密码错误"});
-						summer.setStorage("userinfo",{});
-						summer.openWin({
-							id:'login',
-							url:'index.html',
-							isKeep: false,
-							addBackListener:true,
-							create:false,
-							type:'actionBar',
-							actionBar: {
-								title: "首页",
-								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								backgroundColor: "#039be5",
-								leftItem:{
-									image: "img/opacity0.png",
-									method:"",//返回按钮自定义事件
-								},
-							}
-						});
+						summer.toast({msg:"用户名或密码错误"});
 						break;
 					default:
-						// summer.toast({msg:"登录失败"});
-						summer.setStorage("userinfo",{});
-						summer.openWin({
-							id:'login',
-							url:'index.html',
-							isKeep: false,
-							addBackListener:true,
-							create:false,
-							type:'actionBar',
-							actionBar: {
-								title: "首页",
-								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								backgroundColor: "#039be5",
-								leftItem:{
-									image: "img/opacity0.png",
-									method:"",//返回按钮自定义事件
-								},
-							}
-						});
+						summer.toast({msg:"登录失败"});
 				}
 			}, function(error) {
 				console.log(error);

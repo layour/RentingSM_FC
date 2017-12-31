@@ -12,32 +12,72 @@
 		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script src="../../../js/font.js" ></script>
 		<script src="../../../js/vue.js" ></script>
+		<script src="../../../js/common.js"></script>
 	</head>
 	<body>
 		<div class="um-frame" id="index">
 			<div class="um-content">
 				<h2 class="processNum">流程编号：乘用车放款审核流程31500015</h2>
-				<ul class="processList">
+				<ul class="processList" v-bind:style="[items.length ? {'display':'block'} : {'display':'none'}]">
 					<li
 						v-for = "(k, index) in items"
 						v-bind:class="[index == items.length-1 ? '' : 'borderActive']"
 					>
 						<img src="../../../img/true.png" alt="">
 						<div class = "box">
-							<p class="p1">{{k.status}}</p>
-							<p class="p2">【{{k.num}}】{{k.manager}}：{{k.process}}</p>
-							<p class="p3">{{k.time}}</p>
+							<p class="p1">{{k.TASK_NAME}}</p>
+							<p class="p2">【{{k.ID}}】{{k.OP_NAME}}：{{k.OP_TYPE}}</p>
+							<p class="p3">{{k.OP_TIME}}</p>
 						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<script type="text/javascript">
+			var payProcess = new Vue({
+				el:'#index',
+				data:{
+					items:[]
+				}
+			});
 			summerready=function(){
-				var user = summer.pageParam.user;
+				var info = summer.pageParam.info;
+				summer.showProgress();
+				ajaxRequest({
+					type: 'post',
+					url: 'appservice/bpmtask/showbpmTask',
+					param: {
+						"JBPM_ID": "业务申请审批流程.8520028"
+					}
+				}, function(res) {
+					summer.hideProgress();
+					var Data;
+					if (Object.prototype.toString.call(res.data) === '[object String]') {
+						Data = JSON.parse(res.data);
+					} else {
+						Data = res.data;
+					}
+					if (Data.flag == 1) {
+						if (Data.datas.length < 1) {
+							createNull("content", "../../img/empty.png");
+						} else {
+							payProcess.items = Data.datas;
+						}
+					} else {
+						summer.toast({
+							msg: Data.msg
+						});
+					}
+				}, function(err) {
+					summer.hideProgress();
+					summer.toast({
+						msg: "暂无数据"
+					});
+					console.log(err);
+				});
 			}
 			// 伪造数据
-			var processData = [
+			/*var processData = [
 				{
 					status:"开始",
 					num:6100075,
@@ -80,13 +120,7 @@
 					process:"发起流程",
 					time:"2017-12-08 09:41:32"
 				},
-			];
-			var payProcess = new Vue({
-				el:'#index',
-				data:{
-					items:processData
-				}
-			});
+			];*/
 		</script>
 	</body>
 </html>

@@ -18,9 +18,9 @@
 	<div class="um-win" id="index">
 		<div class="um-content">
 			<div id="bot">
-				<span class = "taste">销售登陆</span>
+				<span class = "taste"></span>
 				<span class = "shu">|</span>
-				<span class = "changeLog"></span>
+				<span class = "changeLog">客户登录</span>
 			</div>
 		</div>
 	</div>
@@ -39,6 +39,11 @@
 				},
 				index: 0,
 				frames: [{
+					id: 'fastLog',
+					url: 'html/login/fastLog.html',
+					bgColor: '#ffffff',
+					hidden: false
+				}, {
 					id: 'salerLogin',
 					url: 'html/login/salerLogin.html',
 					bgColor: '#ffffff',
@@ -47,7 +52,7 @@
 					id: 'customerLogin',
 					url: 'html/login/customerLogin.html',
 					bgColor: '#ffffff',
-					hidden: false
+					hidden: true
 				}],
 			}, function(ret, err) {
 				var index = ret.index;
@@ -56,27 +61,27 @@
 		$(function() {
 			$('body').height($('body')[0].clientHeight);
 			var onOff = true;
-			$('.changeLog').text('客户登陆');
-			/*$('.changeLog').on('click', function() {
+			$('.taste').text('销售登陆');
+			$('.taste').on('click', function() {
 				if (onOff) {
 					onOff = false;
-					$('.changeLog').text('销售登陆');
+					$('.taste').text('快速体验');
 					summer.setFrameGroupAttr({
 						id: 'login',
 						index: 1
 					});
 				} else {
 					onOff = true;
-					$('.changeLog').text('客户登录');
+					$('.taste').text('销售登陆');
 					summer.setFrameGroupAttr({
 						id: 'login',
 						index: 0
 					});
 				}
 			});
-			$('.taste').on('click',function (){
+			/*$('.changeLog').on('click',function (){
 				//暂无
-			})*/;
+			});*/
 		});
 	</script>
 </body>
