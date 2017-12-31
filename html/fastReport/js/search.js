@@ -1,10 +1,10 @@
- 
+
 /*********************************** Summer Lifecycle Handler Define ***********************************/
 summerready = function(){
 	$('#header').css('padding-top','40px')
 	bindEvents();
 }
- 
+
 
 function total(){
 	var _data=[];
@@ -12,18 +12,18 @@ function total(){
 	if(length<1 && summer.getStorage('searcharr')){
 		var listText=doT.template($('#listTemp').text());
 		$('#main').html(listText(summer.getStorage('searcharr')));
-		$('#main').append('<div class="clearhis" onclick="clearhis()">清除历史记录</div>')	
+		$('#main').append('<div class="clearhis" onclick="clearhis()">清除历史记录</div>')
 	}else if(length<1&& !summer.getStorage('searcharr')){
-		$("#main").html('<div class="empty"></div>');	
+		$("#main").html('<div class="empty"></div>');
 	}else{
 		for(var k=0;k<_array.length;k++){
-			if(_array[k].name.indexOf($(this).val())>=0){			
-				_data.push(_array[k]);			
+			if(_array[k].name.indexOf($(this).val())>=0){
+				_data.push(_array[k]);
 			}
-		}	
+		}
 		var listText=doT.template($('#listTemp').text());
-		$('#main').html(listText(_data));	
-	}	
+		$('#main').html(listText(_data));
+	}
 }
 
 /*********************************** DOM Event Handler Define ***********************************/
@@ -36,7 +36,7 @@ function closeWin(){
 }
 
 function clearhis(){
-	summer.setStorage('searcharr','');	
+	summer.setStorage('searcharr','');
 	$("#main").html('<div class="empty"></div>');
 }
 
@@ -47,8 +47,8 @@ function setLocal(obj){
 		"groupname":$(obj).find("dd").text(),
 		"id":$(obj).attr("data-id"),
 		"userid":$(obj).attr("data-userid")	,
-		"tenantid":$(obj).attr("data-tenantid")	
-				
+		"tenantid":$(obj).attr("data-tenantid")
+
 	}
 	if(summer.getStorage('searcharr')){
 		searcharr=summer.getStorage('searcharr');
@@ -60,9 +60,9 @@ function setLocal(obj){
 		if(searcharr.length>=6){
 			searcharr.shift();
 		}
-	}	
+	}
 	searcharr.push(_searchData);
-	summer.setStorage('searcharr',searcharr);		
+	summer.setStorage('searcharr',searcharr);
 	summer.openWin({
 	    id : "employee",
 	    url : "html/app_contacts/employee.html",
@@ -71,5 +71,5 @@ function setLocal(obj){
 	    	id:$(obj).attr("data-userid"),
 			tenantid:$(obj).attr("data-tenantid")
 	    }
-	});		
+	});
 }
