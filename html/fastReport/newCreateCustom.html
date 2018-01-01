@@ -285,8 +285,25 @@
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							//self.baseMessageData=res.data.datas;
-							//console.log(self.baseMessageData);
+							let holeData=res.data.datas.custinfo;
+							    self.message.NAME=holeData.NAME;
+								 self.message.ID_CARD_NO=holeData.ID_CARD_NO;
+								 self.message.SEX=holeData.SEX_NM;
+								 self.message.HOUSE_ADDRESS=holeData.HOUSE_ADDRESS;
+								 self.message.TEL_PHONE=holeData.PHONE;
+								 self.message.marrige=holeData.IS_MARRY_NM;
+								 self.message.IS_MARRY=holeData.IS_MARRY;
+								 self.message.BIRTHDAY=holeData.BIRTHDAY;
+								 self.message.SCALE_SOURCE_NM=holeData.SCALE_SOURCE_NM;
+								 self.message.INDUSTRY_FICATION=holeData.INDUSTRY_FICATION;
+								 self.message.HOME_XZ=holeData.HOME_XZ;
+								 self.message.HOUSE_ADDRESS_PROVINCE=holeData.HOUSE_ADDRESS_PROVINCE;
+								 self.message.HOUSE_ADDRESS_CITY=holeData.HOUSE_ADDRESS_CITY;
+								 if (condition) {
+
+								 } else {
+
+								 }
 						}
 					}, function(err) {
 						alert(err);
@@ -623,7 +640,7 @@
 		summerready = function() {
 			let projectId = summer.pageParam.projectId;
 			let clintId = summer.pageParam.clintId;
-			if (projectId && clintId) {
+			if (clintId) {
 				newCreateCustom.getData(projectId, clintId);
 			}
 			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE",

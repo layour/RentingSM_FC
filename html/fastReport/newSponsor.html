@@ -209,17 +209,18 @@
 				}
 			},
 			methods: {
-				getData(projectId, clintId) {
+				getData(projectId) {
 					let self = this;
 					ajaxRequest({
 						type: 'post',
-						url: 'appservice/customer/custDetail',
+						url: 'appservice/customer/guaranteeList',
 						param: {
-							"CLIENT_ID": clintId,
+							"PROJECT_ID": projectId,
 						}
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
+							console.log(res.data.datas);
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
 						}
@@ -230,7 +231,7 @@
 					});
 				},
 				selectAddr() {
-					summer.setStorage("selectFrom", "newCreateCustom");
+					summer.setStorage("selectFrom", "newSponsor");
 					summer.openWin({
 						id: 'selectProvince',
 						url: 'html/fastReport/selectProvince.html',
@@ -380,34 +381,34 @@
 					}
 					return true;
 				},
-				savePerson: function() {
+				complete: function() {
 					let self=this;
 					if (!this.messageTest()) {
 						return;
 					};
 					ajaxRequest({
 						type: 'post',
-						url: 'appservice/customer/saveCust',
+						url: 'appservice/customer/saveGuarantee',
 						param: {
 							NAME: self.message.NAME,
 							ID_CARD_NO:  self.message.ID_CARD_NO,
-							SEX:  self.message.SEX,
+							SEX:  self.message.SEX=="男"?"0":"1",
 							HOUSE_ADDRESS: self.message.HOUSE_ADDRESS,
 							TEL_PHONE: self.message.TEL_PHONE,
 							IS_MARRY: self.message.IS_MARRY,
 							BIRTHDAY:  self.message.BIRTHDAY,
-							SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
-							INDUSTRY_FICATION: self.message.INDUSTRY_FICATION,
-							HOME_XZ:  self.message.HOME_XZ,
 							HOUSE_ADDRESS_PROVINCE:  self.message.HOUSE_ADDRESS_PROVINCE,
 							HOUSE_ADDRESS_CITY:  self.message.HOUSE_ADDRESS_CITY,
-							HOUSE_ADDRESS_COUNTY:  self.message.HOUSE_ADDRESS_COUNTY,
-							spoustObj:{}
 						}
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 								summer.toast({msg:"创建成功"});
+								summer.execScript({
+									 winId: "setProject",
+									 script: "addRight('sponsor')"
+								});
+								summer.closeWin()
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
 						}
@@ -445,54 +446,15 @@
 						}
 					});*/
 				},
-				nextStopAction: function() {
-					if (!this.messageTest()) {
-						return;
-					};
-					let self=this;
-					//此处ajax请求
-					summer.openWin({
-						id: 'newCreateCustom2',
-						url: 'html/fastReport/newCreateCustom2.html',
-						create: false,
-						type: 'actionBar',
-						isKeep: false,
-						actionBar: {
-							title: "配偶信息",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
-							rightItems: [{
-								type: "text",
-								text: "保存",
-								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								method: "saveAllPerMessage()" //在打开的window中自定义事件
-							}]
-						},
-						pageParam:{
-							personMessage:self.message
-						}
-					});
-				},
 				openPicker: function() {
 					this.$refs.picker.open();
 				}
 			}
 		})
 
-		function savePerson() {
-			newCreateCustom.savePerson();
+		function complete() {
+			newCreateCustom.complete();
 		}
-
-		function nextStopAction() {
-			newCreateCustom.nextStopAction();
-		}
-
 		function getAddr() {
 			newCreateCustom.message.HOUSE_ADDRESS_PROVINCE = JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
 			newCreateCustom.message.HOUSE_ADDRESS_CITY = JSON.parse(summer.getStorage('selectCity')).AREA_NAME
@@ -501,8 +463,8 @@
 		summerready = function() {
 			let projectId = summer.pageParam.projectId;
 			let clintId = summer.pageParam.clintId;
-			if (projectId && clintId) {
-				newCreateCustom.getData(projectId, clintId);
+			if (projectId) {
+				newCreateCustom.getData(projectId);
 			}
 			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE",
 				"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"
