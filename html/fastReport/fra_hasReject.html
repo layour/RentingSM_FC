@@ -29,11 +29,11 @@
 					{{item.CR_BECR_NAME}}<span class="status fr">
 						<i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span>
 				</p>
-				<div class="center" @click="openDetail(item.ID)">
+				<div class="center" @click="openDetail(item.ID,item.JBPM_ID)">
 					<p class="type pl10">
 						<span>{{item.CR_BECR_TYPE}} </span> | <span>{{item.PLATFORM}}</span>
 					</p>
-					<p class="type card pl10 status">
+					<p class="type card pl10 status h20">
 						{{item.LEASE_CODE}} <span class="fr">{{item.STATUS}}</span>
 					</p>
 					<p class="time pl10 pr10">
@@ -177,7 +177,7 @@
 						}
 					})
 				},
-				openDetail(id) {
+				openDetail(id,JBPM_ID) {
 					summer.openWin({
 						id: 'programDetail',
 						url: 'html/fastReport/programDetail.html',
@@ -195,7 +195,8 @@
 							}
 						},
 						pageParam: {
-							id: id
+							id: id,
+							JBPM_ID:JBPM_ID
 						}
 					});
 				},
