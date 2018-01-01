@@ -13,17 +13,26 @@
 		<script src="js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script src="js/font.js" charset="utf-8"></script>
 		<script src="js/common.js" charset="utf-8"></script>
-		<!-- <script src="js/swiper-3.4.2.min.js" charset="utf-8"></script> -->
+		<script src="js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
 		<!-- <script src="js/index.js" ></script> -->
 	</head>
 	<body>
 		<div id="win" class="um-win" >
 			<div id="content" class="um-content p15">
-				<div class="container" onclick="showUserInfo()">
-					<img src="img/timg.jpg" alt="">
-					<p></p>
-					<div class="userInfo">
-					</div>
+				<div class="container">
+					<div id='banner-inner' class='swiper-container'>
+			            <div class='swiper-wrapper'>
+			                <div class="swiper-slide">
+			                    <img src="img/banner1.jpg" alt="" />
+			                </div>
+			                <div class="swiper-slide">
+			                    <img src="img/banner2.jpg" alt="" />
+			                </div>
+			                <div class="swiper-slide">
+			                    <img src="img/banner3.jpg" alt="" />
+			                </div>
+			            </div>
+			        </div>
 				</div>
 				<h2 class="xmgl">
 					<div>
@@ -142,11 +151,12 @@
 			</div>
 		</div>
 		<script>
-			summerready = function (){
-				var userinfo = summer.getStorage("userinfo");
-				var name = userinfo.userName ? userinfo.userName : "游客";
-				$('.container').find('p').text(name);
-			};
+			summerready = function() {
+	            var mySwiper = new Swiper('.swiper-container', {
+	                autoplay : 5000,
+					loop : true
+	            });
+	        }
 			// 判断用户是否登陆
 			function isLogin(){
 				if (!summer.getStorage("userinfo").EMPLOYEE_ID) {

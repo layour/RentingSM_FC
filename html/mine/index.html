@@ -71,6 +71,7 @@
 				btnText : ["取消", "确定"],
 				overlay : true,
 				ok : function() {
+					summer.setStorage("userinfo",{});
 					if (os == "android") {
 						summer.openWin({
 							"id" : 'root',

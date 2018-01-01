@@ -28,11 +28,11 @@
 					{{item.CR_BECR_NAME}}<span class="status fr">
 					<i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span>
 				</p>
-				<div class="center" @click="openDetail(item.ID)">
+				<div class="center" @click="openDetail(item.ID,item.JBPM_ID)">
 					<p class="type pl10">
 						<span>{{item.CR_BECR_TYPE}} </span> | <span>{{item.PLATFORM}}</span>
 					</p>
-					<p class="type card pl10 status">
+					<p class="type card pl10 status h20">
 						{{item.LEASE_CODE}} <span class="fr">{{item.STATUS}}</span>
 					</p>
 					<p class="time pl10 pr10">
@@ -178,35 +178,8 @@
 						}
 					})
 				},
-				openDetail(id) {
+				openDetail(id,JBPM_ID) {
 					console.log(id);
-					/*summer.openWin({
-						id: 'setProject',
-						url: 'html/fastReport/setProject.html',
-						create: false,
-						type: 'actionBar',
-						pageParam: {
-							source: "programList",
-							projectId: id
-						},
-						actionBar: {
-							title: "快捷报单",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
-							rightItems: [{
-								type: "text",
-								text: "完成",
-								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								method: "nextStopInput()" //在打开的window中自定义事件
-							}]
-						}
-					});*/
 						summer.openWin({
 							id: 'programDetail',
 							url: 'html/fastReport/programDetail.html',
@@ -224,7 +197,8 @@
 								}
 							},
 							pageParam: {
-								id: id
+								id: id,
+								JBPM_ID:JBPM_ID
 							}
 						});
 				},
@@ -259,6 +233,27 @@
 				},
 				submit(id) {
 					summer.openWin({
+							id : "submitSure",
+							url : "html/fastReport/submitSure.html",
+							create : false,
+							type : 'actionBar',
+							actionBar : {
+								title : "提交确认",
+								titleColor : "#ffffff",
+								backgroundColor : "#039BE5",
+								leftItem : {
+									image : "img/back.png",
+									method : "",
+									text : "返回",
+									textColor : "#ffffff"
+								}
+							},
+							pageParam:{
+								project_Id:	id
+							}
+
+						})
+					/*summer.openWin({
 						id: 'submitSure',
 						url: 'html/fastReport/submitSure.html',
 						create: false,
@@ -278,7 +273,7 @@
 							id: id,
 							source: "programSelect"
 						}
-					});
+					});*/
 				},
 				edit(id) {
 					summer.openWin({

@@ -1,0 +1,136 @@
+.um-win {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: -webkit-box;
+    display: box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+/*  swiper  */
+.swiper-container {
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    /* Fix of Webkit flickering */
+    z-index: 1;
+}
+.swiper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    -webkit-transition-property: -webkit-transform, left, top;
+    -webkit-transition-duration: 0s;
+    -webkit-transform: translate3d(0px,0,0);
+    -webkit-transition-timing-function: ease;
+    -moz-transition-property: -moz-transform, left, top;
+    -moz-transition-duration: 0s;
+    -moz-transform: translate3d(0px,0,0);
+    -moz-transition-timing-function: ease;
+    -o-transition-property: -o-transform, left, top;
+    -o-transition-duration: 0s;
+    -o-transform: translate3d(0px,0,0);
+    -o-transition-timing-function: ease;
+    -o-transform: translate(0px,0px);
+    -ms-transition-property: -ms-transform, left, top;
+    -ms-transition-duration: 0s;
+    -ms-transform: translate3d(0px,0,0);
+    -ms-transition-timing-function: ease;
+    transition-property: transform, left, top;
+    transition-duration: 0s;
+    transform: translate3d(0px,0,0);
+    transition-timing-function: ease;
+}
+.swiper-free-mode > .swiper-wrapper {
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    margin: 0 auto;
+}
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+}
+.pagination{
+    position: fixed;
+    bottom: 0rem;
+    left: 50%;
+    transform: translate(-50%);
+}
+.swiper-pagination-switch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #c5c5c5;
+    margin: 0 3px;
+    border-radius: 50% 50%;
+    cursor: pointer;
+}
+.swiper-active-switch {
+    background: #00ADF8;
+}
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.skip {
+    position: absolute;
+    z-index: 99;
+    width: 25px;
+    height: 22px;
+    background: url(../../img/skip.png) no-repeat;
+    background-size: 100% 100%;
+    top: 30px;
+    right: 10px;
+}
+.tasteBtn {
+    position: absolute;
+    width: 3.5rem;
+    height: 0.8rem;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 4.65rem;
+    border: 1px solid #000;
+    line-height: 0.8rem;
+    box-sizing: border-box;
+    text-align: center;
+    z-index: 999;
+}
+.txt {
+    position: absolute;
+    top: 1.15 rem;
+    left: 0;
+    width: 100%;
+}
+.ti {
+    font-size: 0.6 rem;
+    color: #22B6F6;
+}
+.de {
+    color: #A0A0A0;
+    font-size: 0.36 rem;
+}
+.none {
+    display: none;
+}

@@ -186,59 +186,17 @@
 						<p class="pl10 pr10">支付方式<span class="fr">{{dataSchemeList.PAY_WAY_NM}}</span></p>
 					</div>
 				</div>
-				<div class="flow">
-					<p class="title   tc um-bgc-white">流程ID：汽车金融项目评审流程.1823211</p>
+				<div class="flow" id="flowContent">
+					<p class="title   tc um-bgc-white">流程ID：{{JBPM_ID_NM}}</p>
 					<div class="contentFlow um-bgc-white">
-						<div class="listItem">
+						<div class="listItem" v-for="(item,index) in JBPM_ID">
 							<div class="inside">
 								<img src="../../img/true.png" class="true" alt="" />
-								<p class="top">开始</p>
-								<p class="content">【6100075】张仁忠: 发起流程 </p>
-								<p class="content"> 2017-12-08 09:41:23</p>
+								<p class="top">{{item.TASK_NAME}}</p>
+								<p class="content">【{{item.OP_CODE}}】{{item.OP_NAME}}: {{item.OP_TYPE}} </p>
+								<p class="content"> {{item.OP_TIME}}</p>
 							</div>
 						</div>
-						<div class="listItem">
-							<div class="inside">
-								<img src="../../img/true.png" class="true" alt="" />
-								<p class="top">提交资信</p>
-								<p class="content">【6100075】张仁忠: 发起流程 </p>
-								<p class="content"> 2017-12-08 09:41:23</p>
-							</div>
-						</div>
-						<div class="listItem">
-							<div class="inside">
-								<img src="../../img/true.png" class="true" alt="" />
-								<p class="top">信审员审批</p>
-								<p class="content">【6100075】张仁忠: 发起流程 </p>
-								<p class="content"> 2017-12-08 09:41:23</p>
-							</div>
-						</div>
-						<div class="listItem">
-							<div class="inside">
-								<img src="../../img/true.png" class="true" alt="" />
-								<p class="top">信审员复审</p>
-								<p class="content">【6100075】张仁忠: 发起流程 </p>
-								<p class="content"> 2017-12-08 09:41:23</p>
-							</div>
-						</div>
-						<div class="listItem">
-							<div class="inside">
-								<img src="../../img/true.png" class="true" alt="" />
-								<p class="top">乘用车区域销售总监审批</p>
-								<p class="content">【6100075】张仁忠: 发起流程 </p>
-								<p class="content"> 2017-12-08 09:41:23</p>
-							</div>
-						</div>
-
-						<div class="listItem">
-							<div class="inside">
-								<img src="../../img/true.png" class="true" alt="" />
-								<p class="top">事业部总经理审批</p>
-								<p class="content">【6100075】张仁忠: 发起流程 </p>
-								<p class="content"> 2017-12-08 09:41:23</p>
-							</div>
-						</div>
-
 					</div>
 
 
@@ -255,8 +213,10 @@
 <script>
 	summerready = function() {
 		var detailId = summer.pageParam.id;
+		var JBPM_ID= summer.pageParam.JBPM_ID;
 		programDetail.project_id=detailId;
 		programDetail.getData(detailId);
+		programDetail.getJBPMData(JBPM_ID);
 		//	programDetail.getSchemeData(detailId);
 	};
 	var programDetail = new Vue({
@@ -265,7 +225,9 @@
 			return {
 				dataList: "",
 				dataSchemeList:"",
-				project_id:""
+				project_id:"",
+				JBPM_ID_NM:"",
+				JBPM_ID:""
 			}
 		},
 		created() {
@@ -314,6 +276,32 @@
 					console.log(err);
 					summer.hideProgress();
 				});
+
+			},
+		  getJBPMData(JBPM_ID){
+				let self = this;
+				if (JBPM_ID) {
+					self.JBPM_ID_NM=JBPM_ID;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/bpmtask/showbpmTask',
+						param: {
+							"JBPM_ID": JBPM_ID,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							self.JBPM_ID=res.data.datas;
+							console.log(res);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				} else {
+						createNull("flowContent", "../../img/empty.png","暂未发起流程")
+				}
 
 			}
 		}
