@@ -166,6 +166,10 @@
 								console.log(JSON.stringify(res));
 								if(res.data.datas.length>0){
 										_this.oldImgList=res.data.datas
+										for (var i = 0; i < _this.oldImgList.length; i++) {
+											_this.oldImgList[i].PDF_PATH=window.G_COMMON_URL+"appservice/business/downloadFiles?PATH="+_this.oldImgList[i].PDF_PATH
+
+										}
 								}
 							},function(err){
 								alert(err);
@@ -304,8 +308,8 @@
 						summer.hideProgress();
 						summer.toast({msg:"上传成功"});
 						summer.execScript({
-								winId: "uploadImg",
-								script: "addRight('"+uploadVue.param.CLASS_NAME+"')"
+								winId: "setProject",
+								script: "addRight('uploadImg')"
 						});
 						summer.closeWin()
 				}

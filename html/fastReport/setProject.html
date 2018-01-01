@@ -371,6 +371,28 @@
 					url = "html/fastReport/uploadImgList.html";
 				}
 				title = '资料上传';
+				summer.openWin({
+					id: id,
+					url: url,
+					create: false,
+					type: 'actionBar',
+					pageParam: {
+						id: setProgect.project_Id,
+						CLIENT_ID: setProgect.customId
+					},
+					actionBar: {
+						title: title,
+						titleColor: "#ffffff",
+						backgroundColor: "#039BE5",
+						leftItem: {
+							image: "img/back.png",
+							method: "",
+							text: "返回",
+							textColor: "#ffffff"
+						}
+					}
+				})
+				return
 			} else if (param == 'remark') {
 				url = "html/fastReport/remark.html";
 				title = '备注';
