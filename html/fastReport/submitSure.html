@@ -151,23 +151,48 @@
 					});
 				},
 				opensubmitFinanl() {
-					summer.openWin({
-						id: 'finanlSubmit',
-						url: 'html/fastReport/finanlSubmit.html',
-						create: false,
-						type: 'actionBar',
-						actionBar: {
-							title: "提交评审",
-							titleColor: "#ffffff",
-							backgroundColor: "#039BE5",
-							leftItem: {
-								image: "img/back.png",
-								method: '',
-								text: "返回",
-								textColor: "#ffffff"
-							}
+					var _this=this;
+					summer.showProgress()
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/business/startRevJbpm',
+						param: {
+							"PROJECT_ID": _this.project_id,
 						}
-					});
+					},function(res){
+						console.log("res",JSON.stringify(res));
+						if(res.data.flag==1){
+							summer.hideProgress()
+							summer.openWin({
+								id: 'finanlSubmit',
+								url: 'html/fastReport/finanlSubmit.html',
+								create: false,
+								type: 'actionBar',
+								addBackListener:true,
+								pageParam:{
+									name:_this.dataList.ProjectObj.CLIENT_NAME,
+									type:_this.dataList.ProjectObj.PLATFORM,
+									carList:_this.dataList.EquipObj,
+									project_Id:_this.project_id,
+									JBPM_ID:res.data.datas.JBPM_ID
+								},
+								actionBar: {
+									title: "提交评审",
+									titleColor: "#ffffff",
+									backgroundColor: "#039BE5",
+									leftItem: {
+										image: "img/back.png",
+										method: 'keyBack()',
+										text: "关闭",
+										textColor: "#ffffff"
+									}
+								}
+							});
+						}
+					},function(err){
+
+					})
+
 				}
 			}
 		});
