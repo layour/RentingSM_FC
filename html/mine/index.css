@@ -94,6 +94,9 @@ body,html{
    color: #424242;
    font-weight: normal;
 }
+.companyInfo .company a{
+    color: #039be5;
+}
 .userList .companyInfo span{
    font-size: 0.28rem;
    height: 0.88rem;
