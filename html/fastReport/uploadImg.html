@@ -84,7 +84,7 @@
 				<ul>
 					<template v-if="!isVideo">
 						<li v-for="(item,index) in oldImgList" :key="index">
-							<div @click="openPopup" ><img v-if="item.PATH" :src="item.PATH" alt="">
+							<div @click="openPopup" ><img v-if="item.PDF_PATH" :src="item.PDF_PATH" alt="">
 							<i v-else class="icon iconfont icon-add"></i></div>
 							<img class="close" @click="deleteOld(item.ID,index)" src="../../img/close.png" alt="">
 							<p>{{param.TPM_TYPE}}</p>
@@ -95,12 +95,12 @@
 							<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
 							<p>{{param.TPM_TYPE}}</p>
 						</li>
-						<li @click="openPopup" v-if="!isVideo&&imgList.length<9">
+						<li @click="openPopup" v-if="imgList.length<9">
 							<div><i  class="icon iconfont icon-add"></i></div>
 							<p>{{param.TPM_TYPE}}</p>
 						</li>
 					</template>
-					<template>
+					<template v-else>
 						<li @click="takeVideo">
 							<div><img v-if="videoUrl" :src="videoImg" alt=""><i v-else class="icon iconfont icon-add"></i></div>
 							<p>{{param.TPM_TYPE}}</p>
@@ -187,6 +187,7 @@
 									console.log(JSON.stringify(res));
 									_this.oldImgList.splice(i,1)
 									summer.hideProgress()
+									summer.toast({msg:'删除成功'})
 								},function(err){
 									alert(err);
 								})

@@ -256,8 +256,44 @@
 				url = '',
 				title = '';
 			if (param == 'addCar') {
-				url = "html/touristsClient/addCar.html";
-				title = '添加车辆';
+				url='html/touristsClient/addCar.html';
+				title="添加车辆";
+				// url = "html/touristsClient/addCarList.html";
+				// title = '添加设备';
+				// if (!setProgect.project_Id) {
+				// 	summer.toast({
+				// 		msg: '请先完善项目基础信息'
+				// 	});
+				// 	return
+				// }
+				// summer.openWin({
+				// 	id: id,
+				// 	url: url,
+				// 	create: false,
+				// 	type: 'actionBar',
+				// 	pageParam: {
+				// 		id: setProgect.project_Id,
+				// 		CLIENT_ID: setProgect.customId
+				// 	},
+				// 	actionBar: {
+				// 		title: title,
+				// 		titleColor: "#ffffff",
+				// 		backgroundColor: "#039BE5",
+				// 		leftItem: {
+				// 			image: "img/back.png",
+				// 			method: "",
+				// 			text: "返回",
+				// 			textColor: "#ffffff"
+				// 		},
+				// 		rightItems: [{
+				// 			type: "text",
+				// 			text: "新增",
+				// 			textColor: "#ffffff",
+				// 			method: "addCar()"
+				// 		}]
+				// 	}
+				// })
+				// return
 			} else if (param == 'quotedPriceDetail') {
 				url = "html/priceCalculation/quotedPriceDetail.html";
 				title = "报价"
