@@ -1,299 +1,375 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="../../css/mint.css">
-		<script src="../../js/font.js" ></script>
-		<style>
-			input::-webkit-input-placeholder {
-					color: #DEDEDE;
-					font-size: 0.28rem;
-			}
-			.topheader{
-				height:180px;
-				background-image:url("img/cardBgc.png");
-				background-repeat:no-repeat;
-				background-size:100% 100%;
-			}
-			.topheader img{
-				 margin-top:0.8rem;
-				 width:2.8rem;
-				 height:1.8rem;
-			}
-			.mint-field-core{
-				text-align: right;
-			}
-			.mint-cell-wrapper{
-				color:#333;
-				font-size:0.28rem;
-			}
-			.mint-cell{
-				min-height:40px;
-				height:0.88rem;
-				color:#333;
-				font-size:0.28rem;
-			}
-			div.item{
-				line-height:0.88rem;
-				background:#ffffff;
-				border-bottom:1px solid #f7f7f7;
-				font-size:0.28rem;
-			}
-			div.item span{
-				color:#666;
-			}
-			div.item span i{
-				color:#dbdbdb;
-			}
-			.mint-cell-wrapper{
-				background-size:100% 0px;
-				border-bottom:1px solid #f7f7f7;
-			}
-			.pickerColor {
-			  width: 100%;
-			  z-index: 10;
-			  background: #ffffff;
-			}
-			.pickerColor > p {
-			   line-height: .88rem;
-		    padding: 0  .56rem;
-		    color: #039BE5;
-		    border-top: 1px solid #E0E0E0;
-			}
-			.pickerColor > p span {
-			  color: #34aadc;
-			}
-			.pickerColor > p span:last-child {
-			  float: right;
-			}
-			.item .first{
-				color:#333;
-			}
-			.item .second{
-				color:#9e9e9e;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="um-frame" id="app" v-cloak>
-			<div class="topheader tc" @click="cardIdentify">
-				 <img v-bind:src="cardUrl"   v-show="cardShow"   alt="" />
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/mint.css">
+	<script src="../../js/font.js"></script>
+	<style>
+		input::-webkit-input-placeholder {
+			color: #DEDEDE;
+			font-size: 0.28rem;
+		}
+
+		.topheader {
+			position: relative;
+			height: 180px;
+			background-image: url("img/cardBgc.png");
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+		}
+
+		.topheader img {
+			margin-top: 0.8rem;
+			width: 2.8rem;
+			height: 1.8rem;
+		}
+
+		.mint-field-core {
+			text-align: right;
+		}
+
+		.mint-cell-wrapper {
+			color: #333;
+			font-size: 0.28rem;
+		}
+
+		.mint-cell {
+			min-height: 40px;
+			height: 0.88rem;
+			color: #333;
+			font-size: 0.28rem;
+		}
+
+		div.item {
+			line-height: 0.88rem;
+			background: #ffffff;
+			border-bottom: 1px solid #f7f7f7;
+			font-size: 0.28rem;
+
+		}
+
+		div.item span {
+			color: #666;
+		}
+
+		div.item span i {
+			color: #dbdbdb;
+		}
+
+		.pickerColor {
+			width: 100%;
+			z-index: 10;
+			background: #ffffff;
+		}
+
+		.pickerColor>p {
+			line-height: .88rem;
+			padding: 0 .56rem;
+			color: #039BE5;
+			border-top: 1px solid #E0E0E0;
+		}
+
+		.pickerColor>p span {
+			color: #34aadc;
+		}
+
+		.mint-cell-wrapper {
+			background-size: 100% 0px;
+			border-bottom: 1px solid #f7f7f7;
+		}
+
+		.pickerColor>p span:last-child {
+			float: right;
+		}
+
+		.item .first {
+
+			color: #333;
+		}
+
+		.item .second {
+			color: #9e9e9e;
+		}
+		.um-footer{
+			min-height:0px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="um-win" id="app" v-cloak>
+		<div class="topheader tc um-header-light" @click="cardIdentify">
+			<img v-bind:src="cardUrl" v-show="cardShow" alt="" />
+		</div>
+		<div class="um-content">
+			<mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.spoustObj.SPOUST_NAME"> </mt-field>
+			<mt-field label="身份证" placeholder="请输入您的身份证号码" v-model="message.spoustObj.SPOUST_ID_CARD_NO"></mt-field>
+			<div @click="surePickerSex" class="item">
+				<p class="pl10 pr10 tr">
+					<span class="fl">性别</span>
+					<span class=""><span v-if='message.spoustObj.SPOUST_SEX' class="first">{{message.spoustObj.SPOUST_SEX}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+				</p>
 			</div>
-			<div class="um-content">
-                <mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.username"> </mt-field>
-				<mt-field label="身份证" placeholder="请输入您的身份证号码"   v-model="message.card"></mt-field>
-				<div @click="surePickerSex" class="item">
-						<p class="pl10 pr10 tr">
-							<span class="fl">性别</span>
-							 <span class=""><span v-if='message.sex' class="first">{{message.sex}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
-						</p>
-				</div>
-				 <div @click="sureDateConfirm" class="item">
-					<p class="pl10 pr10 tr">
-						<span class="fl">出生年月</span>
-					         <span class=""><span v-if='message.dateBirth' class="first">{{message.dateBirth}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
-					</p>
-				</div>
-				<mt-field label="住址" placeholder="请输入您的住址"   v-model="message.address"></mt-field>
-				<mt-field label="手机号" placeholder="请输入您的手机号码"  v-model="message.phone"></mt-field>
-				<mt-field label="通讯地址" placeholder="请输入您的通讯地址"   v-model="message.phoneAddress"></mt-field>
+			<div @click="sureDateConfirm" class="item">
+				<p class="pl10 pr10 tr">
+					<span class="fl">出生年月</span>
+					<span class=""><span v-if='message.spoustObj.SPOUST_BIRTHDAY' class="first">{{message.spoustObj.SPOUST_BIRTHDAY}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+				</p>
 			</div>
-			<div >
-				<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
-						<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
-						<p>
-							<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
-						</p>
-			 	</mt-popup>
-				 <mt-datetime-picker
-				 		ref="picker"
-					  v-model="pickerValue"
-					  type="date"
-						cancel-text='取消'
-						confirm-text='确定'
-						:start-date='new Date("1950-01-01")'
-						:end-date="noweDate"
-					  @confirm="handleConfirm"
-					  >
-				</mt-datetime-picker>
-			</div>
+			<mt-field label="住址" placeholder="请输入您的住址" v-model="message.spoustObj.SPOUST_COMPANY_ADDR"></mt-field>
+			<mt-field label="手机号" placeholder="请输入您的手机号码" v-model="message.spoustObj.SPOUST_TEL_PHONE"></mt-field>
+			<!--<div class="item">
+				<p class="pl10 pr10 tr" @click="selectAddr">
+					<span class="fl">省市县</span>
+					<span class=""> <span  class="first">{{message.HOUSE_ADDRESS_PROVINCE}} {{message.HOUSE_ADDRESS_CITY}} {{message.HOUSE_ADDRESS_COUNTY}}</span> <i class="icon iconfont icon-enter"></i></span>
+				</p>
+			</div>-->
+			<!-- <mt-field label="通讯地址" placeholder="请输入您的通讯地址" v-model="message.phoneAddress"></mt-field> -->
+		</div>
+		<div class="um-footer">
+			<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
+				<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+				<p>
+					<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
+				</p>
+			</mt-popup>
+			<mt-datetime-picker ref="picker" v-model="pickerValue" type="date" cancel-text='取消' confirm-text='确定' :start-date='new Date("1950-01-01")' :end-date="noweDate" @confirm="handleConfirm">
+			</mt-datetime-picker>
 
 		</div>
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/common.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script>
-			var newCreateCustom=new Vue({
-		      el: '#app',
-		      data(){
-		      	return {
-							cardShow:false,
-					      	cardUrl:"",
-					      	pickerVisible:"",
-					      	pickerDate:"",
-					      	pickerValue:new Date(),
-							surePicekerDateVal:'',
-					      	pickerSexStatus:false,
-							pickerDateStatus:false,
-							pickerSex:"",
-							noweDate:new Date(),
-							slots1 : [{
-									flex : 1,
-									values : ['男', '女'],
-									defaultIndex :0,
-									className : 'slot1',
-									textAlign : 'center'
-								}] ,
-					      	message:{
-					      		username:'',
-					      		card:'',
-					      		sex:'',
-					      		address:'',
-					      		phone:'',
-					      		phoneAddress:'',
-					      		marrige:'',
-					      		dateBirth:''
-					      	}
+	</div>
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/mint.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script>
+		var newCreateCustom = new Vue({
+			el: '#app',
+			data() {
+				return {
+					cardShow: false,
+					cardUrl: "",
+					pickerVisible: "",
+					pickerDate: "",
+					pickerValue: new Date(),
+					surePicekerDateVal: '',
+					pickerSexStatus: false,
+					pickerDateStatus: false,
+					pickerSex: "",
+					noweDate: new Date(),
+					slots1: [{
+						flex: 1,
+						values: ['男', '女'],
+						defaultIndex: 0,
+						className: 'slot1',
+						textAlign: 'center'
+					}],
+					personMes:'',
+					message: {
+						spoustObj:{
+							SPOUST_NAME:'',
+							SPOUST_ID_CARD_NO:'',
+							SPOUST_SEX:'',
+							SPOUST_BIRTHDAY:'',
+							SPOUST_COMPANY_ADDR:'',
+							SPOUST_TEL_PHONE:''
 						}
-		      },
-		      methods: {
-		        handleClick: function() {
-		          this.$toast('Hello world!')
-		        },
-		        messageTest:function(){
-					 var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  //身份证校验
-					 var phoneCard=/^[1][3,4,5,7,8,9][0-9]{9}$/;
-					if(this.message.username==""){
-						summer.toast({msg:"姓名不能为空"});
-						return false;
-					}else if(this.message.card==""||regCard.test(this.message.card)===false){
-						summer.toast({msg:"请输入正确的身份证号"});
-						return false;
-					}else if(this.message.sex==""){
-						summer.toast({msg:"性别不能为空"});
-						return false;
-					}else if(this.message.dateBirth==""){
-						summer.toast({msg:"出生年月不能为空"});
-						return false;
-					}else if(this.message.address==""){
-						summer.toast({msg:"住址不能为空"});
-						return false;
-					}else if(this.message.phone==""){
-						summer.toast({msg:"手机号不能为空"});
-						return false;
-					}else if(!phoneCard.test(this.message.phone)){
-						summer.toast({msg:"手机号格式不正确"});
-						return false;
 					}
-					return true;
-				},
-		        cardIdentify:function(){
-		           var _self=this;
-		        	PersonScan.scan({},function(args){
-		        		console.log(args);
-					      _self.message.username=args.name;
-					      _self.message.card=args.id;
-					      _self.message.sex=args.sex;
-					       _self.message.dateBirth=args.birth_date;
-					      _self.message.address=args.address;
-					      CommonUtil.watermark({srcImage:args.imagePath,targetImage:args.imagePath,name:args.name,callback:function(arg){
-								if (!arg.target) {
-									  _self.cardUrl=arg.watermarkFile;
-								} else {
-									_self.cardUrl=arg.target;
-								}
-					      	 _self.cardShow = true;
-					      }});
-
-
-					},function(args){
-					    console.log(args);
+				}
+			},
+			methods: {
+				getData(projectId, clintId) {
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/customer/custDetail',
+						param: {
+							"CLIENT_ID": clintId,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							//self.baseMessageData=res.data.datas;
+							//console.log(self.baseMessageData);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
 					});
-		        },
-		        onValuesChange1:function(picker, values) {
+				},
+				selectAddr() {
+					summer.setStorage("selectFrom", "newCreateCustom");
+					summer.openWin({
+						id: 'selectProvince',
+						url: 'html/fastReport/selectProvince.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: '选择省',
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039BE5",
+							leftItem: {
+								image: "img/back.png",
+								method: '', //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						}
+					})
+				},
+				handleClick: function() {
+					this.$toast('Hello world!')
+				},
+				cardIdentify: function() {
+					var _self = this;
+					PersonScan.scan({}, function(args) {
+						console.log(args);
+						_self.message.spoustObj.SPOUST_NAME = args.name;
+						_self.message.spoustObj.SPOUST_ID_CARD_NO = args.id;
+						_self.message.spoustObj.SPOUST_SEX = args.sex;
+						_self.message.spoustObj.SPOUST_BIRTHDAY = args.birth_date;
+						_self.message.spoustObj.SPOUST_COMPANY_ADDR = args.address;
+						CommonUtil.watermark({
+							srcImage: args.imagePath,
+							targetImage: args.imagePath,
+							name: args.name,
+							callback: function(arg) {
+								if (!arg.target) {
+									_self.cardUrl = arg.watermarkFile;
+								} else {
+									_self.cardUrl = arg.target;
+								}
+								_self.cardShow = true;
+							}
+						});
+					}, function(args) {
+						console.log(args);
+					});
+				},
+				successCallBack: function(args) {
+					console.log(args);
+				},
+				onValuesChange1: function(picker, values) {
 					this.pickerSex = values[0];
 				},
-				surePickerSex:function(param) {
+				surePickerSex: function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
-						this.message.sex = this.pickerSex;
+						this.message.spoustObj.SPOUST_SEX = this.pickerSex;
 					}
 				},
-				sureDateConfirm:function(){
-					this.pickerDateStatus=!this.pickerDateStatus;
+
+				sureDateConfirm: function() {
+					this.pickerDateStatus = !this.pickerDateStatus;
 					this.$refs.picker.open();
 				},
-				handleConfirm:function(pickerValue){
+				handleConfirm: function(pickerValue) {
 					this.pickerValue = pickerValue;
-					this.message.dateBirth=getFormatDate(pickerValue)
-					function getFormatDate(date){
-						var date=new Date(date), seperator1 = "-";
-						var year = date.getFullYear(), month = date.getMonth() + 1, strDate = date.getDate();
+					this.message.spoustObj.SPOUST_BIRTHDAY = getFormatDate(pickerValue)
+
+					function getFormatDate(date) {
+						var date = new Date(date),
+							seperator1 = "-";
+						var year = date.getFullYear(),
+							month = date.getMonth() + 1,
+							strDate = date.getDate();
 						if (month >= 1 && month <= 9) {
 							month = "0" + month;
 						}
 						if (strDate >= 0 && strDate <= 9) {
 							strDate = "0" + strDate;
 						}
-					 return  year  + month + strDate;
-				 }
+						return year + month + strDate;
+					}
+
 				},
-				savePerson:function(){
-					 if(!this.messageTest()){
-					 	return;
-					 };
-						summer.openWin({
-						id:'setProject',
-						url:'html/fastReport/setProject.html',
-						create:false,
-						type:'actionBar',
-						isKeep:false,
-						pageParam:{
-							source:"customer"
-						},
-						actionBar: {
-							title: "快捷报单",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem:{
-									image: "img/back.png",
-									method:"",//返回按钮自定义事件
-									text:"返回",
-									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
-							 rightItems:[{
-						          type:"text",
-						          text:"下一步",
-						          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-						          method:"nextStopInput()" //在打开的window中自定义事件
-						      }]
+				messageTest: function() {
+					var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; //身份证校验
+					var phoneCard = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+					if (this.message.spoustObj.SPOUST_NAME == "") {
+						summer.toast({
+							msg: "姓名不能为空"
+						});
+						return false;
+					} else if (this.message.spoustObj.SPOUST_ID_CARD_NO == "" || regCard.test(this.message.spoustObj.SPOUST_ID_CARD_NO) === false) {
+						summer.toast({
+							msg: "请输入正确的身份证号"
+						});
+						return false;
+					} else if (this.message.spoustObj.SPOUST_SEX == "") {
+						summer.toast({
+							msg: "性别不能为空"
+						});
+						return false;
+					} else if (this.message.spoustObj.SPOUST_BIRTHDAY == "") {
+						summer.toast({
+							msg: "出生年月不能为空"
+						});
+						return false;
+					} else if (this.message.spoustObj.SPOUST_COMPANY_ADDR == "") {
+						summer.toast({
+							msg: "住址不能为空"
+						});
+						return false;
+					} else if (this.message.spoustObj.SPOUST_TEL_PHONE == "") {
+						summer.toast({
+							msg: "手机号不能为空"
+						});
+						return false;
+					} else if (!phoneCard.test(this.message.spoustObj.SPOUST_TEL_PHONE)) {
+						summer.toast({
+							msg: "手机号格式不正确"
+						});
+						return false;
+					}
+					return true;
+				},
+				savePerson: function() {
+					let self=this;
+					if (!this.messageTest()) {
+						return;
+					};
+					self.personMes.spoustObj=self.message.spoustObj;
+					let finanlInput=JSON.parse(JSON.stringify(self.personMes));
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/customer/saveCust',
+						param:self.personMes
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							//self.baseMessageData=res.data.datas;
+							//console.log(self.baseMessageData);
+							summer.toast({msg:"创建成功"});
 						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
 					});
 				},
-		        openPicker:function() {
-			        this.$refs.picker.open();
-			      }
-		      }
-		    })
-		    function saveAllPerMessage(){
-		    	newCreateCustom.savePerson();
-		    }
-		    summerready=function(){
-		    	var params = ["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.CAMERA","android.permission.FLASHLIGHT","android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"];
-					summer.getPermission(params,  function(args){
-					    //alert(args); //成功返回OK
-					}, function(args){
-					    //alert(args); //失败返回illegal access
-					})
-		    }
+				openPicker: function() {
+					this.$refs.picker.open();
+				}
+			}
+		})
 
-		</script>
-	</body>
+		function saveAllPerMessage() {
+			newCreateCustom.savePerson();
+		}
+		summerready = function() {
+			let personMessage = summer.pageParam.personMessage;
+			newCreateCustom.personMes=personMessage;
+		}
+	</script>
+</body>
+
 </html>

@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<ul class="userList">
-				<li>
+				<li onclick="changePsw()">
 					<span class="iconfont icon-version"></span>
 					<i>修改密码</i>
 					<div class="companyInfo">
@@ -149,6 +149,31 @@
 				summer.hideProgress();
 				console.log(error);
 				summer.toast({msg:"系统内部异常"});
+			});
+		};
+		function changePsw(){
+			summer.openWin({
+				id:'changePsw',
+				url:'html/changePsw/index.html',
+				create:false,
+				type:'actionBar',
+				actionBar: {
+					title: "修改密码",
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039be5",
+					leftItem:{
+						image: "img/back.png",
+						method:"",//返回按钮自定义事件
+						text:"返回",
+						textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems:[{
+						type:"text",
+						text:"提交",
+						textColor:"#ffffff" ,
+						method:"submitPsw()"
+					}]
+				}
 			});
 		};
 	</script>

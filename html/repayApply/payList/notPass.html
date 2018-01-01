@@ -1,113 +1,181 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="index.css">
-		<script src="../../../js/summer.js" ></script>
-		<script src="../../../js/jquery.min.js" ></script>
-		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script src="../../../js/font.js" ></script>
-	</head>
-	<body>
-		<div class="um-frame" id="index">
-			<div class="um-header-light">
-				<div class="sera">
-						<div class="s-box" onclick="opensearch()">
-							<i class="iconfont icon-search"> </i>
-							<p class="txt">
-								输入客户名称/关键词
-							</p>
-						</div>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="index.css">
+	<script src="../../../js/summer.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../../js/font.js"></script>
+	<script src="../../../js/vue.js"></script>
+	<script src="../../../js/common.js"></script>
+</head>
+
+<body>
+	<div class="um-frame" id="index">
+		<div class="um-header-light">
+			<div class="sera">
+				<div class="s-box" onclick="opensearch()">
+					<i class="iconfont icon-search"> </i>
+					<p class="txt">
+						输入客户名称/关键词
+					</p>
 				</div>
 			</div>
-			<div class="um-content">
-				<ul class="userList">
-					<li>
-						<div class="title">
-							<span class="name">徐艺</span>
-							<span class="state">张仁忠</span>
-							<span class="iconfont icon-customer"></span>
-						</div>
-						<div class="content">
-							<div class="leftCon">
-								<p class="p1">放款金额：￥200000</p>
-								<p class="p2">合同号：CNK1561654</p>
-								<p class="p3">支付表号：CNK15616548965416</p>
-								<p class="p4">放款时间：2017-01-16</p>
-							</div>
-							<div class="enter">
-								<i class="iconfont icon-enter"></i>
-								<b>放款不通过</b>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
 		</div>
-		<script type="text/javascript">
-			summerready=function(){
-				summer.setRefreshHeaderInfo({
-					 visible: true,
-					 loadingImg: 'img/refresh.png',
-					 bgColor: '#ffffff',
-					 textColor: '#aaaaaa',
-					 textDown: '下拉刷新...',
-					 textUp: '松开刷新...',
-					 showTime: true
-				}, function(ret, err) {
-					 //通常在这里从服务器加载数据，t
-					//  alert(1);
-					 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
-				});
-				summer.setRefreshFooterInfo({
-					 visible: true,
-					 loadingImg: 'img/refresh.png',
-					 bgColor: '#ffffff',
-					 textColor: '#aaaaaa',
-					 textDown: '上拉刷新...',
-					 textUp: '松开刷新...',
-					 showTime: true
-				}, function(ret, err) {
-					 //通常在这里从服务器加载数据，
-					 summer.toast({msg:"没有更多了"});
-					 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
-				});
-			}
-			$(function (){
-				$('.userList .content').on('click',function (){
+		<div class="um-content">
+			<ul class="userList">
+				<li v-for="k in items">
+					<div class="title">
+						<span class="name">{{k.RENTER_NAME}}</span>
+						<span class="state">{{k.CLERK_NAME}}</span>
+						<span class="iconfont icon-customer"></span>
+					</div>
+					<div class="content" @click="payDetail(k.ID,k.PROJECT_ID)">
+						<div class="leftCon">
+							<p class="p1">放款金额：￥{{k.money}}</p>
+							<p class="p2">合同号：{{k.LEASE_CODE}}</p>
+							<p class="p3">支付表号：{{k.PAYLIST_CODE}}</p>
+							<p class="p4">放款时间：{{k.START_DATE}}</p>
+						</div>
+						<div class="enter">
+							<i class="iconfont icon-enter"></i>
+							<b>{{k.N_PAYSTATUS}}</b>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var notPass = new Vue({
+			el: '#index',
+			data: {
+				items: [],
+				totalPage: null,
+				num: 1,
+				resetData: false
+			},
+			methods: {
+				payDetail(userId, PROJECT_ID) {
 					summer.openWin({
-						id:'checkPay',
-						url:'html/repayApply/checkPay/index.html',
-						create:false,
-						type:'actionBar',
+						id: 'checkPay',
+						url: 'html/repayApply/checkPay/index.html',
+						create: false,
+						type: 'actionBar',
 						actionBar: {
 							title: "付款查看",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							backgroundColor: "#039be5",
-							leftItem:{
-									image: "img/back.png",
-									method:"",//返回按钮自定义事件
-									text:"返回",
-									textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						},
+						pageParam: {
+							info: {
+								userId: userId,
+								PROJECT_ID: PROJECT_ID
 							}
 						}
 					});
-				});
-			});
-			// 搜索
-			function opensearch(){
-				summer.openWin({
-					id:'search',
-					url:'html/fastReport/search.html',
-					pageParam:{
-						source:"program"
+				}
+			}
+		});
+		summerready = function() {
+			function getData(pageNum) {
+				summer.showProgress();
+				ajaxRequest({
+					type: 'post',
+					url: 'appservice/paytable/paylist',
+					param: {
+						"pageNo": pageNum,
+						"pageSize": 10
 					}
+				}, function(res) {
+					summer.hideProgress();
+					var Data;
+					if (Object.prototype.toString.call(res.data) === '[object String]') {
+						Data = JSON.parse(res.data);
+					} else {
+						Data = res.data;
+					}
+					if (Data.flag == 1) {
+						notPass.totalPage = Data.datas.totalPage;
+						if (Data.datas.list.length < 1) {
+							createNull("content", "../../img/empty.png")
+						} else {
+							if (notPass.resetData) {
+								notPass.items = Data.datas.list;
+							} else {
+								notPass.items.push(...Data.datas.list);
+							}
+						}
+					}
+					console.log(notPass.items);
+				}, function(err) {
+					summer.hideProgress();
+					summer.toast({
+						msg: "暂无数据"
+					});
+					console.log(err);
 				});
 			};
-		</script>
-	</body>
+			getData(notPass.num);
+			summer.setRefreshHeaderInfo({
+				visible: true,
+				loadingImg: 'img/refresh.png',
+				bgColor: '#ffffff',
+				textColor: '#aaaaaa',
+				textDown: '下拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				//通常在这里从服务器加载数据
+				notPass.resetData = true;
+				getData(1);
+				summer.refreshHeaderLoadDone(); //加载完成后调用方法恢复组件到默认状态
+			});
+			summer.setRefreshFooterInfo({
+				visible: true,
+				loadingImg: 'img/refresh.png',
+				bgColor: '#ffffff',
+				textColor: '#aaaaaa',
+				textDown: '上拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				//通常在这里从服务器加载数据，
+				var num = notPass.num++;
+				if (num > notPass.totalPage) {
+					summer.toast({
+						msg: "没有更多了"
+					});
+				} else {
+					notPass.resetData = false;
+					getData(num);
+				}
+				summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+			});
+		}
+		// 搜索
+		function opensearch() {
+			summer.openWin({
+				id: 'search',
+				url: 'html/fastReport/search.html',
+				pageParam: {
+					source: "program"
+				}
+			});
+		};
+	</script>
+</body>
+
 </html>

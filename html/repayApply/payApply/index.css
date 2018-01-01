@@ -3,6 +3,7 @@ html{
 }
 .um-content{
    position: relative;
+   display: none;
 }
 .applyList{
    width: 100%;

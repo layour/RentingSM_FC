@@ -1,123 +1,155 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="index.css">
-		<script src="../../../js/summer.js" ></script>
-		<script src="../../../js/jquery.min.js" ></script>
-		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script src="../../../js/font.js" ></script>
-		<script src="../../../js/vue.js" ></script>
-	</head>
-	<body>
-		<div class="um-frame" id="index">
-			<div class="um-content">
-				<ul class="infoList">
-				   <li class="first"><strong></strong><i>基本信息</i></li>
-				   <li>
-				      <span>客户信息</span>
-                  <span>{{msg}}</span>
-				   </li>
-				   <li>
-                  <span>合同号</span>
-                  <span>CNKYRZ000435201780</span>
-				   </li>
-				   <li>
-                  <span>支付表号</span>
-                  <span>CNKYRZ000435201780</span>
-				   </li>
-				   <li>
-                  <span>项目类型</span>
-                  <span>大客户业务</span>
-				   </li>
-				   <li>
-                  <span>所属机构</span>
-                  <span>汽车金融事业部</span>
-				   </li>
-				   <li>
-                  <span>首付款代收</span>
-                  <span>是</span>
-				   </li>
-				   <li>
-                  <span>首付款金额</span>
-                  <span>￥<b>8,100.00</b></span>
-				   </li>
-				   <li>
-                  <span>设备款</span>
-                  <span>￥<b>8,100.00</b></span>
-				   </li>
-				   <li>
-                  <span>上牌信息</span>
-                  <span>已上牌</span>
-				   </li>
-				</ul>
-            <ul class="infoList">
-				   <li class="first"><strong></strong><i>付款通知（收款方）</i></li>
-				   <li>
-                  <span>收款方类型</span>
-                  <span>供应商</span>
-				   </li>
-				   <li>
-                  <span>收款单位</span>
-                  <span>郭本福</span>
-				   </li>
-				   <li>
-                  <span>账户类型</span>
-                  <span>对私</span>
-				   </li>
-				   <li>
-                  <span>开户行</span>
-                  <span>农行</span>
-				   </li>
-				   <li>
-                  <span>开户行行号</span>
-                  <span>103475749114</span>
-				   </li>
-				   <li>
-                  <span>收款账号</span>
-                  <span>103475749114</span>
-				   </li>
-				   <li>
-                  <span>备注</span>
-                  <span>无</span>
-				   </li>
-				</ul>
-            <ul class="infoList">
-				   <li class="first"><strong></strong><i>付款通知（付款信息）</i></li>
-				   <li>
-                  <span>应付金额</span>
-                  <span>￥<b>8,100.00</b></span>
-				   </li>
-				   <li>
-                  <span>实付金额</span>
-                  <span>￥<b>8,100.00</b></span>
-				   </li>
-				   <li>
-                  <span>付款方式</span>
-                  <span>银行汇票</span>
-				   </li>
-				   <li>
-                  <span>实付时间</span>
-                  <span>2016-12-01</span>
-				   </li>
-				</ul>
-			</div>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="index.css">
+	<script src="../../../js/summer.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../../js/font.js"></script>
+	<script src="../../../js/vue.js"></script>
+	<script src="../../../js/common.js"></script>
+</head>
+
+<body>
+	<div class="um-frame" id="index">
+		<div class="um-content">
+			<ul class="infoList" v-bind:style="[datas ? {'display':'block'} : {'display':'none'}]">
+				<li class="first"><strong></strong><i>基本信息</i></li>
+				<li>
+					<span>客户信息</span>
+					<span>{{datas ? datas.TABLE_HEAD.RENTER_NAME : ""}}</span>
+				</li>
+				<li>
+					<span>合同号</span>
+					<span>{{datas ? datas.TABLE_HEAD.LEASE_CODE : ""}}</span>
+				</li>
+				<li>
+					<span>支付表号</span>
+					<span>{{datas ? datas.TABLE_HEAD.PAYLIST_CODE : ""}}</span>
+				</li>
+				<li>
+					<span>项目类型</span>
+					<span></span>
+				</li>
+				<li>
+					<span>所属机构</span>
+					<span></span>
+				</li>
+				<li>
+					<span>首付款代收</span>
+					<span></span>
+				</li>
+				<li>
+					<span>首付款金额</span>
+					<span>￥<b>{{datas ? datas.PAY_OTHERDETAIL[0].ITEM_MONEY : ""}}</b></span>
+				</li>
+				<li>
+					<span>设备款</span>
+					<span>￥<b>{{datas ? datas.LEASEOBJ[0].TOTAL : ""}}</b></span>
+				</li>
+				<li>
+					<span>上牌信息</span>
+					<span></span>
+				</li>
+			</ul>
+			<ul class="infoList">
+				<li class="first"><strong></strong><i>付款通知（收款方）</i></li>
+				<li>
+					<span>收款方类型</span>
+					<span></span>
+				</li>
+				<li>
+					<span>收款单位</span>
+					<span></span>
+				</li>
+				<li>
+					<span>账户类型</span>
+					<span></span>
+				</li>
+				<li>
+					<span>开户行</span>
+					<span>{{datas ? datas.PAYBANKINFO.BANK_NAME : ""}}</span>
+				</li>
+				<li>
+					<span>开户行行号</span>
+					<span>{{datas ? datas.PAYBANKINFO.ACCOUNT_NO : ""}}</span>
+				</li>
+				<li>
+					<span>收款账号</span>
+					<span></span>
+				</li>
+				<li>
+					<span>备注</span>
+					<span></span>
+				</li>
+			</ul>
+			<ul class="infoList">
+				<li class="first"><strong></strong><i>付款通知（付款信息）</i></li>
+				<li>
+					<span>应付金额</span>
+					<span>￥<b>{{datas ? datas.PAY_DETAILS[0].MONTHPRICE : ""}}</b></span>
+				</li>
+				<li>
+					<span>实付金额</span>
+					<span>￥<b>{{datas ? datas.PAY_DETAILS[0].OWNPRICE : ""}}</b></span>
+				</li>
+				<li>
+					<span>付款方式</span>
+					<span></span>
+				</li>
+				<li>
+					<span>实付时间</span>
+					<span>{{datas ? datas.TABLE_HEAD.START_DATE : ""}}</span>
+				</li>
+			</ul>
 		</div>
-		<script type="text/javascript">
-			summerready = function (){
-				user = summer.pageParam.user;
-				payInfo.msg = user;
-			};
-			var payInfo = new Vue({
-				el:'#index',
-				data:{
-					msg:''
+	</div>
+	<script type="text/javascript">
+		var payInfo = new Vue({
+			el: '#index',
+			data: {
+				datas: null
+			}
+		});
+		summerready = function() {
+			var info = summer.pageParam.info;
+			summer.showProgress();
+			ajaxRequest({
+				type: 'post',
+				url: 'appservice/paytable/payinfo',
+				param: {
+					"id": info.userId
 				}
+			}, function(res) {
+				summer.hideProgress();
+				var Data;
+				if (Object.prototype.toString.call(res.data) === '[object String]') {
+					Data = JSON.parse(res.data);
+				} else {
+					Data = res.data;
+				}
+				if (Data.flag == 1) {
+					payInfo.datas = Data.datas;
+				} else {
+					summer.toast({
+						msg: Data.msg
+					});
+				}
+			}, function(err) {
+				summer.hideProgress();
+				summer.toast({
+					msg: "暂无数据"
+				});
+				console.log(err);
 			});
-		</script>
-	</body>
+		};
+	</script>
+</body>
+
 </html>
