@@ -95,12 +95,12 @@
 							<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
 							<p>{{param.TPM_TYPE}}</p>
 						</li>
-						<li @click="openPopup" v-if="!isVideo&&imgList.length<9">
+						<li @click="openPopup" v-if="imgList.length<9">
 							<div><i  class="icon iconfont icon-add"></i></div>
 							<p>{{param.TPM_TYPE}}</p>
 						</li>
 					</template>
-					<template>
+					<template v-else>
 						<li @click="takeVideo">
 							<div><img v-if="videoUrl" :src="videoImg" alt=""><i v-else class="icon iconfont icon-add"></i></div>
 							<p>{{param.TPM_TYPE}}</p>
