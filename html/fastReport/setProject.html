@@ -133,6 +133,7 @@
 				var customId = summer.pageParam.customId;
 			var __projectid = summer.pageParam.projectId;
 			setProgect.project_Id = __projectid;
+			setProgect.getProjectId(__projectid);
 			console.log(JSON.stringify(summer.pageParam));
 		/*	if (sourceId == "programList") {
 				setProgect.getProjectId(__projectid);
@@ -209,6 +210,9 @@
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							self.customId = res.data.datas.ProjectObj.CLIENT_ID;
+							addRight('customer');
+							addRight('baseMessage');
+							addRight('sponsor');
 						}
 					}, function(err) {
 						alert(err);
@@ -221,34 +225,60 @@
 					let self = this;
 					let baseData = JSON.parse(JSON.stringify(self.baseMessageData));
 					let _project_Id = self.project_Id;
-					summer.openWin({
-						id: "baseMessage",
-						url: "html/fastReport/baseMessage.html",
-						create: false,
-						type: 'actionBar',
-						actionBar: {
-							title: '基本信息',
-							titleColor: "#ffffff",
-							backgroundColor: "#039BE5",
-							leftItem: {
-								image: "img/back.png",
-								method: "",
-								text: "返回",
-								textColor: "#ffffff"
-							},
-							rightItems: [{
-								type: "text",
-								text: "完成",
-								textColor: "#ffffff",
-								method: "save()"
-							}]
-						},
-						pageParam: {
-							baseData: baseData,
-							project_Id: _project_Id,
-							customId:self.customId
+						if (_project_Id) {
+							summer.openWin({
+								id: "baseMessage",
+								url: "html/fastReport/baseMessage.html",
+								create: false,
+								type: 'actionBar',
+								actionBar: {
+									title: '基本信息',
+									titleColor: "#ffffff",
+									backgroundColor: "#039BE5",
+									leftItem: {
+										image: "img/back.png",
+										method: "",
+										text: "返回",
+										textColor: "#ffffff"
+									}
+								},
+								pageParam: {
+									baseData: baseData,
+									project_Id: _project_Id,
+									customId:self.customId
+								}
+							})
+						} else {
+							summer.openWin({
+								id: "baseMessage",
+								url: "html/fastReport/baseMessage.html",
+								create: false,
+								type: 'actionBar',
+								actionBar: {
+									title: '基本信息',
+									titleColor: "#ffffff",
+									backgroundColor: "#039BE5",
+									leftItem: {
+										image: "img/back.png",
+										method: "",
+										text: "返回",
+										textColor: "#ffffff"
+									},
+									rightItems: [{
+										type: "text",
+										text: "完成",
+										textColor: "#ffffff",
+										method: "save()"
+									}]
+								},
+								pageParam: {
+									baseData: baseData,
+									project_Id: _project_Id,
+									customId:self.customId
+								}
+							})
 						}
-					})
+
 				}
 			}
 		})

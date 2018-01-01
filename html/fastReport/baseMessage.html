@@ -13,19 +13,45 @@
 		<div class="um-win" id="baseMessageElement" v-cloak>
 			<div class="um-content baseMessage">
 				<ul>
-					<li @click="surePickerProgram">
+					<li   v-if='hasProjectId'>
+						<p class="pl10 pr10 tr">
+							<span class="fl">项目类型</span>
+							 <span class="right"><span   class="first">{{programStyle}}</span> </span>
+						</p>
+					</li>
+					<li @click="surePickerProgram" v-else>
 						<p class="pl10 pr10 tr">
 							<span class="fl">项目类型</span>
 							 <span class="right"><span v-if='programStyle' class="first">{{programStyle}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
 
-					<li >
+					<li  v-if='hasProjectId'>
+						<p class="pl10 pr10 tr" >
+							<span class="fl">省市</span>
+							 <span class=""> <span  class="first">{{AREA_ID_NM}} {{CITY_ID_NM}}  </span> </span>
+						</p>
+					</li>
+					<li  v-else>
 						<p class="pl10 pr10 tr" @click="selectAddr">
-							<span class="fl">省市县</span>
+							<span class="fl">省市</span>
 							 <span class=""> <span  class="first">{{AREA_ID_NM}} {{CITY_ID_NM}}  </span> <i class="icon iconfont icon-enter"></i></span>
 						</p>
 					</li>
+					<li  v-if='hasProjectId'>
+						<p class="pl10 pr10 tr" >
+							<span class="fl">项目名称</span>
+							 <span class=""> <span  class="first">{{PROJECT_NAME}}   </span> </span>
+						</p>
+					</li>
+					<li v-else></li>
+					<li  v-if='hasProjectId'>
+						<p class="pl10 pr10 tr" >
+							<span class="fl">项目ID</span>
+							 <span class=""> <span  class="first">{{PROJECT_ID}}   </span> </span>
+						</p>
+					</li>
+					<li v-else></li>
 			<!--		<li>
 						<p class="pl10 pr10 tr" style="line-height:0.88rem;">
 							<span class="fl">合同签署方式</span>
@@ -80,6 +106,7 @@
 			  let _project_Id=summer.pageParam.project_Id;
 
 			  if(_project_Id){
+				  baseMessage.hasProjectId=true;
 					baseMessage.getData(_project_Id);
 			  }
 			  baseMessage.totalData=baseData;
@@ -120,7 +147,10 @@
 					CITY_ID:"",
 					AREA_ID_NM:"",
 					CITY_ID_NM:"",
-					customId:""
+					customId:"",
+					hasProjectId:false,
+					PROJECT_NAME:'',
+					PROJECT_ID:''
 				}
 			},
 			created() {
@@ -138,8 +168,11 @@
 					 }, function(res) {
 						 summer.hideProgress();
 						 if (res.data.flag == 1) {
-								 summer.toast({msg:"创建成功"});
-							 console.log(res);
+								self.programStyle =res.data.datas.ProjectObj.PLATFORM
+								self.AREA_ID_NM =res.data.datas.ProjectObj.AREA_NAME
+								self.CITY_ID_NM =res.data.datas.ProjectObj.CITY_NAME
+								self.PROJECT_NAME =res.data.datas.ProjectObj.PROJECT_NAME
+								self.PROJECT_ID =res.data.datas.ProjectObj.PROJECT_ID
 
 						 }
 					 }, function(err) {

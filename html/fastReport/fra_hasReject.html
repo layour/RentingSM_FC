@@ -41,7 +41,7 @@
 					</p>
 				</div>
 				<p class=" select um-box" v-if="item.STATUS=='草稿'">
-					<span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>
+				<!--	<span class="um-bf1   tc" @click="upload(item.ID)"><i class="iconfont icon-Upload mr5"></i>上传资料</span>-->
 					<span class="um-bf1  tc" @click="submit(item.ID)"><i class="iconfont icon-submit mr5"></i>提交</span>
 					<span class="um-bf1   tc" @click="edit(item.ID)"><i class="iconfont icon-modify mr5"></i>修改</span>
 					<span class="um-bf1  tc" @click="openOpacity(item.ID,item.LEASE_CODE)"><i class="iconfont icon-nav_delete mr5"></i>删除</span>
@@ -276,7 +276,7 @@
 							}]
 						},
 						pageParam: {
-							id: id,
+							projectId: id,
 							source: "programSelect"
 						}
 					});
