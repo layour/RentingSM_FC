@@ -13,74 +13,43 @@ html{
     position: relative;
     margin-bottom: 0.2rem;
 }
-/*.container dl{
-   width: 1.2rem;
-   height: 1.8rem;
-   position: absolute;
-   left: 50%;
-   margin-left: -0.6rem;
-   top: 0.84rem;
+
+.swiper-container{
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
 }
-.container dl dt img{
-   display: block;
-   border: 0;
-   width: 1.2rem;
-   height: 1.2rem;
-   border-radius: 0.6rem;
-   background-color: #fff;
-   margin-bottom: 0.2rem;
+.swiper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
-.container dl dd{
-   width: 1.2rem;
-   height: 0.4rem;
-   font-size: 0.28rem;
-   line-height: 0.4rem;
-   text-align: center;
-   color: #fff;
+.swiper-free-mode > .swiper-wrapper {
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    margin: 0 auto;
 }
-.container .icon-set{
-   position: absolute;
-   width: 0.4rem;
-   height: 0.4rem;
-   color: #fff;
-   font-size: 0.4rem;
-   line-height: 0.4rem;
-   right: 0.42rem;
-   top: 0.6rem;
-}*/
-.container img{
-    position: absolute;
+.swiper-slide {
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+}
+.swiper-slide img {
     display: block;
-    border: 0;
-    width: 1.2rem;
-    height: 1.2rem;
-    background-color: #f1f1f1;
-    border-radius: 0.6rem;
-    left: 50%;
-    top: 0.72rem;
-    z-index: 999;
-    margin-left: -0.6rem;
-}
-.userInfo{
-   width: 100%;
-   height: 3.7rem;
-   background: url('../img/banner.png') no-repeat left top;
-   background-size: 100% 100%;
-   -webkit-filter: blur(4px); /* Chrome, Opera */
-   -moz-filter: blur(4px);
-   -ms-filter: blur(4px);
-   filter: blur(4px);
-}
-.container p{
-    position: absolute;
-    font-size: 0.32rem;
-    height: 0.32rem;
-    line-height: 0.32rem;
-    color: #fff;
-    left: 50%;
-    transform: translate(-50%);
-    top: 2.2rem;
-    z-index: 999;
+    width: 100%;
+    height: 100%;
 }
 .crm,.xmgl{
    height: 0.7rem;
