@@ -220,7 +220,7 @@
 					console.log(data);
 					let self = this;
 					let baseData = JSON.parse(JSON.stringify(self.baseMessageData));
-					let _customId = self.customId;
+					let _project_Id = self.project_Id;
 					summer.openWin({
 						id: "baseMessage",
 						url: "html/fastReport/baseMessage.html",
@@ -245,7 +245,8 @@
 						},
 						pageParam: {
 							baseData: baseData,
-							customId: _customId
+							project_Id: _project_Id,
+							customId:self.customId
 						}
 					})
 				}

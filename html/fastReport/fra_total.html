@@ -233,6 +233,27 @@
 				},
 				submit(id) {
 					summer.openWin({
+							id : "submitSure",
+							url : "html/fastReport/submitSure.html",
+							create : false,
+							type : 'actionBar',
+							actionBar : {
+								title : "提交确认",
+								titleColor : "#ffffff",
+								backgroundColor : "#039BE5",
+								leftItem : {
+									image : "img/back.png",
+									method : "",
+									text : "返回",
+									textColor : "#ffffff"
+								}
+							},
+							pageParam:{
+								project_Id:	id
+							}
+
+						})
+					/*summer.openWin({
 						id: 'submitSure',
 						url: 'html/fastReport/submitSure.html',
 						create: false,
@@ -252,7 +273,7 @@
 							id: id,
 							source: "programSelect"
 						}
-					});
+					});*/
 				},
 				edit(id) {
 					summer.openWin({

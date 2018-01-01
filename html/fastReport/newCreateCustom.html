@@ -269,8 +269,8 @@
 						HOUSE_ADDRESS_PROVINCE: '',
 						HOUSE_ADDRESS_CITY: '',
 						HOUSE_ADDRESS_COUNTY: '',
-					}
-
+					},
+					spoustObjMes:""
 				}
 			},
 			methods: {
@@ -286,6 +286,7 @@
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							let holeData=res.data.datas.custinfo;
+							self.spoustObjMes=res.data.datas.spoustObj
 							    self.message.NAME=holeData.NAME;
 								 self.message.ID_CARD_NO=holeData.ID_CARD_NO;
 								 self.message.SEX=holeData.SEX_NM;
@@ -299,10 +300,34 @@
 								 self.message.HOME_XZ=holeData.HOME_XZ;
 								 self.message.HOUSE_ADDRESS_PROVINCE=holeData.HOUSE_ADDRESS_PROVINCE;
 								 self.message.HOUSE_ADDRESS_CITY=holeData.HOUSE_ADDRESS_CITY;
-								 if (condition) {
-
+								 if (self.message.IS_MARRY=="20") {
+									 summer.setWinAttr({
+										 actionBar: {
+											 title: "客户信息",
+											 titleColor: "#ffffff",
+											 backgroundColor: "#039be5",
+											 rightItems: [{
+												 type: "text",
+												 text: "下一步",
+												 textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+												 method: "nextStopAction()" //在打开的window中自定义事件
+											 }]
+										 }
+									 });
 								 } else {
-
+									 summer.setWinAttr({
+										 actionBar: {
+											 title: "客户信息",
+											 titleColor: "#ffffff",
+											 backgroundColor: "#039be5",
+											 rightItems: [{
+												 type: "text",
+												 text: "保存",
+												 textColor: "#ffffff",
+												 method: "savePerson()" //自定义事件
+											 }]
+										 }
+									 });
 								 }
 						}
 					}, function(err) {
@@ -530,7 +555,7 @@
 						param: {
 							NAME: self.message.NAME,
 							ID_CARD_NO:  self.message.ID_CARD_NO,
-							SEX:  self.message.SEX,
+							SEX:  self.message.SEX=="男"?"0":"1",
 							HOUSE_ADDRESS: self.message.HOUSE_ADDRESS,
 							TEL_PHONE: self.message.TEL_PHONE,
 							IS_MARRY: self.message.IS_MARRY,
@@ -595,7 +620,6 @@
 						url: 'html/fastReport/newCreateCustom2.html',
 						create: false,
 						type: 'actionBar',
-						isKeep: false,
 						actionBar: {
 							title: "配偶信息",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
@@ -614,7 +638,8 @@
 							}]
 						},
 						pageParam:{
-							personMessage:self.message
+							personMessage:self.message,
+							spoustObjMes:self.spoustObjMes
 						}
 					});
 				},

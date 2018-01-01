@@ -3,7 +3,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 		<meta charset="UTF-8">
-		<title>添加车辆</title>
+		<title>基本信息</title>
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
@@ -75,9 +75,15 @@
 		<script>
 		  summerready=function(){
 			  var baseData=summer.pageParam.baseData;
-			  let _customId=summer.pageParam.customId;
+			  var customId=summer.pageParam.customId;
+			  baseMessage.customId=customId;
+			  let _project_Id=summer.pageParam.project_Id;
+
+			  if(_project_Id){
+					baseMessage.getData(_project_Id);
+			  }
 			  baseMessage.totalData=baseData;
-			  baseMessage.customId=_customId;
+			  baseMessage.project_Id=_project_Id;
 			  baseData.business.map((e,i) =>{
 					baseMessage.slots1[0].values.push(e.FLAG);
 			  })
@@ -109,17 +115,38 @@
 						textAlign : 'center'
 					}],
 					totalData:"",
-					customId:"",
+					project_Id:"",
 					AREA_ID:"",
 					CITY_ID:"",
 					AREA_ID_NM:"",
-					CITY_ID_NM:""
+					CITY_ID_NM:"",
+					customId:""
 				}
 			},
 			created() {
 
 			},
 			 methods: {
+				 getData(id){
+					 let self=this;
+					 ajaxRequest({
+						 type: 'post',
+						 url: 'appservice/foundproject/loadProjectPage',
+						 param: {
+							  PROJECT_ID:id
+						 }
+					 }, function(res) {
+						 summer.hideProgress();
+						 if (res.data.flag == 1) {
+								 summer.toast({msg:"创建成功"});
+							 console.log(res);
+
+						 }
+					 }, function(err) {
+						 console.log(err);
+						 summer.hideProgress();
+					 });
+				 },
 				 selectAddr(){
  					summer.setStorage("selectFrom","baseMessage");
  					summer.openWin({
