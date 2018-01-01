@@ -36,7 +36,7 @@
 				<div class="list listContent" v-for="(item,index) in list" :key="index">
 					<p class="title f16">立项通过<span class="fr">{{type}}</span></p>
 					<div>
-						<p class="nb">{{name}}购买了{{item.AMOUNT}}台{{item.PRODUCT_NAME}}<span class="fr"></span></p>
+						<p class="nb">{{name}}购买了{{item.AMOUNT}}台{{item.PRODUCT_NAME}}<span class="fr">{{PROJECT_TRADE}}</span></p>
 						<p class="">&yen;{{item.TOTAL_PRICE}} </p>
 					</div>
 					<p @click="returnInit" class="last">流程ID:<span style="color:#1287DE;">{{JBPM_ID}}</span> <i class='icon iconfont icon-enter fr' style="color:#DBDBDB;"></i></p>
@@ -50,6 +50,7 @@
 				finanlSubmit.name=summer.pageParam.name
 				finanlSubmit.type=summer.pageParam.type
 				finanlSubmit.JBPM_ID=summer.pageParam.JBPM_ID
+				finanlSubmit.PROJECT_TRADE=summer.pageParam.PROJECT_TRADE
 				finanlSubmit.project_Id=summer.pageParam.project_Id
 			}
 			var finanlSubmit=new Vue({
@@ -60,7 +61,8 @@
 						type:'',
 						list:[],
 						JBPM_ID:'',
-						project_Id:''
+						project_Id:'',
+						PROJECT_TRADE:''
 					}
 				},
 				methods:{

@@ -289,6 +289,10 @@
 								};
 								console.log("上传的参数"+JSON.stringify(dataParams))
 								console.log("文件数组"+JSON.stringify(this.uploadImgArr));
+								if(this.uploadImgArr.length==0){
+									summer.toast({msg:'请先选择图片'})
+									return
+								}
 								summer.multiUpload({
 									fileArray : that.uploadImgArr,
 									params : dataParams,
