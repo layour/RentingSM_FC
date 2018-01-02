@@ -149,7 +149,7 @@
 			</div>
 			<div @click="surePickerTransport" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION' class="first">{{message.INDUSTRY_FICATION}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="surePickerHouse" class="item">
@@ -268,16 +268,18 @@
 						IS_MARRY: '',
 						IS_MARRY_NM: '',
 						BIRTHDAY: '',
-						SCALE_SOURCE_NM: '',
+						SCALE_SOURCE: '1',
+						SCALE_SOURCE_NM:'',
 						INDUSTRY_FICATION: '',
-						INDUSTRY_FICATION_NM: '',
+						INDUSTRY_FICATION: '',
 						HOME_XZ: '',
 						HOUSE_ADDRESS_PROVINCE: '',
 						HOUSE_ADDRESS_PROVINCE_NM: '',
 						HOUSE_ADDRESS_CITY: '',
 						HOUSE_ADDRESS_CITY_NM: '',
 					},
-					spoustObjMes: ""
+					spoustObjMes: "",
+					sourceFrom:''
 				}
 			},
 			methods: {
@@ -306,7 +308,6 @@
 							self.message.SCALE_SOURCE = holeData.SCALE_SOURCE;
 							self.message.SCALE_SOURCE_NM = holeData.SCALE_SOURCE_NM;
 							self.message.INDUSTRY_FICATION = holeData.INDUSTRY_FICATION;
-							self.message.INDUSTRY_FICATION_NM = holeData.INDUSTRY_FICATION_NM;
 							self.message.HOME_XZ = holeData.HOME_XZ;
 							self.message.HOUSE_ADDRESS_PROVINCE = holeData.HOUSE_ADDRESS_PROVINCE;
 							self.message.HOUSE_ADDRESS_PROVINCE_NM = holeData.HOUSE_ADDRESS_PROVINCE_NM;
@@ -465,7 +466,7 @@
 				surePickerIsNative: function(param) {
 					this.pickerIsNativeStatus = !this.pickerIsNativeStatus;
 					if (param == 'confirm') {
-						this.message.SCALE_SOURCE_NM = this.pickerIsNative;
+						this.message.SCALE_SOURCE_NM= this.pickerIsNative;
 					}
 				},
 				onValuesChange4: function(picker, values) {
@@ -474,7 +475,7 @@
 				surePickerTransport: function(param) {
 					this.pickerTransportStatus = !this.pickerTransportStatus;
 					if (param == 'confirm') {
-						this.message.INDUSTRY_FICATION_NM = this.pickerTransport;
+						this.message.INDUSTRY_FICATION= this.pickerTransport;
 					}
 				},
 				onValuesChange5: function(picker, values) {
@@ -573,7 +574,8 @@
 							IS_MARRY: self.message.IS_MARRY,
 							BIRTHDAY: self.message.BIRTHDAY,
 							SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
-							INDUSTRY_FICATION_NM: self.message.INDUSTRY_FICATION_NM,
+							SCALE_SOURCE: "1",
+							INDUSTRY_FICATION: self.message.INDUSTRY_FICATION,
 							HOME_XZ: self.message.HOME_XZ,
 							HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
 							HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,
@@ -583,8 +585,40 @@
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							summer.toast({
-								msg: "创建成功"
+								msg: "保存成功"
 							});
+							if (self.sourceFrom=="newCustom") {
+									let clint_Id=res.data.datas.CLIENT_ID;
+								summer.openWin({
+									id : 'setProject',
+									url : 'html/fastReport/setProject.html',
+									create : false,
+									type : 'actionBar',
+									pageParam:{
+										source:"customer",
+										customId:clint_Id
+									},
+									actionBar : {
+										title : "快捷报单",
+										titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										backgroundColor : "#039be5",
+										leftItem : {
+											image : "img/back.png",
+											method : "", //返回按钮自定义事件
+											text : "返回",
+											textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										},
+										rightItems : [{
+											type : "text",
+											text : "下一步",
+											textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+											method : "nextStopInput()" //在打开的window中自定义事件
+										}]
+									}
+								});
+							} else {
+									summer.closeWin();
+							}
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
 						}
@@ -652,7 +686,8 @@
 						},
 						pageParam: {
 							personMessage: self.message,
-							spoustObjMes: self.spoustObjMes
+							spoustObjMes: self.spoustObjMes,
+							sourceFrom:self.sourceFrom
 						}
 					});
 				},
@@ -680,6 +715,8 @@
 		summerready = function() {
 			let projectId = summer.pageParam.projectId;
 			let clintId = summer.pageParam.clintId;
+			let sourceFrom=summer.pageParam.sourceFrom;
+			newCreateCustom.sourceFrom=sourceFrom;
 			if (clintId) {
 				newCreateCustom.getData(projectId, clintId);
 			}

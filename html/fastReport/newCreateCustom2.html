@@ -186,7 +186,8 @@
 							SPOUST_HOUSR_RE_ADDRESS:'',
 							SPOUST_TEL_PHONE:''
 						}
-					}
+					},
+					sourceFrom:''
 				}
 			},
 			methods: {
@@ -357,7 +358,39 @@
 						if (res.data.flag == 1) {
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
-							summer.toast({msg:"创建成功"});
+							summer.toast({msg:"保存成功"});
+							let clint_Id=res.data.datas.CLIENT_ID;
+							if (self.sourceFrom=="newCustom") {
+								summer.openWin({
+									id : 'setProject',
+									url : 'html/fastReport/setProject.html',
+									create : false,
+									type : 'actionBar',
+									pageParam:{
+										source:"customer",
+										customId:clint_Id
+									},
+									actionBar : {
+										title : "快捷报单",
+										titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										backgroundColor : "#039be5",
+										leftItem : {
+											image : "img/back.png",
+											method : "", //返回按钮自定义事件
+											text : "返回",
+											textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										},
+										rightItems : [{
+											type : "text",
+											text : "下一步",
+											textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+											method : "nextStopInput()" //在打开的window中自定义事件
+										}]
+									}
+								});
+							} else {
+									summer.closeToWin({id:"setProject"});
+							}
 						}
 					}, function(err) {
 						alert(err);
@@ -377,6 +410,8 @@
 		summerready = function() {
 			let personMessage = summer.pageParam.personMessage;
 			let spoustObjMes=summer.pageParam.spoustObjMes;
+			let sourceFrom=summer.pageParam.sourceFrom;
+			newCreateCustom.sourceFrom=sourceFrom;
 			if(spoustObjMes){
 				newCreateCustom.message.spoustObj.SPOUST_NAME=spoustObjMes.SPOUST_NAME
 				newCreateCustom.message.spoustObj.SPOUST_ID_CARD_NO=spoustObjMes.SPOUST_ID_CARD_NO
