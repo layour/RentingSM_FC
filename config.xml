@@ -2,7 +2,7 @@
 
 <application>
   <app_start>login.html</app_start>
-  <app_name>复昌测试</app_name>
+  <app_name>复昌租赁</app_name>
   <project_name>RentingSM_FC</project_name>
   <package_name>com.skywish.rentingsm.fc</package_name>
   <frame_name>summer-um</frame_name>

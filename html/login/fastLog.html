@@ -22,7 +22,7 @@
 				<span class="iconfont icon-fuchanglogo-lanse"></span>
 			</div>
 			<form action="">
-				<dl>
+				<!--dl>
 					<dt class="iconfont icon-login"></dt>
 					<dd>
 						<input class="workNum" type="text" placeholder="工号" value = "">
@@ -34,7 +34,7 @@
 						<input class="psw" type="password" placeholder="密码" value = "">
 					</dd>
 				</dl>
-				<p class="forget">忘记密码？</p>
+				<p class="forget">忘记密码？</p-->
 				<button type="button" class="loginBtn" onclick="toLogin()">快速体验</button>
 			</form>
 		</div>
@@ -50,11 +50,13 @@
                 create:false,
                 type:'actionBar',
                 actionBar: {
-                    title: "首页",
+                    title: "",
                     titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
                     backgroundColor: "#039be5",
+                    bottomLineColor: "#039be5",
                     leftItem:{
-                        image: "img/opacity0.png",
+                        text:"复昌租赁",
+                        textColor:"#ffffff",
                         method:"",//返回按钮自定义事件
                     },
 					rightItems: [{

@@ -112,18 +112,20 @@
 							create:false,
 							type:'actionBar',
 							actionBar: {
-								title: "首页",
-								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								backgroundColor: "#039be5",
-								leftItem:{
-									image: "img/opacity0.png",
-									method:"",//返回按钮自定义事件
-								},
+			                    title: "",
+			                    titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+			                    backgroundColor: "#039be5",
+			                    bottomLineColor: "#039be5",
+			                    leftItem:{
+			                        text:"复昌租赁",
+			                        textColor:"#ffffff",
+			                        method:"",//返回按钮自定义事件
+			                    },
 								rightItems: [{
 									image: "img/mine.png",
 									method:"showUserInfo()",//返回按钮自定义事件
 								}]
-							}
+			                }
 						});
 						break;
 					case 0:
