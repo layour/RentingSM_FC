@@ -83,9 +83,10 @@
             }
         }
         summerready = function() {
+            // 关闭启动图
             setTimeout(function() {
                 summer.hideLaunch();
-            }, 500)
+            }, 500);
             var skip = $summer.dom(".skip");
             var mySwiper = new Swiper('.swiper-container', {
                 pagination : '.pagination'
