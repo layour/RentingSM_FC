@@ -152,6 +152,10 @@
 		</div>
 		<script>
 			summerready = function() {
+				// 关闭启动图
+				setTimeout(function() {
+	                summer.hideLaunch();
+	            }, 500);
 	            var mySwiper = new Swiper('.swiper-container', {
 	                autoplay : 5000,
 					loop : true

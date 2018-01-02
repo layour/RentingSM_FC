@@ -36,6 +36,10 @@
 				});
 				return;
 			}
+			// 关闭启动图
+			setTimeout(function() {
+                summer.hideLaunch();
+            }, 500);
 			var bot = $('#bot').height();
 			summer.openFrameGroup({
 				id: 'login',

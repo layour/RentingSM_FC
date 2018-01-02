@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <application>
-  <app_start>login.html</app_start>  
+  <app_start>login.html</app_start>
   <app_name>复昌测试</app_name>
   <project_name>RentingSM_FC</project_name>
   <package_name>com.skywish.rentingsm.fc</package_name>
@@ -17,6 +17,7 @@
   <fullScreen>true</fullScreen>
   <windowSoftInputMode>stateHidden</windowSoftInputMode>
   <openMDoctor>false</openMDoctor>
+  <autoHideLaunch>false</autoHideLaunch>
   <import id="cordova-plugin-compat" type="web" ref="cordova"></import>
   <import id="cordova-plugin-http" type="web" ref="cordova"/>
   <import id="cordova-plugin-camera" type="web" ref="cordova"/>

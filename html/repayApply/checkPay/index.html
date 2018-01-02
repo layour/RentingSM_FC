@@ -44,12 +44,18 @@
 					id: 'payInfo',
 					url: 'html/repayApply/checkPay/payInfo.html',
 					bgColor: '#ffffff',
-					hidden: false
+					hidden: false,
+					pageParam: {
+				        info: info
+				    }
 				}, {
 					id: 'payProcess',
 					url: 'html/repayApply/checkPay/payProcess.html',
 					bgColor: '#ffffff',
-					hidden: true
+					hidden: true,
+					pageParam: {
+				        info: info
+				    }
 				}],
 				pageParam: [
 					{
