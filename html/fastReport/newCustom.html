@@ -252,12 +252,14 @@
 				});
 		}
 		function opensearch() {
+			summer.setStorage("searchFromSource","newCustom");
 			summer.openWin({
 				id: 'search',
 				url: 'html/fastReport/search.html',
+				/*create: false,
 				pageParam: {
 					fromSurce:"newCustom"
-				}
+				}*/
 			});
 		}
 	</script>

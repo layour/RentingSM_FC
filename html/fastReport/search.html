@@ -18,14 +18,14 @@
        <div class="bar bar-nav um-header" id="header" v-if="program">
         	<form action="javascript:void(0);">
         		<i class="iconfont icon-nav_search pl10 pr5"> </i>
-        		<input class="search" id="search" type="search"   name="search" autofocus="autofocus" placeholder="请输入项目名称"/>
+        		<input class="searchValue" id="search_program" type="search"   name="search" autofocus="autofocus" placeholder="请输入项目名称"/>
         	</form>
         	<span onclick="closeWin()">取消</span>
         </div>
         <div class="bar bar-nav um-header" id="header" v-else>
         	<form action="javascript:void(0);">
         		<i class="iconfont icon-nav_search pl10 pr5"> </i>
-        		<input class="search" id="search" type="search"   name="search" autofocus="autofocus" placeholder="请输入客户名称"/>
+        		<input class="searchValue" id="search_custom" type="search"   name="search" autofocus="autofocus" placeholder="请输入客户名称"/>
         	</form>
         	<span onclick="closeWin()">取消</span>
         </div>
@@ -42,11 +42,13 @@
 <script src="../../js/common.js" ></script>
 <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 <script>
+    let url,frameId;
 	summerready=function(){
 		$('#header').css('padding-top','40px')
 		 var top = $summer.offset($summer.byId('header')).h;
-       let source=summer.pageParam.fromSurce;
-       let url,frameId;
+      // let source=summer.pageParam.fromSurce;
+       let source=summer.getStorage('searchFromSource');
+
        if (source=="program") {
           searchD.program=true;
           url="html/fastReport/fra_search.html";
@@ -56,7 +58,10 @@
           url="html/fastReport/fra_search_custom.html"
           frameId="fra_search_custom"
        }
-		 bindEvents();
+       setTimeout(function (){
+			 bindEvents(source);
+   	}, 500);
+
 
 	    summer.openFrame({
 	        id: frameId,
@@ -86,15 +91,15 @@
    function closeWin(){
       summer.closeWin();
    }
-	function bindEvents(){
-			$('.search').on('input propertychange focus',total);
-		}
+	function bindEvents(id){
+			$('.searchValue').on('input propertychange focus',total);
+	}
 	function total(){
 		var searchData=$(this).val();
 		if(searchData.length>0){
 			summer.execScript({
 			    winId: "search",
-			    frameId:"fra_search",
+			    frameId:frameId,
 			    script: "getData('1','"+searchData+"','true')"
 			});
 		}

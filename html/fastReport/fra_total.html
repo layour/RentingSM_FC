@@ -56,12 +56,13 @@
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script>
 		function opensearch() {
+			summer.setStorage("searchFromSource","program");
 			summer.openWin({
 				id: 'search',
 				url: 'html/fastReport/search.html',
-				pageParam: {
+			/*	pageParam: {
 					fromSurce: "program"
-				}
+				}*/
 			});
 		}
 		var _endNum = 1;

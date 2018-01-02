@@ -9,6 +9,14 @@
 	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 	<script src="../../js/font.js"></script>
 	<link rel="stylesheet" href="css/fraCommon.css">
+	<style>
+		.customList .center:after{
+			width: 0px;
+			height: 0px;
+			border-right-width: 0px;
+			border-bottom-width: 0px;
+		}
+	</style>
 </head>
 
 <body>
@@ -92,7 +100,7 @@
 						param: {
 							"pageNo":end,
 							"pageSize":10,
-							"SYSUSERFLAG":1
+							"SYSUSERFLAG":1,
 							"CLIENT_NAME": searchValue ? searchValue : ""
 						}
 					}, function(res) {
