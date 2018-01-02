@@ -93,7 +93,7 @@
 			methods:{
 				// 立即申请付款
 				toApply() {
-					summer.showProgress();
+					/*summer.showProgress();
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/payment/startCarPayment',
@@ -121,7 +121,7 @@
 								summer.closeToWin({
 									id: 'payList'
 								});
-							} 
+							}
 						} else {
 							summer.toast({
 								msg: Data.msg
@@ -133,6 +133,29 @@
 							msg: "申请失败"
 						});
 						console.log(err);
+					});*/
+					summer.openWin({
+						id: 'loanInfo',
+						url: 'html/repayApply/payApply/loanInfo.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "放款日志",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems: [{
+								type: "text",
+								text: "保存",
+								textColor: "#ffffff",
+								method: "loanInfo.save()"
+							}]
+						}
 					});
 				}
 			}
@@ -180,12 +203,6 @@
 				console.log(err);
 			});
 		};
-		// 立即申请付款
-		/*function toApply() {
-			summer.closeToWin({
-				id: 'payList'
-			});
-		}*/
 		// 添加保单
 		function addWarranty() {
 			summer.openWin({

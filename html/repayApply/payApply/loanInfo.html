@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="loanInfo.css">
+    <script src="../../../js/summer.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../../js/font.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <script src="../../../js/common.js"></script>
+</head>
+
+<body>
+    <div class="um-win" id="index">
+        <div class="um-content">
+            <ul class="loanList">
+                <li>
+                    <span>放款方式</span>
+                    <input v-model="method" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>是否代收</span>
+                    <input v-model="replace" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>抵押保证金金额</span>
+                    <input v-model="pledge" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>应交入网保证金</span>
+                    <input v-model="web" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>GPS费用</span>
+                    <input v-model="gps" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>放款模式</span>
+                    <input v-model="pattern" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>代收金额</span>
+                    <div>{{collection}} 元</div>
+                </li>
+                <li>
+                    <span>本次放款金额</span>
+                    <div>{{thisTime}} 元</div>
+                </li>
+            </ul>
+            <div class="calculate" @click="toCalculate">测算</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var loanInfo = new Vue({
+            el: '#index',
+            data: {
+                method:"",
+                replace:"",
+                pledge:"",
+                web:"",
+                gps:"",
+                pattern:"",
+                collection:"",
+                thisTime:""
+            },
+            methods: {
+                save(){
+                    console.log("save");
+                },
+                toCalculate(){
+                    console.log(this.method);
+                    console.log("测算");
+                    this.collection = "8888";
+                    this.thisTime = "9999";
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
