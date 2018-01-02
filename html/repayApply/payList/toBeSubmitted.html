@@ -50,8 +50,8 @@
 					</div>
 					<div class="footer">
 						<ul class="footerList">
-							<li class="first" @click="advance(k.ID,k.PROJECT_ID)">提前放款</li>
-							<li @click="normal(k.ID,k.PROJECT_ID)">正常放款</li>
+							<li class="first" @click="advance(k.ID,k.PROJECT_ID,k.PAY_ID)">提前放款</li>
+							<li @click="normal(k.ID,k.PROJECT_ID,k.PAY_ID)">正常放款</li>
 						</ul>
 					</div>
 				</li>
@@ -93,7 +93,7 @@
 						}
 					});
 				},
-				advance(userId,PROJECT_ID) {
+				advance(userId,PROJECT_ID,PAY_ID) {
 					summer.openWin({
 						id: 'payApply',
 						url: 'html/repayApply/payApply/index.html',
@@ -113,11 +113,12 @@
 						pageParam: {
 							show: false,
 							userId: userId,
-							PROJECT_ID: PROJECT_ID
+							PROJECT_ID: PROJECT_ID,
+							PAY_ID: PAY_ID
 						}
 					});
 				},
-				normal(userId,PROJECT_ID) {
+				normal(userId,PROJECT_ID,PAY_ID) {
 					summer.openWin({
 						id: 'payApply',
 						url: 'html/repayApply/payApply/index.html',
@@ -137,7 +138,8 @@
 						pageParam: {
 							show: true,
 							userId: userId,
-							PROJECT_ID: PROJECT_ID
+							PROJECT_ID: PROJECT_ID,
+							PAY_ID: PAY_ID
 						}
 					});
 				}
