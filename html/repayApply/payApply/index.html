@@ -81,7 +81,14 @@
 			el: '#index',
 			data: {
 				datas: null,
-				PROJECT_ID:""
+				params:{
+					ISDEKOU:"1",
+					PAYMENT_TYPE:"1",
+					CS_PRICE:"1000",
+					LENDING_MODEL:"1",
+					GPS_MONEY:"100",
+					PAY_ID:""
+				}
 			},
 			methods:{
 				// 立即申请付款
@@ -89,9 +96,14 @@
 					summer.showProgress();
 					ajaxRequest({
 						type: 'post',
-						url: 'appservice/business/startRevJbpm',
+						url: 'appservice/payment/startCarPayment',
 						param: {
-							"PROJECT_ID": this.PROJECT_ID
+							"ISDEKOU": this.params.ISDEKOU,
+							"PAYMENT_TYPE": this.params.PAYMENT_TYPE,
+							"CS_PRICE": this.params.CS_PRICE,
+							"LENDING_MODEL": this.params.LENDING_MODEL,
+							"GPS_MONEY": this.params.GPS_MONEY,
+							"PAY_ID": this.params.PAY_ID
 						}
 					}, function(res) {
 						summer.hideProgress();
@@ -109,11 +121,7 @@
 								summer.closeToWin({
 									id: 'payList'
 								});
-							} else if (Data.datas.data) {
-								summer.toast({
-									msg: Data.datas.data
-								});
-							}
+							} 
 						} else {
 							summer.toast({
 								msg: Data.msg
@@ -140,8 +148,8 @@
 				$('.applyBtn').css('top', '9.8rem');
 			}
 			var userId = summer.pageParam.userId;
-			var PROJECT_ID = summer.pageParam.PROJECT_ID;
-			payApply.PROJECT_ID = PROJECT_ID;
+			var PAY_ID = summer.pageParam.PAY_ID;
+			payApply.params.PAY_ID = PAY_ID;
 			summer.showProgress();
 			ajaxRequest({
 				type: 'post',

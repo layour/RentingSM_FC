@@ -60,7 +60,7 @@
 				top:-.2rem;
 				color:#DEDEDE;
 			}
-			.uploadImg ul li img{
+			.uploadImg ul li img,.uploadImg ul li video{
 				width:100%;
 				height:2.6rem;
 			}
@@ -102,7 +102,11 @@
 					</template>
 					<template v-else>
 						<li @click="takeVideo">
-							<div><img v-if="videoUrl" :src="videoImg" alt=""><i v-else class="icon iconfont icon-add"></i></div>
+							<div>
+								<!-- <video v-if="videoUrl" :src="videoUrl"></video> -->
+								<img v-if="videoUrl" src="../../img/video.jpeg" alt="">
+								<i v-else class="icon iconfont icon-add"></i>
+							</div>
 							<p>{{param.TPM_TYPE}}</p>
 						</li>
 					</template>
@@ -128,7 +132,7 @@
 					if(summer.pageParam.video){uploadVue.isVideo=true}
 					console.log("param",JSON.stringify(uploadVue.param));
 					uploadVue.getData();
-					var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"];
+					var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION","android.permission.RECORD_AUDIO"];
 					summer.getPermission(params, function(args) {
 						//alert(args); //成功返回OK
 					}, function(args) {
@@ -170,6 +174,9 @@
 											_this.oldImgList[i].PDF_PATH=window.G_COMMON_URL+"appservice/business/downloadFiles?PATH="+_this.oldImgList[i].PDF_PATH
 
 										}
+								}
+								if(res.data.datas.length>0&&res.data.datas[0].TPM_TYPE=='面签视频材料'){
+									_this.videoUrl='oldVideo'
 								}
 							},function(err){
 								alert(err);
@@ -261,20 +268,47 @@
 						takeVideo(){
 							var _this=this
 							cordova.require("summer-plugin-video.Video").open({}, function(res) {
+								console.log(JSON.stringify(res));
 							    if (res.type == 1) {
 							        //视频
-							        _this.videoUrl= res.path;
-
+							       _this.videoUrl= res.path;
 							    } else if (res.type == 2) {
-
+										 _this.videoUrl= res.path;
 							    }
 							})
 						},
 						videoSave(){
-							console.log("shangchuan");
+							var that=this;
+							if(this.videoUrl=='oldVideo'){
+								summer.toast({msg:'视频已经保存过'})
+								return
+							}
+							summer.showProgress();
+							this.uploadImgArr=[{fileURL:this.videoUrl,type:"image/mp4",name:this.param.TPM_TYPE}]
+							var dataParams={
+									PROJECT_ID: that.param.PROJECT_ID,
+									TPM_BUSINESS_PLATE:that.param.TPM_BUSINESS_PLATE,
+									TPM_CUSTOMER_TYPE:that.param.TPM_CUSTOMER_TYPE,
+									TPM_TYPE:that.param.TPM_TYPE,
+									FILE_NAME:that.param.TPM_TYPE
+							};
+							console.log("上传的参数"+JSON.stringify(dataParams));
+							console.log("文件数组"+JSON.stringify(this.uploadImgArr));
+							if(this.uploadImgArr.length==0){
+								summer.toast({msg:'请先拍摄视频'})
+								return
+							}
+							summer.multiUpload({
+								fileArray : that.uploadImgArr,
+								params : dataParams,
+								// headers :{"Content-Type" : "application/json"},
+								SERVER : window.G_COMMON_URL+"appservice/business/newUploadloadFiles",
+								timeout : 10
+							}, "multiUploadCallback()", "multiUploadErrCallback()");
 						},
 						save(){
-								var that=this
+								var that=this;
+								summer.showProgress();
 								console.log(window.G_COMMON_URL);
 								for(var i=0;i<this.imgList.length;i++){
 									if(i==0){this.fileName=this.param.TPM_TYPE+i}else{this.fileName+="#"+this.param.TPM_TYPE+i}
@@ -320,6 +354,9 @@
 				function multiUploadErrCallback(err){
 					console.log("失败"+ JSON.stringify(err));
 						alert("失败"+ JSON.stringify(err));
+				}
+				function videoSave(){
+					uploadVue.videoSave()
 				}
     </script>
   </body>
