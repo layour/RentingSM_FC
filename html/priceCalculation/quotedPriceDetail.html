@@ -179,7 +179,7 @@
 					<p><span class="fl" @click="pickerBail">取消</span><span class="fr" @click="sureBail">确定</span></p>
 				</mt-popup>
 				<template v-else>
-					<button @click="quotedTest" style="height:.88rem;background:#039BE5;">测算</button>
+					<button @click="quotedTest" style="height:.88rem;background:#039BE5;font-size:14px;">测算</button>
 				</template>
 			</div>
     </div>
@@ -301,7 +301,7 @@
 									if(res.data.datas.prj.LEASE_TOPRIC){
 										_this.quoted.allPrice=res.data.datas.prj.LEASE_TOPRIC
 									}else{
-										_this.quoted.allPrice=summer.getStorage("contractPrice")
+										summer.toast({msg:'请先添加车辆'})
 									}
 								}
 							},function(err){
