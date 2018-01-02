@@ -16,6 +16,10 @@
           <!-- <li @click="pickerAcc" v-for="(item,index) in dealerList" :key="index">{{item}}</li> -->
           <li @click="sureSupplier(item)" v-for="(item,index) in dealerList" :key="index">{{item.SUPPLIERS_NAME}}</li>
         </ul>
+				<div class="alignCenter" v-if="dealerList.length==0">
+					<img src="../../img/empty.png" alt="">
+					<p>请搜索经销商名称</p>
+				</div>
         <!-- <mt-popup v-model="popupVisible" position="bottom">
           <p>选择经销商收款账户</p>
           <ul>
