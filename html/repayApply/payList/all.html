@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="um-content">
+		<div class="um-content" id = "content">
 			<ul class="userList">
 				<li v-for="k in items">
 					<div class="title">
@@ -45,8 +45,14 @@
 						</div>
 						<div class="enter">
 							<i class="iconfont icon-enter"></i>
-							<b>{{k.N_PAYSTATUS}}</b>
+							<b>{{k.PSTATUS_NM}}</b>
 						</div>
+					</div>
+					<div class="footer" v-bind:style="[k.PSTATUS_NM == '未放款' ? {'display':'block'} : {'display':'none'}]">
+						<ul class="footerList">
+							<li class="first" @click="advance(k.ID,k.PROJECT_ID)">提前放款</li>
+							<li @click="normal(k.ID,k.PROJECT_ID)">正常放款</li>
+						</ul>
 					</div>
 				</li>
 			</ul>
@@ -87,6 +93,54 @@
 						}
 					}
 				});
+			},
+			advance(userId,PROJECT_ID) {
+				summer.openWin({
+					id: 'payApply',
+					url: 'html/repayApply/payApply/index.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "付款申请",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					},
+					pageParam: {
+						show: false,
+						userId: userId,
+						PROJECT_ID: PROJECT_ID
+					}
+				});
+			},
+			normal(userId,PROJECT_ID) {
+				summer.openWin({
+					id: 'payApply',
+					url: 'html/repayApply/payApply/index.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "付款申请",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					},
+					pageParam: {
+						show: true,
+						userId: userId,
+						PROJECT_ID: PROJECT_ID
+					}
+				});
 			}
 		}
 	});
@@ -98,7 +152,8 @@
 				url: 'appservice/paytable/paylist',
 				param: {
 					"pageNo": pageNum,
-					"pageSize": 10
+					"pageSize": 10,
+					"PSTATUS":""
 				}
 			}, function(res) {
 				summer.hideProgress();
@@ -111,7 +166,7 @@
 				if (Data.flag == 1) {
 					all.totalPage = Data.datas.totalPage;
 					if (Data.datas.list.length < 1) {
-						createNull("content", "../../img/empty.png");
+						createNull("content", "../../../img/empty.png");
 					} else {
 						if (all.resetData) {
 							all.items = Data.datas.list;
