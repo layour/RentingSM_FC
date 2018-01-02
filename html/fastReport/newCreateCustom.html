@@ -115,7 +115,7 @@
 			<div @click="surePickerSex" class="item">
 				<p class="pl10 pr10 tr">
 					<span class="fl">性别</span>
-					<span class=""><span v-if='message.SEX' class="first">{{message.SEX}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class=""><span v-if='message.SEX_NM' class="first">{{message.SEX_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="sureDateConfirm" class="item">
@@ -129,13 +129,13 @@
 			<div class="item">
 				<p class="pl10 pr10 tr" @click="selectAddr">
 					<span class="fl">省市</span>
-					<span class=""> <span  class="first">{{message.HOUSE_ADDRESS_PROVINCE}} {{message.HOUSE_ADDRESS_CITY}}</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class=""> <span  class="first">{{message.HOUSE_ADDRESS_PROVINCE_NM}} {{message.HOUSE_ADDRESS_CITY_NM}}</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<!-- <mt-field label="通讯地址" placeholder="请输入您的通讯地址" v-model="message.phoneAddress"></mt-field> -->
 			<div @click="surePickerMarrige" class="item">
 				<p class="pl10 pr10  um-box">
-					<span class="um-bf1">婚姻状况</span> <span class="um-bf1 tr"><span v-if='message.marrige' class="first">{{message.marrige}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">婚姻状况</span> <span class="um-bf1 tr"><span v-if='message.IS_MARRY_NM' class="first">{{message.IS_MARRY_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="surePickerIsNative" class="item">
@@ -145,7 +145,7 @@
 			</div>
 			<div @click="surePickerTransport" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION' class="first">{{message.INDUSTRY_FICATION}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="surePickerHouse" class="item">
@@ -255,20 +255,23 @@
 						textAlign: 'center'
 					}],
 					message: {
-						marrige:"",
 						NAME: '',
 						ID_CARD_NO: '',
 						SEX: '',
+						SEX_NM:'',
 						HOUSE_ADDRESS: '',
 						TEL_PHONE: '',
 						IS_MARRY: '',
+						IS_MARRY_NM:'',
 						BIRTHDAY: '',
 						SCALE_SOURCE_NM: '',
 						INDUSTRY_FICATION: '',
+						INDUSTRY_FICATION_NM:'',
 						HOME_XZ: '',
 						HOUSE_ADDRESS_PROVINCE: '',
+						HOUSE_ADDRESS_PROVINCE_NM: '',
 						HOUSE_ADDRESS_CITY: '',
-						HOUSE_ADDRESS_COUNTY: '',
+						HOUSE_ADDRESS_CITY_NM: '',
 					},
 					spoustObjMes:""
 				}
@@ -289,17 +292,22 @@
 							self.spoustObjMes=res.data.datas.spoustObj
 							    self.message.NAME=holeData.NAME;
 								 self.message.ID_CARD_NO=holeData.ID_CARD_NO;
-								 self.message.SEX=holeData.SEX_NM;
+								 self.message.SEX_NM=holeData.SEX_NM;
+								 self.message.SEX=holeData.SEX;
 								 self.message.HOUSE_ADDRESS=holeData.HOUSE_ADDRESS;
 								 self.message.TEL_PHONE=holeData.PHONE;
-								 self.message.marrige=holeData.IS_MARRY_NM;
+								 self.message.IS_MARRY_NM=holeData.IS_MARRY_NM;
 								 self.message.IS_MARRY=holeData.IS_MARRY;
 								 self.message.BIRTHDAY=holeData.BIRTHDAY;
+								 self.message.SCALE_SOURCE=holeData.SCALE_SOURCE;
 								 self.message.SCALE_SOURCE_NM=holeData.SCALE_SOURCE_NM;
 								 self.message.INDUSTRY_FICATION=holeData.INDUSTRY_FICATION;
+								  self.message.INDUSTRY_FICATION_NM=holeData.INDUSTRY_FICATION_NM;
 								 self.message.HOME_XZ=holeData.HOME_XZ;
 								 self.message.HOUSE_ADDRESS_PROVINCE=holeData.HOUSE_ADDRESS_PROVINCE;
+								 self.message.HOUSE_ADDRESS_PROVINCE_NM=holeData.HOUSE_ADDRESS_PROVINCE_NM;
 								 self.message.HOUSE_ADDRESS_CITY=holeData.HOUSE_ADDRESS_CITY;
+								 self.message.HOUSE_ADDRESS_CITY_NM=holeData.HOUSE_ADDRESS_CITY_NM;
 								 if (self.message.IS_MARRY=="20") {
 									 summer.setWinAttr({
 										 actionBar: {
@@ -365,7 +373,7 @@
 						console.log(args);
 						_self.message.NAME = args.name;
 						_self.message.ID_CARD_NO = args.id;
-						_self.message.SEX = args.sex;
+						_self.message.SEX_NM = args.sex;
 						_self.message.BIRTHDAY = args.birth_date;
 						_self.message.HOUSE_ADDRESS = args.address;
 						CommonUtil.watermark({
@@ -394,7 +402,7 @@
 				surePickerSex: function(param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
-						this.message.SEX = this.pickerSex;
+						this.message.SEX_NM = this.pickerSex;
 					}
 				},
 				onValuesChange2: function(picker, values) {
@@ -403,7 +411,7 @@
 				surePickerMarrige: function(param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
-						this.message.marrige=this.pickerMarrige
+						this.message.IS_MARRY_NM=this.pickerMarrige
 						if(this.pickerMarrige=="已婚"){
 							this.message.IS_MARRY =20
 						}else if(this.pickerMarrige=="未婚"){
@@ -462,7 +470,7 @@
 				surePickerTransport: function(param) {
 					this.pickerTransportStatus = !this.pickerTransportStatus;
 					if (param == 'confirm') {
-						this.message.INDUSTRY_FICATION = this.pickerTransport;
+						this.message.INDUSTRY_FICATION_NM = this.pickerTransport;
 					}
 				},
 				onValuesChange5: function(picker, values) {
@@ -511,7 +519,7 @@
 							msg: "请输入正确的身份证号"
 						});
 						return false;
-					} else if (this.message.SEX == "") {
+					} else if (this.message.SEX_NM == "") {
 						summer.toast({
 							msg: "性别不能为空"
 						});
@@ -536,7 +544,7 @@
 							msg: "手机号格式不正确"
 						});
 						return false;
-					} else if (this.message.marrige == "") {
+					} else if (this.message.IS_MARRY_NM == "") {
 						summer.toast({
 							msg: "请选择婚姻状况"
 						});
@@ -555,17 +563,16 @@
 						param: {
 							NAME: self.message.NAME,
 							ID_CARD_NO:  self.message.ID_CARD_NO,
-							SEX:  self.message.SEX=="男"?"0":"1",
+							SEX:  self.message.SEX_NM=="男"?"0":"1",
 							HOUSE_ADDRESS: self.message.HOUSE_ADDRESS,
 							TEL_PHONE: self.message.TEL_PHONE,
 							IS_MARRY: self.message.IS_MARRY,
 							BIRTHDAY:  self.message.BIRTHDAY,
 							SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
-							INDUSTRY_FICATION: self.message.INDUSTRY_FICATION,
+							INDUSTRY_FICATION_NM: self.message.INDUSTRY_FICATION_NM,
 							HOME_XZ:  self.message.HOME_XZ,
 							HOUSE_ADDRESS_PROVINCE:  self.message.HOUSE_ADDRESS_PROVINCE,
 							HOUSE_ADDRESS_CITY:  self.message.HOUSE_ADDRESS_CITY,
-							HOUSE_ADDRESS_COUNTY:  self.message.HOUSE_ADDRESS_COUNTY,
 							spoustObj:{}
 						}
 					}, function(res) {
@@ -576,7 +583,7 @@
 							//console.log(self.baseMessageData);
 						}
 					}, function(err) {
-						alert(err);
+						//alert(err);
 						console.log(err);
 						summer.hideProgress();
 					});
@@ -658,8 +665,10 @@
 		}
 
 		function getAddr() {
-			newCreateCustom.message.HOUSE_ADDRESS_PROVINCE = JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
-			newCreateCustom.message.HOUSE_ADDRESS_CITY = JSON.parse(summer.getStorage('selectCity')).AREA_NAME
+			newCreateCustom.message.HOUSE_ADDRESS_PROVINCE_NM = JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+			newCreateCustom.message.HOUSE_ADDRESS_CITY_NM = JSON.parse(summer.getStorage('selectCity')).AREA_NAME
+			newCreateCustom.message.HOUSE_ADDRESS_PROVINCE = JSON.parse(summer.getStorage('selectProvince')).AREA_ID
+			newCreateCustom.message.HOUSE_ADDRESS_CITY = JSON.parse(summer.getStorage('selectCity')).AREA_ID
 			//newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_NAME
 		}
 		summerready = function() {

@@ -116,7 +116,7 @@
 			<div @click="surePickerSex" class="item">
 				<p class="pl10 pr10 tr">
 					<span class="fl">性别</span>
-					<span class=""><span v-if='message.spoustObj.SPOUST_SEX' class="first">{{message.spoustObj.SPOUST_SEX}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class=""><span v-if='message.spoustObj.SPOUST_SEX_NM' class="first">{{message.spoustObj.SPOUST_SEX_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="sureDateConfirm" class="item">
@@ -181,6 +181,7 @@
 							SPOUST_NAME:'',
 							SPOUST_ID_CARD_NO:'',
 							SPOUST_SEX:'',
+							SPOUST_SEX_NM:'',
 							SPOUST_BIRTHDAY:'',
 							SPOUST_HOUSR_RE_ADDRESS:'',
 							SPOUST_TEL_PHONE:''
@@ -238,7 +239,7 @@
 						console.log(args);
 						_self.message.spoustObj.SPOUST_NAME = args.name;
 						_self.message.spoustObj.SPOUST_ID_CARD_NO = args.id;
-						_self.message.spoustObj.SPOUST_SEX = args.sex;
+						_self.message.spoustObj.SPOUST_SEX_NM = args.sex;
 						_self.message.spoustObj.SPOUST_BIRTHDAY = args.birth_date;
 						_self.message.spoustObj.SPOUST_HOUSR_RE_ADDRESS = args.address;
 						CommonUtil.watermark({
@@ -308,7 +309,7 @@
 							msg: "请输入正确的身份证号"
 						});
 						return false;
-					} else if (this.message.spoustObj.SPOUST_SEX == "") {
+					} else if (this.message.spoustObj.SPOUST_SEX_NM == "") {
 						summer.toast({
 							msg: "性别不能为空"
 						});
@@ -342,7 +343,7 @@
 						return;
 					};
 					self.personMes.spoustObj=self.message.spoustObj;
-					if (self.personMes.spoustObj.SPOUST_SEX=="男") {
+					if (self.personMes.spoustObj.SPOUST_SEX_NM=="男") {
 						self.personMes.spoustObj.SPOUST_SEX="0"
 					} else {
 						self.personMes.spoustObj.SPOUST_SEX="1"
@@ -380,7 +381,8 @@
 			if(spoustObjMes){
 				newCreateCustom.message.spoustObj.SPOUST_NAME=spoustObjMes.SPOUST_NAME
 				newCreateCustom.message.spoustObj.SPOUST_ID_CARD_NO=spoustObjMes.SPOUST_ID_CARD_NO
-				newCreateCustom.message.spoustObj.SPOUST_SEX=spoustObjMes.SPOUST_SEX_NM
+				newCreateCustom.message.spoustObj.SPOUST_SEX=spoustObjMes.SPOUST_SEX
+				newCreateCustom.message.spoustObj.SPOUST_SEX_NM=spoustObjMes.SPOUST_SEX_NM
 				newCreateCustom.message.spoustObj.SPOUST_BIRTHDAY=spoustObjMes.SPOUST_BIRTHDAY
 				newCreateCustom.message.spoustObj.SPOUST_HOUSR_RE_ADDRESS=spoustObjMes.SPOUST_HOUSR_RE_ADDRESS
 				newCreateCustom.message.spoustObj.SPOUST_TEL_PHONE=spoustObjMes.SPOUST_TEL_PHONE
