@@ -149,7 +149,7 @@
 			</div>
 			<div @click="surePickerTransport" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION' class="first">{{message.INDUSTRY_FICATION}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="surePickerHouse" class="item">
@@ -270,7 +270,7 @@
 						BIRTHDAY: '',
 						SCALE_SOURCE: '1',
 						SCALE_SOURCE_NM:'',
-						INDUSTRY_FICATION: '',
+						INDUSTRY_FICATION_NM: '',
 						INDUSTRY_FICATION: '',
 						HOME_XZ: '',
 						HOUSE_ADDRESS_PROVINCE: '',
@@ -308,6 +308,7 @@
 							self.message.SCALE_SOURCE = holeData.SCALE_SOURCE;
 							self.message.SCALE_SOURCE_NM = holeData.SCALE_SOURCE_NM;
 							self.message.INDUSTRY_FICATION = holeData.INDUSTRY_FICATION;
+							self.message.INDUSTRY_FICATION_NM = holeData.INDUSTRY_FICATION_NM;
 							self.message.HOME_XZ = holeData.HOME_XZ;
 							self.message.HOUSE_ADDRESS_PROVINCE = holeData.HOUSE_ADDRESS_PROVINCE;
 							self.message.HOUSE_ADDRESS_PROVINCE_NM = holeData.HOUSE_ADDRESS_PROVINCE_NM;
@@ -379,6 +380,7 @@
 						_self.message.NAME = args.name;
 						_self.message.ID_CARD_NO = args.id;
 						_self.message.SEX_NM = args.sex;
+						 args.sex=="男"?_self.message.SEX="0":_self.message.SEX="1";
 						_self.message.BIRTHDAY = args.birth_date;
 						_self.message.HOUSE_ADDRESS = args.address;
 						CommonUtil.watermark({
@@ -475,7 +477,7 @@
 				surePickerTransport: function(param) {
 					this.pickerTransportStatus = !this.pickerTransportStatus;
 					if (param == 'confirm') {
-						this.message.INDUSTRY_FICATION= this.pickerTransport;
+						this.message.INDUSTRY_FICATION_NM= this.pickerTransport;
 					}
 				},
 				onValuesChange5: function(picker, values) {
@@ -575,7 +577,8 @@
 							BIRTHDAY: self.message.BIRTHDAY,
 							SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
 							SCALE_SOURCE: "1",
-							INDUSTRY_FICATION: self.message.INDUSTRY_FICATION,
+							INDUSTRY_FICATION: "10613",
+							INDUSTRY_FICATION_NM: self.message.INDUSTRY_FICATION_NM,
 							HOME_XZ: self.message.HOME_XZ,
 							HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
 							HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,

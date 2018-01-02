@@ -130,6 +130,7 @@
 	<script>
 		summerready = function() {
 			var sourceId = summer.pageParam.source;
+			setProgect.sourceFrom = sourceId;
 				var customId = summer.pageParam.customId;
 			var __projectid = summer.pageParam.projectId;
 			setProgect.project_Id = __projectid;
@@ -168,7 +169,8 @@
 					baseMessageData: "",
 					customId: "",
 					project_Id: "",
-					carName:''
+					carName:'',
+					sourceFrom:""
 				}
 			},
 			methods: {
@@ -210,9 +212,46 @@
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							self.customId = res.data.datas.ProjectObj.CLIENT_ID;
+							if (self.sourceFrom=="programSelect") {
+								self.getCompleteStatus(self.customId,self.project_Id);
+							}
 							addRight('customer');
 							addRight('baseMessage');
-							addRight('sponsor');
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				},
+				getCompleteStatus(clintId,projectId){
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/foundproject/qloadProjectPage',
+						param: {
+							"PROJECT_ID": projectId,
+							"CLIENT_ID":clintId
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							 let finanlData=res.data.datas;
+							if (finanlData.eID) {
+							 	addRight('emergencyContract');
+							}
+							if (finanlData.scheme_id) {
+							 	addRight('price');
+							}
+							if (finanlData.EquipObj) {
+							 	addRight('addCar');
+							}
+							if (finanlData.gObj) {
+							 	addRight('sponsor');
+							}
+							if (finanlData.fObj) {
+							 	addRight('uploadImg');
+							}
 						}
 					}, function(err) {
 						alert(err);
