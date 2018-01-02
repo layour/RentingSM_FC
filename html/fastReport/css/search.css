@@ -26,7 +26,7 @@ dl,ul,ol,li,dd,dt{
 	display: -webkit-flex;
 	display: flex;
 	padding:6px 10px;
-	background:#ececec;
+	background:#039be5;
 	box-sizing:border-box;
 }
 .bar form{
@@ -41,10 +41,11 @@ dl,ul,ol,li,dd,dt{
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	height:30px;
-	line-height:28px;
-}
 
+}
+.iconfont.icon-nav_search{
+   line-height: 0.6rem;
+}
 .bar .icon-sousuo:before{
 	font-size:0.28rem;
 	color:rgba(136,153,170,1);
@@ -64,6 +65,7 @@ dl,ul,ol,li,dd,dt{
 	line-height:0.6rem;
 	margin-left:10px;
 	font-size:14px;
+   color:white;
 }
 .empty{
 	width:100%;

@@ -15,10 +15,17 @@
   </head>
 <body>
     <div id="search" class="um-win">
-       <div class="bar bar-nav um-header" id="header">
+       <div class="bar bar-nav um-header" id="header" v-if="program">
         	<form action="javascript:void(0);">
         		<i class="iconfont icon-nav_search pl10 pr5"> </i>
-        		<input class="search" id="search" type="search" v-model="searchDate" name="search" autofocus="autofocus" placeholder="请输入您要搜索内容"/>
+        		<input class="search" id="search" type="search"   name="search" autofocus="autofocus" placeholder="请输入项目名称"/>
+        	</form>
+        	<span onclick="closeWin()">取消</span>
+        </div>
+        <div class="bar bar-nav um-header" id="header" v-else>
+        	<form action="javascript:void(0);">
+        		<i class="iconfont icon-nav_search pl10 pr5"> </i>
+        		<input class="search" id="search" type="search"   name="search" autofocus="autofocus" placeholder="请输入客户名称"/>
         	</form>
         	<span onclick="closeWin()">取消</span>
         </div>
@@ -38,19 +45,44 @@
 	summerready=function(){
 		$('#header').css('padding-top','40px')
 		 var top = $summer.offset($summer.byId('header')).h;
+       let source=summer.pageParam.fromSurce;
+       let url,frameId;
+       if (source=="program") {
+          searchD.program=true;
+          url="html/fastReport/fra_search.html";
+          frameId="fra_search"
+       } else if(source=="newCustom"){
+          searchD.newCustom=true;
+          url="html/fastReport/fra_search_custom.html"
+          frameId="fra_search_custom"
+       }
 		 bindEvents();
+
 	    summer.openFrame({
-	        id: 'fra_search',
-	        url: 'html/fastReport/fra_search.html',
+	        id: frameId,
+	        url: url,
 	        bounces: true,
 	        position: {
 	            top: top,
-				      bottom: 0,
+				   bottom: 0,
 	            left: 0,
 	            right: 0
 	        }
 	    });
 	}
+   var searchD=new Vue({
+      el: '#search',
+      data() {
+         return {
+            newCustom:false,//代表从客户这搜索
+            program: false//代表从项目列表搜索
+         }
+      },
+      mounted() {},
+      methods: {
+
+      }
+   });
    function closeWin(){
       summer.closeWin();
    }
