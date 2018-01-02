@@ -33,13 +33,8 @@ summerready = function() {
                 bgColor: '#ffffff',
                 hidden: true
             }, {
-                id: 'rejected',
-                url: 'html/repayApply/payList/rejected.html',
-                bgColor: '#ffffff',
-                hidden: true
-            }, {
-                id: 'notPass',
-                url: 'html/repayApply/payList/notPass.html',
+                id: 'passed',
+                url: 'html/repayApply/payList/passed.html',
                 bgColor: '#ffffff',
                 hidden: true
             }

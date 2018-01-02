@@ -40,17 +40,18 @@
 
 		.mint-cell {
 			min-height: 40px;
-			height: 0.88rem;
+			/* height: 0.88rem; */
+			height: 44px;
 			color: #333;
 			font-size: 0.28rem;
 		}
 
 		div.item {
-			line-height: 0.88rem;
+			/* line-height: 0.88rem; */
+			line-height: 44px;
 			background: #ffffff;
 			border-bottom: 1px solid #f7f7f7;
 			font-size: 0.28rem;
-
 		}
 
 		div.item span {
@@ -87,9 +88,11 @@
 		.pickerColor>p span:last-child {
 			float: right;
 		}
+
 		.pickerColor>p span:first-child {
 			float: left;
 		}
+
 		.item .first {
 
 			color: #333;
@@ -98,8 +101,9 @@
 		.item .second {
 			color: #9e9e9e;
 		}
-		.um-footer{
-			min-height:0px;
+
+		.um-footer {
+			min-height: 0px;
 		}
 	</style>
 </head>
@@ -145,7 +149,7 @@
 			</div>
 			<div @click="surePickerTransport" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION' class="first">{{message.INDUSTRY_FICATION}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="surePickerHouse" class="item">
@@ -258,22 +262,24 @@
 						NAME: '',
 						ID_CARD_NO: '',
 						SEX: '',
-						SEX_NM:'',
+						SEX_NM: '',
 						HOUSE_ADDRESS: '',
 						TEL_PHONE: '',
 						IS_MARRY: '',
-						IS_MARRY_NM:'',
+						IS_MARRY_NM: '',
 						BIRTHDAY: '',
-						SCALE_SOURCE_NM: '',
+						SCALE_SOURCE: '1',
+						SCALE_SOURCE_NM:'',
 						INDUSTRY_FICATION: '',
-						INDUSTRY_FICATION_NM:'',
+						INDUSTRY_FICATION: '',
 						HOME_XZ: '',
 						HOUSE_ADDRESS_PROVINCE: '',
 						HOUSE_ADDRESS_PROVINCE_NM: '',
 						HOUSE_ADDRESS_CITY: '',
 						HOUSE_ADDRESS_CITY_NM: '',
 					},
-					spoustObjMes:""
+					spoustObjMes: "",
+					sourceFrom:''
 				}
 			},
 			methods: {
@@ -288,55 +294,54 @@
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							let holeData=res.data.datas.custinfo;
-							self.spoustObjMes=res.data.datas.spoustObj
-							    self.message.NAME=holeData.NAME;
-								 self.message.ID_CARD_NO=holeData.ID_CARD_NO;
-								 self.message.SEX_NM=holeData.SEX_NM;
-								 self.message.SEX=holeData.SEX;
-								 self.message.HOUSE_ADDRESS=holeData.HOUSE_ADDRESS;
-								 self.message.TEL_PHONE=holeData.PHONE;
-								 self.message.IS_MARRY_NM=holeData.IS_MARRY_NM;
-								 self.message.IS_MARRY=holeData.IS_MARRY;
-								 self.message.BIRTHDAY=holeData.BIRTHDAY;
-								 self.message.SCALE_SOURCE=holeData.SCALE_SOURCE;
-								 self.message.SCALE_SOURCE_NM=holeData.SCALE_SOURCE_NM;
-								 self.message.INDUSTRY_FICATION=holeData.INDUSTRY_FICATION;
-								  self.message.INDUSTRY_FICATION_NM=holeData.INDUSTRY_FICATION_NM;
-								 self.message.HOME_XZ=holeData.HOME_XZ;
-								 self.message.HOUSE_ADDRESS_PROVINCE=holeData.HOUSE_ADDRESS_PROVINCE;
-								 self.message.HOUSE_ADDRESS_PROVINCE_NM=holeData.HOUSE_ADDRESS_PROVINCE_NM;
-								 self.message.HOUSE_ADDRESS_CITY=holeData.HOUSE_ADDRESS_CITY;
-								 self.message.HOUSE_ADDRESS_CITY_NM=holeData.HOUSE_ADDRESS_CITY_NM;
-								 if (self.message.IS_MARRY=="20") {
-									 summer.setWinAttr({
-										 actionBar: {
-											 title: "客户信息",
-											 titleColor: "#ffffff",
-											 backgroundColor: "#039be5",
-											 rightItems: [{
-												 type: "text",
-												 text: "下一步",
-												 textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-												 method: "nextStopAction()" //在打开的window中自定义事件
-											 }]
-										 }
-									 });
-								 } else {
-									 summer.setWinAttr({
-										 actionBar: {
-											 title: "客户信息",
-											 titleColor: "#ffffff",
-											 backgroundColor: "#039be5",
-											 rightItems: [{
-												 type: "text",
-												 text: "保存",
-												 textColor: "#ffffff",
-												 method: "savePerson()" //自定义事件
-											 }]
-										 }
-									 });
-								 }
+							let holeData = res.data.datas.custinfo;
+							self.spoustObjMes = res.data.datas.spoustObj
+							self.message.NAME = holeData.NAME;
+							self.message.ID_CARD_NO = holeData.ID_CARD_NO;
+							self.message.SEX_NM = holeData.SEX_NM;
+							self.message.SEX = holeData.SEX;
+							self.message.HOUSE_ADDRESS = holeData.HOUSE_ADDRESS;
+							self.message.TEL_PHONE = holeData.PHONE;
+							self.message.IS_MARRY_NM = holeData.IS_MARRY_NM;
+							self.message.IS_MARRY = holeData.IS_MARRY;
+							self.message.BIRTHDAY = holeData.BIRTHDAY;
+							self.message.SCALE_SOURCE = holeData.SCALE_SOURCE;
+							self.message.SCALE_SOURCE_NM = holeData.SCALE_SOURCE_NM;
+							self.message.INDUSTRY_FICATION = holeData.INDUSTRY_FICATION;
+							self.message.HOME_XZ = holeData.HOME_XZ;
+							self.message.HOUSE_ADDRESS_PROVINCE = holeData.HOUSE_ADDRESS_PROVINCE;
+							self.message.HOUSE_ADDRESS_PROVINCE_NM = holeData.HOUSE_ADDRESS_PROVINCE_NM;
+							self.message.HOUSE_ADDRESS_CITY = holeData.HOUSE_ADDRESS_CITY;
+							self.message.HOUSE_ADDRESS_CITY_NM = holeData.HOUSE_ADDRESS_CITY_NM;
+							if (self.message.IS_MARRY == "20") {
+								summer.setWinAttr({
+									actionBar: {
+										title: "客户信息",
+										titleColor: "#ffffff",
+										backgroundColor: "#039be5",
+										rightItems: [{
+											type: "text",
+											text: "下一步",
+											textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+											method: "nextStopAction()" //在打开的window中自定义事件
+										}]
+									}
+								});
+							} else {
+								summer.setWinAttr({
+									actionBar: {
+										title: "客户信息",
+										titleColor: "#ffffff",
+										backgroundColor: "#039be5",
+										rightItems: [{
+											type: "text",
+											text: "保存",
+											textColor: "#ffffff",
+											method: "savePerson()" //自定义事件
+										}]
+									}
+								});
+							}
 						}
 					}, function(err) {
 						alert(err);
@@ -411,17 +416,17 @@
 				surePickerMarrige: function(param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
-						this.message.IS_MARRY_NM=this.pickerMarrige
-						if(this.pickerMarrige=="已婚"){
-							this.message.IS_MARRY =20
-						}else if(this.pickerMarrige=="未婚"){
-							this.message.IS_MARRY =10
-						}else if(this.pickerMarrige=="离婚"){
-							this.message.IS_MARRY =40
-						}else if(this.pickerMarrige=="丧偶"){
-							this.message.IS_MARRY =30
-						}else if(this.pickerMarrige=="未说明的婚姻状况"){
-							this.message.IS_MARRY =90
+						this.message.IS_MARRY_NM = this.pickerMarrige
+						if (this.pickerMarrige == "已婚") {
+							this.message.IS_MARRY = 20
+						} else if (this.pickerMarrige == "未婚") {
+							this.message.IS_MARRY = 10
+						} else if (this.pickerMarrige == "离婚") {
+							this.message.IS_MARRY = 40
+						} else if (this.pickerMarrige == "丧偶") {
+							this.message.IS_MARRY = 30
+						} else if (this.pickerMarrige == "未说明的婚姻状况") {
+							this.message.IS_MARRY = 90
 						}
 						if (this.message.IS_MARRY == "20") {
 							summer.setWinAttr({
@@ -461,7 +466,7 @@
 				surePickerIsNative: function(param) {
 					this.pickerIsNativeStatus = !this.pickerIsNativeStatus;
 					if (param == 'confirm') {
-						this.message.SCALE_SOURCE_NM = this.pickerIsNative;
+						this.message.SCALE_SOURCE_NM= this.pickerIsNative;
 					}
 				},
 				onValuesChange4: function(picker, values) {
@@ -470,7 +475,7 @@
 				surePickerTransport: function(param) {
 					this.pickerTransportStatus = !this.pickerTransportStatus;
 					if (param == 'confirm') {
-						this.message.INDUSTRY_FICATION_NM = this.pickerTransport;
+						this.message.INDUSTRY_FICATION= this.pickerTransport;
 					}
 				},
 				onValuesChange5: function(picker, values) {
@@ -553,7 +558,7 @@
 					return true;
 				},
 				savePerson: function() {
-					let self=this;
+					let self = this;
 					if (!this.messageTest()) {
 						return;
 					};
@@ -562,23 +567,58 @@
 						url: 'appservice/customer/saveCust',
 						param: {
 							NAME: self.message.NAME,
-							ID_CARD_NO:  self.message.ID_CARD_NO,
-							SEX:  self.message.SEX_NM=="男"?"0":"1",
+							ID_CARD_NO: self.message.ID_CARD_NO,
+							SEX: self.message.SEX_NM == "男" ? "0" : "1",
 							HOUSE_ADDRESS: self.message.HOUSE_ADDRESS,
 							TEL_PHONE: self.message.TEL_PHONE,
 							IS_MARRY: self.message.IS_MARRY,
-							BIRTHDAY:  self.message.BIRTHDAY,
+							BIRTHDAY: self.message.BIRTHDAY,
 							SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
-							INDUSTRY_FICATION_NM: self.message.INDUSTRY_FICATION_NM,
-							HOME_XZ:  self.message.HOME_XZ,
-							HOUSE_ADDRESS_PROVINCE:  self.message.HOUSE_ADDRESS_PROVINCE,
-							HOUSE_ADDRESS_CITY:  self.message.HOUSE_ADDRESS_CITY,
-							spoustObj:{}
+							SCALE_SOURCE: "1",
+							INDUSTRY_FICATION: self.message.INDUSTRY_FICATION,
+							HOME_XZ: self.message.HOME_XZ,
+							HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
+							HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,
+							spoustObj: {}
 						}
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-								summer.toast({msg:"创建成功"});
+							summer.toast({
+								msg: "保存成功"
+							});
+							if (self.sourceFrom=="newCustom") {
+									let clint_Id=res.data.datas.CLIENT_ID;
+								summer.openWin({
+									id : 'setProject',
+									url : 'html/fastReport/setProject.html',
+									create : false,
+									type : 'actionBar',
+									pageParam:{
+										source:"customer",
+										customId:clint_Id
+									},
+									actionBar : {
+										title : "快捷报单",
+										titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										backgroundColor : "#039be5",
+										leftItem : {
+											image : "img/back.png",
+											method : "", //返回按钮自定义事件
+											text : "返回",
+											textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										},
+										rightItems : [{
+											type : "text",
+											text : "下一步",
+											textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+											method : "nextStopInput()" //在打开的window中自定义事件
+										}]
+									}
+								});
+							} else {
+									summer.closeWin();
+							}
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
 						}
@@ -588,39 +628,39 @@
 						summer.hideProgress();
 					});
 					//此处ajax请求
-				/*	summer.openWin({
-						id: 'setProject',
-						url: 'html/fastReport/setProject.html',
-						create: false,
-						type: 'actionBar',
-						isKeep: false,
-						pageParam: {
-							source: "customer"
-						},
-						actionBar: {
-							title: "快捷报单",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					/*	summer.openWin({
+							id: 'setProject',
+							url: 'html/fastReport/setProject.html',
+							create: false,
+							type: 'actionBar',
+							isKeep: false,
+							pageParam: {
+								source: "customer"
 							},
-							rightItems: [{
-								type: "text",
-								text: "下一步",
-								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								method: "nextStopInput()" //在打开的window中自定义事件
-							}]
-						}
-					});*/
+							actionBar: {
+								title: "快捷报单",
+								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								backgroundColor: "#039be5",
+								leftItem: {
+									image: "img/back.png",
+									method: "", //返回按钮自定义事件
+									text: "返回",
+									textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								},
+								rightItems: [{
+									type: "text",
+									text: "下一步",
+									textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+									method: "nextStopInput()" //在打开的window中自定义事件
+								}]
+							}
+						});*/
 				},
 				nextStopAction: function() {
 					if (!this.messageTest()) {
 						return;
 					};
-					let self=this;
+					let self = this;
 					//此处ajax请求
 					summer.openWin({
 						id: 'newCreateCustom2',
@@ -644,9 +684,10 @@
 								method: "saveAllPerMessage()" //在打开的window中自定义事件
 							}]
 						},
-						pageParam:{
-							personMessage:self.message,
-							spoustObjMes:self.spoustObjMes
+						pageParam: {
+							personMessage: self.message,
+							spoustObjMes: self.spoustObjMes,
+							sourceFrom:self.sourceFrom
 						}
 					});
 				},
@@ -674,6 +715,8 @@
 		summerready = function() {
 			let projectId = summer.pageParam.projectId;
 			let clintId = summer.pageParam.clintId;
+			let sourceFrom=summer.pageParam.sourceFrom;
+			newCreateCustom.sourceFrom=sourceFrom;
 			if (clintId) {
 				newCreateCustom.getData(projectId, clintId);
 			}

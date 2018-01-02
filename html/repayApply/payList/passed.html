@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="um-content">
+		<div class="um-content" id = "content">
 			<ul class="userList">
 				<li v-for="k in items">
 					<div class="title">
@@ -45,21 +45,15 @@
 						</div>
 						<div class="enter">
 							<i class="iconfont icon-enter"></i>
-							<b>{{k.N_PAYSTATUS}}</b>
+							<b>{{k.PSTATUS_NM}}</b>
 						</div>
-					</div>
-					<div class="footer">
-						<ul class="footerList">
-							<li class="first" @click="advance(k.ID,k.PROJECT_ID)">提前放款</li>
-							<li @click="normal(k.ID,k.PROJECT_ID)">正常放款</li>
-						</ul>
 					</div>
 				</li>
 			</ul>
 		</div>
 	</div>
 	<script type="text/javascript">
-		var rejected = new Vue({
+		var passed = new Vue({
 			el: '#index',
 			data: {
 				items: [],
@@ -92,54 +86,6 @@
 							}
 						}
 					});
-				},
-				advance(userId,PROJECT_ID) {
-					summer.openWin({
-						id: 'payApply',
-						url: 'html/repayApply/payApply/index.html',
-						create: false,
-						type: 'actionBar',
-						actionBar: {
-							title: "付款申请",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
-						},
-						pageParam: {
-							show: false,
-							userId: userId,
-							PROJECT_ID: PROJECT_ID
-						}
-					});
-				},
-				normal(userId,PROJECT_ID) {
-					summer.openWin({
-						id: 'payApply',
-						url: 'html/repayApply/payApply/index.html',
-						create: false,
-						type: 'actionBar',
-						actionBar: {
-							title: "付款申请",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
-						},
-						pageParam: {
-							show: true,
-							userId: userId,
-							PROJECT_ID: PROJECT_ID
-						}
-					});
 				}
 			}
 		});
@@ -151,7 +97,8 @@
 					url: 'appservice/paytable/paylist',
 					param: {
 						"pageNo": pageNum,
-						"pageSize": 10
+						"pageSize": 10,
+                        "PSTATUS":"4"
 					}
 				}, function(res) {
 					summer.hideProgress();
@@ -162,18 +109,18 @@
 						Data = res.data;
 					}
 					if (Data.flag == 1) {
-						rejected.totalPage = Data.datas.totalPage;
+						passed.totalPage = Data.datas.totalPage;
 						if (Data.datas.list.length < 1) {
-							createNull("content", "../../img/empty.png")
+							createNull("content", "../../../img/empty.png")
 						} else {
-							if (rejected.resetData) {
-								rejected.items = Data.datas.list;
+							if (passed.resetData) {
+								passed.items = Data.datas.list;
 							} else {
-								rejected.items.push(...Data.datas.list);
+								passed.items.push(...Data.datas.list);
 							}
 						}
 					}
-					console.log(rejected.items);
+					console.log(passed.items);
 				}, function(err) {
 					summer.hideProgress();
 					summer.toast({
@@ -182,7 +129,7 @@
 					console.log(err);
 				});
 			};
-			getData(rejected.num);
+			getData(passed.num);
 			summer.setRefreshHeaderInfo({
 				visible: true,
 				loadingImg: 'img/refresh.png',
@@ -193,7 +140,7 @@
 				showTime: true
 			}, function(ret, err) {
 				//通常在这里从服务器加载数据
-				rejected.resetData = true;
+				passed.resetData = true;
 				getData(1);
 				summer.refreshHeaderLoadDone(); //加载完成后调用方法恢复组件到默认状态
 			});
@@ -207,13 +154,13 @@
 				showTime: true
 			}, function(ret, err) {
 				//通常在这里从服务器加载数据，
-				var num = rejected.num++;
-				if (num > rejected.totalPage) {
+				var num = passed.num++;
+				if (num > passed.totalPage) {
 					summer.toast({
 						msg: "没有更多了"
 					});
 				} else {
-					rejected.resetData = false;
+					passed.resetData = false;
 					getData(num);
 				}
 				summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态

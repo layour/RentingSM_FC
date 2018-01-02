@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="um-content">
+		<div class="um-content" id = "content">
 			<ul class="userList">
 				<li v-for="k in items">
 					<div class="title">
@@ -45,13 +45,13 @@
 						</div>
 						<div class="enter">
 							<i class="iconfont icon-enter"></i>
-							<b>{{k.N_PAYSTATUS}}</b>
+							<b>{{k.PSTATUS_NM}}</b>
 						</div>
 					</div>
 					<div class="footer">
 						<ul class="footerList">
-							<li class="first" @click="advance(k.ID,k.PROJECT_ID)">提前放款</li>
-							<li @click="normal(k.ID,k.PROJECT_ID)">正常放款</li>
+							<li class="first" @click="advance(k.ID,k.PROJECT_ID,k.PAY_ID)">提前放款</li>
+							<li @click="normal(k.ID,k.PROJECT_ID,k.PAY_ID)">正常放款</li>
 						</ul>
 					</div>
 				</li>
@@ -93,7 +93,7 @@
 						}
 					});
 				},
-				advance(userId,PROJECT_ID) {
+				advance(userId,PROJECT_ID,PAY_ID) {
 					summer.openWin({
 						id: 'payApply',
 						url: 'html/repayApply/payApply/index.html',
@@ -113,11 +113,12 @@
 						pageParam: {
 							show: false,
 							userId: userId,
-							PROJECT_ID: PROJECT_ID
+							PROJECT_ID: PROJECT_ID,
+							PAY_ID: PAY_ID
 						}
 					});
 				},
-				normal(userId,PROJECT_ID) {
+				normal(userId,PROJECT_ID,PAY_ID) {
 					summer.openWin({
 						id: 'payApply',
 						url: 'html/repayApply/payApply/index.html',
@@ -137,7 +138,8 @@
 						pageParam: {
 							show: true,
 							userId: userId,
-							PROJECT_ID: PROJECT_ID
+							PROJECT_ID: PROJECT_ID,
+							PAY_ID: PAY_ID
 						}
 					});
 				}
@@ -151,7 +153,8 @@
 					url: 'appservice/paytable/paylist',
 					param: {
 						"pageNo": pageNum,
-						"pageSize": 10
+						"pageSize": 10,
+						"PSTATUS":"1"
 					}
 				}, function(res) {
 					summer.hideProgress();
@@ -164,7 +167,7 @@
 					if (Data.flag == 1) {
 						toBeSubmitted.totalPage = Data.datas.totalPage;
 						if (Data.datas.list.length < 1) {
-							createNull("content", "../../img/empty.png")
+							createNull("content", "../../../img/empty.png")
 						} else {
 							if (toBeSubmitted.resetData) {
 								toBeSubmitted.items = Data.datas.list;
