@@ -20,7 +20,13 @@
 		<div class="um-win" id="quotedPriceDetail" v-cloak>
 			<div class="um-content quotedPriceDetail">
 				<ul>
-					<li class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
+					<li v-if="PROJECT_ID!=''" class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
+					<li v-else class="spec input">
+						<b>合同金额</b>
+						<span>
+							<input type="text" v-model="quoted.allPrice" @input="checkVal('allPrice')" placeholder="请输入合同金额" name="allPrice">&nbsp;元
+						</span>
+					</li>
 					<li @click="surePicker('term')">
 						<b>租赁期数</b>
 						<span>
@@ -185,8 +191,10 @@
     </div>
     <script>
 			summerready=function(){
-				quotedVue.PROJECT_ID=summer.pageParam.id;
-				quotedVue.getData();
+				if(summer.pageParam.id){
+					quotedVue.PROJECT_ID=summer.pageParam.id;
+					quotedVue.getData();
+				}
 			}
       var quotedVue=new Vue({
           el:'#quotedPriceDetail',
@@ -432,13 +440,14 @@
 							var val='';
 							if(value=='fee'){
 								val=this.quoted.consultingFee;
+								if(!this.quoted.allPrice){summer.toast({msg:'请先输入合同金额'});return}
 								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
 									this.quoted.consultingFee=''
 								}
-							}else if (value=='bail') {
-								val=this.quoted.sureBail;
-								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
-									this.quoted.sureBail=''
+							}else if (value=='allPrice') {
+								val=this.quoted.allPrice;
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0){
+									this.quoted.allPrice=''
 								}
 							}else if (value=='gps') {
 								val=this.quoted.gps;

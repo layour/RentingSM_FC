@@ -56,13 +56,31 @@
 					<tr>
             <td>新车指导价</td>
             <td>
-							<input type="text" @input="checkNumber($event,'guidePrice')" name="price" placeholder="请输入指导价" v-model="guidePrice">
+							{{guidePrice}}
+						</td>
+					</tr>
+					<tr>
+            <td>实际价格</td>
+            <td>
+							<input type="text" @input="checkNumber($event,'guidePrice')" name="price" placeholder="请输入指导价" v-model="realityPrice">
 						</td>
 					</tr>
 					<tr>
             <td>留购价</td>
             <td>
 							<input type="text" @input="checkNumber($event,'holdPrice')" name="holdPrice" placeholder="请输入留购价" v-model="holdPrice">
+						</td>
+					</tr>
+					<tr>
+            <td>单台购置税</td>
+            <td>
+							<input type="text" @input="checkNumber($event,'onePrice')" name="onePrice" placeholder="请输入单台购置税" v-model="onePrice">
+						</td>
+					</tr>
+					<tr>
+            <td>保险</td>
+            <td>
+							<input type="text" @input="checkNumber($event,'safePrice')" name="safePrice" placeholder="请输入保险" v-model="safePrice">
 						</td>
 					</tr>
         </table>
@@ -89,7 +107,10 @@
 							carModels:'',
 							color:'',
 							guidePrice:'',
+							realityPrice:'',
 							holdPrice:'100',
+							safePrice:'',
+							onePrice:'',
 							pickerColorStatus:false,
 							pickedColor:'',
 							PROJECT_ID:'',
@@ -128,7 +149,12 @@
 
 									_this.carModels=data.PRODUCT_NAME+" "+data.CATENA_NAME+" "+data.SPEC_NAME;
 									_this.guidePrice=data.UNIT_PRICE;
+									_this.realityPrice=data.UNIT_PRICE;
 									_this.holdPrice=data.STAYBUY_PRICE;
+
+									_this.onePrice=data.STAYBUY_PRICE
+									_this.safePrice=data.STAYBUY_PRICE
+
 									summer.setStorage('pickerDealer',JSON.stringify({SUPPLIERS_NAME:data.SUPPLIERS_NAME,SUPPLIERS_ID:data.SUPPLIERS_ID}))
 									summer.setStorage('pickerCompany',JSON.stringify({COMPANY_NAME:data.COMPANY_NAME,COMPANY_ID:data.COMPANY_ID}))
 									summer.setStorage('pickerModels1',JSON.stringify({PRODUCT_NAME:data.PRODUCT_NAME,PRODUCT_ID:data.PRODUCT_ID}))
@@ -169,8 +195,12 @@
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)){
 								if(param=='guidePrice'){
 									this.guidePrice=''
-								}else{
+								}else if(param=='holdPrice'){
 									this.holdPrice=''
+								}else if(param=='onePrice'){
+									this.onePrice=''
+								}else if(param=='safePrice'){
+									this.safePrice=''
 								}
 							}
 						},
@@ -284,6 +314,8 @@
 							param.TOTAL_PRICE=this.guidePrice;
 							param.AMOUNT=1;
 							param.STAYBUY_PRICE=this.holdPrice;
+							param.STAYBUY_PRICE=this.onePrice;
+							param.STAYBUY_PRICE=this.safePrice;
 							console.log("param",JSON.stringify(param));
 							var _this=this;
 							ajaxRequest({
