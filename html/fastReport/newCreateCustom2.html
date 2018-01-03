@@ -391,6 +391,11 @@
 							} else {
 									summer.closeToWin({id:"setProject"});
 							}
+						}else if(res.data.flag==0){
+							if(res.data.code=="E02003"){
+								summer.toast({msg:"客户证件号重复,请重新录入"});
+								return
+							}
 						}
 					}, function(err) {
 						alert(err);

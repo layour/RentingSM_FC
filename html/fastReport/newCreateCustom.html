@@ -14,6 +14,7 @@
 			color: #DEDEDE;
 			font-size: 0.28rem;
 		}
+
 		.topheader {
 			position: relative;
 			height: 180px;
@@ -21,6 +22,7 @@
 			background-repeat: no-repeat;
 			background-size: 100% 100%;
 		}
+
 		.topheader img {
 			margin-top: 0.8rem;
 			width: 2.8rem;
@@ -142,12 +144,12 @@
 			</div>
 			<div @click="surePickerIsNative" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">是否本地人</span> <span class="um-bf1 tr"><span v-if='message.SCALE_SOURCE_NM' class="first">{{message.SCALE_SOURCE_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">是否本地人</span> <span class="um-bf2 tr"><span v-if='message.SCALE_SOURCE_NM' class="first">{{message.SCALE_SOURCE_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="surePickerTransport" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">运输货物</span> <span class="um-bf1 tr"><span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">运输货物</span> <span class="um-bf2 tr"><span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<div @click="surePickerHouse" class="item">
@@ -237,21 +239,21 @@
 					}],
 					slots3: [{
 						flex: 1,
-						values: ['自主开发', '公司推荐', '客户咨询'],
+						values: "",
 						defaultIndex: 0,
 						className: 'slot1',
 						textAlign: 'center'
 					}],
 					slots4: [{
 						flex: 1,
-						values: ['城市渣土运输', '钢材运输', '港口运输', '轿运物流', '快递运输', '矿产运输', '矿山开采及工程建设运输', '冷链物流', '农副产品运输', '日用工业品运输', '散装罐运输', '砂石运输', '危险品运输', '专用车', '其它运输'],
+						values:"",
 						defaultIndex: 0,
 						className: 'slot1',
 						textAlign: 'center'
 					}],
 					slots5: [{
 						flex: 1,
-						values: ['自置', '按揭', '亲属楼宇', '集体宿舍', '租房', '共有住宅', '其它'],
+						values:"",
 						defaultIndex: 0,
 						className: 'slot1',
 						textAlign: 'center'
@@ -277,7 +279,10 @@
 						HOUSE_ADDRESS_CITY_NM: '',
 					},
 					spoustObjMes: "",
-					sourceFrom:''
+					sourceFrom:'',
+					isNativeData_total:"",
+					transportData_total:'',
+					clintId:''
 				}
 			},
 			methods: {
@@ -293,53 +298,71 @@
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							let holeData = res.data.datas.custinfo;
-							self.spoustObjMes = res.data.datas.spoustObj
-							self.message.NAME = holeData.NAME;
-							self.message.ID_CARD_NO = holeData.ID_CARD_NO;
-							self.message.SEX_NM = holeData.SEX_NM;
-							self.message.SEX = holeData.SEX;
-							self.message.HOUSE_ADDRESS = holeData.HOUSE_ADDRESS;
-							self.message.TEL_PHONE = holeData.PHONE;
-							self.message.IS_MARRY_NM = holeData.IS_MARRY_NM;
-							self.message.IS_MARRY = holeData.IS_MARRY;
-							self.message.BIRTHDAY = holeData.BIRTHDAY;
-							self.message.SCALE_SOURCE = holeData.SCALE_SOURCE;
-							self.message.SCALE_SOURCE_NM = holeData.SCALE_SOURCE_NM;
-							self.message.INDUSTRY_FICATION = holeData.INDUSTRY_FICATION;
-							self.message.INDUSTRY_FICATION_NM = holeData.INDUSTRY_FICATION_NM;
-							self.message.HOME_XZ = holeData.HOME_XZ;
-							self.message.HOUSE_ADDRESS_PROVINCE = holeData.HOUSE_ADDRESS_PROVINCE;
-							self.message.HOUSE_ADDRESS_PROVINCE_NM = holeData.HOUSE_ADDRESS_PROVINCE_NM;
-							self.message.HOUSE_ADDRESS_CITY = holeData.HOUSE_ADDRESS_CITY;
-							self.message.HOUSE_ADDRESS_CITY_NM = holeData.HOUSE_ADDRESS_CITY_NM;
-							if (self.message.IS_MARRY == "20") {
-								summer.setWinAttr({
-									actionBar: {
-										title: "客户信息",
-										titleColor: "#ffffff",
-										backgroundColor: "#039be5",
-										rightItems: [{
-											type: "text",
-											text: "下一步",
-											textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-											method: "nextStopAction()" //在打开的window中自定义事件
-										}]
-									}
-								});
-							} else {
-								summer.setWinAttr({
-									actionBar: {
-										title: "客户信息",
-										titleColor: "#ffffff",
-										backgroundColor: "#039be5",
-										rightItems: [{
-											type: "text",
-											text: "保存",
-											textColor: "#ffffff",
-											method: "savePerson()" //自定义事件
-										}]
-									}
-								});
+							let totalData=res.data.datas;
+							self.isNativeData_total=totalData.caste;
+							self.transportData_total=totalData.industry;
+							let isNativeData=[],transportData=[],houseData=[];
+							for(var i=0;i<totalData.caste.length;i++){
+								isNativeData.push(totalData.caste[i].FLAG);
+							}
+							self.slots3[0].values=isNativeData;
+							for(var i=0;i<totalData.industry.length;i++){
+								transportData.push(totalData.industry[i].FLAG);
+							}
+							self.slots4[0].values=transportData;
+							for(var i=0;i<totalData.residential.length;i++){
+								houseData.push(totalData.residential[i].FLAG);
+							}
+							self.slots5[0].values=houseData;
+							if (holeData) {
+								self.spoustObjMes = res.data.datas.spoustObj
+								self.message.NAME = holeData.NAME;
+								self.message.ID_CARD_NO = holeData.ID_CARD_NO;
+								self.message.SEX_NM = holeData.SEX_NM;
+								self.message.SEX = holeData.SEX;
+								self.message.HOUSE_ADDRESS = holeData.HOUSE_ADDRESS;
+								self.message.TEL_PHONE = holeData.PHONE;
+								self.message.IS_MARRY_NM = holeData.IS_MARRY_NM;
+								self.message.IS_MARRY = holeData.IS_MARRY;
+								self.message.BIRTHDAY = holeData.BIRTHDAY;
+								self.message.SCALE_SOURCE = holeData.SCALE_SOURCE;
+								self.message.SCALE_SOURCE_NM = holeData.SCALE_SOURCE_NM;
+								self.message.INDUSTRY_FICATION = holeData.INDUSTRY_FICATION;
+								self.message.INDUSTRY_FICATION_NM = holeData.INDUSTRY_FICATION_NM;
+								self.message.HOME_XZ = holeData.HOME_XZ;
+								self.message.HOUSE_ADDRESS_PROVINCE = holeData.HOUSE_ADDRESS_PROVINCE;
+								self.message.HOUSE_ADDRESS_PROVINCE_NM = holeData.HOUSE_ADDRESS_PROVINCE_NM;
+								self.message.HOUSE_ADDRESS_CITY = holeData.HOUSE_ADDRESS_CITY;
+								self.message.HOUSE_ADDRESS_CITY_NM = holeData.HOUSE_ADDRESS_CITY_NM;
+								if (self.message.IS_MARRY == "20") {
+									summer.setWinAttr({
+										actionBar: {
+											title: "客户信息",
+											titleColor: "#ffffff",
+											backgroundColor: "#039be5",
+											rightItems: [{
+												type: "text",
+												text: "下一步",
+												textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+												method: "nextStopAction()" //在打开的window中自定义事件
+											}]
+										}
+									});
+								} else {
+									summer.setWinAttr({
+										actionBar: {
+											title: "客户信息",
+											titleColor: "#ffffff",
+											backgroundColor: "#039be5",
+											rightItems: [{
+												type: "text",
+												text: "保存",
+												textColor: "#ffffff",
+												method: "savePerson()" //自定义事件
+											}]
+										}
+									});
+								}
 							}
 						}
 					}, function(err) {
@@ -467,6 +490,11 @@
 					this.pickerIsNativeStatus = !this.pickerIsNativeStatus;
 					if (param == 'confirm') {
 						this.message.SCALE_SOURCE_NM= this.pickerIsNative;
+						for(var i=0;i<this.isNativeData_total.length;i++){
+							if(this.pickerIsNative==this.isNativeData_total[i].FLAG){
+								this.message.SCALE_SOURCE=this.isNativeData_total[i].CODE
+							}
+						}
 					}
 				},
 				onValuesChange4: function(picker, values) {
@@ -476,6 +504,11 @@
 					this.pickerTransportStatus = !this.pickerTransportStatus;
 					if (param == 'confirm') {
 						this.message.INDUSTRY_FICATION_NM= this.pickerTransport;
+						for(var i=0;i<this.transportData_total.length;i++){
+							if(this.pickerTransport==this.transportData_total[i].FLAG){
+								this.message.INDUSTRY_FICATION=this.transportData_total[i].ID
+							}
+						}
 					}
 				},
 				onValuesChange5: function(picker, values) {
@@ -562,26 +595,31 @@
 					if (!this.messageTest()) {
 						return;
 					};
+					summer.showProgress();
+					let paramData={
+						NAME: self.message.NAME,
+						ID_CARD_NO: self.message.ID_CARD_NO,
+						SEX: self.message.SEX_NM == "男" ? "0" : "1",
+						HOUSE_ADDRESS: self.message.HOUSE_ADDRESS,
+						TEL_PHONE: self.message.TEL_PHONE,
+						IS_MARRY: self.message.IS_MARRY,
+						BIRTHDAY: self.message.BIRTHDAY,
+						SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
+						SCALE_SOURCE:self.message.SCALE_SOURCE,
+						INDUSTRY_FICATION: self.message.INDUSTRY_FICATION,
+						INDUSTRY_FICATION_NM: self.message.INDUSTRY_FICATION_NM,
+						HOME_XZ: self.message.HOME_XZ,
+						HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
+						HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,
+						spoustObj: {}
+					};
+					if(self.clintId){
+						paramData.CLIENT_ID=self.clintId;
+					}
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/saveCust',
-						param: {
-							NAME: self.message.NAME,
-							ID_CARD_NO: self.message.ID_CARD_NO,
-							SEX: self.message.SEX_NM == "男" ? "0" : "1",
-							HOUSE_ADDRESS: self.message.HOUSE_ADDRESS,
-							TEL_PHONE: self.message.TEL_PHONE,
-							IS_MARRY: self.message.IS_MARRY,
-							BIRTHDAY: self.message.BIRTHDAY,
-							SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
-							SCALE_SOURCE: "1",
-							INDUSTRY_FICATION: "10613",
-							INDUSTRY_FICATION_NM: self.message.INDUSTRY_FICATION_NM,
-							HOME_XZ: self.message.HOME_XZ,
-							HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
-							HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,
-							spoustObj: {}
-						}
+						param: paramData
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
@@ -595,6 +633,7 @@
 									url : 'html/fastReport/setProject.html',
 									create : false,
 									type : 'actionBar',
+									isKeep:false,
 									pageParam:{
 										source:"customer",
 										customId:clint_Id
@@ -622,6 +661,11 @@
 							}
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
+						}else if(res.data.flag==0){
+							if(res.data.code=="E02003"){
+								summer.toast({msg:"客户证件号重复,请重新录入"});
+								return
+							}
 						}
 					}, function(err) {
 						//alert(err);
@@ -718,9 +762,8 @@
 			let clintId = summer.pageParam.clintId;
 			let sourceFrom=summer.pageParam.sourceFrom;
 			newCreateCustom.sourceFrom=sourceFrom;
-			if (clintId) {
-				newCreateCustom.getData(projectId, clintId);
-			}
+			newCreateCustom.clintId=clintId;
+			newCreateCustom.getData(projectId, clintId);
 			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE",
 				"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"
 			];
