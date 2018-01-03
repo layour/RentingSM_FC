@@ -1,0 +1,31 @@
+.title{
+    height: 0.9rem;
+    width: 100%;
+    margin: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+.title span{
+    float: left;
+    width: 50%;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    color: #039be5;
+    text-align: center;
+    font-weight: normal;
+    font-size: 0.34rem;
+}
+.billList li{
+    width: 100%;
+    height: 0.9rem;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+.billList li span{
+    float: left;
+    width: 50%;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    text-align: center;
+    color: #333;
+}
