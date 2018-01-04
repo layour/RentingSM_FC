@@ -205,7 +205,23 @@
 		};
 		function toLog(){
 			if (!isLogin) {
-				logout();
+				var os = $summer.os;
+				summer.setStorage("userinfo",{});
+				if (os == "android") {
+					summer.openWin({
+						"id" : 'login',
+						"url" : 'login.html',
+						"isKeep" : false
+					});
+					summer.closeToWin({
+						id : "homePage"
+					});
+				} else {
+					cordova.exec(null, null, "FrameManager", "initializeWin", [{
+						"id": 'login',
+						"url": 'login.html'
+					}]);
+				}
 			}
 		};
 	</script>
