@@ -15,6 +15,16 @@
     font-size: 0.28rem;
     color: #333;
 }
+.loanList li div i,.loanList li div span{
+   float: right;
+   font-style: normal;
+}
+.loanList li div i{
+   color: #9e9e9e;
+}
+.loanList li div span{
+   margin: 0 0 0 0.1rem;
+}
 .loanList li div{
     float: right;
     height: 0.9rem;
@@ -46,4 +56,31 @@
     transform: translate(-50%);
     top: 8rem;
     border-radius: 0.1rem;
+}
+.insurer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background: #ffffff;
+}
+.insurer .picker-item {
+  font-size: 0.28rem;
+}
+.insurer > p {
+    padding: .24rem .44rem;
+    line-height: .88rem;
+    padding: 0 .56rem;
+    color: #039BE5;
+    border-top: 1px solid #E0E0E0;
+}
+.insurer > p span {
+  color: #34aadc;
+}
+.insurer > p span:last-child {
+  float: right;
+}
+.picker-slot-wrapper{
+    height: auto;
 }

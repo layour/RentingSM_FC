@@ -18,8 +18,8 @@
 	<div class="um-win" id="index">
 		<div class="um-content">
 			<div class="box">
-				<img src="../../img/timg.jpg" alt="">
-				<p></p>
+				<img src="../../img/timg.jpg" alt="" onclick="toLog()">
+				<p onclick="toLog()"></p>
 				<div class="userInfo">
 				</div>
 			</div>
@@ -59,10 +59,24 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		var isLogin;
+		if (summer.getStorage("userinfo")) {
+			if (summer.getStorage("userinfo").EMPLOYEE_ID) {
+				isLogin = true;
+			} else {
+				isLogin = false;
+			}
+		} else {
+			isLogin = false;
+		}
 		summerready = function (){
-			var userinfo = summer.getStorage("userinfo");
-			var name = userinfo ? userinfo.userName : "张帅经理";
-			$('.box').find('p').text(name);
+			if (isLogin) {
+				var userinfo = summer.getStorage("userinfo");
+				var name = userinfo ? userinfo.userName : "张帅经理";
+				$('.box').find('p').text(name);
+			} else {
+				$('.box').find('p').text("请登录");
+			}
 		};
 		function logout() {
 			var os = $summer.os;
@@ -74,16 +88,16 @@
 					summer.setStorage("userinfo",{});
 					if (os == "android") {
 						summer.openWin({
-							"id" : 'root',
+							"id" : 'login',
 							"url" : 'login.html',
 							"isKeep" : false
 						});
 						summer.closeToWin({
-							id : "login"
+							id : "homePage"
 						});
 					} else {
 						cordova.exec(null, null, "FrameManager", "initializeWin", [{
-							"id": 'root',
+							"id": 'login',
 							"url": 'login.html'
 						}]);
 					}
@@ -91,91 +105,108 @@
 			});
 		};
 		function help(){
-			summer.openWin({
-				id:'help',
-				url:'html/help/index.html',
-				create:false,
-				type:'actionBar',
-				actionBar: {
-					title: "帮助与反馈",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					leftItem:{
-						image: "img/back.png",
-						method:"",//返回按钮自定义事件
-						text:"返回",
-						textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					},
-					rightItems:[{
-						type:"text",
-						text:"提交",
-						textColor:"#ffffff" ,
-						method:"uploadHr()"
-					}]
-				}
-			});
+			if (isLogin) {
+				summer.openWin({
+					id:'help',
+					url:'html/help/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "帮助与反馈",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems:[{
+							type:"text",
+							text:"提交",
+							textColor:"#ffffff" ,
+							method:"uploadHr()"
+						}]
+					}
+				});
+			} else {
+				summer.toast({msg:"请先登录"});
+			}
 		};
 		function update(){
-			summer.showProgress();
-            summer.ajax({
-				type: "post",
-				url: "http://122.49.7.88:8080/appservice/appsys/getNewapp",
-				param:{
-                    "version":"1",
-                	"appFlag":"1",
-                	"sysCd":"11002"
-				},
-				header : {
-			        "Content-Type" : "application/json"
-			    }
-			}, function(response) {
-				summer.hideProgress();
-                var Data;
-				if (Object.prototype.toString.call(response.data) === '[object String]') {
-					Data = JSON.parse(response.data);
-				} else {
-					Data = response.data;
-				}
-				switch (Data.flag) {
-					case 1:
+			if (isLogin) {
+				summer.showProgress();
+				summer.ajax({
+					type: "post",
+					url: "http://122.49.7.88:8080/appservice/appsys/getNewapp",
+					param:{
+						"version":"1",
+						"appFlag":"1",
+						"sysCd":"11002"
+					},
+					header : {
+						"Content-Type" : "application/json"
+					}
+				}, function(response) {
+					summer.hideProgress();
+					var Data;
+					if (Object.prototype.toString.call(response.data) === '[object String]') {
+						Data = JSON.parse(response.data);
+					} else {
+						Data = response.data;
+					}
+					switch (Data.flag) {
+						case 1:
 						summer.toast({msg:"成功"});
 						break;
-					case 0:
+						case 0:
 						summer.toast({msg:"请求失败"});
 						break;
-					default:
+						default:
 						summer.toast({msg:"请求失败"});
-				}
-			}, function(error) {
-				summer.hideProgress();
-				console.log(error);
-				summer.toast({msg:"系统内部异常"});
-			});
+					}
+				}, function(error) {
+					summer.hideProgress();
+					console.log(error);
+					summer.toast({msg:"系统内部异常"});
+				});
+			} else {
+				summer.toast({msg:"请先登录"});
+			}
 		};
 		function changePsw(){
-			summer.openWin({
-				id:'changePsw',
-				url:'html/changePsw/index.html',
-				create:false,
-				type:'actionBar',
-				actionBar: {
-					title: "修改密码",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					leftItem:{
-						image: "img/back.png",
-						method:"",//返回按钮自定义事件
-						text:"返回",
-						textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					},
-					rightItems:[{
-						type:"text",
-						text:"提交",
-						textColor:"#ffffff" ,
-						method:"submitPsw()"
-					}]
-				}
-			});
+			if (isLogin) {
+				summer.openWin({
+					id:'changePsw',
+					url:'html/changePsw/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "修改密码",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems:[{
+							type:"text",
+							text:"提交",
+							textColor:"#ffffff" ,
+							method:"submitPsw()"
+						}]
+					}
+				});
+			} else {
+				summer.toast({msg:"请先登录"});
+			}
+		};
+		function toLog(){
+			if (!isLogin) {
+				logout();
+			}
 		};
 	</script>
 </body>
