@@ -310,7 +310,8 @@
 									if(res.data.datas.prj.LEASE_TOPRIC){
 										_this.quoted.allPrice=res.data.datas.prj.LEASE_TOPRIC
 									}else{
-										summer.toast({msg:'请先添加车辆'})
+										if(_this.PROJECT_ID!=''){summer.toast({msg:'请先添加车辆'})}
+
 									}
 								}
 							},function(err){

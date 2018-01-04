@@ -177,11 +177,11 @@
 								type:'POST',
 								url:'appservice/customer/datadictionary',
 								param:{
-									DATATYPE:'车辆类型'
+									DATATYPE:'车辆种类'
 								}
 							},function(res){
 								_this.slots[0].values=res.data.datas
-								console.log("车辆类型",res);
+								console.log("车辆种类",res);
 
 							},function(err){
 								console.log("err",err);

@@ -11,21 +11,37 @@
 			.addCarList>ul li{
 				background:#fff;
 				margin-bottom: .2rem;
-				height: 2.16rem;
+				height: 2rem;
+				position: relative;
 			}
-			.price{padding-left: .56rem; font-size: 13px;line-height: .4rem;}
+			.price{
+				color: #333;
+				 font-size: 14px;
+				 line-height: .4rem;
+				 position: absolute;
+				 left:0;
+				 bottom: .32rem;
+			 }
 			.mint-cell-swipe{
-				height: 1.76rem;
-				padding-left: .56rem;
+				height: 2rem;
+				padding-left: .54rem;
 				background: none;
 			}
 			.mint-cell-wrapper{
-				height: 1.76rem;
+				height: 2rem;
 				padding-left: 0;
 				background: none;
 			}
 			.mint-cell-right{
-				height: 2.16rem;
+				height: 2rem;
+				font-size: 14px;
+			}
+			.mint-cell-title{
+				margin-bottom: .3rem;
+			}
+			.mint-cell-title span{
+				display: block;
+				margin-bottom: .2rem;
 			}
 			.title,.mint-cell-text{
 				font-size: 16px;
@@ -77,24 +93,22 @@
 			<div class="um-content addCarList">
 				<ul>
 					<li v-for="(item,index) in addCarList" @click="gotoDetail(item)" :key='index'>
-						<template v-if="addCarList.length==1">
+						<!-- <template v-if="addCarList.length==1">
 							<div class="inDiv" style="padding:.4rem 1rem; .4rem 0;">
 								<p class="title">{{item.PRODUCT_NAME}}{{item.CATENA_NAME}}{{item.SPEC_NAME}}</p>
 								<p class="normal">{{item.COMPANY_NAME}}</p>
+								<p class="price">成交价：&yen;{{item.ACTUAL_PRICE}}</p>
 							</div>
 							<div  class="fr one inDiv">
 								<i class="icon iconfont icon-enter"></i>
 							</div>
-              <p class="price">成交价：&yen;{{item.ACTUAL_PRICE}}</p>
-						</template>
-						<template v-else>
-						<mt-cell-swipe :title="item.PRODUCT_NAME+' | '+item.CATENA_NAME+' | '+item.SPEC_NAME" :label="item.COMPANY_NAME" :right="[{content: '&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'1.76rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index,ID)}]">
+						</template> -->
+						<mt-cell-swipe :title="item.PRODUCT_NAME+' | '+item.CATENA_NAME+' | '+item.SPEC_NAME" :label="item.COMPANY_NAME" :label="ACTUAL_PRICE" :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'1.76rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index,ID)}]">
+								 <p class="price">成交价：&yen;{{item.ACTUAL_PRICE}}</p>
 								<div class="fr">
 									<i class="icon iconfont icon-enter"></i>
 								</div>
 						</mt-cell-swipe>
-            <p class="price">成交价：&yen;{{item.ACTUAL_PRICE}}</p>
-						</template>
 					</li>
 				</ul>
 				<div id="noData" class="alignCenter" v-if="addCarList.length==0">
@@ -125,7 +139,7 @@
           el:'#addCarList',
           data(){
             return {
-							addCarList:[{PRODUCT_NAME:'888'}],
+							addCarList:[],
 							PROJECT_ID:'',
 							CLIENT_ID:'',
 							dataLength:false,
@@ -140,6 +154,7 @@
           },
 					methods:{
 						gotoDetail(item){
+							console.log("传参",JSON.stringify(item));
 							summer.openWin({
 								id:'addCar',
 								url:'html/touristsClient/addCar.html',
@@ -222,23 +237,48 @@
 								}
 							})
 						},
-						toggleItem(item){
-							if(item.ROWNUM){
+						toggleItem(itemData){
+							if(itemData.ROWNUM){
 								for(var i=0;i<this.addCarList.length;i++){
-									if(item.ROWNUM==this.addCarList[i].ROWNUM){
-										this.addCarList[i]=item
+									if(itemData.ROWNUM==this.addCarList[i].ROWNUM){
+										this.addCarList[i].SUPPLIERS_NAME=itemData.SUPPLIERS_NAME
+										this.addCarList[i].SUPPLIERS_ID=itemData.SUPPLIERS_ID
+										this.addCarList[i].COMPANY_NAME=itemData.COMPANY_NAME
+										this.addCarList[i].COMPANY_ID=itemData.COMPANY_ID
+										this.addCarList[i].CAR_TYPE=itemData.CAR_TYPE
+										this.addCarList[i].CAR_NAME=itemData.CAR_NAME
+										this.addCarList[i].PRODUCT_NAME=itemData.PRODUCT_NAME
+										this.addCarList[i].PRODUCT_ID=itemData.PRODUCT_ID
+										this.addCarList[i].CATENA_NAME=itemData.CATENA_NAME
+										this.addCarList[i].CATENA_ID=itemData.CATENA_ID
+										this.addCarList[i].SPEC_NAME=itemData.SPEC_NAME
+										this.addCarList[i].SPEC_ID=itemData.SPEC_ID
+										this.addCarList[i].ROWNUM=itemData.ROWNUM
+										this.addCarList[i].UNITTEST=itemData.UNITTEST
+										this.addCarList[i].UNIT=itemData.UNIT
+										this.addCarList[i].AMOUNT=itemData.AMOUNT
+										this.addCarList[i].UNIT_PRICE=itemData.UNIT_PRICE
+										this.addCarList[i].ACTUAL_PRICE=itemData.ACTUAL_PRICE
+										this.addCarList[i].CCS=itemData.CCS
+										this.addCarList[i].BX=itemData.BX
+										this.addCarList[i].STAYBUY_PRICE=itemData.STAYBUY_PRICE
 									}
 								}
 
 							}else{
-								this.addCarList.push(item)
+								itemData.ROWNUM=new Date().getTime()
+								this.addCarList.push(itemData)
 							}
 							if(this.addCarList.length>0){this.dataLength=true}
-							console.log(JSON.stringify(this.addCarList));
+							console.log("最终结果",JSON.stringify(this.addCarList));
 						},
 						save(){
 							//发请求
 							console.log(JSON.stringify(this.addCarList));
+							if(this.addCarList.length==0){
+								summer.toast({msg:'请先添加车辆'});
+								return
+							}
 							summer.showProgress();
 							var _this=this;
 							ajaxRequest({
