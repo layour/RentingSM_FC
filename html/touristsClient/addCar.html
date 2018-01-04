@@ -151,7 +151,7 @@
 								_this.onePrice=data.CCS;
 								_this.safePrice=data.BX;
 								_this.number=data.AMOUNT;
-								_this.id=data.ID;
+								_this.id=data.ROWNUM;
 								summer.setStorage('pickerDealer',JSON.stringify({SUPPLIERS_NAME:data.SUPPLIERS_NAME,SUPPLIERS_ID:data.SUPPLIERS_ID}))
 								summer.setStorage('pickerCompany',JSON.stringify({COMPANY_NAME:data.COMPANY_NAME,COMPANY_ID:data.COMPANY_ID}))
 								summer.setStorage('pickerModels1',JSON.stringify({PRODUCT_NAME:data.PRODUCT_NAME,PRODUCT_ID:data.PRODUCT_ID}))
@@ -304,7 +304,7 @@
 							param.CATENA_ID=JSON.parse(summer.getStorage('pickerModels2')).CATENA_ID;
 							param.SPEC_NAME=JSON.parse(summer.getStorage('pickerModels3')).NAME;
 							param.SPEC_ID=JSON.parse(summer.getStorage('pickerModels3')).ID;
-							param.ID=this.id;
+							param.ROWNUM=this.id;
 							param.UNITTEST='台';
 							param.UNIT='1';
 							param.AMOUNT=this.number;

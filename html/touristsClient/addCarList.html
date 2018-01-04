@@ -223,9 +223,9 @@
 							})
 						},
 						toggleItem(item){
-							if(item.id){
+							if(item.ROWNUM){
 								for(var i=0;i<this.addCarList.length;i++){
-									if(item.id==this.addCarList[i].ID){
+									if(item.ROWNUM==this.addCarList[i].ROWNUM){
 										this.addCarList[i]=item
 									}
 								}
