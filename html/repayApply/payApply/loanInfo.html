@@ -38,15 +38,15 @@
                 </li>
                 <li>
                     <span>抵押保证金金额</span>
-                    <input v-model="pledge" type="text" placeholder="请输入" />
+                    <input v-model="pledge" type="number" placeholder="请输入" />
                 </li>
                 <li>
                     <span>应交入网保证金</span>
-                    <input v-model="web" type="text" placeholder="请输入" />
+                    <input v-model="web" type="number" placeholder="请输入" />
                 </li>
                 <li>
                     <span>GPS费用</span>
-                    <input v-model="gps" type="text" placeholder="请输入" />
+                    <input v-model="gps" type="number" placeholder="请输入" />
                 </li>
                 <li>
                     <span>放款模式</span>
@@ -98,7 +98,7 @@
                 insurerReplace:"请选择",
                 replaceSlots: [{
                     flex: 1,
-                    values: ['是', '否'],
+                    values: ['全额', '差额'],
                     defaultIndex: 0,
                     className: 'slot1',
                     textAlign: 'center'
@@ -107,6 +107,7 @@
                 methodStatus:false,
                 pickedMethod:"",
                 insurerMethod:"请选择",
+                methodArr:[],
                 methodSlots: [{
                     flex: 1,
                     values: ['方式一', '方式二'],
@@ -118,6 +119,7 @@
                 patternStatus:false,
                 pickedPattern:"",
                 insurerPattern:"请选择",
+                patternArr:[],
                 patternSlots: [{
                     flex: 1,
                     values: ['模式一', '模式二'],
@@ -165,12 +167,59 @@
 				},
                 // 保存
                 save(){
+                    if (this.insurerMethod == "请选择") {
+                        summer.toast({
+                            msg: "请选择放款方式"
+                        });
+                        return;
+                    } else if (this.insurerReplace == "请选择") {
+                        summer.toast({
+                            msg: "请选择是否代收"
+                        });
+                        return;
+                    } else if (this.pledge == "") {
+                        summer.toast({
+                            msg: "请填写抵押保证金金额"
+                        });
+                        return;
+                    } else if (this.gps == "") {
+                        summer.toast({
+                            msg: "请填写GPS费用"
+                        });
+                        return;
+                    } else if (this.insurerPattern == "请选择") {
+                        summer.toast({
+                            msg: "请选择放款模式"
+                        });
+                        return;
+                    }
                     summer.showProgress();
+                    var ISDEKOU, PAYMENT_TYPE, CS_PRICE, LENDING_MODEL, GPS_MONEY;
+                    if (this.insurerReplace == "全额") {
+                        ISDEKOU = "1"
+                    } else {
+                        ISDEKOU = "0"
+                    }
+                    methodArr.forEach((e) => {
+                        if (e.FLAG == this.insurerMethod) {
+                            PAYMENT_TYPE = e.CODE;
+                        }
+                    });
+                    patternArr.forEach((e) => {
+                        if (e.FLAG == this.insurerPattern) {
+                            LENDING_MODEL = e.CODE;
+                        }
+                    });
 					ajaxRequest({
 						type: 'post',
-						url: 'appservice/business/startRevJbpm',
+						url: 'appservice/payment/startCarPayment',
 						param: {
-							PROJECT_ID: this.params.PROJECT_ID
+							ISDEKOU: ISDEKOU,
+                            PAYMENT_TYPE: PAYMENT_TYPE,
+                            CS_PRICE: this.pledge,
+                            LENDING_MODEL: LENDING_MODEL,
+                            GPS_MONEY: this.gps,
+                            PAY_ID: this.params.PAY_ID
 						}
 					}, function(res) {
 						summer.hideProgress();
@@ -188,7 +237,14 @@
 								summer.closeToWin({
 									id: 'payList'
 								});
-							}
+							} else {
+                                summer.toast({
+                                    msg: Data.datas.data
+                                });
+                                summer.closeToWin({
+                                    id: 'payList'
+                                });
+                            }
 						} else {
 							summer.toast({
 								msg: Data.msg
@@ -210,6 +266,62 @@
             }
         });
         summerready = function() {
+            // 获取放款方式
+            summer.showProgress();
+			ajaxRequest({
+				type: 'post',
+				url: 'appservice/customer/datadictionary',
+				param: {
+					"DATATYPE": "放款方式"
+				}
+			}, function(res) {
+				var Data;
+				if (Object.prototype.toString.call(res.data) === '[object String]') {
+					Data = JSON.parse(res.data);
+				} else {
+					Data = res.data;
+				}
+				if (Data.flag == 1) {
+                    methodArr = Data.datas;
+                    loanInfo.methodSlots[0].values = Data.datas.map((e) => {
+                        return e.FLAG;
+                    });
+				}
+                // 获取放款模式
+                ajaxRequest({
+                    type: 'post',
+                    url: 'appservice/customer/datadictionary',
+                    param: {
+                        "DATATYPE": "放款模式"
+                    }
+                }, function(res) {
+                    summer.hideProgress();
+                    var Data;
+                    if (Object.prototype.toString.call(res.data) === '[object String]') {
+                        Data = JSON.parse(res.data);
+                    } else {
+                        Data = res.data;
+                    }
+                    if (Data.flag == 1) {
+                        patternArr = Data.datas;
+                        loanInfo.patternSlots[0].values = Data.datas.map((e) => {
+                            return e.FLAG;
+                        });
+                    }
+                }, function(err) {
+                    summer.hideProgress();
+                    summer.toast({
+                        msg: "暂无数据"
+                    });
+                    console.log(err);
+                });
+			}, function(err) {
+				summer.hideProgress();
+				summer.toast({
+					msg: "暂无数据"
+				});
+				console.log(err);
+			});
             var PAY_ID = summer.pageParam.PAY_ID;
 			var PROJECT_ID = summer.pageParam.PROJECT_ID;
             loanInfo.params.PAY_ID = PAY_ID;

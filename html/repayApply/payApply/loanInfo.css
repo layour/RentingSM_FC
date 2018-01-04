@@ -24,6 +24,7 @@
 }
 .loanList li div span{
    margin: 0 0 0 0.1rem;
+   color: #dbdbdb;
 }
 .loanList li div{
     float: right;
