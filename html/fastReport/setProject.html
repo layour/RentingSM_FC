@@ -79,10 +79,10 @@
 						<span class="frp"> <i class="baseMessage icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div>
 				</a>
-				<a href="javascript:void(0);" onclick="checkVersion('addCar')">
+				<a href="javascript:void(0);" onclick="checkVersion('addCarList')">
 					<div class="um-list-item-bodys">
 						添加车辆
-						<span class="frp"> <i class="addCar icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+						<span class="frp"> <i class="addCarList icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div>
 				</a>
 				<a href="javascript:void(0);" id="version" onclick="checkVersion('quotedPriceDetail')">
@@ -244,7 +244,7 @@
 							 	addRight('price');
 							}
 							if (finanlData.EquipObj) {
-							 	addRight('addCar');
+							 	addRight('addCarList');
 							}
 							if (finanlData.gObj) {
 							 	addRight('sponsor');
@@ -325,45 +325,45 @@
 			var id = param,
 				url = '',
 				title = '';
-			if (param == 'addCar') {
-				url='html/touristsClient/addCar.html';
-				title="添加车辆";
-				// url = "html/touristsClient/addCarList.html";
-				// title = '添加设备';
-				// if (!setProgect.project_Id) {
-				// 	summer.toast({
-				// 		msg: '请先完善项目基础信息'
-				// 	});
-				// 	return
-				// }
-				// summer.openWin({
-				// 	id: id,
-				// 	url: url,
-				// 	create: false,
-				// 	type: 'actionBar',
-				// 	pageParam: {
-				// 		id: setProgect.project_Id,
-				// 		CLIENT_ID: setProgect.customId
-				// 	},
-				// 	actionBar: {
-				// 		title: title,
-				// 		titleColor: "#ffffff",
-				// 		backgroundColor: "#039BE5",
-				// 		leftItem: {
-				// 			image: "img/back.png",
-				// 			method: "",
-				// 			text: "返回",
-				// 			textColor: "#ffffff"
-				// 		},
-				// 		rightItems: [{
-				// 			type: "text",
-				// 			text: "新增",
-				// 			textColor: "#ffffff",
-				// 			method: "addCar()"
-				// 		}]
-				// 	}
-				// })
-				// return
+			if (param == 'addCarList') {
+				// url='html/touristsClient/addCar.html';
+				// title="添加车辆";
+				url = "html/touristsClient/addCarList.html";
+				title = '添加设备';
+				if (!setProgect.project_Id) {
+					summer.toast({
+						msg: '请先完善项目基础信息'
+					});
+					return
+				}
+				summer.openWin({
+					id: id,
+					url: url,
+					create: false,
+					type: 'actionBar',
+					pageParam: {
+						id: setProgect.project_Id,
+						CLIENT_ID: setProgect.customId
+					},
+					actionBar: {
+						title: title,
+						titleColor: "#ffffff",
+						backgroundColor: "#039BE5",
+						leftItem: {
+							image: "img/back.png",
+							method: "",
+							text: "返回",
+							textColor: "#ffffff"
+						},
+						rightItems: [{
+							type: "text",
+							text: "添加",
+							textColor: "#ffffff",
+							method: "addCar()"
+						}]
+					}
+				})
+				return
 			} else if (param == 'quotedPriceDetail') {
 				url = "html/priceCalculation/quotedPriceDetail.html";
 				title = "报价"

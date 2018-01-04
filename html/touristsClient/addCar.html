@@ -42,10 +42,6 @@
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
-					<tr>
-						<td>单位</td>
-						<td><span>台</span></td>
-					</tr>
 					<tr @click="pickerModels">
             <td>选择车型</td>
             <td>
@@ -62,13 +58,21 @@
 					<tr>
             <td>实际价格</td>
             <td>
-							<input type="text" @input="checkNumber($event,'guidePrice')" name="price" placeholder="请输入指导价" v-model="realityPrice">
+							<input type="text" @input="checkNumber($event,'realityPrice')" name="price" placeholder="请输入实际价格" v-model="realityPrice">
 						</td>
 					</tr>
 					<tr>
             <td>留购价</td>
             <td>
 							<input type="text" @input="checkNumber($event,'holdPrice')" name="holdPrice" placeholder="请输入留购价" v-model="holdPrice">
+						</td>
+					</tr>
+					<tr>
+						<td>数量</td>
+						<td>
+							<span>
+								<input type="number"  name="number" placeholder="请输入数量" v-model="number">
+							台</span>
 						</td>
 					</tr>
 					<tr>
@@ -92,9 +96,10 @@
 		</div>
 		<script>
 				summerready=function(){
-					console.log(summer.pageParam);
-					addCar.PROJECT_ID=summer.pageParam.id
-					addCar.CLIENT_ID=summer.pageParam.CLIENT_ID
+					console.log(summer.pageParam.item);
+					if(summer.pageParam.item){
+						addCar.initDate(summer.pageParam.item)
+					}
 					addCar.getData()
 				}
 				var addCar=new Vue({
@@ -111,8 +116,10 @@
 							holdPrice:'100',
 							safePrice:'',
 							onePrice:'',
+							number:'',
 							pickerColorStatus:false,
 							pickedColor:'',
+							id:'',
 							PROJECT_ID:'',
 							CLIENT_ID:'',
 							slots: [
@@ -128,42 +135,32 @@
 					},
 					created(){},
 					methods:{
+						initDate(data){
+								var _this=this;
+								_this.dealer=data.SUPPLIERS_NAME;
+								_this.company=data.COMPANY_NAME;
+
+								_this.color=data.CAR_NAME;
+								_this.colorId=data.CAR_TYPE;
+
+								_this.carModels=data.PRODUCT_NAME+" "+data.CATENA_NAME+" "+data.SPEC_NAME;
+								_this.guidePrice=data.UNIT_PRICE;
+								_this.realityPrice=data.UNIT_PRICE;
+								_this.holdPrice=data.STAYBUY_PRICE;
+
+								_this.onePrice=data.CCS;
+								_this.safePrice=data.BX;
+								_this.number=data.AMOUNT;
+								_this.id=data.ID;
+								summer.setStorage('pickerDealer',JSON.stringify({SUPPLIERS_NAME:data.SUPPLIERS_NAME,SUPPLIERS_ID:data.SUPPLIERS_ID}))
+								summer.setStorage('pickerCompany',JSON.stringify({COMPANY_NAME:data.COMPANY_NAME,COMPANY_ID:data.COMPANY_ID}))
+								summer.setStorage('pickerModels1',JSON.stringify({PRODUCT_NAME:data.PRODUCT_NAME,PRODUCT_ID:data.PRODUCT_ID}))
+								summer.setStorage('pickerModels2',JSON.stringify({CATENA_NAME:data.CATENA_NAME,CATENA_ID:data.CATENA_ID}))
+								summer.setStorage('pickerModels3',JSON.stringify({NAME:data.SPEC_NAME,ID:data.SPEC_ID}))
+
+						},
 						getData(){
 							var _this=this;
-							console.log(_this.PROJECT_ID);
-							ajaxRequest({
-								type:'POST',
-								url:'appservice/foundproject/loadProjectPage',
-								param:{
-									PROJECT_ID:_this.PROJECT_ID
-								}
-							},function(res){
-								console.log("res",res);
-								if(res.data.datas.EquipObj[0]){
-									var data=res.data.datas.EquipObj[0];
-									_this.dealer=data.SUPPLIERS_NAME;
-									_this.company=data.COMPANY_NAME;
-
-									_this.color=data.CAR_NAME;
-									_this.colorId=data.CAR_TYPE;
-
-									_this.carModels=data.PRODUCT_NAME+" "+data.CATENA_NAME+" "+data.SPEC_NAME;
-									_this.guidePrice=data.UNIT_PRICE;
-									_this.realityPrice=data.UNIT_PRICE;
-									_this.holdPrice=data.STAYBUY_PRICE;
-
-									_this.onePrice=data.STAYBUY_PRICE
-									_this.safePrice=data.STAYBUY_PRICE
-
-									summer.setStorage('pickerDealer',JSON.stringify({SUPPLIERS_NAME:data.SUPPLIERS_NAME,SUPPLIERS_ID:data.SUPPLIERS_ID}))
-									summer.setStorage('pickerCompany',JSON.stringify({COMPANY_NAME:data.COMPANY_NAME,COMPANY_ID:data.COMPANY_ID}))
-									summer.setStorage('pickerModels1',JSON.stringify({PRODUCT_NAME:data.PRODUCT_NAME,PRODUCT_ID:data.PRODUCT_ID}))
-									summer.setStorage('pickerModels2',JSON.stringify({CATENA_NAME:data.CATENA_NAME,CATENA_ID:data.CATENA_ID}))
-									summer.setStorage('pickerModels3',JSON.stringify({NAME:data.SPEC_NAME,ID:data.SPEC_ID}))
-								}
-							},function(err){
-								console.log("err",err);
-							})
 							// ajaxRequest({
 							// 	type:'POST',
 							// 	url:'appservice/customer/datadictionary',
@@ -195,8 +192,8 @@
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)){
 								if(param=='guidePrice'){
 									this.guidePrice=''
-								}else if(param=='holdPrice'){
-									this.holdPrice=''
+								}else if(param=='realityPrice'){
+									this.realityPrice=''
 								}else if(param=='onePrice'){
 									this.onePrice=''
 								}else if(param=='safePrice'){
@@ -288,15 +285,13 @@
 							}
 						},
 						save(){
-							if(!this.dealer||!this.company||!this.color||!this.carModels||!this.guidePrice||!this.holdPrice){
+							if(!this.dealer||!this.company||!this.color||!this.carModels||!this.guidePrice||!this.holdPrice||!this.onePrice||!this.safePrice){
 								summer.toast({msg:'请填写车辆的所有信息'})
 								return
 							}
 							summer.setStorage('carType',this.color)
 							var param={};
-							summer.showProgress();
-							param.PROJECT_ID=this.PROJECT_ID;
-							param.CLIENT_ID=this.CLIENT_ID;
+							// summer.showProgress();
 							param.SUPPLIERS_NAME=JSON.parse(summer.getStorage('pickerDealer')).SUPPLIERS_NAME;
 							param.SUPPLIERS_ID=JSON.parse(summer.getStorage('pickerDealer')).SUPPLIERS_ID;
 							param.COMPANY_NAME=JSON.parse(summer.getStorage('pickerCompany')).COMPANY_NAME;
@@ -308,34 +303,21 @@
 							param.CATENA_ID=JSON.parse(summer.getStorage('pickerModels2')).CATENA_ID;
 							param.SPEC_NAME=JSON.parse(summer.getStorage('pickerModels3')).NAME;
 							param.SPEC_ID=JSON.parse(summer.getStorage('pickerModels3')).ID;
-
-							param.UNITTEST='1';
+							param.ID=this.id;
+							param.UNITTEST='台';
+							param.UNIT='1';
+							param.AMOUNT=this.number;
 							param.UNIT_PRICE=this.guidePrice;
-							param.TOTAL_PRICE=this.guidePrice;
-							param.AMOUNT=1;
+							param.ACTUAL_PRICE=this.realityPrice;
+							param.CCS=this.onePrice;
+							param.BX=this.safePrice;
 							param.STAYBUY_PRICE=this.holdPrice;
-							param.STAYBUY_PRICE=this.onePrice;
-							param.STAYBUY_PRICE=this.safePrice;
 							console.log("param",JSON.stringify(param));
-							var _this=this;
-							ajaxRequest({
-								type:'POST',
-								url:'appservice/foundproject/saveProject',
-								param:param
-							},function(res){
-								console.log("res",res);
-								summer.setStorage("contractPrice",_this.guidePrice)
-								summer.hideProgress();
-								summer.toast({msg:"保存成功"});
-								summer.execScript({
-								    winId: "setProject",
-								    script: "addRight('addCar')"
-								});
-								summer.closeWin()
-							},function(err){
-								console.log("err",err);
-							})
-
+							summer.execScript({
+									winId: "addCarList",
+									script: "itemTemplate('"+JSON.stringify(param)+"')"
+							});
+							summer.closeWin()
 						}
 					}
 				});
@@ -359,9 +341,11 @@
 					if(models){
 						addCar.carModels=JSON.parse(summer.getStorage('pickerModels1')).PRODUCT_NAME+JSON.parse(summer.getStorage('pickerModels2')).CATENA_NAME+JSON.parse(models).NAME;
 						addCar.guidePrice=JSON.parse(models).PRICE;
+						addCar.realityPrice=JSON.parse(models).PRICE;
 					}
 				}
-				function save(){
+
+				function goBack(){
 					addCar.save()
 				}
 		</script>
