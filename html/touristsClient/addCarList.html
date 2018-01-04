@@ -79,7 +79,7 @@
 					<li v-for="(item,index) in addCarList" @click="gotoDetail(item)" :key='index'>
 						<template v-if="addCarList.length==1">
 							<div class="inDiv" style="padding:.4rem 1rem; .4rem 0;">
-								<p class="title">{{item.PRODUCT_NAME}}{{item.CATENA_NAME}}{{item.NAME}}</p>
+								<p class="title">{{item.PRODUCT_NAME}}{{item.CATENA_NAME}}{{item.SPEC_NAME}}</p>
 								<p class="normal">{{item.COMPANY_NAME}}</p>
 							</div>
 							<div  class="fr one inDiv">
@@ -178,7 +178,7 @@
 									PROJECT_ID:_this.PROJECT_ID
 								}
 							},function(res){
-								console.log("res",res);
+								console.log("res",JSON.stringify(res.data.datas.EquipObj));
 								summer.hideProgress()
 								var length=res.data.datas.EquipObj.length;
 								if(length>0){

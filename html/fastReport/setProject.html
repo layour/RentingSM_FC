@@ -147,7 +147,7 @@
 			//从后台判断有没有填写 为了调试上传图片 暂时加上车辆的 start
 			// if(summer.pageParam.isEdit){
 			// 	$(".customer").addClass('active').siblings('i').addClass("active");
-			// 	$(".addCar").addClass('active').siblings('i').addClass("active");
+			// 	$(".addCarList").addClass('active').siblings('i').addClass("active");
 			// 	$(".baseMessage").addClass('active').siblings('i').addClass("active");
 			// 	summer.setStorage('carType',"重卡")
 			// }
@@ -367,7 +367,7 @@
 			} else if (param == 'quotedPriceDetail') {
 				url = "html/priceCalculation/quotedPriceDetail.html";
 				title = "报价"
-				if(!$(".addCar").hasClass('active')){
+				if(!$(".addCarList").hasClass('active')){
 					summer.toast({
 						msg: '请先添加车辆信息'
 					});
@@ -559,7 +559,7 @@
 			if(!$(".baseMessage").hasClass('active')){
 				summer.toast({msg:"请完善项目基本信息"});
 				return;
-			}else if(!$(".addCar").hasClass('active')){
+			}else if(!$(".addCarList").hasClass('active')){
 				summer.toast({msg:"请添加车辆"});
 				return;
 			}else if(!$(".price").hasClass('active')){
