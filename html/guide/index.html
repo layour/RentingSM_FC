@@ -42,25 +42,34 @@
     <script type="text/javascript">
         function openWin() {
             summer.setStorage("welcome", true);
-            var userinfo = summer.getStorage("userinfo") ? summer.getStorage("userinfo") : {};
-            var EMPLOYEE_ID = userinfo.EMPLOYEE_ID ? userinfo.EMPLOYEE_ID : "";
-            if (isEmpty(EMPLOYEE_ID)) {
-                var os = $summer.os;
-                if (os == "android") {
-                    summer.openWin({
-                        "id" : 'root',
-                        "url" : 'login.html',
-                        "isKeep" : false
-                    });
-                } else {
-                    cordova.exec(null, null, "FrameManager", "initializeWin", [{
-                        "id": 'root',
-                        "url": 'login.html'
-                    }]);
+            summer.openWin({
+                id:'homePage',
+                url:'index.html',
+                isKeep: false,
+                addBackListener:true,
+                create:false,
+                type:'actionBar',
+                actionBar: {
+                    title: "首页",
+                    titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                    backgroundColor: "#039be5",
+                    leftItem:{
+                        image: "img/opacity0.png",
+                        method:"",//返回按钮自定义事件
+                    },
+                    rightItems: [{
+                        image: "img/mine.png",
+                        method:"showUserInfo()",//返回按钮自定义事件
+                    }]
                 }
-            } else {
+            });
+        }
+        summerready = function() {
+            // 判断是否加载引导页
+			var bool = summer.getStorage("welcome") ? summer.getStorage("welcome") : false;
+			if (bool) {
                 summer.openWin({
-                    id:'login',
+                    id:'homePage',
                     url:'index.html',
                     isKeep: false,
                     addBackListener:true,
@@ -80,11 +89,10 @@
                         }]
                     }
                 });
-            }
-        }
-        summerready = function() {
+				return;
+			}
             // 关闭启动图
-            setTimeout(function() {
+			setTimeout(function() {
                 summer.hideLaunch();
             }, 500);
             var skip = $summer.dom(".skip");

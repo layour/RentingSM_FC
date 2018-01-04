@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="lease.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+</head>
+
+<body>
+	<div class="um-win" id="index">
+		<div class="um-content">
+            <ul class="leaseList" v-cloak>
+                <li v-for="k in items" @click = "billDetail">
+                    <div class="left">
+                        <span>{{k.car}}</span>
+                        <span>{{k.num}}</span>
+                    </div>
+                    <div class="right">
+                        <span class="iconfont icon-enter"></span>
+                        <span>{{k.periods}}期</span>
+                    </div>
+                </li>
+            </ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+        // 数据
+        data = [
+            {
+                car:"别克 昂科威 2017 破产版",
+                num:"CNCARZ04893058384",
+                periods:"12"
+            },
+            {
+                car:"别克 昂科威 2017 低配版",
+                num:"CNCARZ04893058384",
+                periods:"24"
+            },
+            {
+                car:"别克 昂科威 2017 高配版",
+                num:"CNCARZ04893058384",
+                periods:"36"
+            },
+            {
+                car:"别克 昂科威 2017 豪华版",
+                num:"CNCARZ04893058384",
+                periods:"48"
+            }
+        ];
+        var lease = new Vue({
+            el: '#index',
+            data: {
+                items:data
+            },
+            methods: {
+                billDetail:function (){
+                    summer.openWin({
+        				id:'billDetail',
+        				url:'html/stock/billDetail.html',
+        				create:false,
+        				type:'actionBar',
+        				actionBar: {
+        					title: "账单详情",
+        					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+        					backgroundColor: "#039be5",
+        					leftItem:{
+        						image: "img/back.png",
+        						method:"",//返回按钮自定义事件
+        						text:"返回",
+        						textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+        					}
+        				}
+        			});
+                }
+            }
+        });
+	</script>
+</body>
+
+</html>

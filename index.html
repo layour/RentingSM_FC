@@ -151,6 +151,17 @@
 			</div>
 		</div>
 		<script>
+			// 判断是否已登陆
+			var isLogin;
+			if (summer.getStorage("userinfo")) {
+                if (summer.getStorage("userinfo").EMPLOYEE_ID) {
+                    isLogin = true;
+                } else {
+                    isLogin = false;
+                }
+            } else {
+                isLogin = false;
+            }
 			summerready = function() {
 				// 关闭启动图
 				setTimeout(function() {
@@ -165,34 +176,9 @@
 			function none(){
 				console.log(1);
 			};
-			// 判断用户是否登陆
-			function isLogin(){
-				if (!summer.getStorage("userinfo").EMPLOYEE_ID) {
-					var os = $summer.os;
-					if (os == "android") {
-						summer.openWin({
-							"id" : 'root',
-							"url" : 'login.html',
-							"isKeep" : false
-						});
-						summer.closeToWin({
-							id : "login"
-						});
-					} else {
-						cordova.exec(null, null, "FrameManager", "initializeWin", [{
-							"id": 'root',
-							"url": 'login.html'
-						}]);
-					}
-					summer.toast({msg:"请先登录"});
-					return false;
-				} else {
-					return true;
-				}
-			};
 			// 支付表查询
 			function openPayTab(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'payTable',
 						url:'html/payTableQuery/payTableList.html',
@@ -210,11 +196,13 @@
 							}
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			// 风险跟踪
 			function openRiskTracking(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'riskTracking',
 						url:'html/riskTracking/index.html',
@@ -232,11 +220,13 @@
 							}
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			// 对账单
 			function openStatement(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'statement',
 						url:'html/statement/statementList.html',
@@ -254,11 +244,13 @@
 							}
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			// 销售线索
 			function openLeads(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'leadsList',
 						url:'html/salesLeads/leadsList.html',
@@ -282,11 +274,13 @@
 							}]
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			// 销售简报
 			function openBriefing(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'briefing',
 						url:'html/salesBriefing/index.html',
@@ -304,13 +298,15 @@
 							}
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			function openQuotedPrice(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
-						id:'quotedPrice',
-						url:'html/priceCalculation/quotedPriceList.html',
+						id:'quotedPriceDetail',
+						url:'html/priceCalculation/quotedPriceDetail.html',
 						create:false,
 						type:'actionBar',
 						actionBar: {
@@ -325,11 +321,13 @@
 							}
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			//拜访记录
 			function openVisitRecord(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'visitRecord',
 						url:'html/visitRecord/visitRecord.html',
@@ -353,10 +351,12 @@
 							}]
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			function openAddCar(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'setProject',
 						url:'html/fastReport/setProject.html',
@@ -374,10 +374,12 @@
 							}
 						}
 					})
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			function openFastReport(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'programSelect',
 						url:'html/fastReport/programSelect.html',
@@ -401,11 +403,13 @@
 							}]
 						}
 					});
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			// 付款列表
 			function openPayList(){
-				if (isLogin()) {
+				if (isLogin) {
 					summer.openWin({
 						id:'payList',
 						url:'html/repayApply/payList/index.html',
@@ -423,29 +427,29 @@
 							}
 						}
 					});
+				} else {
+					summer.toast({msg:"请先登录"});
 				}
 			}
 			// 我的
 			function showUserInfo(){
-				if (isLogin()) {
-					summer.openWin({
-						id:'mine',
-						url:'html/mine/index.html',
-						create:false,
-						type:'actionBar',
-						actionBar: {
-							title: "我的资料",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem:{
-								image: "img/back.png",
-								method:"",//返回按钮自定义事件
-								text:"返回",
-								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
+				summer.openWin({
+					id:'mine',
+					url:'html/mine/index.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "我的资料",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem:{
+							image: "img/back.png",
+							method:"",//返回按钮自定义事件
+							text:"返回",
+							textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						}
-					});
-				}
+					}
+				});
 			}
 
 			//Android返回键监听

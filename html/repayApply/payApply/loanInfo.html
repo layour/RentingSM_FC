@@ -8,25 +8,33 @@
     <link rel="stylesheet" href="../../../css/iuapmobile.um.css">
     <link rel="stylesheet" href="../../../css/fonts/iconfont.css">
     <link rel="stylesheet" href="loanInfo.css">
+    <link rel="stylesheet" href="../../../css/mint.css">
     <script src="../../../js/summer.js"></script>
     <script src="../../../js/jquery.min.js"></script>
     <script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
     <script src="../../../js/font.js"></script>
     <script src="../../../js/vue.js"></script>
+    <script src="../../../js/mint.js"></script>
     <script src="../../../js/common.js"></script>
 </head>
 
 <body>
     <div class="um-win" id="index">
-        <div class="um-content">
+        <div class="um-content" v-cloak>
             <ul class="loanList">
                 <li>
                     <span>放款方式</span>
-                    <input v-model="method" type="text" placeholder="请输入" />
+                    <div @click="sureMethod">
+						<span class="iconfont icon-enter"></span>
+						<i>{{insurerMethod}}</i>
+					</div>
                 </li>
                 <li>
                     <span>是否代收</span>
-                    <input v-model="replace" type="text" placeholder="请输入" />
+                    <div @click="sureReplace">
+						<span class="iconfont icon-enter"></span>
+						<i>{{insurerReplace}}</i>
+					</div>
                 </li>
                 <li>
                     <span>抵押保证金金额</span>
@@ -42,7 +50,10 @@
                 </li>
                 <li>
                     <span>放款模式</span>
-                    <input v-model="pattern" type="text" placeholder="请输入" />
+                    <div @click="surePattern">
+						<span class="iconfont icon-enter"></span>
+						<i>{{insurerPattern}}</i>
+					</div>
                 </li>
                 <li>
                     <span>代收金额</span>
@@ -53,6 +64,18 @@
                     <div>{{thisTime}} 元</div>
                 </li>
             </ul>
+            <section v-if="replaceStatus" class="insurer">
+				<mt-picker :slots="replaceSlots" @change="onReplaceChange"></mt-picker>
+				<p><span class="" @click="sureReplace">取消</span><span class="" @click="sureReplace('confirm')">确定</span></p>
+			</section>
+            <section v-if="methodStatus" class="insurer">
+				<mt-picker :slots="methodSlots" @change="onMethodChange"></mt-picker>
+				<p><span class="" @click="sureMethod">取消</span><span class="" @click="sureMethod('confirm')">确定</span></p>
+			</section>
+            <section v-if="patternStatus" class="insurer">
+				<mt-picker :slots="patternSlots" @change="onPatternChange"></mt-picker>
+				<p><span class="" @click="surePattern">取消</span><span class="" @click="surePattern('confirm')">确定</span></p>
+			</section>
             <div class="calculate" @click="toCalculate">测算</div>
         </div>
     </div>
@@ -60,27 +83,138 @@
         var loanInfo = new Vue({
             el: '#index',
             data: {
-                method:"",
-                replace:"",
                 pledge:"",
                 web:"",
                 gps:"",
-                pattern:"",
                 collection:"",
-                thisTime:""
+                thisTime:"",
+                params:{
+                    PAY_ID:"",
+                    PROJECT_ID:""
+                },
+                // 是否代收
+                replaceStatus:false,
+                pickedReplace:"",
+                insurerReplace:"请选择",
+                replaceSlots: [{
+                    flex: 1,
+                    values: ['是', '否'],
+                    defaultIndex: 0,
+                    className: 'slot1',
+                    textAlign: 'center'
+                }],
+                // 放款方式
+                methodStatus:false,
+                pickedMethod:"",
+                insurerMethod:"请选择",
+                methodSlots: [{
+                    flex: 1,
+                    values: ['方式一', '方式二'],
+                    defaultIndex: 0,
+                    className: 'slot1',
+                    textAlign: 'center'
+                }],
+                // 放款模式
+                patternStatus:false,
+                pickedPattern:"",
+                insurerPattern:"请选择",
+                patternSlots: [{
+                    flex: 1,
+                    values: ['模式一', '模式二'],
+                    defaultIndex: 0,
+                    className: 'slot1',
+                    textAlign: 'center'
+                }]
             },
             methods: {
+                // 选择是否代收
+				onReplaceChange(picker, values) {
+					this.pickedReplace = values[0];
+				},
+				sureReplace(param) {
+					this.replaceStatus = !this.replaceStatus;
+                    this.methodStatus = false;
+                    this.patternStatus = false;
+					if (param == 'confirm') {
+						this.insurerReplace = this.pickedReplace;
+					}
+				},
+                // 选择放款方式
+                onMethodChange(picker, values) {
+					this.pickedMethod = values[0];
+				},
+				sureMethod(param) {
+					this.methodStatus = !this.methodStatus;
+                    this.replaceStatus = false;
+                    this.patternStatus = false;
+					if (param == 'confirm') {
+						this.insurerMethod = this.pickedMethod;
+					}
+				},
+                // 选择放款模式
+                onPatternChange(picker, values) {
+					this.pickedPattern = values[0];
+				},
+				surePattern(param) {
+					this.patternStatus = !this.patternStatus;
+                    this.replaceStatus = false;
+                    this.methodStatus = false;
+					if (param == 'confirm') {
+						this.insurerPattern = this.pickedPattern;
+					}
+				},
+                // 保存
                 save(){
-                    console.log("save");
+                    summer.showProgress();
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/business/startRevJbpm',
+						param: {
+							PROJECT_ID: this.params.PROJECT_ID
+						}
+					}, function(res) {
+						summer.hideProgress();
+						var Data;
+						if (Object.prototype.toString.call(res.data) === '[object String]') {
+							Data = JSON.parse(res.data);
+						} else {
+							Data = res.data;
+						}
+						if (Data.flag == 1) {
+							if (Data.datas.JBPM_ID) {
+								summer.toast({
+									msg: "申请成功"
+								});
+								summer.closeToWin({
+									id: 'payList'
+								});
+							}
+						} else {
+							summer.toast({
+								msg: Data.msg
+							});
+						}
+					}, function(err) {
+						summer.hideProgress();
+						summer.toast({
+							msg: "申请失败"
+						});
+						console.log(err);
+					});
                 },
+                // 测算
                 toCalculate(){
-                    console.log(this.method);
-                    console.log("测算");
                     this.collection = "8888";
                     this.thisTime = "9999";
                 }
             }
         });
+        summerready = function() {
+            var PAY_ID = summer.pageParam.PAY_ID;
+			var PROJECT_ID = summer.pageParam.PROJECT_ID;
+            loanInfo.params.PAY_ID = PAY_ID;
+			loanInfo.params.PROJECT_ID = PROJECT_ID;
+        };
     </script>
 </body>
 
