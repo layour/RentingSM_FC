@@ -48,7 +48,7 @@
 							<b>{{k.PSTATUS_NM}}</b>
 						</div>
 					</div>
-					<div class="footer" v-bind:style="[k.PSTATUS_NM == '未放款' ? {'display':'block'} : {'display':'none'}]">
+					<div class="footer" v-bind:style="[k.PSTATUS_NM == '放款中' ? {'display':'block'} : {'display':'none'}]">
 						<ul class="footerList">
 							<li class="first" @click="advance(k.ID,k.PROJECT_ID,k.PAY_ID)">提前放款</li>
 							<li @click="normal(k.ID,k.PROJECT_ID,k.PAY_ID)">正常放款</li>
@@ -95,7 +95,6 @@
 				});
 			},
 			advance(userId,PROJECT_ID,PAY_ID) {
-				console.log(PAY_ID);
 				summer.openWin({
 					id: 'payApply',
 					url: 'html/repayApply/payApply/index.html',
@@ -121,7 +120,6 @@
 				});
 			},
 			normal(userId,PROJECT_ID,PAY_ID) {
-				console.log(PAY_ID);
 				summer.openWin({
 					id: 'payApply',
 					url: 'html/repayApply/payApply/index.html',
@@ -179,7 +177,6 @@
 						}
 					}
 				}
-				console.log(all.items);
 			}, function(err) {
 				summer.hideProgress();
 				summer.toast({

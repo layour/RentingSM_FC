@@ -82,58 +82,13 @@
 			data: {
 				datas: null,
 				params:{
-					ISDEKOU:"1",
-					PAYMENT_TYPE:"1",
-					CS_PRICE:"1000",
-					LENDING_MODEL:"1",
-					GPS_MONEY:"100",
-					PAY_ID:""
+					PAY_ID:"",
+					PROJECT_ID:""
 				}
 			},
 			methods:{
 				// 立即申请付款
 				toApply() {
-					/*summer.showProgress();
-					ajaxRequest({
-						type: 'post',
-						url: 'appservice/payment/startCarPayment',
-						param: {
-							"ISDEKOU": this.params.ISDEKOU,
-							"PAYMENT_TYPE": this.params.PAYMENT_TYPE,
-							"CS_PRICE": this.params.CS_PRICE,
-							"LENDING_MODEL": this.params.LENDING_MODEL,
-							"GPS_MONEY": this.params.GPS_MONEY,
-							"PAY_ID": this.params.PAY_ID
-						}
-					}, function(res) {
-						summer.hideProgress();
-						var Data;
-						if (Object.prototype.toString.call(res.data) === '[object String]') {
-							Data = JSON.parse(res.data);
-						} else {
-							Data = res.data;
-						}
-						if (Data.flag == 1) {
-							if (Data.datas.JBPM_ID) {
-								summer.toast({
-									msg: "申请成功"
-								});
-								summer.closeToWin({
-									id: 'payList'
-								});
-							}
-						} else {
-							summer.toast({
-								msg: Data.msg
-							});
-						}
-					}, function(err) {
-						summer.hideProgress();
-						summer.toast({
-							msg: "申请失败"
-						});
-						console.log(err);
-					});*/
 					summer.openWin({
 						id: 'loanInfo',
 						url: 'html/repayApply/payApply/loanInfo.html',
@@ -155,6 +110,10 @@
 								textColor: "#ffffff",
 								method: "loanInfo.save()"
 							}]
+						},
+						pageParam: {
+							PAY_ID:"",
+							PROJECT_ID:""
 						}
 					});
 				}
@@ -172,7 +131,9 @@
 			}
 			var userId = summer.pageParam.userId;
 			var PAY_ID = summer.pageParam.PAY_ID;
+			var PROJECT_ID = summer.pageParam.PROJECT_ID;
 			payApply.params.PAY_ID = PAY_ID;
+			payApply.params.PROJECT_ID = PROJECT_ID;
 			summer.showProgress();
 			ajaxRequest({
 				type: 'post',
