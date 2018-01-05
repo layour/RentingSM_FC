@@ -37,17 +37,6 @@
 				});
 				return;
 			}
-			// 判断是否已登陆
-			var isLogin;
-			if (summer.getStorage("userinfo")) {
-				if (summer.getStorage("userinfo").EMPLOYEE_ID) {
-					isLogin = true;
-				} else {
-					isLogin = false;
-				}
-			} else {
-				isLogin = false;
-			}
 			// 关闭启动图
 			setTimeout(function() {
                 summer.hideLaunch();

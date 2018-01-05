@@ -151,17 +151,7 @@
 			</div>
 		</div>
 		<script>
-			// 判断是否已登陆
 			var isLogin;
-			if (summer.getStorage("userinfo")) {
-                if (summer.getStorage("userinfo").EMPLOYEE_ID) {
-                    isLogin = true;
-                } else {
-                    isLogin = false;
-                }
-            } else {
-                isLogin = false;
-            }
 			summerready = function() {
 				// 关闭启动图
 				setTimeout(function() {
@@ -172,13 +162,26 @@
 					loop : true
 	            });
 	        }
+	        // 判断是否已登陆
+	        function isLogin(){
+	        		if (summer.getStorage("userinfo")) {
+	                if (summer.getStorage("userinfo").EMPLOYEE_ID) {
+	                    isLogin = true;
+	                } else {
+	                    isLogin = false;
+	                }
+	            } else {
+	                isLogin = false;
+	            }
+	        }
+			
 			// 空方法
 			function none(){
 				console.log(1);
 			};
 			// 支付表查询
 			function openPayTab(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'payTable',
 						url:'html/payTableQuery/payTableList.html',
@@ -202,7 +205,7 @@
 			}
 			// 风险跟踪
 			function openRiskTracking(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'riskTracking',
 						url:'html/riskTracking/index.html',
@@ -226,7 +229,7 @@
 			}
 			// 对账单
 			function openStatement(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'statement',
 						url:'html/statement/statementList.html',
@@ -250,7 +253,7 @@
 			}
 			// 销售线索
 			function openLeads(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'leadsList',
 						url:'html/salesLeads/leadsList.html',
@@ -280,7 +283,7 @@
 			}
 			// 销售简报
 			function openBriefing(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'briefing',
 						url:'html/salesBriefing/index.html',
@@ -303,7 +306,7 @@
 				}
 			}
 			function openQuotedPrice(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'quotedPriceDetail',
 						url:'html/priceCalculation/quotedPriceDetail.html',
@@ -327,7 +330,7 @@
 			}
 			//拜访记录
 			function openVisitRecord(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'visitRecord',
 						url:'html/visitRecord/visitRecord.html',
@@ -356,7 +359,7 @@
 				}
 			}
 			function openAddCar(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'setProject',
 						url:'html/fastReport/setProject.html',
@@ -379,7 +382,7 @@
 				}
 			}
 			function openFastReport(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'programSelect',
 						url:'html/fastReport/programSelect.html',
@@ -409,7 +412,7 @@
 			}
 			// 付款列表
 			function openPayList(){
-				if (isLogin) {
+				if (isLogin()) {
 					summer.openWin({
 						id:'payList',
 						url:'html/repayApply/payList/index.html',

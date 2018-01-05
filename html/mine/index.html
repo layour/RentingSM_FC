@@ -60,17 +60,20 @@
 	</div>
 	<script type="text/javascript">
 		var isLogin;
-		if (summer.getStorage("userinfo")) {
-			if (summer.getStorage("userinfo").EMPLOYEE_ID) {
-				isLogin = true;
-			} else {
-				isLogin = false;
-			}
-		} else {
-			isLogin = false;
-		}
+		// 判断是否已登陆
+        function isLogin(){
+        		if (summer.getStorage("userinfo")) {
+                if (summer.getStorage("userinfo").EMPLOYEE_ID) {
+                    isLogin = true;
+                } else {
+                    isLogin = false;
+                }
+            } else {
+                isLogin = false;
+            }
+        }
 		summerready = function (){
-			if (isLogin) {
+			if (isLogin()) {
 				var userinfo = summer.getStorage("userinfo");
 				var name = userinfo ? userinfo.userName : "张帅经理";
 				$('.box').find('p').text(name);
@@ -129,7 +132,7 @@
 			});
 		};
 		function help(){
-			if (isLogin) {
+			if (isLogin()) {
 				summer.openWin({
 					id:'help',
 					url:'html/help/index.html',
@@ -158,7 +161,7 @@
 			}
 		};
 		function update(){
-			if (isLogin) {
+			if (isLogin()) {
 				summer.showProgress();
 				summer.ajax({
 					type: "post",
@@ -199,7 +202,7 @@
 			}
 		};
 		function changePsw(){
-			if (isLogin) {
+			if (isLogin()) {
 				summer.openWin({
 					id:'changePsw',
 					url:'html/changePsw/index.html',
@@ -228,7 +231,7 @@
 			}
 		};
 		function toLog(){
-			if (!isLogin) {
+			if (!isLogin()) {
 				var os = $summer.os;
 				summer.setStorage("userinfo",{});
 				if (os == "android") {
