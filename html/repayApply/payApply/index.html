@@ -77,172 +77,172 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var payApply = new Vue({
-			el: '#index',
-			data: {
-				datas: null,
-				params:{
-					PAY_ID:"",
-					PROJECT_ID:""
-				}
-			},
-			methods:{
-				// 立即申请付款
-				toApply() {
-					summer.openWin({
-						id: 'loanInfo',
-						url: 'html/repayApply/payApply/loanInfo.html',
-						create: false,
-						type: 'actionBar',
-						actionBar: {
-							title: "放款日志",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
-							rightItems: [{
-								type: "text",
-								text: "保存",
-								textColor: "#ffffff",
-								method: "loanInfo.save()"
-							}]
+	var payApply = new Vue({
+		el: '#index',
+		data: {
+			datas: null,
+			params:{
+				PAY_ID:"",
+				PROJECT_ID:""
+			}
+		},
+		methods:{
+			// 立即申请付款
+			toApply() {
+				summer.openWin({
+					id: 'loanInfo',
+					url: 'html/repayApply/payApply/loanInfo.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "放款日志",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						},
-						pageParam: {
-							PAY_ID:this.params.PAY_ID,
-							PROJECT_ID:this.params.PROJECT_ID
-						}
-					});
-				}
+						rightItems: [{
+							type: "text",
+							text: "保存",
+							textColor: "#ffffff",
+							method: "loanInfo.save()"
+						}]
+					},
+					pageParam: {
+						PAY_ID:this.params.PAY_ID,
+						PROJECT_ID:this.params.PROJECT_ID
+					}
+				});
+			}
+		}
+	});
+	// 接添加保险参数
+	function saveWarranty(insurer, warrantyMoney, warrantyImg) {
+		// alert(insurer + warrantyMoney + warrantyImg);
+	}
+	summerready = function() {
+		var show = summer.pageParam.show;
+		if (show) {
+			$('.change').css('display', 'block');
+			$('.applyBtn').css('top', '9.8rem');
+		}
+		var userId = summer.pageParam.userId;
+		var PAY_ID = summer.pageParam.PAY_ID;
+		var PROJECT_ID = summer.pageParam.PROJECT_ID;
+		payApply.params.PAY_ID = PAY_ID;
+		payApply.params.PROJECT_ID = PROJECT_ID;
+		summer.showProgress();
+		ajaxRequest({
+			type: 'post',
+			url: 'appservice/paytable/payinfo',
+			param: {
+				"id": userId
+			}
+		}, function(res) {
+			summer.hideProgress();
+			var Data;
+			if (Object.prototype.toString.call(res.data) === '[object String]') {
+				Data = JSON.parse(res.data);
+			} else {
+				Data = res.data;
+			}
+			if (Data.flag == 1) {
+				payApply.datas = Data.datas;
+			} else {
+				summer.toast({
+					msg: Data.msg
+				});
+			}
+		}, function(err) {
+			summer.hideProgress();
+			summer.toast({
+				msg: "暂无数据"
+			});
+			console.log(err);
+		});
+	};
+	// 添加保单
+	function addWarranty() {
+		summer.openWin({
+			id: 'warranty',
+			url: 'html/repayApply/addWarranty/index.html',
+			create: false,
+			type: 'actionBar',
+			actionBar: {
+				title: "添加保险",
+				titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				backgroundColor: "#039be5",
+				leftItem: {
+					image: "img/back.png",
+					method: "", //返回按钮自定义事件
+					text: "返回",
+					textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				},
+				rightItems: [{
+					type: "text",
+					text: "保存",
+					textColor: "#ffffff",
+					method: "addWarranty.save()"
+				}]
 			}
 		});
-		// 接添加保险参数
-		function saveWarranty(insurer, warrantyMoney, warrantyImg) {
-			// alert(insurer + warrantyMoney + warrantyImg);
-		}
-		summerready = function() {
-			var show = summer.pageParam.show;
-			if (show) {
-				$('.change').css('display', 'block');
-				$('.applyBtn').css('top', '9.8rem');
+	}
+	// 添加合格证
+	function addCertificate() {
+		summer.openWin({
+			id: 'certificate',
+			url: 'html/repayApply/addCertificate/index.html',
+			create: false,
+			type: 'actionBar',
+			actionBar: {
+				title: "添加合格证",
+				titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				backgroundColor: "#039be5",
+				leftItem: {
+					image: "img/back.png",
+					method: "", //返回按钮自定义事件
+					text: "返回",
+					textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				},
+				rightItems: [{
+					type: "text",
+					text: "保存",
+					textColor: "#ffffff",
+					method: "addCertificate.save()"
+				}]
 			}
-			var userId = summer.pageParam.userId;
-			var PAY_ID = summer.pageParam.PAY_ID;
-			var PROJECT_ID = summer.pageParam.PROJECT_ID;
-			payApply.params.PAY_ID = PAY_ID;
-			payApply.params.PROJECT_ID = PROJECT_ID;
-			summer.showProgress();
-			ajaxRequest({
-				type: 'post',
-				url: 'appservice/paytable/payinfo',
-				param: {
-					"id": userId
-				}
-			}, function(res) {
-				summer.hideProgress();
-				var Data;
-				if (Object.prototype.toString.call(res.data) === '[object String]') {
-					Data = JSON.parse(res.data);
-				} else {
-					Data = res.data;
-				}
-				if (Data.flag == 1) {
-					payApply.datas = Data.datas;
-				} else {
-					summer.toast({
-						msg: Data.msg
-					});
-				}
-			}, function(err) {
-				summer.hideProgress();
-				summer.toast({
-					msg: "暂无数据"
-				});
-				console.log(err);
-			});
-		};
-		// 添加保单
-		function addWarranty() {
-			summer.openWin({
-				id: 'warranty',
-				url: 'html/repayApply/addWarranty/index.html',
-				create: false,
-				type: 'actionBar',
-				actionBar: {
-					title: "添加保险",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					leftItem: {
-						image: "img/back.png",
-						method: "", //返回按钮自定义事件
-						text: "返回",
-						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					},
-					rightItems: [{
-						type: "text",
-						text: "保存",
-						textColor: "#ffffff",
-						method: "addWarranty.save()"
-					}]
-				}
-			});
-		}
-		// 添加合格证
-		function addCertificate() {
-			summer.openWin({
-				id: 'certificate',
-				url: 'html/repayApply/addCertificate/index.html',
-				create: false,
-				type: 'actionBar',
-				actionBar: {
-					title: "添加合格证",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					leftItem: {
-						image: "img/back.png",
-						method: "", //返回按钮自定义事件
-						text: "返回",
-						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					},
-					rightItems: [{
-						type: "text",
-						text: "保存",
-						textColor: "#ffffff",
-						method: "addCertificate.save()"
-					}]
-				}
-			});
-		}
-		// 跳转到上传页
-		function toUpload() {
-			summer.openWin({
-				id: 'uploadImg',
-				url: 'html/fastReport/uploadImg.html',
-				create: false,
-				type: 'actionBar',
-				actionBar: {
-					title: "资料上传",
-					titleColor: "#ffffff",
-					backgroundColor: "#039BE5",
-					leftItem: {
-						image: "img/back.png",
-						method: "",
-						text: "返回",
-						textColor: "#ffffff"
-					},
-					rightItems: [{
-						type: "text",
-						text: "保存",
-						textColor: "#ffffff",
-						method: "save()"
-					}]
-				}
-			});
-		};
-	</script>
+		});
+	}
+	// 跳转到上传页
+	function toUpload() {
+		summer.openWin({
+			id: 'uploadImg',
+			url: 'html/fastReport/uploadImg.html',
+			create: false,
+			type: 'actionBar',
+			actionBar: {
+				title: "资料上传",
+				titleColor: "#ffffff",
+				backgroundColor: "#039BE5",
+				leftItem: {
+					image: "img/back.png",
+					method: "",
+					text: "返回",
+					textColor: "#ffffff"
+				},
+				rightItems: [{
+					type: "text",
+					text: "保存",
+					textColor: "#ffffff",
+					method: "save()"
+				}]
+			}
+		});
+	};
+</script>
 </body>
 
 </html>

@@ -1,6 +1,14 @@
 html{
     background-color: #f6f6f6;
 }
+.clearfix:after{
+    content: ".";
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    display: block;
+}
 #content{
    padding: 0;
    background-color: #f6f6f6;
@@ -82,22 +90,14 @@ html{
 .crm_con,.xmgl_con{
    background-color: #fff;
    width: 100%;
-   height: 3.6rem;
    margin-bottom: 0.2rem;
-}
-.crm_con:last-child,.xmgl_con:last-child{
-   height: 2rem;
 }
 .xmgl_con:last-child{
    margin-bottom: 0;
 }
 .crm_list,.xmgl_list{
    width: 100%;
-   height: 3.6rem;
-   padding: 0.2rem;
-}
-.crm_list:last-child,.xmgl_list:last-child{
-   height: 2rem;
+   padding: 0.2rem 0.2rem 0 0.2rem;
 }
 .crm_list li,.xmgl_list li{
    float: left;
