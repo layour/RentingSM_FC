@@ -136,6 +136,8 @@
 					pickerDateStatus: false,
 					noweDate: new Date(),
 					isSelect:false,
+					CLIENT_ID:'',
+					GID:'',
 					message: {
 						TYPE:'LP',
 						NAME: '',
@@ -186,8 +188,8 @@
 								self.message.REGISTE_ADDRESS_CITY_NM=sponsor.REGISTE_ADDRESS_CITY_NM;
 								self.message.LEGAL_PERSON_PHONE=sponsor.LEGAL_PERSON_PHONE;
 								self.message.PROJECT_ID=sponsor.PROJECT_ID;
-								self.message.GID=sponsor.GID;
-								self.message.CLIENT_ID=sponsor.CLIENT_ID;
+								self.GID=sponsor.GID;
+								self.CLIENT_ID=sponsor.CLIENT_ID;
 								self.message.TYPE=sponsor.TYPE;
 							}
 						}
@@ -269,7 +271,7 @@
 						if (strDate >= 0 && strDate <= 9) {
 							strDate = "0" + strDate;
 						}
-						return year + month + strDate;
+						return year +'-'+ month +'-'+ strDate;
 					}
 
 				},
@@ -321,8 +323,10 @@
 					};*/
 					let paramData;
 					if(self.isSelect){
-						paramData=self.message
-							paramData=JOSN.parse(JSON.stringify(paramData));
+							self.message.GID=self.GID
+							self.message.CLIENT_ID=self.CLIENT_ID
+							paramData=self.message
+							paramData=JSON.parse(JSON.stringify(paramData));
 					}else{
 						// self.message.CLIENT_ID='';
 						paramData=self.message;
@@ -402,7 +406,7 @@
 			let projectId = summer.pageParam.projectId;
 			newCreateCustom.message.PROJECT_ID=projectId;
 			let clintId = summer.pageParam.clientId;
-			newCreateCustom.message.CLIENT_ID=clintId;
+			newCreateCustom.CLIENT_ID=clintId;
 
 			if (projectId) {
 				newCreateCustom.getData(projectId);
