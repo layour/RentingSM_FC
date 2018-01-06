@@ -18,10 +18,8 @@
 	<div class="um-win" id="index">
 		<div class="um-content">
 			<div id="bot">
-				<div class="btnBox">
-					<span class = "taste">销售登陆</span>
-					<span class = "changeLog">客户登录</span>
-				</div>
+				<span class = "taste">销售登陆</span>
+				<span class = "changeLog">客户登录</span>
 			</div>
 		</div>
 	</div>
@@ -41,7 +39,7 @@
 			setTimeout(function() {
                 summer.hideLaunch();
             }, 500);
-			var bot = $('#bot').height() + $('.um-header').height() + $('#bot').offset().top;
+			var bot = $('#bot').height() + $('.um-header').height();
 			summer.openFrameGroup({
 				id: 'login',
 				background: '#ffffff',
@@ -71,21 +69,21 @@
 		$(function() {
 			$('body').height($('body')[0].clientHeight);
 			$('.taste').css({
-				'background':'#039be5',
-				'color':'#fff'
+				'color':'#1287de',
+				'border-color':'#1287de'
 			});
 			$('.changeLog').css({
-				'background':'#fff',
-				'color':'#1287de'
+				'color':'#333',
+				'border-color':'#d4d4d4'
 			});
 			$('.taste').on('click', function() {
 				$(this).css({
-					'background':'#039be5',
-					'color':'#fff'
+					'color':'#1287de',
+					'border-color':'#1287de'
 				});
 				$('.changeLog').css({
-					'background':'#fff',
-					'color':'#1287de'
+					'color':'#333',
+					'border-color':'#d4d4d4'
 				});
 				summer.setFrameGroupAttr({
 					id: 'login',
@@ -94,12 +92,12 @@
 			});
 			$('.changeLog').on('click', function() {
 				$(this).css({
-					'background':'#039be5',
-					'color':'#fff'
+					'color':'#1287de',
+					'border-color':'#1287de'
 				});
 				$('.taste').css({
-					'background':'#fff',
-					'color':'#1287de'
+					'color':'#333',
+					'border-color':'#d4d4d4'
 				});
 				summer.setFrameGroupAttr({
 					id: 'login',

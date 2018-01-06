@@ -2,50 +2,21 @@ body,.um-frame,.um-win,html{
    background-color: #fff;
 }
 #bot{
-   height: 0.6rem;
+   height: 0.9rem;
    background-color: #fff;
    width: 100%;
-   position: fixed;
-   top: 1.2rem;
 }
-#bot .btnBox{
-    width: 6.36rem;
-    border: 1px solid #039be5;
-    margin: 0 auto;
-    height: 0.52rem;
-    box-sizing: content-box;
-}
-#bot .btnBox span{
+#bot span{
    float: left;
-   width: 3.18rem;
-   height: 0.52rem;
-   line-height: 0.52rem;
+   width: 50%;
+   height: 0.9rem;
+   box-sizing: border-box;
+   line-height: 0.9rem;
    text-align: center;
-   font-size: 0.24rem;
-   color: #1287de;
+   font-size: 0.32rem;
+   color: #333;
+   border-bottom: 0.04rem solid #d4d4d4;
 }
-/*.loginTitle{
-   width: 1.8rem;
-   height: 1.8rem;
-   position: absolute;
-   border-radius: 0.9rem;
-   background-color: #fff;
-   left: 50%;
-   margin-left: -0.9rem;
-   top: 2.4rem;
-   overflow: hidden;
-   display: block;
-   border: 0;
-}
-.loginTitle span{
-    width: 1.8rem;
-    height: 1.8rem;
-    position: absolute;
-    font-size: 1.2rem;
-    line-height: 1.8rem;
-    text-align: center;
-    color: #0e3a5d;
-}*/
 form{
    width: 6.4rem;
    position: absolute;
@@ -117,19 +88,19 @@ dl dd input{
    font-size: 0.28rem;
 }
 .loginBtn{
-   width: 6.4rem;
-   height: 1rem;
-   background-color: #039be5;
-   color: #fff;
+   width: 6.34rem;
+   height: 0.9rem;
+   background-color: #fff;
+   color: #1287de;
    position: absolute;
    left: 50%;
-   margin-left: -3.2rem;
-   bottom: 0.8rem;
-   border: 0;
+   margin-left: -3.17rem;
+   bottom: 1.8rem;
+   border: 1px solid #039be5;
    outline: none;
-   border-radius: 0.1rem;
-   font-size: 0.34rem;
+   border-radius: 0.08rem;
+   font-size: 0.32rem;
    letter-spacing: 0.05rem;
-   line-height: 1rem;
+   line-height: 0.9rem;
    text-align: center;
 }
