@@ -76,6 +76,20 @@
 		.um-footer{
 			min-height:0px;
 		}
+		.text{
+		    width: 100%;
+		    position: relative;
+		    margin-top: 0.1rem;
+		    height: 2.6rem;
+		}
+		.text textarea{
+		    resize: none;
+		    outline: none;
+		    border: 1px solid #f1f1f1;
+		    padding: 0.2rem;
+		    height: 2.4rem;
+		}
+
 	</style>
 </head>
 
@@ -92,28 +106,31 @@
 				</p>
 			</div>
 			<mt-field label="企业名称" placeholder="请输入企业名称" v-model="message.NAME"> </mt-field>
-			<mt-field label="营业执照编号" placeholder="请输入您的营业执照编号" v-model="message.CORP_BUSINESS_LICENSE"> </mt-field>
-			<mt-field label="注册电话" placeholder="请输入您的注册电话" v-model="message.REGISTE_PHONE"> </mt-field>
+			<mt-field label="营业执照号" placeholder="请输入您的营业执照号" v-model="message.CORP_BUSINESS_LICENSE"> </mt-field>
+			<!--<mt-field label="注册电话" placeholder="请输入您的注册电话" v-model="message.REGISTE_PHONE"> </mt-field>
 			<div @click="sureDateConfirm" class="item">
 				<p class="pl10 pr10 tr">
 					<span class="fl">注册日期</span>
 					<span class=""><span v-if='message.REGISTE_DATE' class="first">{{message.REGISTE_DATE}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
-			</div>
-			<div class="item">
+			</div>-->
+		<!--	<div class="item">
 				<p class="pl10 pr10 tr" @click="selectAddr">
 					<span class="fl">注册省市</span>
 					<span class=""> <span  class="first">{{message.REGISTE_ADDRESS_PROVINCE_NM}} {{message.REGISTE_ADDRESS_CITY_NM}}</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
-			<mt-field label="注册详细地址" placeholder="请输入您的注册详细地址" v-model="message.REGISTE_ADDRESS"></mt-field>
+			<mt-field label="注册详细地址" placeholder="请输入您的注册详细地址" v-model="message.REGISTE_ADDRESS"></mt-field>-->
 			<mt-field label="法人姓名" placeholder="请输入法人姓名" v-model="message.LEGAL_PERSON"></mt-field>
-				<mt-field label="法人身份证号" placeholder="请输入法人身份证号" v-model="message.ID_CARD_CORPORATE_NO"></mt-field>
+				<!-- <mt-field label="法人身份证号" placeholder="请输入法人身份证号" v-model="message.ID_CARD_CORPORATE_NO"></mt-field> -->
 			<mt-field label="法人手机号" placeholder="请输入法人手机号" v-model="message.LEGAL_PERSON_PHONE"></mt-field>
+			<div class="text">
+				 <textarea class = "text" placeholder="担保能力说明" v-model="message.GUARANTEE_CAPACITY"></textarea>
+			</div>
 		</div>
 		<div class="um-footer">
-			<mt-datetime-picker ref="picker" v-model="pickerValue" type="date" cancel-text='取消' confirm-text='确定' :start-date='new Date("1950-01-01")' :end-date="noweDate" @confirm="handleConfirm">
-			</mt-datetime-picker>
+			<!--<mt-datetime-picker ref="picker" v-model="pickerValue" type="date" cancel-text='取消' confirm-text='确定' :start-date='new Date("1950-01-01")' :end-date="noweDate" @confirm="handleConfirm">
+			</mt-datetime-picker>-->
 		</div>
 	</div>
 	<script src="../../js/summer.js"></script>
@@ -142,16 +159,17 @@
 						TYPE:'LP',
 						NAME: '',
 						CORP_BUSINESS_LICENSE:'',
-						REGISTE_PHONE:'',
-						ID_CARD_CORPORATE_NO: '',
+						//REGISTE_PHONE:'',
+						//ID_CARD_CORPORATE_NO: '',
 						LEGAL_PERSON:'',
-						REGISTE_ADDRESS: '',
-						REGISTE_DATE: '',
-						REGISTE_ADDRESS_PROVINCE: '',
-						REGISTE_ADDRESS_PROVINCE_NM:'',
-						REGISTE_ADDRESS_CITY: '',
-						REGISTE_ADDRESS_CITY_NM:'',
+						//REGISTE_ADDRESS: '',
+						//REGISTE_DATE: '',
+						//REGISTE_ADDRESS_PROVINCE: '',
+						//REGISTE_ADDRESS_PROVINCE_NM:'',
+						//REGISTE_ADDRESS_CITY: '',
+					//	REGISTE_ADDRESS_CITY_NM:'',
 						LEGAL_PERSON_PHONE:'',
+						GUARANTEE_CAPACITY:'',
 						PROJECT_ID:'',
 					/*	GID:"",
 						CLIENT_ID:"",*/
@@ -177,17 +195,18 @@
 								self.isSelect=true;
 								self.message.NAME=sponsor.NAME;
 								self.message.CORP_BUSINESS_LICENSE=sponsor.CORP_BUSINESS_LICENSE;
-								self.message.REGISTE_PHONE=sponsor.REGISTE_PHONE;
-								self.message.ID_CARD_CORPORATE_NO=sponsor.ID_CARD_CORPORATE_NO;
+							//	self.message.REGISTE_PHONE=sponsor.REGISTE_PHONE;
+							//	self.message.ID_CARD_CORPORATE_NO=sponsor.ID_CARD_CORPORATE_NO;
 								self.message.LEGAL_PERSON=sponsor.LEGAL_PERSON;
-								self.message.REGISTE_ADDRESS=sponsor.REGISTE_ADDRESS;
-								self.message.REGISTE_DATE=sponsor.REGISTE_DATE;
-								self.message.REGISTE_ADDRESS_PROVINCE=sponsor.REGISTE_ADDRESS_PROVINCE;
-								self.message.REGISTE_ADDRESS_PROVINCE_NM=sponsor.REGISTE_ADDRESS_PROVINCE_NM;
-								self.message.REGISTE_ADDRESS_CITY=sponsor.REGISTE_ADDRESS_CITY;
-								self.message.REGISTE_ADDRESS_CITY_NM=sponsor.REGISTE_ADDRESS_CITY_NM;
+								//self.message.REGISTE_ADDRESS=sponsor.REGISTE_ADDRESS;
+								//self.message.REGISTE_DATE=sponsor.REGISTE_DATE;
+								//self.message.REGISTE_ADDRESS_PROVINCE=sponsor.REGISTE_ADDRESS_PROVINCE;
+								//self.message.REGISTE_ADDRESS_PROVINCE_NM=sponsor.REGISTE_ADDRESS_PROVINCE_NM;
+								//self.message.REGISTE_ADDRESS_CITY=sponsor.REGISTE_ADDRESS_CITY;
+								//self.message.REGISTE_ADDRESS_CITY_NM=sponsor.REGISTE_ADDRESS_CITY_NM;
 								self.message.LEGAL_PERSON_PHONE=sponsor.LEGAL_PERSON_PHONE;
 								self.message.PROJECT_ID=sponsor.PROJECT_ID;
+								self.message.GUARANTEE_CAPACITY=sponsor.GUARANTEE_CAPACITY;
 								self.GID=sponsor.GID;
 								self.CLIENT_ID=sponsor.CLIENT_ID;
 								self.message.TYPE=sponsor.TYPE;

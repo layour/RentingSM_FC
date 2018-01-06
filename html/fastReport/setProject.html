@@ -9,35 +9,7 @@
 	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 	<link rel="stylesheet" href="../../css/mint.css">
 	<style>
-	.pickerColor {
-		width: 100%;
-		z-index: 10;
-		background: #ffffff;
-	}
 
-	.pickerColor>p {
-		line-height: .88rem;
-		padding: 0 .56rem;
-		color: #039BE5;
-		border-top: 1px solid #E0E0E0;
-		overflow: hidden;
-	}
-
-	.pickerColor>p span {
-		color: #34aadc;
-	}
-
-	.mint-cell-wrapper {
-		background-size: 100% 0px;
-		border-bottom: 1px solid #f7f7f7;
-	}
-
-	.pickerColor>p span:last-child {
-		float: right;
-	}
-	.pickerColor>p span:first-child {
-		float: left;
-	}
 	.item .first {
 
 		color: #333;
@@ -143,7 +115,7 @@
 						<span class="frp"> <i class="emergencyContract icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div>
 				</a>
-				<a href="javascript:void(0);" id="version" @click="surePickerSponsorType"  >
+				<a href="javascript:void(0);" id="version"  onclick="openSponsor('sponsorList')"  >
 					<div class="um-list-item-bodys">
 						担保人
 						<span class="frp"> <i class="sponsor icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
@@ -156,14 +128,6 @@
 						<span class="frp"> <i class="remark icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div> </a> -->
 			</div>
-		</div>
-		 <div class="um-footer"id="footer">
-			 <mt-popup v-model="pickerSponsorTypeStatus" position='bottom' class="pickerColor">
-				 <mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
-				 <p>
-					 <span class="" @click="surePickerSponsorType">取消</span><span class="" @click="surePickerSponsorType('confirm')">确定</span>
-				 </p>
-			 </mt-popup>
 		</div>
 	</div>
 	<script src="../../js/summer.js"></script>
@@ -217,16 +181,6 @@
 					project_Id: "",
 					carName:'',
 					sourceFrom:"",
-					pickerSponsorTypeStatus: false,
-					pickerSponsorType: "",
-					sponsorType:'',
-					slots1: [{
-						flex: 1,
-						values: ['企业', '个人'],
-						defaultIndex: 0,
-						className: 'slot1',
-						textAlign: 'center'
-					}],
 				}
 			},
 			methods: {
@@ -374,56 +328,7 @@
 							})
 						}
 
-				},
-				onValuesChange1: function(picker, values) {
-					this.pickerSponsorType = values[0];
-				},
-				getSponsorData:function(){
-					let self = this;
-					summer.showProgress();
-					ajaxRequest({
-						type: 'post',
-						url: 'appservice/customer/guaranteeList',
-						param: {
-							"PROJECT_ID":self. project_Id
-						}
-					}, function(res) {
-						summer.hideProgress();
-						if (res.data.flag == 1) {
-							if (res.data.datas.guaranteeList[0].TYPE=="LP") {
-								openSponsor('newSponsor_company');
-							}else{
-								openSponsor('newSponsor');
-							}
-						}
-					}, function(err) {
-						alert(err);
-						console.log(err);
-						summer.hideProgress();
-					});
-				},
-				surePickerSponsorType: function(param) {
-					if (!this.project_Id) {
-						summer.toast({
-							msg: "请先完善项目基本信息"
-						});
-						return;
-					};
-					if($(".sponsor").hasClass('active')){
-						this.getSponsorData();
-						return;
-					}
-					this.pickerSponsorTypeStatus = !this.pickerSponsorTypeStatus;
-					if (param == 'confirm') {
-						let sponsorType = this.pickerSponsorType;
-						if(sponsorType=="个人"){
-							openSponsor('newSponsor');
-						}else{
-							openSponsor('newSponsor_company');
-						}
-
-					}
-				},
+				}
 			}
 		})
 		function checkVersion(param) {
@@ -620,6 +525,12 @@
 				});
 				return;
 			} else {
+				let isAdd;
+				if(!$(".sponsor").hasClass('active')){
+					isAdd= true;
+				}else{
+					isAdd=false;
+				}
 				summer.openWin({
 					id: id,
 					url: 'html/fastReport/'+id+'.html',
@@ -637,15 +548,16 @@
 						},
 						rightItems: [{
 							type: "text",
-							text: "保存",
+							text: "添加",
 							textColor: "#ffffff",
-							method: "complete()"
+							method: "surePickerSponsorType()"
 						}]
 
 					},
 					pageParam: {
 						projectId: projectId,
-						clientId: clientId
+						clientId: clientId,
+						isAdd:isAdd
 					}
 				});
 			}
