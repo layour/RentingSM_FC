@@ -45,7 +45,7 @@ html,body{
    color: #039be5;
    margin-bottom: 0.22rem;
 }
-.processList li .box .p2,.processList li .box .p3{
+.processList li .box .p2,.processList li .box .p3, .processList li .box .p4 {
     line-height: 0.4rem;
     font-size: 0.28rem;
     color: #9e9e9e;
