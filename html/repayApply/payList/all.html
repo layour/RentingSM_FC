@@ -48,7 +48,7 @@
 							<b>{{k.PSTATUS_NM}}</b>
 						</div>
 					</div>
-					<div class="footer" v-bind:style="[k.PSTATUS_NM == '放款中' ? {'display':'block'} : {'display':'none'}]">
+					<div class="footer" v-bind:style="[k.PSTATUS_NM == '未放款' ? {'display':'block'} : {'display':'none'}]">
 						<ul class="footerList">
 							<li class="first" @click="advance(k.ID,k.PROJECT_ID,k.PAY_ID,k.PAYMENT_ID)">提前放款</li>
 							<li @click="normal(k.ID,k.PROJECT_ID,k.PAY_ID,k.PAYMENT_ID)">正常放款</li>
