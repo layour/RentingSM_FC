@@ -54,6 +54,9 @@
 				color:#333;
 				font-size: 14px;
 			}
+			.um-footer{
+				background: inherit;
+			}
 			.um-footer button{
 	      height: .9rem;
 	      border:none;
@@ -106,7 +109,7 @@
 								<i class="icon iconfont icon-enter"></i>
 							</div>
 						</template> -->
-						<mt-cell-swipe :title="item.PRODUCT_NAME+' | '+item.CATENA_NAME+' | '+item.SPEC_NAME" :label="item.COMPANY_NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'1.76rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index,ID)}]">
+						<mt-cell-swipe :title="item.PRODUCT_NAME+' | '+item.CATENA_NAME+' | '+item.SPEC_NAME" :label="item.COMPANY_NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index,ID)}]">
 								 <div class="price">
 									<p>数量：{{item.AMOUNT}}台</p>
 								 	<p>成交价：&yen;{{item.ACTUAL_PRICE}}</p>
