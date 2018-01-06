@@ -16,8 +16,8 @@
 	</head>
 	<body>
 		<div class="um-frame" id="index">
-			<div class="um-content">
-				<h2 class="processNum">流程编号：乘用车放款审核流程31500015</h2>
+			<div class="um-content" v-cloak>
+				<h2 class="processNum">流程编号：{{JBPM_ID}}</h2>
 				<ul class="processList" v-bind:style="[items.length ? {'display':'block'} : {'display':'none'}]">
 					<li
 						v-for = "(k, index) in items"
@@ -37,17 +37,19 @@
 			var payProcess = new Vue({
 				el:'#index',
 				data:{
-					items:[]
+					items:[],
+					JBPM_ID:""
 				}
 			});
 			summerready=function(){
 				var info = summer.pageParam.info;
+				payProcess.JBPM_ID = info.JBPM_ID;
 				summer.showProgress();
 				ajaxRequest({
 					type: 'post',
 					url: 'appservice/bpmtask/showbpmTask',
 					param: {
-						"JBPM_ID": "业务申请审批流程.8520028"
+						"JBPM_ID": info.JBPM_ID
 					}
 				}, function(res) {
 					summer.hideProgress();
