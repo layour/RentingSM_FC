@@ -27,7 +27,8 @@
 						<div class = "box">
 							<p class="p1">{{k.TASK_NAME}}</p>
 							<p class="p2">【{{k.ID}}】{{k.OP_NAME}}：{{k.OP_TYPE}}</p>
-							<p class="p3">{{k.OP_TIME}}</p>
+							<p class="p3">审批意见：{{k.MEMO ? k.MEMO : "无"}}</p>
+							<p class="p4">{{k.OP_TIME}}</p>
 						</div>
 					</li>
 				</ul>

@@ -17,18 +17,16 @@
 </head>
 
 <body>
+    <div class="null">
+        <div class="nullCon">
+            <div class="nullBox">
+                <img src="../../../img/empty.png" alt="">
+                <p>暂无数据</p>
+            </div>
+        </div>
+    </div>
 	<div class="um-frame" id="index" v-cloak>
-		<div class="um-header-light">
-			<div class="sera">
-				<div class="s-box" onclick="opensearch()">
-					<i class="iconfont icon-search"> </i>
-					<p class="txt">
-						输入客户名称/关键词
-					</p>
-				</div>
-			</div>
-		</div>
-		<div class="um-content" id = "content">
+		<div class="um-content">
 			<ul class="userList">
 				<li v-for="k in items">
 					<div class="title">
@@ -48,7 +46,7 @@
 							<b>{{k.PSTATUS_NM}}</b>
 						</div>
 					</div>
-					<div class="footer" v-bind:style="[k.PSTATUS_NM == '放款中' ? {'display':'block'} : {'display':'none'}]">
+					<div class="footer" v-bind:style="[k.PSTATUS_NM == '未放款' ? {'display':'block'} : {'display':'none'}]">
 						<ul class="footerList">
 							<li class="first" @click="advance(k.ID,k.PROJECT_ID,k.PAY_ID,k.PAYMENT_ID)">提前放款</li>
 							<li @click="normal(k.ID,k.PROJECT_ID,k.PAY_ID,k.PAYMENT_ID)">正常放款</li>
@@ -66,7 +64,8 @@
 			items: [],
 			totalPage: null,
 			num: 1,
-			resetData: false
+			resetData: false,
+            searchValue:""
 		},
 		methods: {
 			payDetail(userId,PROJECT_ID,JBPM_ID) {
@@ -149,46 +148,53 @@
 			}
 		}
 	});
+    function getData(pageNum,searchValue,bool) {
+        if (bool) {
+            all.resetData = true;
+        }
+        all.searchValue = searchValue;
+        if (searchValue) {
+            summer.showProgress();
+            ajaxRequest({
+                type: 'post',
+                url: 'appservice/paytable/paylist',
+                param: {
+                    "pageNo": pageNum,
+                    "pageSize": 10,
+                    "PSTATUS":"",
+                    "CR_BECR_NAME":searchValue ? searchValue : ""
+                }
+            }, function(res) {
+                summer.hideProgress();
+                var Data;
+                if (Object.prototype.toString.call(res.data) === '[object String]') {
+                    Data = JSON.parse(res.data);
+                } else {
+                    Data = res.data;
+                }
+                if (Data.flag == 1) {
+                    all.totalPage = Data.datas.totalPage;
+                    if (Data.datas.list.length < 1) {
+                        $('.null').css('display','block');
+                    } else {
+                        $('.null').css('display','none');
+                        if (all.resetData) {
+                            all.items = Data.datas.list;
+                        } else {
+                            all.items.push(...Data.datas.list);
+                        }
+                    }
+                }
+            }, function(err) {
+                summer.hideProgress();
+                summer.toast({
+                    msg: "暂无数据"
+                });
+                console.log(err);
+            });
+        }
+    };
 	summerready = function() {
-		function getData(pageNum) {
-			summer.showProgress();
-			ajaxRequest({
-				type: 'post',
-				url: 'appservice/paytable/paylist',
-				param: {
-					"pageNo": pageNum,
-					"pageSize": 10,
-					"PSTATUS":""
-				}
-			}, function(res) {
-				summer.hideProgress();
-				var Data;
-				if (Object.prototype.toString.call(res.data) === '[object String]') {
-					Data = JSON.parse(res.data);
-				} else {
-					Data = res.data;
-				}
-				if (Data.flag == 1) {
-					all.totalPage = Data.datas.totalPage;
-					if (Data.datas.list.length < 1) {
-						createNull("content", "../../../img/empty.png");
-					} else {
-						if (all.resetData) {
-							all.items = Data.datas.list;
-						} else {
-							all.items.push(...Data.datas.list);
-						}
-					}
-				}
-			}, function(err) {
-				summer.hideProgress();
-				summer.toast({
-					msg: "暂无数据"
-				});
-				console.log(err);
-			});
-		};
-		getData(all.num);
 		summer.setRefreshHeaderInfo({
 			visible: true,
 			loadingImg: 'img/refresh.png',
@@ -200,7 +206,7 @@
 		}, function(ret, err) {
 			//通常在这里从服务器加载数据
 			all.resetData = true;
-			getData(1);
+			getData(1,all.searchValue);
 			summer.refreshHeaderLoadDone(); //加载完成后调用方法恢复组件到默认状态
 		});
 		summer.setRefreshFooterInfo({
@@ -220,19 +226,11 @@
 				});
 			} else {
 				all.resetData = false;
-				getData(num);
+				getData(num,all.searchValue);
 			}
 			summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
 		});
 	}
-	// 搜索
-	function opensearch() {
-		summer.setStorage("searchFromSource","payList");
-		summer.openWin({
-			id: 'search',
-			url: 'html/fastReport/search.html',
-		});
-	};
 </script>
 
 </html>

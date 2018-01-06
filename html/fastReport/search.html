@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>summer</title>
@@ -7,103 +8,120 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="../../css/iuapmobile.um.css">
-	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-	<link rel="stylesheet" href="../../css/mint.css">
-	<link rel="stylesheet" href="css/fraCommon.css">
-	<link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/mint.css">
+    <link rel="stylesheet" href="css/fraCommon.css">
+    <link rel="stylesheet" href="css/search.css">
 
-  </head>
+</head>
+
 <body>
     <div id="search" class="um-win">
-       <div class="bar bar-nav um-header" id="header" v-if="program">
-        	<form action="javascript:void(0);">
-        		<i class="iconfont icon-nav_search pl10 pr5"> </i>
-        		<input class="searchValue" id="search_program" type="search"   name="search" autofocus="autofocus" placeholder="请输入项目名称"/>
-        	</form>
-        	<span onclick="closeWin()">取消</span>
+        <div class="bar bar-nav um-header" id="header" v-if="program">
+            <form action="javascript:void(0);">
+                <i class="iconfont icon-nav_search pl10 pr5"> </i>
+                <input class="searchValue" id="search_program" type="search" name="search" autofocus="autofocus" placeholder="请输入项目名称" />
+            </form>
+            <span onclick="closeWin()">取消</span>
         </div>
-        <div class="bar bar-nav um-header" id="header" v-else>
-        	<form action="javascript:void(0);">
-        		<i class="iconfont icon-nav_search pl10 pr5"> </i>
-        		<input class="searchValue" id="search_custom" type="search"   name="search" autofocus="autofocus" placeholder="请输入客户名称"/>
-        	</form>
-        	<span onclick="closeWin()">取消</span>
+        <div class="bar bar-nav um-header" id="header" v-else-if="newCustom">
+            <form action="javascript:void(0);">
+                <i class="iconfont icon-nav_search pl10 pr5"> </i>
+                <input class="searchValue" id="search_custom" type="search" name="search" autofocus="autofocus" placeholder="请输入客户名称" />
+            </form>
+            <span onclick="closeWin()">取消</span>
         </div>
-        <div   class="um-content">
+        <div class="bar bar-nav um-header" id="header" v-else="payList">
+            <form action="javascript:void(0);">
+                <i class="iconfont icon-nav_search pl10 pr5"> </i>
+                <input class="searchValue" id="search_payList" type="search" name="search" autofocus="autofocus" placeholder="请输入客户名称" />
+            </form>
+            <span onclick="closeWin()">取消</span>
+        </div>
+        <div class="um-content">
 
         </div>
     </div>
 </body>
-<script src="../../js/summer.js" ></script>
-<script src="../../js/jquery.min.js" ></script>
-<script src="../../js/vue.js" ></script>
-<script src="../../js/mint.js" ></script>
-<script src="../../js/font.js" ></script>
-<script src="../../js/common.js" ></script>
-<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+<script src="../../js/summer.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="../../js/mint.js"></script>
+<script src="../../js/font.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 <script>
-    let url,frameId;
-	summerready=function(){
-		$('#header').css('padding-top','40px')
-		 var top = $summer.offset($summer.byId('header')).h;
-      // let source=summer.pageParam.fromSurce;
-       let source=summer.getStorage('searchFromSource');
+    let url, frameId;
+    summerready = function() {
+        $('#header').css('padding-top', '40px')
+        var top = $summer.offset($summer.byId('header')).h;
+        // let source=summer.pageParam.fromSurce;
+        let source = summer.getStorage('searchFromSource');
 
-       if (source=="program") {
-          searchD.program=true;
-          url="html/fastReport/fra_search.html";
-          frameId="fra_search"
-       } else if(source=="newCustom"){
-          searchD.newCustom=true;
-          url="html/fastReport/fra_search_custom.html"
-          frameId="fra_search_custom"
-       }
-       setTimeout(function (){
-			 bindEvents(source);
-   	}, 500);
+        if (source == "program") {
+            searchD.program = true;
+            url = "html/fastReport/fra_search.html";
+            frameId = "fra_search"
+        } else if (source == "newCustom") {
+            searchD.newCustom = true;
+            url = "html/fastReport/fra_search_custom.html"
+            frameId = "fra_search_custom"
+        } else if (source == "payList") {
+            searchD.payList = true;
+            url = "html/repayApply/payList/payList_search.html"
+            frameId = "payList_search"
+        }
+        setTimeout(function() {
+            bindEvents(source);
+        }, 500);
 
 
-	    summer.openFrame({
-	        id: frameId,
-	        url: url,
-	        bounces: true,
-	        position: {
-	            top: top,
-				   bottom: 0,
-	            left: 0,
-	            right: 0
-	        }
-	    });
-	}
-   var searchD=new Vue({
-      el: '#search',
-      data() {
-         return {
-            newCustom:false,//代表从客户这搜索
-            program: false//代表从项目列表搜索
-         }
-      },
-      mounted() {},
-      methods: {
+        summer.openFrame({
+            id: frameId,
+            url: url,
+            bounces: true,
+            position: {
+                top: top,
+                bottom: 0,
+                left: 0,
+                right: 0
+            }
+        });
+    }
+    var searchD = new Vue({
+        el: '#search',
+        data() {
+            return {
+                newCustom: false, //代表从客户这搜索
+                program: false, //代表从项目列表搜索
+                payList: false //代表搜索支付表
+            }
+        },
+        mounted() {},
+        methods: {
 
-      }
-   });
-   function closeWin(){
-      summer.closeWin();
-   }
-	function bindEvents(id){
-			$('.searchValue').on('input propertychange focus',total);
-	}
-	function total(){
-		var searchData=$(this).val();
-		if(searchData.length>0){
-			summer.execScript({
-			    winId: "search",
-			    frameId:frameId,
-			    script: "getData('1','"+searchData+"','true')"
-			});
-		}
+        }
+    });
 
-	}
+    function closeWin() {
+        summer.closeWin();
+    }
+
+    function bindEvents(id) {
+        $('.searchValue').on('input propertychange focus', total);
+    }
+
+    function total() {
+        var searchData = $(this).val();
+        if (searchData.length > 0) {
+            summer.execScript({
+                winId: "search",
+                frameId: frameId,
+                script: "getData('1','" + searchData + "','true')"
+            });
+        }
+
+    }
 </script>
+
 </html>

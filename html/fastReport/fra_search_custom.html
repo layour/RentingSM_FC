@@ -20,6 +20,14 @@
 </head>
 
 <body>
+	<div class="null">
+        <div class="nullCon">
+            <div class="nullBox">
+                <img src="../../img/empty.png" alt="">
+                <p>暂无数据</p>
+            </div>
+        </div>
+    </div>
 	<div class="um-frame" id="fraSearch" v-cloak>
 		<!-- <div class="um-header-light">
 				<div class="sera">
@@ -109,8 +117,9 @@
 						if (res.data.flag == 1) {
 							if (flag) {
 								if (res.data.datas.list.length < 1) {
-									createNull("content", "../../img/empty.png")
+									$('.null').css('display','block');
 								} else {
+									$('.null').css('display','none');
 									self.dataList = res.data.datas.list;
 								}
 							} else {

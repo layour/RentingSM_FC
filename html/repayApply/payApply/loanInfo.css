@@ -40,6 +40,7 @@
     text-align: right;
     outline: none;
     margin-top: 0.3rem;
+    margin-right: 0.05rem;
 }
 .calculate{
     position: absolute;
@@ -81,4 +82,12 @@
 }
 .picker-slot-wrapper{
     height: auto;
+}
+strong{
+   float: right;
+   height: 0.9rem;
+   line-height: 0.9rem;
+   font-weight: normal;
+   font-size: 0.28rem;
+   color: #333;
 }

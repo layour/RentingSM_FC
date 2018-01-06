@@ -8,7 +8,7 @@
 .sera{
 	padding:0.13rem 0.19rem;
 	background:#f6f6f6;
-	
+
 }
 .sera p.txt{
 	display:inline-block;
@@ -31,7 +31,7 @@
 }
 .s-box .icon-sousuo:before{
 	font-size:0.28rem;
-	color:rgba(136,153,170,1);	
+	color:rgba(136,153,170,1);
 }
 .customList:first-child{
 	margin-top:0px;
@@ -48,17 +48,17 @@
 }
 .customList p.title span{
 	color:#424242;
-	
+
 }
- 
+
 .customList p.select{
 	line-height:0.88rem;
 	color:#424242;
 	font-size:0.24rem;
 	border-bottom:1px solid #f6f6f6;
-	
-	
-	 
+
+
+
 }
 .customList p.select span{
 	border-right:1px solid #f6f6f6;
@@ -100,4 +100,40 @@
 }
 .customList .center:active{
 	background:#f4f4f4;
+}
+
+.null {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    position: fixed;
+    z-index: 999;
+}
+.nullCon{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nullBox{
+    width: 2.34rem;
+    height: 3.8rem;
+    position: relative;
+}
+.nullBox img{
+    width: 100%;
+    display: block;
+    border: 0;
+}
+.nullBox p{
+    width: 100%;
+    height: 0.28rem;
+    color: #cbcbcb;
+    line-height: 0.28rem;
+    font-size: 0.28rem;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
 }
