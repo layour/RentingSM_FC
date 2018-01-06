@@ -268,7 +268,7 @@
 						IS_MARRY: '',
 						IS_MARRY_NM: '',
 						BIRTHDAY: '',
-						SCALE_SOURCE: '1',
+						SCALE_SOURCE: '',
 						SCALE_SOURCE_NM:'',
 						INDUSTRY_FICATION_NM: '',
 						INDUSTRY_FICATION: '',
@@ -585,6 +585,26 @@
 					} else if (this.message.IS_MARRY_NM == "") {
 						summer.toast({
 							msg: "请选择婚姻状况"
+						});
+						return false;
+					} else if (this.message.INDUSTRY_FICATION_NM == "") {
+						summer.toast({
+							msg: "请选择运输货物"
+						});
+						return false;
+					} else if (this.message.HOUSE_ADDRESS_CITY_NM == "") {
+						summer.toast({
+							msg: "请选择省市"
+						});
+						return false;
+					} else if (this.message.HOME_XZ == "") {
+						summer.toast({
+							msg: "请选择住房情况"
+						});
+						return false;
+					}else if (this.message.SCALE_SOURCE_NM == "") {
+						summer.toast({
+							msg: "请选择是否本地人"
 						});
 						return false;
 					}
