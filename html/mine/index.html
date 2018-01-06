@@ -89,45 +89,24 @@
 				overlay: true,
 				ok: function() {
 					summer.setStorage("userinfo", {});
-					if (os == "android") {
-						summer.openWin({
-							id: 'login',
-							url: 'login.html',
-							isKeep: false,
-							create: false,
-							type: 'actionBar',
-							actionBar: {
-								title: "登录",
-								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								backgroundColor: "#039be5",
-								leftItem: {
-									image: "img/back.png",
-									method: "", //返回按钮自定义事件
-									text: "返回",
-									textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								}
+					summer.openWin({
+						id: 'login',
+						url: 'login.html',
+						isKeep: false,
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "登录",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							}
-						});
-					} else {
-						cordova.exec(null, null, "FrameManager", "initializeWin", [{
-							id: 'login',
-							url: 'login.html',
-							isKeep: false,
-							create: false,
-							type: 'actionBar',
-							actionBar: {
-								title: "登录",
-								titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								backgroundColor: "#039be5",
-								leftItem: {
-									image: "img/back.png",
-									method: "", //返回按钮自定义事件
-									text: "返回",
-									textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								}
-							}
-						}]);
-					}
+						}
+					});
 				}
 			});
 		};
@@ -252,45 +231,24 @@
 			if (!isLogin()) {
 				var os = $summer.os;
 				summer.setStorage("userinfo", {});
-				if (os == "android") {
-					summer.openWin({
-						id: 'login',
-						url: 'login.html',
-						isKeep: false,
-						create: false,
-						type: 'actionBar',
-						actionBar: {
-							title: "登录",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
+				summer.openWin({
+					id: 'login',
+					url: 'login.html',
+					isKeep: false,
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "登录",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						}
-					});
-				} else {
-					cordova.exec(null, null, "FrameManager", "initializeWin", [{
-						id: 'login',
-						url: 'login.html',
-						isKeep: false,
-						create: false,
-						type: 'actionBar',
-						actionBar: {
-							title: "登录",
-							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor: "#039be5",
-							leftItem: {
-								image: "img/back.png",
-								method: "", //返回按钮自定义事件
-								text: "返回",
-								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							}
-						}
-					}]);
-				}
+					}
+				});
 			}
 		};
 	</script>

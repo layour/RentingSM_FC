@@ -103,28 +103,8 @@
 							EMPLOYEE_ID:EMPLOYEE_ID
 						};
 						summer.setStorage("userinfo",userinfo);
-						summer.openWin({
-							id:'homePage',
-							url:'index.html',
-							isKeep: false,
-							addBackListener:true,
-							create:false,
-							type:'actionBar',
-							actionBar: {
-			                    title: "",
-			                    titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-			                    backgroundColor: "#039be5",
-			                    bottomLineColor: "#039be5",
-			                    leftItem:{
-			                        text:"复昌租赁",
-			                        textColor:"#ffffff",
-			                        method:"none()",//返回按钮自定义事件
-			                    },
-								rightItems: [{
-									image: "img/mine.png",
-									method:"showUserInfo()",//返回按钮自定义事件
-								}]
-			                }
+						summer.closeToWin({
+							id:"homePage"
 						});
 						break;
 					case 0:
