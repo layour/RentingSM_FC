@@ -105,6 +105,7 @@ html{
    height: 1.16rem;
    font-size: 0.24rem;
    margin: 0 0.18rem 0.54rem 0.18rem;
+   position: relative;
 }
 .crm_list li dl,.xmgl_list li dl{
    width: 100%;
@@ -125,4 +126,18 @@ html{
    line-height: 0.36rem;
    font-size: 0.24rem;
    color: #424242;
+}
+.missionNum{
+   position: absolute;;
+   top:0.1rem;
+   right:0.4rem;
+   color:white;
+   width: 0.32rem;
+   display: inline-block;
+   font-size: 0.24rem;
+   text-align: center;
+   line-height:0.32rem;
+   border-radius: 50%;
+   background-color: #fe0000;
+
 }

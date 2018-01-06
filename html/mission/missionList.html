@@ -18,20 +18,20 @@
 </head>
 
 <body>
-    <div class="um-win" id="index">
+    <div class="um-frame" id="index">
 		<div class="um-content">
             <ul class="missionList">
-				<li v-for="k in items">
+				<li v-for="k in dataList">
 					<div class="title">
-						<span class="name">{{k.RENTER_NAME}}</span>
-						<span class="state">{{k.CLERK_NAME}}</span>
+						<span class="name">{{k.PRO_NAME}}</span>
+						<span class="state">{{k.CUST_NAME}}</span>
 					</div>
-					<div class="content" @click="missionDetail">
+					<div class="content" @click="missionDetail(k.EXECUTIONID,k.ID)">
 						<div class="leftCon">
-							<p class="p1">融资金额：￥{{k.money}}</p>
-							<p class="p2">项目编号：{{k.LEASE_CODE}}</p>
-							<p class="p3">审批流程：{{k.PAYLIST_CODE}}</p>
-							<p class="p4">审批时间：{{k.START_DATE}}</p>
+							<p class="p1">任务名：{{k.ACTIVITYNAME}}</p>
+							<p class="p2">项目编号：{{k.PRO_CODE}}</p>
+							<p class="p3">流程编号：{{k.EXECUTIONID}}</p>
+							<p class="p4">审批时间：{{k.CREATETIME}}</p>
 						</div>
 						<div class="enter">
 							<i class="iconfont icon-enter"></i>
@@ -42,64 +42,114 @@
 		</div>
 	</div>
     <script type="text/javascript">
-        var datas = [
-            {
-                RENTER_NAME:"任务人",
-                CLERK_NAME:"客户",
-                money:"123123",
-                LEASE_CODE:"1263751273126",
-                PAYLIST_CODE:"业务申请审批流程.5030031",
-                START_DATE:"2017-07-07"
-            },
-            {
-                RENTER_NAME:"任务人",
-                CLERK_NAME:"客户",
-                money:"123123",
-                LEASE_CODE:"1263751273126",
-                PAYLIST_CODE:"业务申请审批流程.5030031",
-                START_DATE:"2017-07-07"
-            },
-            {
-                RENTER_NAME:"任务人",
-                CLERK_NAME:"客户",
-                money:"123123",
-                LEASE_CODE:"1263751273126",
-                PAYLIST_CODE:"业务申请审批流程.5030031",
-                START_DATE:"2017-07-07"
-            },
-            {
-                RENTER_NAME:"任务人",
-                CLERK_NAME:"客户",
-                money:"123123",
-                LEASE_CODE:"1263751273126",
-                PAYLIST_CODE:"业务申请审批流程.5030031",
-                START_DATE:"2017-07-07"
-            },
-        ];
+    var _endNum = 1;
+    summerready = function() {
+      summer.showProgress();
+      getData(1, true)
+      summer.setRefreshHeaderInfo({
+          visible: true,
+          loadingImg: 'img/refresh.png',
+          bgColor: '#ffffff',
+          textColor: '#aaaaaa',
+          textDown: '下拉刷新...',
+          textUp: '松开刷新...',
+          showTime: true
+      }, function(ret, err) {
+          //通常在这里从服务器加载数据，t
+          getData(1, true);
+          _endNum = 1;
+      });
+      summer.setRefreshFooterInfo({
+          visible: true,
+          loadingImg: 'img/refresh.png',
+          bgColor: '#ffffff',
+          textColor: '#aaaaaa',
+          textDown: '上拉刷新...',
+          textUp: '松开刷新...',
+          showTime: true
+      }, function(ret, err) {
+          //通常在这里从服务器加载数据，
+          _endNum += 1;
+          if (_endNum > missionList.totalPage) {
+             summer.toast({
+                msg: "没有更多了"
+             });
+             summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+             return;
+          }
+          getData(_endNum, false);
+      });
+    }
+    function getData(end, flag) {
+      missionList.getData(end, flag);
+    }
+
         var missionList = new Vue({
     		el: '#index',
     		data: {
-    			items: datas,
+    			dataList: '',
     		},
             methods:{
-                missionDetail:function (){
+               getData(pageNum, flag) {
+                  let self = this;
+                  ajaxRequest({
+                     type: 'post',
+                     url: 'appservice/bpmtask/myTask',
+                     param: {
+                        "pageNo": pageNum,
+                        "pageSize": 10,
+                     }
+                  }, function(res) {
+                     //alert(res);
+                     summer.hideProgress();
+                     var Data= res.data;
+                     if (Data.flag == 1) {
+                        self.totalPage = Data.datas.last;
+                        if (flag) {
+                           if (Data.datas.list.length < 1) {
+                              createNull("content", "../../img/empty.png")
+                           } else {
+                              self.dataList = Data.datas.list;
+                           }
+                        } else {
+                           self.dataList = self.dataList.concat(Data.datas.list);
+                        }
+
+                        console.log(self.dataList);
+                     }
+                  }, function(err) {
+                     //alert(err);
+                     console.log(err);
+                     summer.hideProgress();
+                  });
+                  this.$nextTick(function() {
+                     summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
+                     summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+                  })
+               },
+                missionDetail:function (JBPM_ID,TASK_ID){
                     summer.openWin({
-    					id: 'missionDetail',
-    					url: 'html/mission/missionDetail.html',
-    					create: false,
-    					type: 'actionBar',
-    					actionBar: {
-    						title: "任务处理",
-    						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-    						backgroundColor: "#039be5",
-    						leftItem: {
-    							image: "img/back.png",
-    							method: "", //返回按钮自定义事件
-    							text: "返回",
-    							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-    						}
-    					}
-    				});
+          					id: 'missionDetail',
+          					url: 'html/mission/missionDetail.html',
+          					create: false,
+          					type: 'actionBar',
+          					actionBar: {
+          						title: "任务处理",
+          						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+          						backgroundColor: "#039be5",
+          						leftItem: {
+          							image: "img/back.png",
+          							method: "", //返回按钮自定义事件
+          							text: "返回",
+          							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+          						}
+          					},
+                        pageParam:{
+                           JBPM_ID:JBPM_ID,
+                           TASK_ID:TASK_ID
+                        }
+
+          				});
                 }
             }
         });
