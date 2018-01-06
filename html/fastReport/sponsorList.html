@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/font-icons.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<style>
+		.pickerColor {
+			width: 100%;
+			z-index: 10;
+			background: #ffffff;
+		}
+
+		.pickerColor>p {
+			line-height: .88rem;
+			padding: 0 .56rem;
+			color: #039BE5;
+			border-top: 1px solid #E0E0E0;
+			overflow: hidden;
+		}
+
+		.pickerColor>p span {
+			color: #34aadc;
+		}
+
+		.mint-cell-wrapper {
+			background-size: 100% 0px;
+			border-bottom: 1px solid #f7f7f7;
+		}
+
+		.pickerColor>p span:last-child {
+			float: right;
+		}
+		.pickerColor>p span:first-child {
+			float: left;
+		}
+		.customList:first-child{
+			margin-top:0px;
+		}
+		.customList{
+			 position: relative;
+			 margin-top:0.2rem;
+		}
+			.customList p.title{
+			font-size:0.32rem;
+			color:#039be5;
+			line-height:0.88rem;
+			border-bottom:1px solid #f7f7f7;
+		}
+		.customList p.title span{
+			color:#424242;
+
+		}
+
+		.customList p.select{
+			line-height:0.88rem;
+			color:#424242;
+			font-size:0.24rem;
+			border-bottom:1px solid #f6f6f6;
+		}
+		.customList p.select span{
+			border-right:1px solid #f6f6f6;
+		}
+		.customList .center{
+			padding:0.3rem 0.2rem;
+			border-bottom:1px solid #f7f7f7;
+			font-size:0.28rem;
+			color:#424242;
+		}
+		.um-footer{
+			min-height: 0px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="um-win" id="mySponsor" v-cloak>
+			<div class="um-content" >
+				<div id="content"></div>
+				<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorList">
+			       <p class="pl20 title pr20">{{item.NAME}}<span class="status fr"></p>
+			       <div class="center"  >
+						 <p class="type pl10">  <span>担保人类型 :</span> <span>{{item.TYPE=="LP"?"企业":"个人"}}</span> </p>
+			       		<p class="type pl10">  <span>法人 :</span> <span>{{item.LEGAL_PERSON}}</span> </p>
+			      		<p class="time pl10 pr10"><span>营业执照：<span>{{item.CORP_BUSINESS_LICENSE}}</span></span></p>
+			       </div>
+			    </div>
+			</div>
+			<div class="um-footer"id="footer">
+	  			 <mt-popup v-model="pickerSponsorTypeStatus" position='bottom' class="pickerColor">
+	  				 <mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+	  				 <p>
+	  					 <span class="" @click="surePickerSponsorType">取消</span><span class="" @click="surePickerSponsorType('confirm')">确定</span>
+	  				 </p>
+	  			 </mt-popup>
+                <button class="btn um-btn-primary" v-show="sponsorList.length>0"   onclick="saveMessage()">保存</button>
+         </div>
+		</div>
+			<script src="../../js/mint.js"></script>
+		<script>
+			summerready=function(){
+				let projectId=summer.pageParam.projectId;
+				let clintId=summer.pageParam.clientId;
+				let isAdd=summer.pageParam.isAdd;
+				if(!isAdd){
+					mySponsor.getSponsorList();
+				}else{
+						createNull("content", "../../img/empty.png","请添加担保人")
+				}
+				mySponsor.PROJECT_ID=projectId;
+				mySponsor.CLIENT_ID=clintId;
+			}
+			function addSponsor1(args){
+				console.log(args);
+				mySponsor.sponsorList.push(JSON.parse(args));
+			}
+			function getSponsorList(){
+					mySponsor.getSponsorList();
+			}
+			function surePickerSponsorType(){
+				mySponsor.surePickerSponsorType();
+			}
+			var mySponsor=new Vue({
+					el:'#mySponsor',
+					data(){
+						return {
+							pickerSponsorTypeStatus: false,
+							pickerSponsorType: "",
+							sponsorList:[],
+							slots1: [{
+								flex: 1,
+								values: ['企业', '个人'],
+								defaultIndex: 0,
+								className: 'slot1',
+								textAlign: 'center'
+							}],
+							PROJECT_ID:'',
+							CLIENT_ID:''
+
+						}
+					},
+					methods:{
+						getSponsorList(projectId){
+							let self = this;
+							summer.showProgress();
+							ajaxRequest({
+								type: 'post',
+								url: 'appservice/customer/guaranteeList',
+								param: {
+									"PROJECT_ID":self.PROJECT_ID
+								}
+							}, function(res) {
+								summer.hideProgress();
+								if (res.data.flag == 1) {
+									$("#content").css('display','none');
+									self.sponsorList=res.data.datas.guaranteeList;
+								}
+							}, function(err) {
+								alert(err);
+								console.log(err);
+								summer.hideProgress();
+							});
+						},
+						surePickerSponsorType(param){
+							this.pickerSponsorTypeStatus = !this.pickerSponsorTypeStatus;
+							if (param == 'confirm') {
+								let sponsorType = this.pickerSponsorType;
+								if(sponsorType=="个人"){
+									openSponsor('newSponsor');
+								}else{
+									openSponsor('newSponsor_company');
+								}
+
+							}
+						},
+						onValuesChange1: function(picker, values) {
+							this.pickerSponsorType = values[0];
+						},
+						openSponsorDetail(TYPE,item){
+							let id;
+							if (TYPE=="LP") {
+								id="newSponsor_company"
+							}else{
+								id="newSponsor"
+							}
+								summer.openWin({
+									id: id,
+									url: 'html/fastReport/'+id+'.html',
+									create: false,
+									type: 'actionBar',
+									actionBar: {
+										title: "担保人",
+										titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										backgroundColor: "#039BE5",
+										leftItem: {
+											image: "img/back.png",
+											method: "", //返回按钮自定义事件
+											text: "返回",
+											textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										},
+										rightItems: [{
+											type: "text",
+											text: "保存",
+											textColor: "#ffffff",
+											method: "complete()"
+										}]
+
+									},
+									pageParam: {
+										item: item,
+									}
+								});
+						},
+						opensubmitFinanl(){
+							summer.openWin({
+								id:'finanlSubmit',
+								url:'html/fastReport/finanlSubmit.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+									title: "提交评审",
+									titleColor: "#ffffff",
+									backgroundColor: "#007aff",
+									leftItem:{
+											image: "img/back.png",
+											method:'',
+											text:"返回",
+											textColor:"#ffffff"
+									}
+								}
+							});
+						}
+					}
+				})
+			function saveMessage(){
+				summer.execScript({
+				    winId: "setProject",
+				    script: "addRight('sponsor')"
+				});
+
+				summer.closeWin();
+			}
+			function addSponsor(){
+				summer.openWin({
+					id:'newSponsor',
+					url:'html/fastReport/newSponsor.html',
+					create:false,
+					type:'actionBar',
+					actionBar: {
+						title: "担保人",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039BE5",
+						leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems:[{
+						          type:"text",
+						          text:"完成",
+						          textColor:"#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						          method:"complete()" //在打开的window中自定义事件
+						      }]
+					}
+				});
+			}
+			function openSponsor(id) {
+				let projectId = mySponsor.PROJECT_ID;
+				let clientId=	mySponsor.CLIENT_ID
+					summer.openWin({
+						id: id,
+						url: 'html/fastReport/'+id+'.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "添加担保人",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039BE5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems: [{
+								type: "text",
+								text: "保存",
+								textColor: "#ffffff",
+								method: "complete()"
+							}]
+
+						},
+						pageParam: {
+							projectId: projectId,
+							clientId: clientId
+						}
+					});
+
+			}
+
+		</script>
+	</body>
+</html>

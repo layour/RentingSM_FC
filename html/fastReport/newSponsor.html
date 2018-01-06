@@ -523,7 +523,26 @@
 			newCreateCustom.message.projectId=projectId;
 			let clintId = summer.pageParam.clientId;
 			newCreateCustom.message.CLIENT_ID=clintId;
-
+			let item= summer.pageParam.item;
+			if(item){
+				self.message.NAME=item.NAME;
+				self.message.ID_CARD_NO=item.ID_CARD_NO;
+				self.message.SEX=item.SEX;
+				self.message.SEX_NM=item.SEX_NM;
+				self.message.HOUSE_ADDRESS=item.HOUSE_ADDRESS;
+				self.message.TEL_PHONE=item.TEL_PHONE;
+				self.message.IS_MARRY=item.IS_MARRY;
+				self.message.IS_MARRY_NM=item.IS_MARRY_NM;
+				self.message.BIRTHDAY=item.BIRTHDAY;
+				self.message.HOUSE_ADDRESS_CITY=item.HOUSE_ADDRESS_CITY;
+				self.message.HOUSE_ADDRESS_CITY_NM=item.HOUSE_ADDRESS_CITY_NM;
+				self.message.HOUSE_ADDRESS_PROVINCE=item.HOUSE_ADDRESS_PROVINCE;
+				self.message.HOUSE_ADDRESS_PROVINCE_NM=item.HOUSE_ADDRESS_PROVINCE_NM;
+				self.message.PROJECT_ID=item.PROJECT_ID;
+				self.message.GID=item.GID;
+				self.message.CLIENT_ID=item.CLIENT_ID;
+				self.message.TYPE=item.TYPE;
+			}
 			if (projectId) {
 				newCreateCustom.getData(projectId);
 			}

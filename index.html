@@ -15,11 +15,13 @@
 	<script src="js/font.js" charset="utf-8"></script>
 	<script src="js/common.js" charset="utf-8"></script>
 	<script src="js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
+	<script src="js/common.js"></script>
+	<script src="js/vue.js" ></script>
 	<!-- <script src="js/index.js" ></script> -->
 </head>
 
 <body>
-	<div id="win" class="um-win">
+	<div id="win" class="um-frame">
 		<div id="content" class="um-content p15">
 			<div class="container">
 				<div id='banner-inner' class='swiper-container'>
@@ -44,11 +46,12 @@
 				</h2>
 			<div class="xmgl_con">
 				<ul class="xmgl_list clearfix">
-					<li onclick="mission()">
+					<li onclick="mission()" class="">
 						<dl>
 							<dt class="iconfont icon-submit" style="color:#c79644"></dt>
 							<dd>代办任务</dd>
 						</dl>
+						<span class="missionNum">{{missionNum}}</span>
 					</li>
 					<li onclick="openFastReport()">
 						<dl>
@@ -160,6 +163,19 @@
 	</div>
 	<script>
 		summerready = function() {
+			getMissionData();//获取代办任务个数
+	      summer.setRefreshHeaderInfo({
+	          visible: true,
+	          loadingImg: 'img/refresh.png',
+	          bgColor: '#ffffff',
+	          textColor: '#aaaaaa',
+	          textDown: '下拉刷新...',
+	          textUp: '松开刷新...',
+	          showTime: true
+	      }, function(ret, err) {
+	          //通常在这里从服务器加载数据，t
+	          getMissionData();
+	      });
 			// 关闭启动图
 			setTimeout(function() {
 				summer.hideLaunch();
@@ -169,6 +185,40 @@
 				loop: true
 			});
 		}
+		function getMissionData() {
+        fistPage.getMissionData();
+      }
+		var fistPage = new Vue({
+		 el: '#win',
+		 data: {
+				  missionNum:''
+		 },
+		 methods:{
+			 getMissionData(){
+				 let self = this;
+					 ajaxRequest({
+						 type: 'post',
+						 url: 'appservice/bpmtask/myTaskCount',
+						 param: {}
+					 }, function(res) {
+						 summer.hideProgress();
+						 if (res.data.flag == 1) {
+							 self.missionNum=res.data.datas.count;
+							 console.log(res);
+						 }
+					 }, function(err) {
+						 alert(err);
+						 console.log(err);
+						 summer.hideProgress();
+					 });
+					 this.$nextTick(function() {
+						 summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
+						 summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+					 })
+			 },
+
+		 }
+		});
 		// 判断是否已登陆
 		function isLogin() {
 			if (summer.getStorage("userinfo")) {
