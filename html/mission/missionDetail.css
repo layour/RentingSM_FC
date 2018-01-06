@@ -16,10 +16,10 @@ html,body{
    padding-top: 0.24rem;
 }
 .processList li{
-   width: 100%;
-   height: 2rem;
-   position: relative;
-   padding-left: 0.42rem;
+    width: 100%;
+    position: relative;
+    padding-left: 0.42rem;
+    padding-bottom: 0.4rem
 }
 .borderActive{
    border-left: 1px dotted #dddddd;
@@ -33,11 +33,9 @@ html,body{
    left: -0.16rem;
 }
 .processList li .box{
-   height: 1.74rem;
    border-bottom: 1px solid #f1f1f1;
 }
 .processList li:last-child .box{
-   height: 1.74rem;
    border-bottom: 0;
 }
 .processList li .box .p1{
@@ -48,11 +46,10 @@ html,body{
    margin-bottom: 0.22rem;
 }
 .processList li .box .p2,.processList li .box .p3{
-   height: 0.28rem;
-   line-height: 0.28rem;
-   font-size: 0.28rem;
-   color: #9e9e9e;
-   margin-bottom: 0.22rem;
+    line-height: 0.4rem;
+    font-size: 0.28rem;
+    color: #9e9e9e;
+    margin-bottom: 0.22rem;
 }
 .processList li .box .p2{
    margin-left: -0.12rem;
@@ -91,4 +88,14 @@ html,body{
 }
 .submitBtn{
    padding:0.1rem 0.2rem;
+}
+.processNum {
+    height: 0.9rem;
+    padding: 0 0.56rem;
+    font-size: 0.28rem;
+    line-height: 0.9rem;
+    color: #333;
+    background-color: #fff;
+    font-weight: normal;
+    margin: 0 0 0.2rem 0;
 }

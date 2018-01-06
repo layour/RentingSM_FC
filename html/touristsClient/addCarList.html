@@ -55,11 +55,11 @@
 				font-size: 14px;
 			}
 			.um-footer button{
-	      height: .7rem;
+	      height: .9rem;
 	      border:none;
 	      outline: none;
 	      width:100%;
-	      line-height: .7rem;
+	      line-height: .9rem;
 	      color:#fff;
 	      border-radius: 5px;
 	    }
@@ -124,7 +124,9 @@
       </div>
 
 			<div v-if="addCarList.length>0" class="um-footer" id="footer">
-				<button @click="save" style="height:.88rem;background:#039BE5;font-size:0.3rem;">保存</button>
+				<div style="padding:0 .56rem;">
+					<button @click="save" style="height:.9rem;margin-bottom:.56rem;background:#039BE5;font-size:0.3rem;">保存</button>
+				</div>
 			</div>
     </div>
 		<script src="../../js/summer.js" ></script>

@@ -84,7 +84,8 @@
 			params:{
 				PAY_ID:"",
 				PROJECT_ID:"",
-				PAYMENT_ID:""
+				PAYMENT_ID:"",
+				PAYLIST_CODE:""
 			}
 		},
 		methods:{
@@ -116,7 +117,8 @@
 						pageParam: {
 							PAY_ID:this.params.PAY_ID,
 							PROJECT_ID:this.params.PROJECT_ID,
-							PAYMENT_ID:this.params.PAYMENT_ID
+							PAYMENT_ID:this.params.PAYMENT_ID,
+							PAYLIST_CODE:this.params.PAYLIST_CODE
 						}
 					});
 				} else {
@@ -161,6 +163,7 @@
 			}
 			if (Data.flag == 1) {
 				payApply.datas = Data.datas;
+				payApply.params.PAYLIST_CODE = Data.datas.TABLE_HEAD.LEASE_CODE;
 			} else {
 				summer.toast({
 					msg: Data.msg

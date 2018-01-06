@@ -12,6 +12,14 @@
 </head>
 
 <body>
+	<div class="null">
+        <div class="nullCon">
+            <div class="nullBox">
+                <img src="../../img/empty.png" alt="">
+                <p>暂无数据</p>
+            </div>
+        </div>
+    </div>
 	<div class="um-frame" id="fraSearch" v-cloak>
 		<!-- <div class="um-header-light">
 				<div class="sera">
@@ -112,35 +120,38 @@
 			mounted() {},
 			methods: {
 				getData(end, searchValue,flag) {
-						let self=this;
-					ajaxRequest({
-						type: 'post',
-						url: 'appservice/promc/projectList',
-						param: {
-							"pageNo": end,
-							"pageSize": 10,
-							"STATUS": "",
-							"CR_BECR_NAME": searchValue ? searchValue : ""
-						}
-					}, function(res) {
-						//alert(res);
-						summer.hideProgress();
-						if (res.data.flag == 1) {
-							if (flag) {
-								if (res.data.datas.list.length < 1) {
-									createNull("content", "../../img/empty.png")
-								} else {
-									self.dataList = res.data.datas.list;
-								}
-							} else {
-								self.dataList = self.dataList.concat(res.data.datas.list);
+					let self=this;
+					if (searchValue) {
+						ajaxRequest({
+							type: 'post',
+							url: 'appservice/promc/projectList',
+							param: {
+								"pageNo": end,
+								"pageSize": 10,
+								"STATUS": "",
+								"CR_BECR_NAME": searchValue ? searchValue : ""
 							}
-						}
-					}, function(err) {
-						alert(err);
-						console.log(err);
-						summer.hideProgress();
-					});
+						}, function(res) {
+							//alert(res);
+							summer.hideProgress();
+							if (res.data.flag == 1) {
+								if (flag) {
+									if (res.data.datas.list.length < 1) {
+										$('.null').css('display','block');
+									} else {
+										$('.null').css('display','none');
+										self.dataList = res.data.datas.list;
+									}
+								} else {
+									self.dataList = self.dataList.concat(res.data.datas.list);
+								}
+							}
+						}, function(err) {
+							alert(err);
+							console.log(err);
+							summer.hideProgress();
+						});
+					}
 					this.$nextTick(function() {
 						summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
 						summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态

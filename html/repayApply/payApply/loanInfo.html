@@ -23,40 +23,46 @@
         <div class="um-content" v-cloak>
             <ul class="loanList">
                 <li>
+                    <span>支付表号</span>
+                    <div>{{PAYLIST_CODE}}</div>
+                </li>
+                <li>
                     <span>放款方式</span>
                     <div @click="sureMethod">
 						<span class="iconfont icon-enter"></span>
-						<i>{{insurerMethod}}</i>
-					</div>
-                </li>
-                <li>
-                    <span>是否代收</span>
-                    <div @click="sureReplace">
-						<span class="iconfont icon-enter"></span>
-						<i>{{insurerReplace}}</i>
+						<i v-bind:style="[insurerMethod == '请选择' ? {'color':'#9e9e9e'} : {'color':'#424242'}]">{{insurerMethod}}</i>
 					</div>
                 </li>
                 <li>
                     <span>放款模式</span>
                     <div @click="surePattern">
                         <span class="iconfont icon-enter"></span>
-                        <i>{{insurerPattern}}</i>
+                        <i v-bind:style="[insurerPattern == '请选择' ? {'color':'#9e9e9e'} : {'color':'#424242'}]">{{insurerPattern}}</i>
                     </div>
                 </li>
                 <li>
                     <span>付款方式</span>
                     <div @click="surePay">
                         <span class="iconfont icon-enter"></span>
-                        <i>{{insurerPay}}</i>
+                        <i v-bind:style="[insurerPay == '请选择' ? {'color':'#9e9e9e'} : {'color':'#424242'}]">{{insurerPay}}</i>
+                    </div>
+                </li>
+                <li>
+                    <span>是否代收</span>
+                    <div @click="sureReplace">
+                        <span class="iconfont icon-enter"></span>
+                        <i v-bind:style="[insurerReplace == '请选择' ? {'color':'#9e9e9e'} : {'color':'#424242'}]">{{insurerReplace}}</i>
                     </div>
                 </li>
                 <li>
                     <span>抵押保证金金额</span>
-                    <div>{{pledge}} 元</div>
+                    <strong>元</strong>
+					<input v-model="pledge" @input="pledgeInps" type="number" placeholder="请输入" />
                 </li>
                 <li>
                     <span>GPS费用</span>
-                    <div>{{gps}} 元</div>
+                    <strong>元</strong>
+                    <input v-model="gps" @input="GPSinps" type="number" placeholder="请输入" />
                 </li>
                 <li>
                     <span>代收金额</span>
@@ -96,6 +102,7 @@
                 PAY_MONEY:"",
                 LAST_MONEY:"",
                 PAYMENT_ID:"",
+                PAYLIST_CODE:"",
                 params:{
                     PAY_ID:"",
                     PROJECT_ID:""
@@ -207,6 +214,22 @@
 						this.insurerPay = this.pickedPay;
 					}
 				},
+                // 抵押保证金输入监听
+                pledgeInps() {
+                    if (this.insurerReplace == "差额") {
+                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
+                    } else if (this.insurerReplace == "全额") {
+                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
+                    }
+                },
+                // GPS费用输入监听
+                GPSinps() {
+                    if (this.insurerReplace == "差额") {
+                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
+                    } else if (this.insurerReplace == "全额") {
+                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
+                    }
+                },
                 // 保存
                 save(){
                     if (this.insurerMethod == "请选择") {
@@ -313,7 +336,9 @@
         });
         summerready = function() {
             var PAYMENT_ID = summer.pageParam.PAYMENT_ID;
+            var PAYLIST_CODE = summer.pageParam.PAYLIST_CODE;
             loanInfo.PAYMENT_ID = PAYMENT_ID;
+            loanInfo.PAYLIST_CODE = PAYLIST_CODE;
             ajaxRequest({
                 type: 'post',
                 url: 'appservice/payment/queryPaymentInfo',
@@ -345,10 +370,10 @@
                     loanInfo.paySlots[0].values = loanInfo.payArr.map((e) => {
                         return e.FLAG;
                     });
-                    loanInfo.pledge = Data.datas.paymentMap.CS_PRICE;
-                    loanInfo.gps = Data.datas.paymentMap.GPS_MONEY;
-                    loanInfo.collection = Data.datas.paymentMap.DEKOU_SQ;
+                    // loanInfo.pledge = Data.datas.paymentMap.CS_PRICE;
+                    // loanInfo.gps = Data.datas.paymentMap.GPS_MONEY;
                     // loanInfo.LAST_MONEY = Data.datas.paymentMap.LAST_MONEY;
+                    loanInfo.collection = Data.datas.paymentMap.DEKOU_SQ;
                     loanInfo.PAY_MONEY = Data.datas.paymentMap.PAY_MONEY;
                 } else {
                     summer.toast({
