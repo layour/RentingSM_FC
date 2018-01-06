@@ -54,7 +54,7 @@
 		}
 
 		div.item span {
-			color: #666;
+			color: #333;
 		}
 
 		div.item span i {
@@ -109,6 +109,12 @@
 		<div class="um-content">
 			<div class="topheader tc um-header-light" @click="cardIdentify">
 				<img v-bind:src="cardUrl" v-show="cardShow" alt="" />
+			</div>
+			<div   class="item">
+				<p class="pl10 pr10 tr">
+					<span class="fl">担保人类型</span>
+					<span class=""><span   class="first"> 个人</span>   </span>
+				</p>
 			</div>
 			<mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.NAME"> </mt-field>
 			<mt-field label="身份证" placeholder="请输入您的身份证号码" v-model="message.ID_CARD_NO"></mt-field>
@@ -358,7 +364,8 @@
 						if (strDate >= 0 && strDate <= 9) {
 							strDate = "0" + strDate;
 						}
-						return year + month + strDate;
+						return  year +'-'+ month +'-'+ strDate;
+
 					}
 
 				},

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/mint.css">
+	<script src="../../js/font.js"></script>
+	<style>
+		input::-webkit-input-placeholder {
+			color: #DEDEDE;
+			font-size: 0.28rem;
+		}
+
+		.topheader {
+			position: relative;
+			height: 180px;
+			background-image: url("img/cardBgc.png");
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+		}
+
+		.topheader img {
+			margin-top: 0.8rem;
+			width: 2.8rem;
+			height: 1.8rem;
+		}
+
+		.mint-field-core {
+			text-align: right;
+		}
+
+		.mint-cell-wrapper {
+			color: #333;
+			font-size: 0.28rem;
+		}
+
+		.mint-cell {
+			min-height: 40px;
+			height: 44px;
+			color: #333;
+			font-size: 0.28rem;
+		}
+		.mint-cell-wrapper {
+			background-size: 100% 0px;
+			border-bottom: 1px solid #f7f7f7;
+		}
+		div.item {
+			line-height: 44px;
+			background: #ffffff;
+			border-bottom: 1px solid #f7f7f7;
+			font-size: 0.28rem;
+
+		}
+
+		div.item span {
+			color: #333;
+		}
+
+		div.item span i {
+			color: #dbdbdb;
+		}
+
+
+		.item .first {
+
+			color: #333;
+		}
+
+		.item .second {
+			color: #9e9e9e;
+		}
+		.um-footer{
+			min-height:0px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="um-win" id="app" v-cloak>
+		<div class="um-content">
+			<!--<div class="topheader tc um-header-light" @click="cardIdentify">
+				<img v-bind:src="cardUrl" v-show="cardShow" alt="" />
+			</div>-->
+			<div   class="item">
+				<p class="pl10 pr10 tr">
+					<span class="fl">担保人类型</span>
+					<span class=""><span   class="first"> 企业</span>   </span>
+				</p>
+			</div>
+			<mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.NAME"> </mt-field>
+			<mt-field label="营业执照" placeholder="请输入您的营业执照" v-model="message.CORP_BUSINESS_LICENSE"> </mt-field>
+			<mt-field label="注册电话" placeholder="请输入您的注册电话" v-model="message.REGISTE_PHONE"> </mt-field>
+			<div @click="sureDateConfirm" class="item">
+				<p class="pl10 pr10 tr">
+					<span class="fl">注册日期</span>
+					<span class=""><span v-if='message.REGISTE_DATE' class="first">{{message.REGISTE_DATE}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+				</p>
+			</div>
+			<div class="item">
+				<p class="pl10 pr10 tr" @click="selectAddr">
+					<span class="fl">注册省市</span>
+					<span class=""> <span  class="first">{{message.REGISTE_ADDRESS_PROVINCE_NM}} {{message.REGISTE_ADDRESS_CITY_NM}}</span> <i class="icon iconfont icon-enter"></i></span>
+				</p>
+			</div>
+			<mt-field label="注册详细地址" placeholder="请输入您的注册详细地址" v-model="message.REGISTE_ADDRESS"></mt-field>
+			<mt-field label="法人姓名" placeholder="请输入法人姓名" v-model="message.LEGAL_PERSON"></mt-field>
+				<mt-field label="法人身份证号" placeholder="请输入法人身份证号" v-model="message.ID_CARD_CORPORATE_NO"></mt-field>
+			<mt-field label="法人手机号" placeholder="请输入法人手机号" v-model="message.LEGAL_PERSON_PHONE"></mt-field>
+		</div>
+		<div class="um-footer">
+			<mt-datetime-picker ref="picker" v-model="pickerValue" type="date" cancel-text='取消' confirm-text='确定' :start-date='new Date("1950-01-01")' :end-date="noweDate" @confirm="handleConfirm">
+			</mt-datetime-picker>
+		</div>
+	</div>
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/mint.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script>
+		var newCreateCustom = new Vue({
+			el: '#app',
+			data() {
+				return {
+					cardShow: false,
+					cardUrl: "",
+					pickerVisible: "",
+					pickerDate: "",
+					pickerValue: new Date(),
+					surePicekerDateVal: '',
+					pickerDateStatus: false,
+					noweDate: new Date(),
+					isSelect:false,
+					CLIENT_ID:'',
+					GID:'',
+					message: {
+						TYPE:'LP',
+						NAME: '',
+						CORP_BUSINESS_LICENSE:'',
+						REGISTE_PHONE:'',
+						ID_CARD_CORPORATE_NO: '',
+						LEGAL_PERSON:'',
+						REGISTE_ADDRESS: '',
+						REGISTE_DATE: '',
+						REGISTE_ADDRESS_PROVINCE: '',
+						REGISTE_ADDRESS_PROVINCE_NM:'',
+						REGISTE_ADDRESS_CITY: '',
+						REGISTE_ADDRESS_CITY_NM:'',
+						LEGAL_PERSON_PHONE:'',
+						PROJECT_ID:'',
+					/*	GID:"",
+						CLIENT_ID:"",*/
+					}
+
+				}
+			},
+			methods: {
+				getData(projectId) {
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/customer/guaranteeList',
+						param: {
+							"PROJECT_ID": projectId,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							console.log(res.data.datas);
+							let sponsor=res.data.datas.guaranteeList[0];
+							if (!isEmpty(sponsor)) {
+								self.isSelect=true;
+								self.message.NAME=sponsor.NAME;
+								self.message.CORP_BUSINESS_LICENSE=sponsor.CORP_BUSINESS_LICENSE;
+								self.message.REGISTE_PHONE=sponsor.REGISTE_PHONE;
+								self.message.ID_CARD_CORPORATE_NO=sponsor.ID_CARD_CORPORATE_NO;
+								self.message.LEGAL_PERSON=sponsor.LEGAL_PERSON;
+								self.message.REGISTE_ADDRESS=sponsor.REGISTE_ADDRESS;
+								self.message.REGISTE_DATE=sponsor.REGISTE_DATE;
+								self.message.REGISTE_ADDRESS_PROVINCE=sponsor.REGISTE_ADDRESS_PROVINCE;
+								self.message.REGISTE_ADDRESS_PROVINCE_NM=sponsor.REGISTE_ADDRESS_PROVINCE_NM;
+								self.message.REGISTE_ADDRESS_CITY=sponsor.REGISTE_ADDRESS_CITY;
+								self.message.REGISTE_ADDRESS_CITY_NM=sponsor.REGISTE_ADDRESS_CITY_NM;
+								self.message.LEGAL_PERSON_PHONE=sponsor.LEGAL_PERSON_PHONE;
+								self.message.PROJECT_ID=sponsor.PROJECT_ID;
+								self.GID=sponsor.GID;
+								self.CLIENT_ID=sponsor.CLIENT_ID;
+								self.message.TYPE=sponsor.TYPE;
+							}
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				},
+				selectAddr() {
+					summer.setStorage("selectFrom", "newSponsor_company");
+					summer.openWin({
+						id: 'selectProvince',
+						url: 'html/fastReport/selectProvince.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: '选择省',
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039BE5",
+							leftItem: {
+								image: "img/back.png",
+								method: '', //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						}
+					})
+				},
+				handleClick: function() {
+					this.$toast('Hello world!')
+				},
+				cardIdentify: function() {
+					var _self = this;
+					PersonScan.scan({}, function(args) {
+						console.log(args);
+						_self.message.NAME = args.name;
+						_self.message.ID_CARD_NO = args.id;
+						_self.message.SEX_NM = args.sex;
+						_self.message.BIRTHDAY = args.birth_date;
+						_self.message.HOUSE_ADDRESS = args.address;
+						CommonUtil.watermark({
+							srcImage: args.imagePath,
+							targetImage: args.imagePath,
+							name: args.name,
+							callback: function(arg) {
+								if (!arg.target) {
+									_self.cardUrl = arg.watermarkFile;
+								} else {
+									_self.cardUrl = arg.target;
+								}
+								_self.cardShow = true;
+							}
+						});
+					}, function(args) {
+						console.log(args);
+					});
+				},
+				successCallBack: function(args) {
+					console.log(args);
+				},
+				sureDateConfirm: function() {
+					this.pickerDateStatus = !this.pickerDateStatus;
+					this.$refs.picker.open();
+				},
+				handleConfirm: function(pickerValue) {
+					this.pickerValue = pickerValue;
+					this.message.REGISTE_DATE = getFormatDate(pickerValue)
+
+					function getFormatDate(date) {
+						var date = new Date(date),
+							seperator1 = "-";
+						var year = date.getFullYear(),
+							month = date.getMonth() + 1,
+							strDate = date.getDate();
+						if (month >= 1 && month <= 9) {
+							month = "0" + month;
+						}
+						if (strDate >= 0 && strDate <= 9) {
+							strDate = "0" + strDate;
+						}
+						return year +'-'+ month +'-'+ strDate;
+					}
+
+				},
+				messageTest: function() {
+					var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; //身份证校验
+					var phoneCard = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+					if (this.message.NAME == "") {
+						summer.toast({
+							msg: "姓名不能为空"
+						});
+						return false;
+					} else if (this.message.ID_CARD_CORPORATE_NO == "" || regCard.test(this.message.ID_CARD_CORPORATE_NO) === false) {
+						summer.toast({
+							msg: "请输入正确的身份证号"
+						});
+						return false;
+					} else if (this.message.REGISTE_DATE == "") {
+						summer.toast({
+							msg: "出生年月不能为空"
+						});
+						return false;
+					} else if (this.message.HOUSE_ADDRESS == "") {
+						summer.toast({
+							msg: "住址不能为空"
+						});
+						return false;
+					} else if (this.message.TEL_PHONE == "") {
+						summer.toast({
+							msg: "手机号不能为空"
+						});
+						return false;
+					} else if (!phoneCard.test(this.message.TEL_PHONE)) {
+						summer.toast({
+							msg: "手机号格式不正确"
+						});
+						return false;
+					} else if (this.message.IS_MARRY_NM == "") {
+						summer.toast({
+							msg: "请选择婚姻状况"
+						});
+						return false;
+					}
+					return true;
+				},
+				complete: function() {
+					let self=this;
+					/*if (!this.messageTest()) {
+						return;
+					};*/
+					let paramData;
+					if(self.isSelect){
+							self.message.GID=self.GID
+							self.message.CLIENT_ID=self.CLIENT_ID
+							paramData=self.message
+							paramData=JSON.parse(JSON.stringify(paramData));
+					}else{
+						// self.message.CLIENT_ID='';
+						paramData=self.message;
+						paramData=JSON.parse(JSON.stringify(paramData));
+					}
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/customer/saveGuarantee',
+						param: paramData
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+								summer.toast({msg:"保存成功"});
+								summer.execScript({
+									 winId: "setProject",
+									 script: "addRight('sponsor')"
+								});
+								summer.closeWin()
+							//self.baseMessageData=res.data.datas;
+							//console.log(self.baseMessageData);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+					//此处ajax请求
+				/*	summer.openWin({
+						id: 'setProject',
+						url: 'html/fastReport/setProject.html',
+						create: false,
+						type: 'actionBar',
+						isKeep: false,
+						pageParam: {
+							source: "customer"
+						},
+						actionBar: {
+							title: "快捷报单",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems: [{
+								type: "text",
+								text: "下一步",
+								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method: "nextStopInput()" //在打开的window中自定义事件
+							}]
+						}
+					});*/
+				},
+				openPicker: function() {
+					this.$refs.picker.open();
+				}
+			}
+		})
+
+		function complete() {
+			newCreateCustom.complete();
+		}
+		function getAddr() {
+
+
+
+
+			newCreateCustom.message.REGISTE_ADDRESS_PROVINCE_NM = JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
+			newCreateCustom.message.REGISTE_ADDRESS_CITY_NM = JSON.parse(summer.getStorage('selectCity')).AREA_NAME
+			newCreateCustom.message.REGISTE_ADDRESS_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_ID
+			newCreateCustom.message.REGISTE_ADDRESS_CITY=JSON.parse(summer.getStorage('selectCity')).AREA_ID
+			//newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_NAME
+		}
+		summerready = function() {
+			let projectId = summer.pageParam.projectId;
+			newCreateCustom.message.PROJECT_ID=projectId;
+			let clintId = summer.pageParam.clientId;
+			newCreateCustom.CLIENT_ID=clintId;
+
+			if (projectId) {
+				newCreateCustom.getData(projectId);
+			}
+			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE",
+				"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"
+			];
+			summer.getPermission(params, function(args) {
+				//alert(args); //成功返回OK
+			}, function(args) {
+				//alert(args); //失败返回illegal access
+			})
+		}
+	</script>
+</body>
+
+</html>

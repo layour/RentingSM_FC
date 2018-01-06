@@ -5,9 +5,6 @@
     padding: 0 0.56rem;
     background-color: #fff;
 }
-.loanList li:nth-of-type(6){
-    margin-bottom: 0.2rem;
-}
 .loanList li span{
     float: left;
     height: 0.9rem;
@@ -24,6 +21,7 @@
 }
 .loanList li div span{
    margin: 0 0 0 0.1rem;
+   color: #dbdbdb;
 }
 .loanList li div{
     float: right;

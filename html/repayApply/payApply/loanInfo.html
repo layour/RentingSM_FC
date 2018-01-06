@@ -37,31 +37,34 @@
 					</div>
                 </li>
                 <li>
-                    <span>抵押保证金金额</span>
-                    <input v-model="pledge" type="text" placeholder="请输入" />
+                    <span>放款模式</span>
+                    <div @click="surePattern">
+                        <span class="iconfont icon-enter"></span>
+                        <i>{{insurerPattern}}</i>
+                    </div>
                 </li>
                 <li>
-                    <span>应交入网保证金</span>
-                    <input v-model="web" type="text" placeholder="请输入" />
+                    <span>付款方式</span>
+                    <div @click="surePay">
+                        <span class="iconfont icon-enter"></span>
+                        <i>{{insurerPay}}</i>
+                    </div>
+                </li>
+                <li>
+                    <span>抵押保证金金额</span>
+                    <div>{{pledge}} 元</div>
                 </li>
                 <li>
                     <span>GPS费用</span>
-                    <input v-model="gps" type="text" placeholder="请输入" />
-                </li>
-                <li>
-                    <span>放款模式</span>
-                    <div @click="surePattern">
-						<span class="iconfont icon-enter"></span>
-						<i>{{insurerPattern}}</i>
-					</div>
+                    <div>{{gps}} 元</div>
                 </li>
                 <li>
                     <span>代收金额</span>
                     <div>{{collection}} 元</div>
                 </li>
                 <li>
-                    <span>本次放款金额</span>
-                    <div>{{thisTime}} 元</div>
+                    <span>实际付款金额</span>
+                    <div>{{LAST_MONEY}} 元</div>
                 </li>
             </ul>
             <section v-if="replaceStatus" class="insurer">
@@ -76,7 +79,11 @@
 				<mt-picker :slots="patternSlots" @change="onPatternChange"></mt-picker>
 				<p><span class="" @click="surePattern">取消</span><span class="" @click="surePattern('confirm')">确定</span></p>
 			</section>
-            <div class="calculate" @click="toCalculate">测算</div>
+            <section v-if="payStatus" class="insurer">
+				<mt-picker :slots="paySlots" @change="onPayChange"></mt-picker>
+				<p><span class="" @click="surePay">取消</span><span class="" @click="surePay('confirm')">确定</span></p>
+			</section>
+            <!-- <div class="calculate" @click="toCalculate">测算</div> -->
         </div>
     </div>
     <script type="text/javascript">
@@ -84,10 +91,11 @@
             el: '#index',
             data: {
                 pledge:"",
-                web:"",
                 gps:"",
                 collection:"",
-                thisTime:"",
+                PAY_MONEY:"",
+                LAST_MONEY:"",
+                PAYMENT_ID:"",
                 params:{
                     PAY_ID:"",
                     PROJECT_ID:""
@@ -96,9 +104,10 @@
                 replaceStatus:false,
                 pickedReplace:"",
                 insurerReplace:"请选择",
+                replaceArr:[],
                 replaceSlots: [{
                     flex: 1,
-                    values: ['是', '否'],
+                    values: ['全额', '差额'],
                     defaultIndex: 0,
                     className: 'slot1',
                     textAlign: 'center'
@@ -107,6 +116,7 @@
                 methodStatus:false,
                 pickedMethod:"",
                 insurerMethod:"请选择",
+                methodArr:[],
                 methodSlots: [{
                     flex: 1,
                     values: ['方式一', '方式二'],
@@ -118,9 +128,22 @@
                 patternStatus:false,
                 pickedPattern:"",
                 insurerPattern:"请选择",
+                patternArr:[],
                 patternSlots: [{
                     flex: 1,
                     values: ['模式一', '模式二'],
+                    defaultIndex: 0,
+                    className: 'slot1',
+                    textAlign: 'center'
+                }],
+                // 付款方式
+                payStatus:false,
+                pickedPay:"",
+                insurerPay:"请选择",
+                payArr:[],
+                paySlots: [{
+                    flex: 1,
+                    values: ['方式一', '方式二'],
                     defaultIndex: 0,
                     className: 'slot1',
                     textAlign: 'center'
@@ -135,8 +158,14 @@
 					this.replaceStatus = !this.replaceStatus;
                     this.methodStatus = false;
                     this.patternStatus = false;
+                    this.payStatus = false;
 					if (param == 'confirm') {
 						this.insurerReplace = this.pickedReplace;
+                        if (this.pickedReplace == "差额") {
+                            this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
+                        } else if (this.pickedReplace == "全额") {
+                            this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
+                        }
 					}
 				},
                 // 选择放款方式
@@ -147,6 +176,7 @@
 					this.methodStatus = !this.methodStatus;
                     this.replaceStatus = false;
                     this.patternStatus = false;
+                    this.payStatus = false;
 					if (param == 'confirm') {
 						this.insurerMethod = this.pickedMethod;
 					}
@@ -159,18 +189,88 @@
 					this.patternStatus = !this.patternStatus;
                     this.replaceStatus = false;
                     this.methodStatus = false;
+                    this.payStatus = false;
 					if (param == 'confirm') {
 						this.insurerPattern = this.pickedPattern;
 					}
 				},
+                // 选择付款方式
+                onPayChange(picker, values) {
+					this.pickedPay = values[0];
+				},
+				surePay(param) {
+					this.payStatus = !this.payStatus;
+                    this.replaceStatus = false;
+                    this.methodStatus = false;
+                    this.patternStatus = false;
+					if (param == 'confirm') {
+						this.insurerPay = this.pickedPay;
+					}
+				},
                 // 保存
                 save(){
+                    if (this.insurerMethod == "请选择") {
+                        summer.toast({
+                            msg: "请选择放款方式"
+                        });
+                        return;
+                    } else if (this.insurerReplace == "请选择") {
+                        summer.toast({
+                            msg: "请选择是否代收"
+                        });
+                        return;
+                    } else if (this.pledge == "") {
+                        summer.toast({
+                            msg: "请填写抵押保证金金额"
+                        });
+                        return;
+                    } else if (this.gps == "") {
+                        summer.toast({
+                            msg: "请填写GPS费用"
+                        });
+                        return;
+                    } else if (this.insurerPattern == "请选择") {
+                        summer.toast({
+                            msg: "请选择放款模式"
+                        });
+                        return;
+                    }
                     summer.showProgress();
+                    var ISDEKOU, PAYMENT_TYPE, LENDING_MODEL, PAYMONEY_TYPE;
+                    this.replaceArr.forEach((e) => {
+                        if (e.FLAG == this.insurerReplace) {
+                            ISDEKOU = e.CODE;
+                        }
+                    });
+                    this.methodArr.forEach((e) => {
+                        if (e.FLAG == this.insurerMethod) {
+                            PAYMENT_TYPE = e.CODE;
+                        }
+                    });
+                    this.patternArr.forEach((e) => {
+                        if (e.FLAG == this.insurerPattern) {
+                            LENDING_MODEL = e.CODE;
+                        }
+                    });
+                    this.payArr.forEach((e) => {
+                        if (e.FLAG == this.insurerPay) {
+                            PAYMONEY_TYPE = e.CODE;
+                        }
+                    });
 					ajaxRequest({
 						type: 'post',
-						url: 'appservice/business/startRevJbpm',
+						url: 'appservice/payment/startCarPayment',
 						param: {
-							PROJECT_ID: this.params.PROJECT_ID
+							ISDEKOU: ISDEKOU,
+                            PAYMENT_TYPE: PAYMENT_TYPE,
+                            CS_PRICE: this.pledge,
+                            LENDING_MODEL: LENDING_MODEL,
+                            GPS_MONEY: this.gps,
+                            PAY_ID: this.params.PAY_ID,
+                            PAYMONEY_TYPE: PAYMONEY_TYPE,
+                            DEKOU_SQ: this.collection,
+                            LAST_MONEY: this.LAST_MONEY,
+                            PAYMENT_ID: this.PAYMENT_ID
 						}
 					}, function(res) {
 						summer.hideProgress();
@@ -188,7 +288,14 @@
 								summer.closeToWin({
 									id: 'payList'
 								});
-							}
+							} else {
+                                summer.toast({
+                                    msg: Data.datas.data
+                                });
+                                summer.closeToWin({
+                                    id: 'payList'
+                                });
+                            }
 						} else {
 							summer.toast({
 								msg: Data.msg
@@ -201,15 +308,60 @@
 						});
 						console.log(err);
 					});
-                },
-                // 测算
-                toCalculate(){
-                    this.collection = "8888";
-                    this.thisTime = "9999";
                 }
             }
         });
         summerready = function() {
+            var PAYMENT_ID = summer.pageParam.PAYMENT_ID;
+            loanInfo.PAYMENT_ID = PAYMENT_ID;
+            ajaxRequest({
+                type: 'post',
+                url: 'appservice/payment/queryPaymentInfo',
+                param: {
+                    PAYMENT_ID: PAYMENT_ID
+                }
+            }, function(res) {
+                summer.hideProgress();
+                var Data;
+                if (Object.prototype.toString.call(res.data) === '[object String]') {
+                    Data = JSON.parse(res.data);
+                } else {
+                    Data = res.data;
+                }
+                if (Data.flag == 1) {
+                    loanInfo.methodArr = Data.datas.PAYMENT_TYPE;
+                    loanInfo.methodSlots[0].values = loanInfo.methodArr.map((e) => {
+                        return e.FLAG;
+                    });
+                    loanInfo.patternArr = Data.datas.LENDING_MODEL;
+                    loanInfo.patternSlots[0].values = loanInfo.patternArr.map((e) => {
+                        return e.FLAG;
+                    });
+                    loanInfo.replaceArr = Data.datas.ISDEKOU;
+                    loanInfo.replaceSlots[0].values = loanInfo.replaceArr.map((e) => {
+                        return e.FLAG;
+                    });
+                    loanInfo.payArr = Data.datas.PAYMONEY_TYPE;
+                    loanInfo.paySlots[0].values = loanInfo.payArr.map((e) => {
+                        return e.FLAG;
+                    });
+                    loanInfo.pledge = Data.datas.paymentMap.CS_PRICE;
+                    loanInfo.gps = Data.datas.paymentMap.GPS_MONEY;
+                    loanInfo.collection = Data.datas.paymentMap.DEKOU_SQ;
+                    // loanInfo.LAST_MONEY = Data.datas.paymentMap.LAST_MONEY;
+                    loanInfo.PAY_MONEY = Data.datas.paymentMap.PAY_MONEY;
+                } else {
+                    summer.toast({
+                        msg: "暂无数据"
+                    });
+                }
+            }, function(err) {
+                summer.hideProgress();
+                summer.toast({
+                    msg: "暂无数据"
+                });
+                console.log(err);
+            });
             var PAY_ID = summer.pageParam.PAY_ID;
 			var PROJECT_ID = summer.pageParam.PROJECT_ID;
             loanInfo.params.PAY_ID = PAY_ID;

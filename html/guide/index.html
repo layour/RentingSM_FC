@@ -50,12 +50,14 @@
                 create:false,
                 type:'actionBar',
                 actionBar: {
-                    title: "首页",
+                    title: "",
                     titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
                     backgroundColor: "#039be5",
+                    bottomLineColor: "#039be5",
                     leftItem:{
-                        image: "img/opacity0.png",
-                        method:"",//返回按钮自定义事件
+                        text:"复昌租赁",
+                        textColor:"#ffffff",
+                        method:"none()",//返回按钮自定义事件
                     },
                     rightItems: [{
                         image: "img/mine.png",
@@ -76,12 +78,14 @@
                     create:false,
                     type:'actionBar',
                     actionBar: {
-                        title: "首页",
+                        title: "",
                         titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
                         backgroundColor: "#039be5",
+                        bottomLineColor: "#039be5",
                         leftItem:{
-                            image: "img/opacity0.png",
-                            method:"",//返回按钮自定义事件
+                            text:"复昌租赁",
+                            textColor:"#ffffff",
+                            method:"none()",//返回按钮自定义事件
                         },
                         rightItems: [{
                             image: "img/mine.png",
@@ -89,16 +93,16 @@
                         }]
                     }
                 });
-				return;
-			}
-            // 关闭启动图
-			setTimeout(function() {
-                summer.hideLaunch();
-            }, 500);
-            var skip = $summer.dom(".skip");
-            var mySwiper = new Swiper('.swiper-container', {
-                pagination : '.pagination'
-            });
+			} else {
+                // 关闭启动图
+                setTimeout(function() {
+                    summer.hideLaunch();
+                }, 500);
+                var skip = $summer.dom(".skip");
+                var mySwiper = new Swiper('.swiper-container', {
+                    pagination : '.pagination'
+                });
+            }
         }
     </script>
 </body>

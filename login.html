@@ -18,9 +18,10 @@
 	<div class="um-win" id="index">
 		<div class="um-content">
 			<div id="bot">
-				<span class = "taste"></span>
-				<span class = "shu">|</span>
-				<span class = "changeLog">客户登录</span>
+				<div class="btnBox">
+					<span class = "taste">销售登陆</span>
+					<span class = "changeLog">客户登录</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -36,65 +37,23 @@
 				});
 				return;
 			}
-			// 判断是否已登陆
-			var isLogin;
-			if (summer.getStorage("userinfo")) {
-				if (summer.getStorage("userinfo").EMPLOYEE_ID) {
-					isLogin = true;
-				} else {
-					isLogin = false;
-				}
-			} else {
-				isLogin = false;
-			}
-			/*summer.openWin({
-				id:'login',
-				url:'index.html',
-				isKeep: false,
-				addBackListener:true,
-				create:false,
-				type:'actionBar',
-				actionBar: {
-					title: "",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					bottomLineColor: "#039be5",
-					leftItem:{
-						text:"复昌租赁",
-						textColor:"#ffffff",
-						method:"none()",//返回按钮自定义事件
-					},
-					rightItems: [{
-						image: "img/mine.png",
-						method:"showUserInfo()",//返回按钮自定义事件
-					}]
-				},
-				pageParam: {
-					isLogin:isLogin
-				}
-			});*/
 			// 关闭启动图
 			setTimeout(function() {
                 summer.hideLaunch();
             }, 500);
-			var bot = $('#bot').height();
+			var bot = $('#bot').height() + $('.um-header').height() + $('#bot').offset().top;
 			summer.openFrameGroup({
 				id: 'login',
 				background: '#ffffff',
 				scrollEnabled: false,
 				position: {
-					top: 0,
-					bottom: bot,
+					top: bot,
+					bottom: 0,
 					left: 0,
 					right: 0
 				},
 				index: 0,
 				frames: [{
-					id: 'fastLog',
-					url: 'html/login/fastLog.html',
-					bgColor: '#ffffff',
-					hidden: false
-				}, {
 					id: 'salerLogin',
 					url: 'html/login/salerLogin.html',
 					bgColor: '#ffffff',
@@ -111,28 +70,42 @@
 		}
 		$(function() {
 			$('body').height($('body')[0].clientHeight);
-			var onOff = true;
-			$('.taste').text('销售登陆');
-			$('.taste').on('click', function() {
-				if (onOff) {
-					onOff = false;
-					$('.taste').text('快速体验');
-					summer.setFrameGroupAttr({
-						id: 'login',
-						index: 1
-					});
-				} else {
-					onOff = true;
-					$('.taste').text('销售登陆');
-					summer.setFrameGroupAttr({
-						id: 'login',
-						index: 0
-					});
-				}
+			$('.taste').css({
+				'background':'#039be5',
+				'color':'#fff'
 			});
-			/*$('.changeLog').on('click',function (){
-				//暂无
-			});*/
+			$('.changeLog').css({
+				'background':'#fff',
+				'color':'#1287de'
+			});
+			$('.taste').on('click', function() {
+				$(this).css({
+					'background':'#039be5',
+					'color':'#fff'
+				});
+				$('.changeLog').css({
+					'background':'#fff',
+					'color':'#1287de'
+				});
+				summer.setFrameGroupAttr({
+					id: 'login',
+					index: 0
+				});
+			});
+			$('.changeLog').on('click', function() {
+				$(this).css({
+					'background':'#039be5',
+					'color':'#fff'
+				});
+				$('.taste').css({
+					'background':'#fff',
+					'color':'#1287de'
+				});
+				summer.setFrameGroupAttr({
+					id: 'login',
+					index: 1
+				});
+			});
 		});
 	</script>
 </body>

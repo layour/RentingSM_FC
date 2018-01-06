@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="missionList.css">
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/vue.js" ></script>
+</head>
+
+<body>
+    <div class="um-win" id="index">
+		<div class="um-content">
+            <ul class="missionList">
+				<li v-for="k in items">
+					<div class="title">
+						<span class="name">{{k.RENTER_NAME}}</span>
+						<span class="state">{{k.CLERK_NAME}}</span>
+					</div>
+					<div class="content" @click="missionDetail">
+						<div class="leftCon">
+							<p class="p1">融资金额：￥{{k.money}}</p>
+							<p class="p2">项目编号：{{k.LEASE_CODE}}</p>
+							<p class="p3">审批流程：{{k.PAYLIST_CODE}}</p>
+							<p class="p4">审批时间：{{k.START_DATE}}</p>
+						</div>
+						<div class="enter">
+							<i class="iconfont icon-enter"></i>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+    <script type="text/javascript">
+        var datas = [
+            {
+                RENTER_NAME:"任务人",
+                CLERK_NAME:"客户",
+                money:"123123",
+                LEASE_CODE:"1263751273126",
+                PAYLIST_CODE:"业务申请审批流程.5030031",
+                START_DATE:"2017-07-07"
+            },
+            {
+                RENTER_NAME:"任务人",
+                CLERK_NAME:"客户",
+                money:"123123",
+                LEASE_CODE:"1263751273126",
+                PAYLIST_CODE:"业务申请审批流程.5030031",
+                START_DATE:"2017-07-07"
+            },
+            {
+                RENTER_NAME:"任务人",
+                CLERK_NAME:"客户",
+                money:"123123",
+                LEASE_CODE:"1263751273126",
+                PAYLIST_CODE:"业务申请审批流程.5030031",
+                START_DATE:"2017-07-07"
+            },
+            {
+                RENTER_NAME:"任务人",
+                CLERK_NAME:"客户",
+                money:"123123",
+                LEASE_CODE:"1263751273126",
+                PAYLIST_CODE:"业务申请审批流程.5030031",
+                START_DATE:"2017-07-07"
+            },
+        ];
+        var missionList = new Vue({
+    		el: '#index',
+    		data: {
+    			items: datas,
+    		},
+            methods:{
+                missionDetail:function (){
+                    summer.openWin({
+    					id: 'missionDetail',
+    					url: 'html/mission/missionDetail.html',
+    					create: false,
+    					type: 'actionBar',
+    					actionBar: {
+    						title: "任务处理",
+    						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+    						backgroundColor: "#039be5",
+    						leftItem: {
+    							image: "img/back.png",
+    							method: "", //返回按钮自定义事件
+    							text: "返回",
+    							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+    						}
+    					}
+    				});
+                }
+            }
+        });
+    </script>
+</body>
+</html>

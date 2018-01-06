@@ -1,0 +1,88 @@
+.missionList {
+    margin-top: 0.1rem;
+    width: 100%;
+}
+
+.missionList li {
+    margin-bottom: 0.2rem;
+    background-color: #fff;
+}
+
+.missionList .title {
+    width: 100%;
+    height: 0.88rem;
+    border-bottom: 1px solid #f7f7f7;
+    padding: 0 0.56rem;
+}
+
+.missionList .title .name {
+    float: left;
+    height: 0.88rem;
+    color: #0394d3;
+    font-size: 0.32rem;
+    line-height: 0.88rem;
+}
+
+.missionList .title .state {
+    float: right;
+    height: 0.88rem;
+    color: #424242;
+    font-size: 0.24rem;
+    line-height: 0.88rem;
+    margin-left: 0.1rem;
+}
+
+.content {
+    padding: 0.2rem 0.56rem;
+    position: relative;
+    border-bottom: 1px solid #f7f7f7;
+}
+
+.content:after {
+    content: ".";
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    display: block;
+}
+
+.leftCon {
+    float: left;
+    height: 100%;
+}
+
+.enter {
+    float: right;
+    height: 2rem;
+    width: 0.5rem;
+}
+
+.enter i{
+    float: right;
+}
+
+.enter .icon-enter {
+    float: right;
+    width: 0.28rem;
+    height: 2rem;
+    color: #dbdbdb;
+    font-size: 0.28rem;
+    line-height: 2rem;
+    margin-left: 0.1rem;
+}
+
+.content p {
+    height: 0.5rem;
+    line-height: 0.5rem;
+    color: #8c8c8c;
+    font-size: 0.28rem;
+}
+
+.content span {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    right: 0.3rem;
+    top: 0.7rem;
+}
