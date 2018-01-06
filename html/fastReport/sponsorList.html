@@ -87,6 +87,7 @@
 
 		.um-footer {
 			min-height: 0px;
+			background-color: #efeff4;
 		}
 
 		.saveBtn {
@@ -99,25 +100,21 @@
 	<div class="um-win" id="mySponsor1" v-cloak>
 		<div class="um-content">
 			<div id="content"></div>
-			<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorList" v-if="item.TYPE=='LP'">
+			<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorListData" >
 				<p class="pl20 title pr20">{{item.NAME}}<span class="status fr"></p>
-			       <div class="center"  >
+			       <div class="center" v-if="item.TYPE=='LP'" >
 						 <p class="type pl10">  <span>担保人类型 :</span> <span>企业</span> </p>
 				<p class="type pl10"> <span>法人 :</span> <span>{{item.LEGAL_PERSON}}</span> </p>
 				<p class="time pl10 pr10"><span>营业执照号：<span>{{item.CORP_BUSINESS_LICENSE}}</span></span>
 				</p>
 			</div>
+			<div class="center" v-else>
+				<p class="type pl10"> <span>担保人类型 :</span> <span>个人</span> </p>
+				<p class="type pl10"> <span>手机号 :</span> <span>{{item.TEL_PHONE}}</span> </p>
+				<p class="time pl10 pr10"><span>身份证号：<span>{{item.ID_CARD_NO}}</span></span>
+				</p>
+			</div>
 		</div>
-		<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorList" v-else-if="item.TYPE=='NP'">
-			<p class="pl20 title pr20">{{item.NAME}}<span class="status fr"></p>
-					  <div class="center"  >
-						  <p class="type pl10">  <span>担保人类型 :</span> <span>个人</span> </p>
-			<p class="type pl10"> <span>手机号 :</span> <span>{{item.TEL_PHONE}}</span> </p>
-			<p class="time pl10 pr10"><span>身份证号：<span>{{item.ID_CARD_NO}}</span></span>
-			</p>
-		</div>
-	</div>
-	<div v-else></div>
 	</div>
 	<div class="um-footer" id="footer">
 		<mt-popup v-model="pickerSponsorTypeStatus" position='bottom' class="pickerColor">
@@ -127,7 +124,7 @@
 			</p>
 		</mt-popup>
 		<div class="saveBtn">
-			<button class="btn um-btn-primary" v-show="sponsorList.length>0" @click="saveMessage()">保存</button>
+			<button class="btn um-btn-primary" v-show="sponsorListData.length>0" @click="saveMessage()">保存</button>
 		</div>
 
 	</div>
@@ -148,11 +145,6 @@
 
 		}
 
-		function addSponsor1(args) {
-			console.log(args);
-			mySponsor.sponsorList.push(JSON.parse(args));
-		}
-
 		function getSponsorList() {
 			mySponsor.getSponsorList();
 		}
@@ -166,7 +158,7 @@
 				return {
 					pickerSponsorTypeStatus: false,
 					pickerSponsorType: "",
-					sponsorList: [],
+					sponsorListData: [],
 					slots1: [{
 						flex: 1,
 						values: ['企业', '个人'],
@@ -193,7 +185,7 @@
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							$("#content").css('display', 'none');
-							self.sponsorList = res.data.datas.guaranteeList;
+							self.sponsorListData = res.data.datas.guaranteeList;
 						}
 					}, function(err) {
 						alert(err);
