@@ -461,8 +461,8 @@
 						if (res.data.flag == 1) {
 								summer.toast({msg:"保存成功"});
 								summer.execScript({
-									 winId: "setProject",
-									 script: "addRight('sponsor')"
+									 winId: "sponsorList",
+									 script: "getSponsorList()"
 								});
 								summer.closeWin()
 							//self.baseMessageData=res.data.datas;
@@ -525,26 +525,23 @@
 			newCreateCustom.message.CLIENT_ID=clintId;
 			let item= summer.pageParam.item;
 			if(item){
-				self.message.NAME=item.NAME;
-				self.message.ID_CARD_NO=item.ID_CARD_NO;
-				self.message.SEX=item.SEX;
-				self.message.SEX_NM=item.SEX_NM;
-				self.message.HOUSE_ADDRESS=item.HOUSE_ADDRESS;
-				self.message.TEL_PHONE=item.TEL_PHONE;
-				self.message.IS_MARRY=item.IS_MARRY;
-				self.message.IS_MARRY_NM=item.IS_MARRY_NM;
-				self.message.BIRTHDAY=item.BIRTHDAY;
-				self.message.HOUSE_ADDRESS_CITY=item.HOUSE_ADDRESS_CITY;
-				self.message.HOUSE_ADDRESS_CITY_NM=item.HOUSE_ADDRESS_CITY_NM;
-				self.message.HOUSE_ADDRESS_PROVINCE=item.HOUSE_ADDRESS_PROVINCE;
-				self.message.HOUSE_ADDRESS_PROVINCE_NM=item.HOUSE_ADDRESS_PROVINCE_NM;
-				self.message.PROJECT_ID=item.PROJECT_ID;
-				self.message.GID=item.GID;
-				self.message.CLIENT_ID=item.CLIENT_ID;
-				self.message.TYPE=item.TYPE;
-			}
-			if (projectId) {
-				newCreateCustom.getData(projectId);
+				newCreateCustom.message.NAME=item.NAME;
+				newCreateCustom.message.ID_CARD_NO=item.ID_CARD_NO;
+				newCreateCustom.message.SEX=item.SEX;
+				newCreateCustom.message.SEX_NM=item.SEX_NM;
+				newCreateCustom.message.HOUSE_ADDRESS=item.HOUSE_ADDRESS;
+				newCreateCustom.message.TEL_PHONE=item.TEL_PHONE;
+				newCreateCustom.message.IS_MARRY=item.IS_MARRY;
+				newCreateCustom.message.IS_MARRY_NM=item.IS_MARRY_NM;
+				newCreateCustom.message.BIRTHDAY=item.BIRTHDAY;
+				newCreateCustom.message.HOUSE_ADDRESS_CITY=item.HOUSE_ADDRESS_CITY;
+				newCreateCustom.message.HOUSE_ADDRESS_CITY_NM=item.HOUSE_ADDRESS_CITY_NM;
+				newCreateCustom.message.HOUSE_ADDRESS_PROVINCE=item.HOUSE_ADDRESS_PROVINCE;
+				newCreateCustom.message.HOUSE_ADDRESS_PROVINCE_NM=item.HOUSE_ADDRESS_PROVINCE_NM;
+				newCreateCustom.message.PROJECT_ID=item.PROJECT_ID;
+				newCreateCustom.message.GID=item.GID;
+				newCreateCustom.message.CLIENT_ID=item.CLIENT_ID;
+				newCreateCustom.message.TYPE=item.TYPE;
 			}
 			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE",
 				"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"
