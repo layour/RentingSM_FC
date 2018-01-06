@@ -51,7 +51,7 @@
 							<dt class="iconfont icon-submit" style="color:#c79644"></dt>
 							<dd>代办任务</dd>
 						</dl>
-						<span class="missionNum">{{missionNum}}</span>
+						<span class="missionNum" v-show='missionNum>0' >{{missionNum}}</span>
 					</li>
 					<li onclick="openFastReport()">
 						<dl>
@@ -203,7 +203,7 @@
 					 }, function(res) {
 						 summer.hideProgress();
 						 if (res.data.flag == 1) {
-							 self.missionNum=res.data.datas.count;
+							 self.missionNum=parseInt(res.data.datas.count) ;
 							 console.log(res);
 						 }
 					 }, function(err) {

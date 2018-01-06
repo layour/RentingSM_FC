@@ -79,20 +79,60 @@
 		}
 
 		.customList .center {
-			padding: 0.3rem 0.2rem;
-			border-bottom: 1px solid #f7f7f7;
+			padding: 0rem 0.4rem;
 			font-size: 0.28rem;
 			color: #424242;
+			position: absolute;
+			left:0;
+			bottom:0.2rem;
+			width: 100%;
 		}
 
 		.um-footer {
 			min-height: 0px;
 			background-color: #efeff4;
 		}
-
+		.list{
+			position: relative;
+		}
 		.saveBtn {
 			padding: 0.2rem 0.56rem;
 		}
+		.mint-cell-swipe{
+			height: 2.4rem;
+			background: #fff;
+		}
+		.mint-cell-wrapper{
+			height: 2.4rem;
+			padding-left: 0;
+			background: none;
+		}
+		.mint-cell-right{
+			height: 2.4rem;
+			font-size: 14px;
+		}
+		.mint-cell-title{
+			margin-bottom: 1rem;
+		}
+		.mint-cell-title span{
+			display: block;
+			margin-bottom: 1rem;
+			color:#039BE5;
+			font-size: 0.32rem;
+		}
+		.mint-cell-title span:first-child{
+			margin-bottom: .1rem;
+			padding-left:0.4rem;
+		}
+		.center{
+			color: #333;
+			 font-size: 14px;
+			 line-height: .4rem;
+			 position: absolute;
+			 left:0;
+			 bottom: .3rem;
+			 width: 100%;
+		 }
 	</style>
 </head>
 
@@ -101,19 +141,20 @@
 		<div class="um-content">
 			<div id="content"></div>
 			<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorListData" >
-				<p class="pl20 title pr20">{{item.NAME}}<span class="status fr"></p>
-			       <div class="center" v-if="item.TYPE=='LP'" >
-						 <p class="type pl10">  <span>担保人类型 :</span> <span>企业</span> </p>
-				<p class="type pl10"> <span>法人 :</span> <span>{{item.LEGAL_PERSON}}</span> </p>
-				<p class="time pl10 pr10"><span>营业执照号：<span>{{item.CORP_BUSINESS_LICENSE}}</span></span>
-				</p>
-			</div>
-			<div class="center" v-else>
-				<p class="type pl10"> <span>担保人类型 :</span> <span>个人</span> </p>
-				<p class="type pl10"> <span>手机号 :</span> <span>{{item.TEL_PHONE}}</span> </p>
-				<p class="time pl10 pr10"><span>身份证号：<span>{{item.ID_CARD_NO}}</span></span>
-				</p>
-			</div>
+			<mt-cell-swipe :title="item.NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index)}]">
+				<div class="center" v-if="item.TYPE=='LP'" >
+				 	<p class="type ">  <span>担保人类型 :</span> <span>企业</span> </p>
+					<p class="type "> <span>法人 :</span> <span>{{item.LEGAL_PERSON}}</span> </p>
+					<p class="time  pr10"><span>营业执照号：<span>{{item.CORP_BUSINESS_LICENSE}}</span></span>
+					</p>
+				</div>
+				<div class="center" v-else>
+					<p class="type "> <span>担保人类型 :</span> <span>个人</span> </p>
+					<p class="type "> <span>手机号 :</span> <span>{{item.TEL_PHONE}}</span> </p>
+					<p class="time  pr10"><span>身份证号：<span>{{item.ID_CARD_NO}}</span></span>
+					</p>
+				</div>
+			</mt-cell-swipe>
 		</div>
 	</div>
 	<div class="um-footer" id="footer">
@@ -166,6 +207,13 @@
 						className: 'slot1',
 						textAlign: 'center'
 					}],
+					swipeArr:[
+					 {
+						content: '删除',
+						style: { background: 'red', color: '#fff' },
+						handler: () => this.$messagebox('delete')
+					 }
+				 ],
 					PROJECT_ID: '',
 					CLIENT_ID: ''
 
@@ -207,6 +255,11 @@
 				},
 				onValuesChange1: function(picker, values) {
 					this.pickerSponsorType = values[0];
+				},
+				deleteItem(i){
+					//此处需要调后端接口
+					this.sponsorListData.splice(i,1)
+					summer.toast({msg:'删除成功'})
 				},
 				openSponsorDetail(TYPE, item) {
 					let id;
