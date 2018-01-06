@@ -83,13 +83,14 @@
 	</head>
 	<body>
 		<div class="um-win" id="mySponsor" v-cloak>
-			<div class="um-content" id="content">
-				<div class="list customList um-bgc-white" v-for="(item,index) in sponsorList">
+			<div class="um-content" >
+				<div id="content"></div>
+				<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorList">
 			       <p class="pl20 title pr20">{{item.NAME}}<span class="status fr"></p>
 			       <div class="center"  >
 						 <p class="type pl10">  <span>担保人类型 :</span> <span>{{item.TYPE=="LP"?"企业":"个人"}}</span> </p>
-			       		<p class="type pl10">  <span>手机号 :</span> <span>{{item.TEL_PHONE}}</span> </p>
-			      		<p class="time pl10 pr10"><span>身份证：<span>{{item.ID_CARD_NO}}</span></span></p>
+			       		<p class="type pl10">  <span>法人 :</span> <span>{{item.LEGAL_PERSON}}</span> </p>
+			      		<p class="time pl10 pr10"><span>营业执照：<span>{{item.CORP_BUSINESS_LICENSE}}</span></span></p>
 			       </div>
 			    </div>
 			</div>
@@ -110,7 +111,7 @@
 				let clintId=summer.pageParam.clientId;
 				let isAdd=summer.pageParam.isAdd;
 				if(!isAdd){
-					mySponsor.getSponsorList(projectId);
+					mySponsor.getSponsorList();
 				}else{
 						createNull("content", "../../img/empty.png","请添加担保人")
 				}
@@ -120,6 +121,9 @@
 			function addSponsor1(args){
 				console.log(args);
 				mySponsor.sponsorList.push(JSON.parse(args));
+			}
+			function getSponsorList(){
+					mySponsor.getSponsorList();
 			}
 			function surePickerSponsorType(){
 				mySponsor.surePickerSponsorType();
@@ -138,6 +142,8 @@
 								className: 'slot1',
 								textAlign: 'center'
 							}],
+							PROJECT_ID:'',
+							CLIENT_ID:''
 
 						}
 					},
@@ -149,11 +155,12 @@
 								type: 'post',
 								url: 'appservice/customer/guaranteeList',
 								param: {
-									"PROJECT_ID":projectId
+									"PROJECT_ID":self.PROJECT_ID
 								}
 							}, function(res) {
 								summer.hideProgress();
 								if (res.data.flag == 1) {
+									$("#content").css('display','none');
 									self.sponsorList=res.data.datas.guaranteeList;
 								}
 							}, function(err) {
@@ -176,6 +183,41 @@
 						},
 						onValuesChange1: function(picker, values) {
 							this.pickerSponsorType = values[0];
+						},
+						openSponsorDetail(TYPE,item){
+							let id;
+							if (TYPE=="LP") {
+								id="newSponsor_company"
+							}else{
+								id="newSponsor"
+							}
+								summer.openWin({
+									id: id,
+									url: 'html/fastReport/'+id+'.html',
+									create: false,
+									type: 'actionBar',
+									actionBar: {
+										title: "担保人",
+										titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										backgroundColor: "#039BE5",
+										leftItem: {
+											image: "img/back.png",
+											method: "", //返回按钮自定义事件
+											text: "返回",
+											textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										},
+										rightItems: [{
+											type: "text",
+											text: "保存",
+											textColor: "#ffffff",
+											method: "complete()"
+										}]
+
+									},
+									pageParam: {
+										item: item,
+									}
+								});
 						},
 						opensubmitFinanl(){
 							summer.openWin({
@@ -213,7 +255,7 @@
 					create:false,
 					type:'actionBar',
 					actionBar: {
-						title: "添加担保人",
+						title: "担保人",
 						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						backgroundColor: "#039BE5",
 						leftItem:{

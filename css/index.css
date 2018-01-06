@@ -132,12 +132,12 @@ html{
    top:0.1rem;
    right:0.4rem;
    color:white;
-   width: 0.36rem;
+   width: 18px;
    display: inline-block;
-   font-size: 0.24rem;
+   font-size: 12px;
    text-align: center;
-   line-height:0.36rem;
-   border-radius: 50%;
+   line-height:18px;
+   border-radius: 18px;
    background-color: #fe0000;
 
 }

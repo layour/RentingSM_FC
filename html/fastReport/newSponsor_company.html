@@ -125,7 +125,7 @@
 				<!-- <mt-field label="法人身份证号" placeholder="请输入法人身份证号" v-model="message.ID_CARD_CORPORATE_NO"></mt-field> -->
 			<mt-field label="法人手机号" placeholder="请输入法人手机号" v-model="message.LEGAL_PERSON_PHONE"></mt-field>
 			<div class="text">
-				 <textarea class = "text" placeholder="担保能力说明" v-model="message.GUARANTEE_CAPACITY"></textarea>
+				 <textarea class = "text" placeholder="担保能力说明" maxlength="300" v-model="message.GUARANTEE_CAPACITY"></textarea>
 			</div>
 		</div>
 		<div class="um-footer">
@@ -360,8 +360,8 @@
 						if (res.data.flag == 1) {
 								summer.toast({msg:"保存成功"});
 								summer.execScript({
-									 winId: "setProject",
-									 script: "addRight('sponsor')"
+									 winId: "sponsorList",
+									 script: "getSponsorList()"
 								});
 								summer.closeWin()
 							//self.baseMessageData=res.data.datas;
@@ -411,10 +411,6 @@
 			newCreateCustom.complete();
 		}
 		function getAddr() {
-
-
-
-
 			newCreateCustom.message.REGISTE_ADDRESS_PROVINCE_NM = JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
 			newCreateCustom.message.REGISTE_ADDRESS_CITY_NM = JSON.parse(summer.getStorage('selectCity')).AREA_NAME
 			newCreateCustom.message.REGISTE_ADDRESS_PROVINCE=JSON.parse(summer.getStorage('selectProvince')).AREA_ID
@@ -426,7 +422,18 @@
 			newCreateCustom.message.PROJECT_ID=projectId;
 			let clintId = summer.pageParam.clientId;
 			newCreateCustom.CLIENT_ID=clintId;
-
+			let item= summer.pageParam.item;
+			if(item){
+				self.message.NAME=item.NAME;
+				self.message.CORP_BUSINESS_LICENSE=item.CORP_BUSINESS_LICENSE;
+				self.message.LEGAL_PERSON=item.LEGAL_PERSON;
+				self.message.LEGAL_PERSON_PHONE=item.LEGAL_PERSON_PHONE;
+				self.message.PROJECT_ID=item.PROJECT_ID;
+				self.message.GUARANTEE_CAPACITY=item.GUARANTEE_CAPACITY;
+				self.GID=item.GID;
+				self.CLIENT_ID=item.CLIENT_ID;
+				self.message.TYPE=item.TYPE;
+			}
 			if (projectId) {
 				newCreateCustom.getData(projectId);
 			}
