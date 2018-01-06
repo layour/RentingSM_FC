@@ -112,7 +112,7 @@
 						<mt-cell-swipe :title="item.PRODUCT_NAME+' | '+item.CATENA_NAME+' | '+item.SPEC_NAME" :label="item.COMPANY_NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index,ID)}]">
 								 <div class="price">
 									<p>数量：{{item.AMOUNT}}台</p>
-								 	<p>成交价：&yen;{{item.ACTUAL_PRICE}}</p>
+								 	<p>单台成交价：&yen;{{item.ACTUAL_PRICE}}</p>
 								 </div>
 								<div class="fr">
 									<i class="icon iconfont icon-enter"></i>
