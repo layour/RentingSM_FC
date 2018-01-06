@@ -62,12 +62,14 @@
 }
 .customList p.select span{
 	border-right:1px solid #f6f6f6;
+	color:#039be5;
 }
 .customList p.select span:active{
 	 background:#f6f6f6;
 }
 .customList p.select span:last-child{
 	border-right:0px solid #f6f6f6;
+	color:#f44336;
 }
 .customList p.time .manager{
 	font-size:0.36rem;
