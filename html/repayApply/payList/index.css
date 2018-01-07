@@ -201,10 +201,10 @@
     height: 0.88rem;
 }
 .footerList li div i{
-    font-size: 0.24rem;
+    font-size: 0.30rem;
     line-height: 0.88rem;
     height: 0.88rem;
-    color: #424242;
+    color: #039be5;
     font-style: normal;
     margin-right: 0.08rem;
     float: left;
@@ -213,8 +213,8 @@
     float: left;
     font-size: 0.24rem;
     height: 0.88rem;
-    line-height: 0.88rem;
-    color: #424242;
+    line-height: 0.95rem;
+    color: #039be5;
 }
 .footerList li:nth-of-type(2) {
     box-sizing: border-box;
