@@ -65,10 +65,21 @@
 }
 
 .infoList li span:nth-of-type(2) {
+    color: #333;
     float: right;
-    color: #424242;
+    min-height: 0.9rem;
+    display: flex;
+    align-items: center;
+    width: 4rem;
 }
-
+.infoList li span:nth-of-type(2)>div{
+    font-size: 0.28rem;
+    color: #333;
+    display: block;
+    line-height: 0.4rem;
+    text-align: right;
+    width: 100%;
+}
 .infoList li span {
     height: 0.9rem;
     line-height: 0.9rem;
