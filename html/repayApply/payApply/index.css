@@ -10,7 +10,6 @@ html{
 }
 .applyList li{
    width: 100%;
-   height: 0.9rem;
    border-bottom: 1px solid #f1f1f1;
    padding: 0 0.56rem;
    background-color: #fff;
@@ -45,24 +44,43 @@ html{
    font-size: 0.36rem;
    color: #000;
 }
+
 .applyList li div{
    float: right;
-   height: 0.9rem;
-   line-height: 0.9rem;
-   font-size: 0.28rem;
-   color: #424242;
+   min-height: 0.9rem;
+   display: flex;
+   align-items: center;
+   width: 4rem;
 }
-.applyList li .first{
-   height: 0.9rem;
-   line-height: 0.9rem;
-   font-size: 0.28rem;
+.applyList li .divs{
+    height: 0.9rem;
+    float: right;
+    width: 4rem;
+    display: block;
+}
+.applyList li .divs>span,.applyList li .divs>i{
+    float: right;
+    text-align: left;
+    line-height: 0.9rem;
+    height: 0.9rem;
+    width: auto;
+}
+.applyList li div>i{
+    font-size: 0.28rem;
+    color: #424242;
+    display: block;
+    line-height: 0.4rem;
+    text-align: right;
+    width: 100%;
+}
+.applyList li .first>i{
    color: #000;
 }
 .applyList li div i,.applyList li div span{
    float: right;
    font-style: normal;
 }
-.applyList li div i{
+.applyList li div .color{
    color: #039be5;
 }
 .applyList li div span{
@@ -88,4 +106,12 @@ html{
 }
 strong{
    font-weight: normal;
+}
+.clearfix:after{
+    content: ".";
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    display: block;
 }

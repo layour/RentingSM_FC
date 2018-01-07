@@ -23,35 +23,35 @@
 				<li class="first"><strong></strong><i>基本信息</i></li>
 				<li>
 					<span>客户信息</span>
-					<span>{{datas ? datas.TABLE_HEAD.RENTER_NAME : ""}}</span>
+					<span>{{datas ? datas.paymentMap.NAME : ""}}</span>
 				</li>
 				<li>
 					<span>合同号</span>
-					<span>{{datas ? datas.TABLE_HEAD.LEASE_CODE : ""}}</span>
+					<span>{{datas ? datas.paymentMap.LEASE_CODE : ""}}</span>
 				</li>
 				<li>
 					<span>支付表号</span>
-					<span>{{datas ? datas.TABLE_HEAD.PAYLIST_CODE : ""}}</span>
+					<span>{{datas ? datas.paymentMap.PAYLIST_CODE : ""}}</span>
 				</li>
-				<li>
+				<!-- <li>
 					<span>项目类型</span>
 					<span></span>
-				</li>
-				<li>
+				</li> -->
+				<!-- <li>
 					<span>所属机构</span>
 					<span></span>
-				</li>
+				</li> -->
 				<li>
 					<span>首付款代收</span>
-					<span></span>
+					<span>{{datas ? datas.paymentMap.ISDEKOU : ""}}</span>
 				</li>
 				<li>
 					<span>首付款金额</span>
-					<span>￥<b>{{datas ? datas.PAY_OTHERDETAIL[0].ITEM_MONEY : ""}}</b></span>
+					<span>￥<b>{{datas ? datas.paymentMap.FIRSTPAYALL : ""}}</b></span>
 				</li>
 				<li>
 					<span>设备款</span>
-					<span>￥<b>{{datas ? datas.LEASEOBJ[0].TOTAL : ""}}</b></span>
+					<span>￥<b>{{datas ? datas.paymentMap.LEASE_TOPRIC : ""}}</b></span>
 				</li>
 				<li>
 					<span>上牌信息</span>
@@ -60,29 +60,29 @@
 			</ul>
 			<ul class="infoList">
 				<li class="first"><strong></strong><i>付款通知（收款方）</i></li>
-				<li>
+				<!-- <li>
 					<span>收款方类型</span>
 					<span></span>
-				</li>
+				</li> -->
 				<li>
 					<span>收款单位</span>
-					<span></span>
+					<span>{{datas ? datas.paymentMap.PAYEE_NAME : ""}}</span>
 				</li>
-				<li>
+				<!-- <li>
 					<span>账户类型</span>
 					<span></span>
-				</li>
+				</li> -->
 				<li>
 					<span>开户行</span>
-					<span>{{datas ? datas.PAYBANKINFO.BANK_NAME : ""}}</span>
+					<span>{{datas ? datas.paymentMap.PAY_BANK_NAME : ""}}</span>
 				</li>
 				<li>
 					<span>开户行行号</span>
-					<span>{{datas ? datas.PAYBANKINFO.ACCOUNT_NO : ""}}</span>
+					<span>{{datas ? datas.paymentMap.COBANK_ACCOUNT : ""}}</span>
 				</li>
 				<li>
 					<span>收款账号</span>
-					<span></span>
+					<span>{{datas ? datas.paymentMap.PAY_BANK_ACCOUNT : ""}}</span>
 				</li>
 				<li>
 					<span>备注</span>
@@ -93,19 +93,19 @@
 				<li class="first"><strong></strong><i>付款通知（付款信息）</i></li>
 				<li>
 					<span>应付金额</span>
-					<span>￥<b>{{datas ? datas.PAY_DETAILS[0].MONTHPRICE : ""}}</b></span>
+					<span>￥<b>{{datas ? datas.paymentMap.PAY_MONEY : ""}}</b></span>
 				</li>
 				<li>
 					<span>实付金额</span>
-					<span>￥<b>{{datas ? datas.PAY_DETAILS[0].OWNPRICE : ""}}</b></span>
+					<span>￥<b>{{datas ? datas.paymentMap.LAST_MONEY : ""}}</b></span>
 				</li>
 				<li>
 					<span>付款方式</span>
-					<span></span>
+					<span>{{datas ? datas.paymentMap.PAYMONEY_TYPE : ""}}</span>
 				</li>
 				<li>
 					<span>实付时间</span>
-					<span>{{datas ? datas.TABLE_HEAD.START_DATE : ""}}</span>
+					<span></span>
 				</li>
 			</ul>
 		</div>
@@ -122,9 +122,9 @@
 			summer.showProgress();
 			ajaxRequest({
 				type: 'post',
-				url: 'appservice/paytable/payinfo',
+				url: 'appservice/payment/queryPaymentInfo',
 				param: {
-					"id": info.userId
+					PAYMENT_ID: info.PAYMENT_ID
 				}
 			}, function(res) {
 				summer.hideProgress();
@@ -135,10 +135,20 @@
 					Data = res.data;
 				}
 				if (Data.flag == 1) {
+					if (Data.datas.paymentMap.PAYMONEY_TYPE == 0) {
+						Data.datas.paymentMap.PAYMONEY_TYPE = "现汇";
+					} else {
+						Data.datas.paymentMap.PAYMONEY_TYPE = "承兑";
+					}
+					if (Data.datas.paymentMap.ISDEKOU == 0) {
+						Data.datas.paymentMap.ISDEKOU = "差额";
+					} else {
+						Data.datas.paymentMap.ISDEKOU = "全额";
+					}
 					payInfo.datas = Data.datas;
 				} else {
 					summer.toast({
-						msg: Data.msg
+						msg: "暂无数据"
 					});
 				}
 			}, function(err) {

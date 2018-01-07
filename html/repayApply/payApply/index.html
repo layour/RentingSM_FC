@@ -20,42 +20,66 @@
 	<div class="um-win" id="index">
 		<div class="um-content" v-bind:style="[datas ? {'display':'block'} : {'display':'none'}]">
 			<ul class="applyList">
-				<li>
+				<li class="clearfix">
 					<span class="title">
 							<i></i>
-							<b>{{datas ? datas.TABLE_HEAD.RENTER_NAME : ""}}</b>
+							<b>{{datas ? datas.paymentMap.NAME : ""}}</b>
 						</span>
-					<div class="first">{{datas ? datas.PAYBANKINFO.ACCOUNT_NO : ""}}</div>
+					<div class="first">
+						<i>
+							{{datas ? datas.paymentMap.CODE : ""}}
+						</i>
+					</div>
 				</li>
-				<li>
+				<li class="clearfix">
 					<span>融资租赁合同号</span>
-					<div>{{datas ? datas.TABLE_HEAD.LEASE_CODE : ""}}</div>
+					<div>
+						<i>
+							{{datas ? datas.paymentMap.LEASE_CODE : ""}}
+						</i>
+					</div>
 				</li>
-				<li>
+				<li class="clearfix">
 					<span>支付表号</span>
-					<div>{{datas ? datas.TABLE_HEAD.PAYLIST_CODE : ""}}</div>
+					<div>
+						<i>
+							{{datas ? datas.paymentMap.PAYLIST_CODE : ""}}
+						</i>
+					</div>
 				</li>
-				<li>
+				<li class="clearfix">
 					<span>车型</span>
-					<div>{{datas ? datas.LEASEOBJ[0].THING_NAME : ""}}</div>
+					<div>
+						<i>
+							{{datas ? datas.paymentMap.CPMC : ""}}
+						</i>
+					</div>
 				</li>
-				<li>
+				<li class="clearfix">
 					<span>价格</span>
-					<div>￥<strong>{{datas ? datas.LEASEOBJ[0].TOTAL : ""}}</strong>元</div>
+					<div>
+						<i>
+							￥<strong>{{datas ? datas.paymentMap.LEASE_TOPRIC : ""}}</strong>元
+						</i>
+					</div>
 				</li>
-				<li>
+				<!--<li>
 					<span>留购价</span>
 					<div>￥<strong>{{datas ? datas.LEASEOBJ[0].STAYBUY_PRICE : ""}}</strong>元</div>
-				</li>
-				<li>
+				</li>-->
+				<li class="clearfix">
 					<span>经销商</span>
-					<div></div>
+					<div>
+						<i>
+							{{datas ? datas.paymentMap.SUP_NAME : ""}}
+						</i>
+					</div>
 				</li>
-				<li class="change">
+				<li class="change clearfix">
 					<span>保险</span>
-					<div onclick="addWarranty()">
+					<div class="divs" onclick="addWarranty()">
 						<span class="iconfont icon-enter"></span>
-						<i>添加保单</i>
+						<i class="color">添加保单</i>
 					</div>
 				</li>
 				<!-- <li class="change">
@@ -65,11 +89,11 @@
 						<i>添加合格证</i>
 					</div>
 				</li> -->
-				<li class="change">
+				<li class="change clearfix">
 					<span>付款审核资料</span>
-					<div onclick="toUpload()">
+					<div class="divs" onclick="toUpload()">
 						<span class="iconfont icon-enter"></span>
-						<i>开始上传</i>
+						<i class="color">开始上传</i>
 					</div>
 				</li>
 			</ul>
@@ -148,9 +172,9 @@
 		summer.showProgress();
 		ajaxRequest({
 			type: 'post',
-			url: 'appservice/paytable/payinfo',
+			url: 'appservice/payment/queryPaymentInfo',
 			param: {
-				"id": userId
+				PAYMENT_ID: PAYMENT_ID
 			}
 		}, function(res) {
 			summer.hideProgress();
@@ -162,10 +186,9 @@
 			}
 			if (Data.flag == 1) {
 				payApply.datas = Data.datas;
-				payApply.params.PAYLIST_CODE = Data.datas.TABLE_HEAD.LEASE_CODE;
 			} else {
 				summer.toast({
-					msg: Data.msg
+					msg: "暂无数据"
 				});
 			}
 		}, function(err) {

@@ -339,6 +339,7 @@
             var PAYLIST_CODE = summer.pageParam.PAYLIST_CODE;
             loanInfo.PAYMENT_ID = PAYMENT_ID;
             loanInfo.PAYLIST_CODE = PAYLIST_CODE;
+            summer.showProgress();
             ajaxRequest({
                 type: 'post',
                 url: 'appservice/payment/queryPaymentInfo',
