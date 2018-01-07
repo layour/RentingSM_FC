@@ -34,7 +34,7 @@
 						<span class="state">{{k.CLERK_NAME}}</span>
 						<span class="iconfont icon-customer"></span>
 					</div>
-					<div class="content" @click="payDetail(k.ID,k.PROJECT_ID,k.JBPM_ID)">
+					<div class="content" @click="payDetail(k.ID,k.PROJECT_ID,k.JBPM_ID,k.PAYMENT_ID)">
 						<div class="leftCon">
 							<p class="p1">放款金额：￥{{k.TOPRIC_SUBFIRENT}}</p>
 							<p class="p2">合同号：{{k.LEASE_CODE}}</p>
@@ -78,7 +78,7 @@
             searchValue:""
 		},
 		methods: {
-			payDetail(userId,PROJECT_ID,JBPM_ID) {
+			payDetail(userId,PROJECT_ID,JBPM_ID,PAYMENT_ID) {
 				summer.openWin({
 					id: 'checkPay',
 					url: 'html/repayApply/checkPay/index.html',
@@ -99,7 +99,8 @@
 						info:{
 							userId: userId,
 							PROJECT_ID: PROJECT_ID,
-							JBPM_ID: JBPM_ID
+							JBPM_ID: JBPM_ID,
+							PAYMENT_ID: PAYMENT_ID
 						}
 					}
 				});
