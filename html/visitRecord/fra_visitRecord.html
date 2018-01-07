@@ -18,22 +18,25 @@
 	.customList p.title{
 	font-size:0.32rem;
 	color:#039be5;
-	line-height:0.88rem;
+	line-height:1rem;
 	border-bottom:1px solid #f7f7f7;
+	padding:0 0.52rem;
 }
 .customList p.title span{
 	color:#424242;
-	
+
 }
- 
+.customList p.title span.status{
+   font-size:0.24rem;
+}
 .customList p.select{
 	line-height:0.88rem;
 	color:#424242;
 	font-size:0.24rem;
 	border-bottom:1px solid #f6f6f6;
-	
-	
-	 
+
+
+
 }
 .customList p.select span{
 	border-right:1px solid #f6f6f6;
@@ -48,15 +51,16 @@
 	font-size:0.36rem;
 }
 .customList .center{
-	padding:0.3rem 0.2rem;
+	line-height: 1rem;
 	border-bottom:1px solid #f7f7f7;
 	font-size:0.28rem;
+	padding:0 0.52rem;
 	color:#424242;
 }
 .customList .center p.status span{
 	padding-right:0.7rem;
 }
-/*.customList .center:after{
+  .time:after{
 	content: "";
 	display: inline-block;
 	width: 0.24rem;
@@ -65,14 +69,14 @@
 	border-bottom: 1px solid #dbdbdb;
 	transform: rotate(-45deg);
 	transform: rotate(-45deg);
-	-ms-transform: rotate(-45deg);	 
-	-moz-transform: rotate(-45deg);	 
-	-webkit-transform: rotate(-45deg);  
+	-ms-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
 	-o-transform: rotate(-45deg);
 	position: absolute;
 	right: 0.6rem;
 	top:1.4rem;
-}*/
+}
 .customList .center:active{
 	background:#f4f4f4;
 }
@@ -82,14 +86,16 @@
 		<div class="um-frame" id="fra_visitRecord" v-cloak>
 			<div class="um-content">
 				<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
-					<p class="pl10 title pr10">
-						{{item.name}} 
+					<p class="  title  ">
+						{{item.name}}
+						<span class="status fr">
+						<i class="iconfont icon-customer mr5"></i>{{item.leader}}</span>
+					</p>
 					<div class="center"   @click="openDetail(item.ID)">
-						<p class="time pl10 pr10">
-							<span>创建时间：<span>{{item.planTime}}</span></span><span class="status fr">{{item.status}}</span>
-						</p>
-						<p class="time pl10 pr10">
-							<span>负责人：<span>{{item.leader}}</span></span>
+						<p class="time tr">
+							 <i class="iconfont icon-qiandao mr5 fl"></i>
+							 <span class="fl">计划日期：{{item.planTime}}</span>
+							 <span class="status">{{item.status}}</span>
 						</p>
 					</div>
 				</div>
@@ -176,7 +182,7 @@
 				},
 				mounted(){
 				},
-			methods:{	
+			methods:{
 					getData(end){
 						ajaxRequest({
 					        type: 'post',
