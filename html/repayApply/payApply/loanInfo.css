@@ -1,42 +1,36 @@
-.loanList li {
+.loanList li{
     width: 100%;
     height: 0.9rem;
     border-bottom: 1px solid #f1f1f1;
     padding: 0 0.56rem;
     background-color: #fff;
 }
-
-.loanList li span {
+.loanList li span{
     float: left;
     height: 0.9rem;
     line-height: 0.9rem;
     font-size: 0.28rem;
     color: #333;
 }
-
-.loanList li div i, .loanList li div span {
-    float: right;
-    font-style: normal;
+.loanList li div i,.loanList li div span{
+   float: right;
+   font-style: normal;
 }
-
-.loanList li div i {
-    color: #9e9e9e;
+.loanList li div i{
+   color: #9e9e9e;
 }
-
-.loanList li div span {
-    margin: 0 0 0 0.1rem;
-    color: #dbdbdb;
+.loanList li div span{
+   margin: 0 0 0 0.1rem;
+   color: #dbdbdb;
 }
-
-.loanList li div {
+.loanList li div{
     float: right;
     height: 0.9rem;
     line-height: 0.9rem;
     font-size: 0.28rem;
     color: #424242;
 }
-
-.loanList li input {
+.loanList li input{
     border: 0;
     background: none;
     float: right;
@@ -48,8 +42,7 @@
     margin-top: 0.3rem;
     margin-right: 0.05rem;
 }
-
-.calculate {
+.calculate{
     position: absolute;
     width: 6.34rem;
     height: 0.9rem;
@@ -63,58 +56,38 @@
     top: 8rem;
     border-radius: 0.1rem;
 }
-
 .insurer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
-    background: #ffffff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background: #ffffff;
 }
-
 .insurer .picker-item {
-    font-size: 0.28rem;
+  font-size: 0.28rem;
 }
-
-.insurer>p {
+.insurer > p {
     padding: .24rem .44rem;
     line-height: .88rem;
     padding: 0 .56rem;
     color: #039BE5;
     border-top: 1px solid #E0E0E0;
 }
-
-.insurer>p span {
-    color: #34aadc;
+.insurer > p span {
+  color: #34aadc;
 }
-
-.insurer>p span:last-child {
-    float: right;
-    min-height: 0.9rem;
-    display: flex;
-    align-items: center;
-    width: 4rem;
+.insurer > p span:last-child {
+  float: right;
 }
-
-.insurer>p span:last-child>div {
-    font-size: 0.28rem;
-    color: #333;
-    display: block;
-    line-height: 0.4rem;
-    text-align: right;
-    width: 100%;
-}
-
-.picker-slot-wrapper {
+.picker-slot-wrapper{
     height: auto;
 }
-
-strong {
-    float: right;
-    height: 0.9rem;
-    line-height: 0.9rem;
-    font-weight: normal;
-    font-size: 0.28rem;
-    color: #333;
+strong{
+   float: right;
+   height: 0.9rem;
+   line-height: 0.9rem;
+   font-weight: normal;
+   font-size: 0.28rem;
+   color: #333;
 }
