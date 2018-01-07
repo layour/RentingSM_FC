@@ -84,13 +84,13 @@
 				<ul>
 					<template v-if="!isVideo">
 						<li v-for="(item,index) in oldImgList" :key="index">
-							<div @click="openPopup" ><img v-if="item.PDF_PATH" :src="item.PDF_PATH" alt="">
+							<div @click="lookBig(item.PDF_PATH)" ><img v-if="item.PDF_PATH" :src="item.PDF_PATH" alt="">
 							<i v-else class="icon iconfont icon-add"></i></div>
 							<img class="close" @click="deleteOld(item.ID,index)" src="../../img/close.png" alt="">
 							<p>{{param.TPM_TYPE}}</p>
 						</li>
 						<li v-for="(item,index) in imgList" :key="index">
-							<div @click="openPopup"><img v-if="item" :src="item" alt="">
+							<div @click="lookBig(item)"><img v-if="item" :src="item" alt="">
 							<i v-else class="icon iconfont icon-add"></i></div>
 							<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
 							<p>{{param.TPM_TYPE}}</p>
@@ -155,6 +155,22 @@
             }
           },
 					methods:{
+						lookBig(it){
+							var _this=this;
+              summer.openWin({
+        				id: 'lookBigImg',
+        				url: "html/fastReport/lookBigImg.html",
+        				create: false,
+								animation:{
+									type:"fade",
+									subType:"",
+									duration:300
+								},
+        				pageParam: {
+        					url:it
+        				}
+        			})
+						},
 						getData(){
 							var _this=this;
 							ajaxRequest({

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <meta name="viewport" content="width=device-width,user-scalable=yes,initial-scale=1, maximum-scale=3, minimal-ui">
+    <style>
+      .alignCenter{
+          position:absolute;;
+          top:50%;
+          left:50%;
+          -ms-transform:translate(-50%,-50%);
+          -webkit-transform:translate(-50%,-50%);
+          -o-transform:translate(-50%,-50%);
+          -moz-transform:translate(-50%,-50%);
+          transform:translate(-50%,-50%);
+          text-align:center;
+      }
+      body{
+        background: #000;
+      }
+      .alignCenter{
+        width: 100%;
+        background: #000;
+      }
+      .alignCenter img{
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body  onclick="closeImg()">
+  <div class="alignCenter">
+    <img class="bigImg" src="" alt="">
+  </div>
+  <script src="../../js/summer.js" ></script>
+  <script src="../../js/jquery.min.js" ></script>
+  <script src="../../js/font.js" ></script>
+  <script type="text/javascript">
+      $(function(){
+        summerready=function(){
+          var url=summer.pageParam.url;
+          $('.bigImg').attr('src',url)
+        }
+      })
+      function closeImg(){
+        summer.closeWin()
+      }
+  </script>
+  </body>
+</html>
