@@ -23,7 +23,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="um-content" id="content">
+		<div class="um-content"  >
+			<div  id="content"></div>
 			<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
 				<p class="pl10 title pr10">
 					{{item.CR_BECR_NAME}}<span class="status fr">
@@ -138,8 +139,10 @@
 							self.totalPage = Data.datas.last;
 							if (flag) {
 								if (Data.datas.list.length < 1) {
-									createNull("content", "../../img/empty.png")
+									createNull("content", "../../img/empty.png");
+									$("#content").css('display', 'block');
 								} else {
+									$("#content").css('display', 'none');
 									self.dataList = Data.datas.list;
 								}
 							} else {

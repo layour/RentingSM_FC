@@ -141,7 +141,7 @@
 		<div class="um-content">
 			<div id="content"></div>
 			<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorListData" >
-			<mt-cell-swipe :title="item.NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index)}]">
+			<mt-cell-swipe :title="item.NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(item.ID)}]">
 				<div class="center" v-if="item.TYPE=='LP'" >
 				 	<p class="type ">  <span>担保人类型 :</span> <span>企业</span> </p>
 					<p class="type "> <span>法人 :</span> <span>{{item.LEGAL_PERSON}}</span> </p>
@@ -232,8 +232,13 @@
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							$("#content").css('display', 'none');
-							self.sponsorListData = res.data.datas.guaranteeList;
+							if (res.data.datas.guaranteeList.length>0) {
+								$("#content").css('display', 'none');
+								self.sponsorListData = res.data.datas.guaranteeList;
+							}else{
+								self.sponsorListData = res.data.datas.guaranteeList;
+							    $("#content").css('display', 'block');
+							}
 						}
 					}, function(err) {
 						alert(err);
@@ -256,10 +261,28 @@
 				onValuesChange1: function(picker, values) {
 					this.pickerSponsorType = values[0];
 				},
-				deleteItem(i){
+				deleteItem(id){
 					//此处需要调后端接口
-					this.sponsorListData.splice(i,1)
-					summer.toast({msg:'删除成功'})
+					let This=this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/customer/delGuarantee',
+						param: {
+							"CLIENT_ID": id
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							This.getSponsorList()
+						 	summer.toast({msg:'删除成功'})
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				  //this.sponsorListData.splice(i,1)
+
 				},
 				openSponsorDetail(TYPE, item) {
 					let id;
