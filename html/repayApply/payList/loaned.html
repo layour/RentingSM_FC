@@ -28,7 +28,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="um-content" id = "content">
+		<div class="um-content">
+			<div id = "content"></div>
 			<ul class="userList">
 				<li v-for="k in items">
 					<div class="title">
@@ -113,8 +114,10 @@
 					if (Data.flag == 1) {
 						loaned.totalPage = Data.datas.totalPage;
 						if (Data.datas.list.length < 1) {
-							createNull("content", "../../../img/empty.png")
+							createNull("content", "../../../img/empty.png");
+							$('#content').css('display','block');
 						} else {
+							$('#content').css('display','none');
 							if (loaned.resetData) {
 								loaned.items = Data.datas.list;
 							} else {
