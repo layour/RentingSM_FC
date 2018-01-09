@@ -187,8 +187,9 @@
 						<p class="pl10 pr10">支付方式<span class="fr">{{dataSchemeList.PAY_WAY_NM}}</span></p>
 					</div>
 				</div>
-				<div class="flow" id="flowContent">
-					<p class="title   tc um-bgc-white">流程ID：{{JBPM_ID_NM}}</p>
+				<div class="flow" >
+					<div id="flowContent"></div>
+					<p class="title   tc um-bgc-white" v-show="JBPM_ID_NM" >流程ID：{{JBPM_ID_NM}}</p>
 					<div class="contentFlow um-bgc-white">
 						<div class="listItem" v-for="(item,index) in JBPM_ID">
 							<div class="inside">
@@ -283,6 +284,7 @@
 		  getJBPMData(JBPM_ID){
 				let self = this;
 				if (JBPM_ID) {
+					$("#content").css('display', 'none');
 					self.JBPM_ID_NM=JBPM_ID;
 					ajaxRequest({
 						type: 'post',
@@ -302,7 +304,8 @@
 						summer.hideProgress();
 					});
 				} else {
-						createNull("flowContent", "../../img/empty.png","暂未发起流程")
+						createNull("flowContent", "../../img/empty.png","暂未发起流程");
+						$("#content").css('display', 'block');
 				}
 
 			}

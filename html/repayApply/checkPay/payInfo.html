@@ -78,9 +78,11 @@
 					</span>
 				</li>
 				<li>
-					<span>上牌信息</span>
+					<span>品牌</span>
 					<span>
-						<div></div>
+						<div>
+							{{datas ? datas.paymentMap.PRODUCT_NAME : ""}}
+						</div>
 					</span>
 				</li>
 			</ul>
@@ -106,7 +108,7 @@
 					<span>开户行</span>
 					<span>
 						<div>
-							{{datas ? datas.paymentMap.PAY_BANK_NAME : ""}}
+							{{datas ? datas.paymentMap.COBANK_NAME : ""}}
 						</div>
 					</span>
 				</li>
@@ -126,12 +128,12 @@
 						</div>
 					</span>
 				</li>
-				<li>
+				<!-- <li>
 					<span>备注</span>
 					<span>
 						<div></div>
 					</span>
-				</li>
+				</li> -->
 			</ul>
 			<ul class="infoList">
 				<li class="first"><strong></strong><i>付款通知（付款信息）</i></li>
@@ -162,7 +164,9 @@
 				<li>
 					<span>实付时间</span>
 					<span>
-						<div></div>
+						<div>
+							{{datas ? datas.paymentMap.REALITY_DATE : ""}}
+						</div>
 					</span>
 				</li>
 			</ul>

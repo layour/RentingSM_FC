@@ -89,13 +89,13 @@
 						<i>添加合格证</i>
 					</div>
 				</li> -->
-				<li class="change clearfix">
+				<!-- <li class="change clearfix">
 					<span>付款审核资料</span>
 					<div class="divs" onclick="toUpload()">
 						<span class="iconfont icon-enter"></span>
 						<i class="color">开始上传</i>
 					</div>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 	</div>
@@ -253,21 +253,21 @@
 		});
 	}*/
 	// 跳转到上传页
-	function toUpload() {
+	function toUpload(val,title,customerType,type) {
 		summer.openWin({
 			id: 'uploadImg',
 			url: 'html/fastReport/uploadImg.html',
 			create: false,
 			type: 'actionBar',
 			actionBar: {
-				title: "资料上传",
-				titleColor: "#ffffff",
+				title: title,
+				titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 				backgroundColor: "#039BE5",
 				leftItem: {
 					image: "img/back.png",
-					method: "",
+					method: "", //返回按钮自定义事件
 					text: "返回",
-					textColor: "#ffffff"
+					textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 				},
 				rightItems: [{
 					type: "text",
@@ -275,6 +275,13 @@
 					textColor: "#ffffff",
 					method: "save()"
 				}]
+			},
+			pageParam: {
+				PROJECT_ID: payApply.params.PROJECT_ID,
+				TPM_TYPE:title,
+			  	TPM_CUSTOMER_TYPE:customerType,
+			  	TPM_BUSINESS_PLATE:type,
+			  	CLASS_NAME:val
 			}
 		});
 	};
