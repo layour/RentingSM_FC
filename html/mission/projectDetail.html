@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="projectDetail.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/common.js"></script>
+</head>
+
+<body>
+	<div class="um-frame" id="index">
+		<div class="um-content" v-cloak>
+			<ul class="infoList">
+				<li class="first"><strong></strong><i>基本信息</i></li>
+				<li>
+					<span>客户信息</span>
+					<span>
+						<div>
+                            {{dataList?dataList.ProjectObj.CLIENT_NAME:""}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>合同编号</span>
+					<span>
+						<div>
+                            {{dataList?dataList.ProjectObj.LEASE_CODE:""}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>业务模式</span>
+					<span>
+						<div>
+                            {{dataList?dataList.ProjectObj.PLATFORM:""}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>客户经理</span>
+					<span>
+						<div>
+                            {{dataList?dataList.ProjectObj.EMPLOYEE_NAME:""}}
+						</div>
+					</span>
+				</li>
+			</ul>
+			<ul class="infoList" v-for="(item,index) in dataList.EquipObj">
+				<li class="first"><strong></strong><i>车辆信息{{(dataList.EquipObj.length>1) ? index+1 : ""}}</i></li>
+				<li>
+					<span>经销商</span>
+					<span>
+						<div>
+                            {{item.SUPPLIERS_NAME}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>厂商</span>
+					<span>
+						<div>
+                            {{item.COMPANY_NAME}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>品牌</span>
+					<span>
+						<div>
+                            {{item.PRODUCT_NAME}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>数量</span>
+					<span>
+						<div>
+                            {{item.AMOUNT}}
+						</div>
+					</span>
+				</li>
+                <li>
+					<span>车型</span>
+					<span>
+						<div>
+                            {{item.CATENA_NAME}}
+						</div>
+					</span>
+				</li>
+                <li>
+					<span>成交价</span>
+					<span>
+						<div>
+                            {{item.TOTAL}}
+						</div>
+					</span>
+				</li>
+			</ul>
+			<ul class="infoList" style="margin-bottom:0;">
+				<li class="first"><strong></strong><i>报价方案</i></li>
+				<li>
+					<span>租赁物总价值</span>
+					<span>
+						<div>
+                            {{dataSchemeList.TOTAL_MONTH_PRICE}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>合同额</span>
+					<span>
+						<div>
+                            {{dataSchemeList.LEASE_TOPRIC}}
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>首付比例</span>
+					<span>
+						<div>
+                            {{dataSchemeList.START_PERCENT}}%
+						</div>
+					</span>
+				</li>
+				<li>
+					<span>首期租金</span>
+					<span>
+						<div>
+                            {{dataSchemeList.FIRST_MONEY}}
+						</div>
+					</span>
+				</li>
+                <li>
+					<span>保证金</span>
+					<span>
+						<div>
+                            {{dataSchemeList.DEPOSIT_MONEY}}
+						</div>
+					</span>
+				</li>
+                <li>
+					<span>咨询费</span>
+					<span>
+						<div>
+                            {{dataSchemeList.POUNDAGE_PRICE}}
+						</div>
+					</span>
+				</li>
+                <li>
+					<span>年利率</span>
+					<span>
+						<div>
+                            {{dataSchemeList.YEAR_INTEREST}}%
+						</div>
+					</span>
+				</li>
+                <li>
+					<span>租赁期数</span>
+					<span>
+						<div>
+                            {{dataSchemeList.LEASE_TERM}}月
+						</div>
+					</span>
+				</li>
+                <li>
+					<span>支付方式</span>
+					<span>
+						<div>
+                            {{dataSchemeList.PAY_WAY_NM}}
+						</div>
+					</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var projectDetail = new Vue({
+			el: '#index',
+			data: {
+				dataList: "",
+                dataSchemeList: ""
+			}
+		});
+		summerready = function() {
+            var PROJECT_ID = summer.pageParam.PROJECT_ID;
+			summer.showProgress();
+			ajaxRequest({
+                type: 'post',
+                url: 'appservice/foundproject/loadProjectPage',
+                param: {
+                    "PROJECT_ID": PROJECT_ID,
+                }
+			}, function(res) {
+				var Data;
+				if (Object.prototype.toString.call(res.data) === '[object String]') {
+					Data = JSON.parse(res.data);
+				} else {
+					Data = res.data;
+				}
+				if (Data.flag == 1) {
+					projectDetail.dataList = Data.datas;
+                    ajaxRequest({
+    					type: 'post',
+    					url: 'appservice/foundproject/queryProjectScheme',
+    					param: {
+    						"PROJECT_ID": PROJECT_ID,
+    					}
+    				}, function(res) {
+    					summer.hideProgress();
+                        var Data;
+        				if (Object.prototype.toString.call(res.data) === '[object String]') {
+        					Data = JSON.parse(res.data);
+        				} else {
+        					Data = res.data;
+        				}
+    					if (Data.flag == 1) {
+    						projectDetail.dataSchemeList = Data.datas.scheme;
+    					} else {
+                            summer.toast({
+            					msg: "暂无数据"
+            				});
+                        }
+    				}, function(err) {
+                        summer.hideProgress();
+                        summer.toast({
+        					msg: "暂无数据"
+        				});
+    					console.log(err);
+    				});
+				} else {
+					summer.toast({
+						msg: "暂无数据"
+					});
+				}
+			}, function(err) {
+				summer.hideProgress();
+				summer.toast({
+					msg: "暂无数据"
+				});
+				console.log(err);
+			});
+		};
+	</script>
+</body>
+
+</html>

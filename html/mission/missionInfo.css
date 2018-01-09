@@ -1,0 +1,24 @@
+.navbar {
+    height: 0.88rem;
+    background-color: #fff
+}
+
+.navbar .missionInfo {
+    height: 0.88rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+}
+
+.navbar .missionInfo li {
+    height: 0.88rem;
+    width: 100%;
+    text-align: center;
+    line-height: 0.88rem;
+    color: #424242;
+}
+
+.navbar .missionInfo .active {
+    border-bottom: 0.06rem solid #039be5;
+    color: #039be5;
+}

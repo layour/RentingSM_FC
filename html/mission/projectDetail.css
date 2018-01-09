@@ -1,0 +1,63 @@
+.infoList {
+    width: 100%;
+    margin-bottom: 0.2rem;
+    background-color: #fff;
+}
+
+.infoList li {
+    height: 0.9rem;
+    padding: 0 0.56rem;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.infoList .first {
+    line-height: 0.9rem;
+    font-size: 0.36rem;
+    color: #333;
+}
+
+.infoList .first i {
+    float: left;
+    font-style: normal;
+}
+
+.infoList .first strong {
+    float: left;
+    width: 0.06rem;
+    height: 0.32rem;
+    background-color: #039be5;
+    font-style: normal;
+    margin: 0.28rem 0.08rem 0 0;
+}
+
+.infoList li span:nth-of-type(1) {
+    float: left;
+    color: #333;
+}
+
+.infoList li span:nth-of-type(2) {
+    color: #333;
+    float: right;
+    min-height: 0.9rem;
+    display: flex;
+    align-items: center;
+    width: 4.5rem;
+}
+.infoList li span:nth-of-type(2)>div{
+    font-size: 0.28rem;
+    color: #333;
+    display: block;
+    line-height: 0.4rem;
+    text-align: right;
+    width: 100%;
+}
+.infoList li span {
+    height: 0.9rem;
+    line-height: 0.9rem;
+    font-size: 0.28rem;
+    color: #333;
+}
+
+.infoList li span b {
+    font-weight: normal;
+}

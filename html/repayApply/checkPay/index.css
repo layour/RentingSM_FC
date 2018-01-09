@@ -70,7 +70,7 @@
     min-height: 0.9rem;
     display: flex;
     align-items: center;
-    width: 4rem;
+    width: 4.5rem;
 }
 .infoList li span:nth-of-type(2)>div{
     font-size: 0.28rem;
