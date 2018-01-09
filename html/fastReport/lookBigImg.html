@@ -9,6 +9,7 @@
           position:absolute;;
           top:50%;
           left:50%;
+          z-index: 100;
           -ms-transform:translate(-50%,-50%);
           -webkit-transform:translate(-50%,-50%);
           -o-transform:translate(-50%,-50%);
@@ -19,6 +20,17 @@
       body{
         background: #000;
       }
+      .main{
+        height: 100%;
+        position: relative;
+      }
+      .main>img{
+        width: 20px;
+        position: absolute;
+        left: 0.24rem;
+        top: .54rem;
+        z-index: 1000;
+      }
       .alignCenter{
         width: 100%;
         background: #000;
@@ -28,20 +40,21 @@
       }
     </style>
   </head>
-  <body  onclick="closeImg()">
-  <div class="alignCenter">
-    <img class="bigImg" src="" alt="">
-  </div>
+  <body>
+    <div onclick="closeImg()" class="main">
+      <img src="../../img/back.png">
+       <div class="alignCenter">
+        <img class="bigImg" src="" alt="">
+      </div>
+    </div>
   <script src="../../js/summer.js" ></script>
   <script src="../../js/jquery.min.js" ></script>
   <script src="../../js/font.js" ></script>
   <script type="text/javascript">
-      $(function(){
-        summerready=function(){
-          var url=summer.pageParam.url;
-          $('.bigImg').attr('src',url)
-        }
-      })
+      summerready=function(){
+        var url=summer.pageParam.url;
+        $('.bigImg').attr('src',url)
+      }
       function closeImg(){
         summer.closeWin()
       }
