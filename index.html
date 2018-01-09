@@ -16,7 +16,7 @@
 	<script src="js/common.js" charset="utf-8"></script>
 	<script src="js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
 	<script src="js/common.js"></script>
-	<script src="js/vue.js" ></script>
+	<script src="js/vue.js"></script>
 	<!-- <script src="js/index.js" ></script> -->
 </head>
 
@@ -49,9 +49,9 @@
 					<li onclick="mission()" class="">
 						<dl>
 							<dt class="iconfont icon-submit" style="color:#c79644"></dt>
-							<dd>代办任务</dd>
+							<dd>审批管理</dd>
 						</dl>
-						<span class="missionNum" v-show='missionNum>0' >{{missionNum}}</span>
+						<span class="missionNum" v-show='missionNum>0'>{{missionNum}}</span>
 					</li>
 					<li onclick="openFastReport()">
 						<dl>
@@ -163,19 +163,19 @@
 	</div>
 	<script>
 		summerready = function() {
-			getMissionData();//获取代办任务个数
-	      summer.setRefreshHeaderInfo({
-	          visible: true,
-	          loadingImg: 'img/refresh.png',
-	          bgColor: '#ffffff',
-	          textColor: '#aaaaaa',
-	          textDown: '下拉刷新...',
-	          textUp: '松开刷新...',
-	          showTime: true
-	      }, function(ret, err) {
-	          //通常在这里从服务器加载数据，t
-	          getMissionData();
-	      });
+			getMissionData(); //获取代办任务个数
+			summer.setRefreshHeaderInfo({
+				visible: true,
+				loadingImg: 'img/refresh.png',
+				bgColor: '#ffffff',
+				textColor: '#aaaaaa',
+				textDown: '下拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				//通常在这里从服务器加载数据，t
+				getMissionData();
+			});
 			// 关闭启动图
 			setTimeout(function() {
 				summer.hideLaunch();
@@ -185,39 +185,40 @@
 				loop: true
 			});
 		}
-		function getMissionData() {
-        fistPage.getMissionData();
-      }
-		var fistPage = new Vue({
-		 el: '#win',
-		 data: {
-				  missionNum:''
-		 },
-		 methods:{
-			 getMissionData(){
-				 let self = this;
-					 ajaxRequest({
-						 type: 'post',
-						 url: 'appservice/bpmtask/myTaskCount',
-						 param: {}
-					 }, function(res) {
-						 summer.hideProgress();
-						 if (res.data.flag == 1) {
-							 self.missionNum=parseInt(res.data.datas.count) ;
-							 console.log(res);
-						 }
-					 }, function(err) {
-						 alert(err);
-						 console.log(err);
-						 summer.hideProgress();
-					 });
-					 this.$nextTick(function() {
-						 summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
-						 summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
-					 })
-			 },
 
-		 }
+		function getMissionData() {
+			fistPage.getMissionData();
+		}
+		var fistPage = new Vue({
+			el: '#win',
+			data: {
+				missionNum: ''
+			},
+			methods: {
+				getMissionData() {
+					let self = this;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/bpmtask/myTaskCount',
+						param: {}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							self.missionNum = parseInt(res.data.datas.count);
+							console.log(res);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+					this.$nextTick(function() {
+						summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
+						summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+					})
+				},
+
+			}
 		});
 		// 判断是否已登陆
 		function isLogin() {
@@ -235,6 +236,31 @@
 		// 空方法
 		function none() {
 			console.log(1);
+		};
+        // 跳回登录页
+		function toLog(){
+			summer.setStorage("userinfo", {});
+			summer.toast({
+				"msg": "请先登录"
+			});
+			summer.openWin({
+				id: 'login',
+				url: 'login.html',
+				isKeep: true,
+				create: false,
+				type: 'actionBar',
+				actionBar: {
+					title: "登录",
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039be5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					}
+				}
+			});
 		};
 		// 支付表查询
 		function openPayTab() {
@@ -257,9 +283,7 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 		// 风险跟踪
@@ -283,9 +307,7 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 		// 对账单
@@ -309,9 +331,7 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 		// 销售线索
@@ -341,9 +361,7 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 		// 销售简报
@@ -367,9 +385,7 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 
@@ -393,9 +409,7 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 		//拜访记录
@@ -425,9 +439,7 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 
@@ -451,13 +463,11 @@
 					}
 				})
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
-        // 代办任务
-		function mission(){
+		// 代办任务
+		function mission() {
 			if (isLogin()) {
 				summer.openWin({
 					id: 'missionList',
@@ -477,11 +487,10 @@
 					}
 				});
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		};
+
 		function openFastReport() {
 			if (isLogin()) {
 				summer.openWin({
@@ -508,9 +517,7 @@
 					}
 				});
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 		// 付款列表
@@ -534,9 +541,7 @@
 					}
 				});
 			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
+				toLog();
 			}
 		}
 		// 我的
