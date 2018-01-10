@@ -87,6 +87,9 @@ body,html{
 .companyInfo b{
    float: left;
 }
+.companyInfo .company a{
+    color: #039be5;
+}
 .companyInfo .company{
    font-size: 0.28rem;
    height: 0.88rem;
@@ -124,7 +127,7 @@ strong{
    background-color: #fff;
    border: 0;
    outline: none;
-   color: #9e9e9e;
+   color: #f44336;
    font-size: 0.28rem;
    line-height: 0.88rem;
    text-align: center;
@@ -132,7 +135,7 @@ strong{
 }
 .um-modal .um-modal-title{
 	font-weight:normal;
-	color:#485358;
+	color:#000!important;
 }
 .um-modal{
 	border-radius:5px;
@@ -145,9 +148,15 @@ strong{
 	background-color:white;
 }
 .um-modal .um-modal-content{
-	border-bottom:1px solid #f0f0f0;
+	border-bottom:1px solid #f6f6f6!important;
+    border-image: none;
 }
 .um-modal .um-modal-btns .btn:visited, .um-modal .um-modal-btns .btn-bg:visited, .um-modal .um-modal-btns .um-btn:visited{
     color: #039be5!important;
-    font-weight: normal!important;
+}
+.um-modal .um-modal-btns .btn, .um-modal .um-modal-btns .btn-bg, .um-modal .um-modal-btns .um-btn{
+    font-weight: normal;
+    color: #039be5;
+    border-color: #f6f6f6!important;
+    border-image: none;
 }

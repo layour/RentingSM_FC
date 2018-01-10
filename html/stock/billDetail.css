@@ -3,7 +3,7 @@
     width: 100%;
     margin: 0;
     background-color: #fff;
-    border-bottom: 1px solid #d4d4d4;
+    border-bottom: 1px solid #efefef;
 }
 .title span{
     float: left;
@@ -19,7 +19,7 @@
     width: 100%;
     height: 0.9rem;
     background-color: #fff;
-    border-bottom: 1px solid #d4d4d4;
+    border-bottom: 1px solid #efefef;
 }
 .billList li span{
     float: left;
@@ -28,4 +28,7 @@
     line-height: 0.9rem;
     text-align: center;
     color: #333;
+}
+.billList .billListActive{
+    background-color: #f0fafe;
 }
