@@ -36,6 +36,7 @@
     padding: 0.2rem 0.56rem;
     position: relative;
     border-bottom: 1px solid #f7f7f7;
+    overflow: hidden;
 }
 
 .content:after {
@@ -50,12 +51,16 @@
 .leftCon {
     float: left;
     height: 100%;
+    width: 5.5rem;
 }
 
 .enter {
-    float: right;
-    height: 2rem;
+    height: 0.4rem;
     width: 0.5rem;
+    position: absolute;
+    right: 0.56rem;
+    top: 50%;
+    margin-top: -0.25rem;
 }
 
 .enter i{
@@ -63,17 +68,13 @@
 }
 
 .enter .icon-enter {
-    float: right;
     width: 0.28rem;
-    height: 2rem;
     color: #dbdbdb;
     font-size: 0.28rem;
-    line-height: 2rem;
-    margin-left: 0.1rem;
+    line-height: 0.4rem;
 }
 
 .content p {
-    height: 0.5rem;
     line-height: 0.5rem;
     color: #8c8c8c;
     font-size: 0.28rem;
