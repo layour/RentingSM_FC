@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="opportunity.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/common.js"></script>
+</head>
+
+<body>
+	<div class="um-win" id="index">
+		<div class="um-header-light">
+			<div class="sera">
+				<div class="s-box" onclick="opensearch()">
+					<i class="iconfont icon-search"> </i>
+					<p class="txt">
+						搜索商机
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="um-content">
+			<div id="content"></div>
+			<div class="headBar">
+				<div class="headItems">阶段</div>
+				<div class="headItems">排序</div>
+				<div class="headItems">筛选</div>
+			</div>
+			<ul class="opportunity">
+				<li class="opportunityItems clearfix">
+					<div class="leftCon">
+						<dl class="clearfix">
+							<dt>
+								<span>1/3</span>
+							</dt>
+							<dd>
+								<p class="p1">测试</p>
+								<p class="p2">只是测试</p>
+								<p class="p3">售前阶段1 收集客户信息</p>
+								<p class="p4">售后 未开启</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="rightCon">
+						<div>
+							<p class="p1">2017年09月22日</p>
+							<p class="p2">10.00元</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="um-footer">
+			<button type="button">新建商机</button>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var opportunity = new Vue({
+		el: '#index',
+		data: {
+			items: []
+		},
+		methods: {
+
+		}
+	});
+	summerready = function () {
+			// 搜索
+			function opensearch() {
+				summer.setStorage("searchFromSource", "opportunity");
+				summer.openWin({
+					id: 'search',
+					url: 'html/fastReport/search.html',
+				});
+			};
+</script>
+
+</html>

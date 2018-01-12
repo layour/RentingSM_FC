@@ -105,7 +105,7 @@
 							<dd>销售线索</dd>
 						</dl>
 					</li>
-					<li>
+					<li onclick="openOpportunity()">
 						<dl>
 							<dt class="iconfont icon-house" style="color:#c79644"></dt>
 							<dd>商机</dd>
@@ -163,7 +163,9 @@
 	</div>
 	<script>
 		summerready = function() {
-			getMissionData(); //获取代办任务个数
+			if (isLogin()) {
+				getMissionData(); //获取代办任务个数
+			}
 			summer.setRefreshHeaderInfo({
 				visible: true,
 				loadingImg: 'img/refresh.png',
@@ -544,6 +546,30 @@
 				toLog();
 			}
 		}
+		// 商机
+		function openOpportunity(){
+			if (isLogin()) {
+				summer.openWin({
+					id: 'payList',
+					url: 'html/opportunity/opportunity.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "商机",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			} else {
+				toLog();
+			}
+		};
 		// 我的
 		function showUserInfo() {
 			summer.openWin({
