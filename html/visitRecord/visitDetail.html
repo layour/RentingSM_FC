@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title>拜访详情</title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<script src="../../js/font.js"></script>
+</head>
+	<style>
+		html{
+			background-color: #f6f6f6;
+		}
+		.detail{
+			background-color: #fff;
+		}
+		.detail p.title:before {
+			content: "";
+			width: 3px;
+			height: 0.32rem;
+			background: #039be5;
+			position: absolute;
+			left: 0.4rem;
+			top: 0.26rem;
+		}
+		.detail p.title {
+			color: #333;
+			font-size: 0.36rem;
+			position: relative;
+			line-height: 0.9rem;
+			padding-left: 0.5rem;
+			background-color: #ffffff;
+			border-bottom:1px solid #efefef;
+		}
+		.detail .content{
+			padding-left:0.54rem;
+			color:#424242;
+			font-size:0.28rem;
+			line-height: 0.68rem;
+			padding-right: 0.56rem;
+		}
+		.detail.second{
+			margin-top:0.2rem;
+		}
+		textarea{
+			word-break: break-all;
+			display: block;
+			width: 100%;
+			height: 1.6rem;
+			line-height: 0.4rem;
+			text-indent: 2em;
+			resize: none;
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			text-align: justify;
+			outline: none;
+			border: none;
+			border-color: #fff;
+			font-size: 0.26rem;
+			color:#999;
+		}
+	</style>
+<body>
+	<div class="um-win" id="programDetail">
+		<div class="um-content">
+			<div class="detail">
+				<p class="title">拜访详情</p>
+				<p class="content">计划日期：<span>2016-03-12</span></p>
+				<p class="content">拜访状态：<span class="completeStatus">未完成</span></p>
+			</div>
+			<div class="detail second">
+					<p class="title">客户信息</p>
+					<p class="content">客户：<span class="fr">2016-03-12</span></p>
+					<p class="content">位置信息：<span class="completeStatus fr">北京市海淀区XX路XX号</span></p>
+					<p  class="content">拜访内容:</p>
+					<textarea name="" id="" cols="30" rows="10" placeholder="日常拜访，此处为描述性文字"></textarea>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../../js/summer.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+<script>
+	summerready = function() {
+		var detailId = summer.pageParam.id;
+		var JBPM_ID= summer.pageParam.JBPM_ID;
+		programDetail.project_id=detailId;
+		programDetail.getData(detailId);
+		programDetail.getJBPMData(JBPM_ID);
+		//	programDetail.getSchemeData(detailId);
+	};
+	var programDetail = new Vue({
+		el: '#programDetail',
+		data() {
+			return {
+				dataList: "",
+				dataSchemeList:"",
+				project_id:"",
+				JBPM_ID_NM:"",
+				JBPM_ID:""
+			}
+		},
+		created() {
+
+
+		},
+		methods: {
+			getData(id) {
+				let self = this;
+				ajaxRequest({
+					type: 'post',
+					url: 'appservice/foundproject/loadProjectPage',
+					param: {
+						"PROJECT_ID": id,
+					}
+				}, function(res) {
+					summer.hideProgress();
+					if (res.data.flag == 1) {
+						self.dataList = res.data.datas;
+						self.getSchemeData(self.project_id);
+						console.log(self.dataList);
+					}
+				}, function(err) {
+					alert(err);
+					console.log(err);
+					summer.hideProgress();
+				});
+
+			},
+			getSchemeData(id){
+				let self = this;
+				ajaxRequest({
+					type: 'post',
+					url: 'appservice/foundproject/queryProjectScheme',
+					param: {
+						"PROJECT_ID": id,
+					}
+				}, function(res) {
+					summer.hideProgress();
+					if (res.data.flag == 1) {
+						self.dataSchemeList = res.data.datas.scheme;
+						console.log(self.dataSchemeList);
+					}
+				}, function(err) {
+					alert(err);
+					console.log(err);
+					summer.hideProgress();
+				});
+
+			},
+		  getJBPMData(JBPM_ID){
+				let self = this;
+				if (JBPM_ID) {
+					$("#content").css('display', 'none');
+					self.JBPM_ID_NM=JBPM_ID;
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/bpmtask/showbpmTask',
+						param: {
+							"JBPM_ID": JBPM_ID,
+						}
+					}, function(res) {
+						summer.hideProgress();
+						if (res.data.flag == 1) {
+							self.JBPM_ID=res.data.datas;
+							console.log(res);
+						}
+					}, function(err) {
+						alert(err);
+						console.log(err);
+						summer.hideProgress();
+					});
+				} else {
+						createNull("flowContent", "../../img/empty.png","暂未发起流程");
+						$("#content").css('display', 'block');
+				}
+
+			}
+		}
+	});
+	$(function() {
+		/*导航更换js*/
+		$('ul.um-tabbar-switch  Li').click(function() {
+			$(this).addClass('active').siblings('.active').removeClass('active');
+			var tar = $(this).attr('data-tar');
+			$(tar).addClass('active').siblings('.active').removeClass('active');
+		});
+	});
+
+	function newCreateCustom() {
+		summer.openWin({
+			id: 'newCreateCustom',
+			url: 'html/fastReport/newCreateCustom.html',
+			create: false,
+			type: 'actionBar',
+			actionBar: {
+				title: "客户信息",
+				titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				backgroundColor: "#039be5",
+				leftItem: {
+					image: "img/back.png",
+					method: "", //返回按钮自定义事件
+					text: "返回",
+					textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				},
+				rightItems: [{
+					type: "text",
+					text: "下一步",
+					textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					method: "nextStopAction()" //在打开的window中自定义事件
+				}]
+			}
+		});
+	}
+</script>
+
+</html>
