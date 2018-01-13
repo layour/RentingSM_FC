@@ -105,7 +105,7 @@
 					</li> -->
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
 					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
-					<li><b>期数</b><span>{{resultData.term}}</span></li>
+					<li><b>期数</b><span>{{resultData.term}}期</span></li>
 				</ul>
 
       </div>
@@ -186,7 +186,7 @@
 				</mt-popup>
 				<div class="bButton" v-else>
 					<button @click="quotedTest">测算</button>
-				</template>
+				</div>
 			</div>
     </div>
     <script>
@@ -248,7 +248,8 @@
 								termPrice:'',
 								term:''
 							},
-							testData:{}
+							testData:{},
+							isTest:false
             }
           },
 					computed:{
@@ -480,6 +481,7 @@
 							},function(res){
 								console.log("res",res);
 								summer.toast({msg:"测算完成"});
+								_this.isTest=true;
 								_this.testData=res.data.datas
 								_this.resultData.firstPrice=_this.quoted.sureFirstPay
 								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
@@ -491,7 +493,7 @@
 						},
 						save(){
 							// http
-							if(!this.resultData.termPrice){
+							if(!this.isTest){
 								summer.toast({msg:'请先测算报价'})
 								return
 							}

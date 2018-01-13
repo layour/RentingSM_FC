@@ -194,22 +194,26 @@ ul{
   .um-footer{
   // padding:.1rem .4rem;
   background: inherit;
+  button{
+    border:none;
+    outline: none;
+    color:@grayBlue;
+  }
   .bButton{
     padding:0 .56rem;
-  }
-    button{
-      border:none;
-      outline: none;
+    >button{
+      width:100%;
+      height:.9rem;
+      line-height: .9rem;
+      font-size:0.3rem;
       display: block;
       margin-bottom: .56rem;
-      width:100%;
-      line-height: .9rem;
-      color:@white;
       border-radius: 5px;
       background: @grayBlue;
-      height:.9rem;
-      font-size:0.3rem;
+      color:@white;
     }
+  }
+
   }
 }
 .mint-popup{
