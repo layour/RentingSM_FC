@@ -51,25 +51,25 @@
           </tr>
 					<tr>
             <td>新车指导价</td>
-            <td>
+            <td class='last'>
 							{{guidePrice}}元
 						</td>
 					</tr>
 					<tr>
             <td>实际价格</td>
-            <td>
+            <td class='last'>
 							<input type="text" @input="checkNumber($event,'realityPrice')" name="price" placeholder="请输入实际价格" v-model="realityPrice">元
 						</td>
 					</tr>
 					<tr>
             <td>留购价</td>
-            <td>
+            <td class='last'>
 							<input type="text" @input="checkNumber($event,'holdPrice')" name="holdPrice" placeholder="请输入留购价" v-model="holdPrice">元
 						</td>
 					</tr>
 					<tr>
 						<td>数量</td>
-						<td>
+						<td class='last'>
 							<span>
 								<input type="number"  name="number" placeholder="请输入数量" v-model="number">
 							台</span>
@@ -77,13 +77,13 @@
 					</tr>
 					<tr>
             <td>单台购置税</td>
-            <td>
+            <td class='last'>
 							<input type="text" @input="checkNumber($event,'onePrice')" name="onePrice" placeholder="请输入单台购置税" v-model="onePrice">元
 						</td>
 					</tr>
 					<tr>
             <td>保险</td>
-            <td>
+            <td class='last'>
 							<input type="text" @input="checkNumber($event,'safePrice')" name="safePrice" placeholder="请输入保险" v-model="safePrice">元
 						</td>
 					</tr>
