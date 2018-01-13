@@ -110,6 +110,12 @@
 	<div class="um-win" id="app" v-cloak>
 		<div class="um-content">
 			<p class="pl10 title">拜访信息</p>
+			<div class="item">
+				<p class="pl10 pr10 tr" @click="selectCustom">
+					<span class="fl">客户姓名</span>
+					<span class=""> <span  class="first">{{CLIENT_NAME}}</span> <i class="icon iconfont icon-enter"></i></span>
+				</p>
+			</div>
 			<mt-field label="客户姓名" placeholder="请输入您的客户姓名" v-model="message.address"></mt-field>
 			<div @click="surePickertheme" class="item">
 				<p class="pl10 pr10 tr">
@@ -177,6 +183,8 @@
 						textAlign: 'center'
 					}],
 					message: {
+						CLIENT_ID:'',
+
 						username: '',
 						card: '',
 						theme: '',
@@ -185,14 +193,43 @@
 						phoneAddress: '',
 						marrige: '',
 						dateBirth: ''
-					}
+					},
+					CLIENT_ID:'',
+					CLIENT_NAME:''
 				}
 			},
 			methods: {
 				handleClick: function () {
 					this.$toast('Hello world!')
 				},
-
+				selectCustom:function(){
+					summer.openWin({
+						id: 'newCustom',
+						url: 'html/fastReport/newCustom.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "选择客户",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems: [{
+								type: "text",
+								text: "添加",
+								textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								method: "newCreateCustom()" //在打开的window中自定义事件
+							}]
+						},
+						pageParam:{
+							pageSource:"newVisit"
+						}
+					});
+				},
 				onValuesChange1: function (picker, values) {
 					this.pickertheme = values[0];
 				},
@@ -347,7 +384,10 @@
 		function nextStopAction() {
 			newCreateCustom.nextStopAction();
 		}
-
+		function getCustomName(id,name){
+			newCreateCustom.CLIENT_NAME=name;	
+			newCreateCustom.CLIENT_ID=id;	
+		}
 		summerready = function () {
 			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION",
 				"android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE",

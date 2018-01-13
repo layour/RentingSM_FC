@@ -87,7 +87,7 @@
 			</div>
 			<div class="um-content"  >
 				<div  id="content"></div>
-				<div class="list customList um-bgc-white" v-for="(item,index) in dataSource" @click="completeCustom(item.CLIENT_ID)">
+				<div class="list customList um-bgc-white" v-for="(item,index) in dataSource" @click="completeCustom(item.CLIENT_ID,item.CLIENT_NAME)">
 					<p class="pl20 title pr20">{{item.CLIENT_NAME}}<span class="status fr"><i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span></p>
 					<div class="center" >
 						  <p class="type pl10"><span>{{item.TYPE}} </span> | <span> {{item.CUST_STATUS}}</span> </p>
@@ -105,6 +105,8 @@
 	<script>
 		var _endNum=1;
 		summerready=function(){
+			var pageSource=summer.pageParam.pageSource;
+			newCustom.pageSource=pageSource;
 			summer.showProgress();
 			getData(1,true)
 				summer.setRefreshHeaderInfo({
@@ -149,7 +151,8 @@
 			data(){
 				return{
 					dataSource:"",
-					totalPage:''
+					totalPage:'',
+					pageSource:''
 				}
 			},
 			mounted(){
@@ -198,34 +201,44 @@
 			                 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
 			            })
 					},
-				completeCustom(id){
-					summer.openWin({
-						id : 'setProject',
-						url : 'html/fastReport/setProject.html',
-						create : false,
-						type : 'actionBar',
-						pageParam:{
-							source:"customer",
-							customId:id
-						},
-						actionBar : {
-							title : "快捷报单",
-							titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							backgroundColor : "#039be5",
-							leftItem : {
-								image : "img/back.png",
-								method : "", //返回按钮自定义事件
-								text : "返回",
-								textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+				completeCustom(id,name){
+					let self=this;
+					if (self.pageSource=='programSelect') {
+						summer.openWin({
+							id : 'setProject',
+							url : 'html/fastReport/setProject.html',
+							create : false,
+							type : 'actionBar',
+							pageParam:{
+								source:"customer",
+								customId:id
 							},
-							rightItems : [{
-								type : "text",
-								text : "下一步",
-								textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-								method : "nextStopInput()" //在打开的window中自定义事件
-							}]
-						}
-					});
+							actionBar : {
+								title : "快捷报单",
+								titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								backgroundColor : "#039be5",
+								leftItem : {
+									image : "img/back.png",
+									method : "", //返回按钮自定义事件
+									text : "返回",
+									textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+								},
+								rightItems : [{
+									type : "text",
+									text : "下一步",
+									textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+									method : "nextStopInput()" //在打开的window中自定义事件
+								}]
+							}
+						});
+					} else {
+						summer.execScript({
+								winId: self.pageSource,
+								script: 'getCustomName("'+id+'","'+name+'")'
+						});
+						summer.closeWin();
+					}
+					
 				}
 			}
 		});
@@ -259,6 +272,7 @@
 		}
 		function opensearch() {
 			summer.setStorage("searchFromSource","newCustom");
+			summer.setStorage("pageFromSource",newCustom.pageSource);//通过这个判断选完跳转的页面
 			summer.openWin({
 				id: 'search',
 				url: 'html/fastReport/search.html',
