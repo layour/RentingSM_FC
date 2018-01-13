@@ -112,6 +112,9 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 		 }
 		successCallback(response);
 	}, function(response) {
+		summer.hideProgress();
+		summer.toast({msg:"数据请求失败"+ JSON.stringify(response)});
+		return;
 		//此处还需要和后端沟通，统一失败状态码，统一处理
 		// 执行自己的其它逻辑
 		errorCallback(response)

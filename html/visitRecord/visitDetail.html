@@ -8,119 +8,15 @@
 	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 	<script src="../../js/font.js"></script>
+</head>
 	<style>
-		div.Artical>div {
-			display: none;
-			color: #555;
+		html{
+			background-color: #f6f6f6;
 		}
-
-		.um-tabbar.um-tabbar-underline {
-			background-color: white;
+		.detail{
+			background-color: #fff;
 		}
-
-		div.Artical>div.active {
-			display: block;
-		}
-
-		.flow p.title {
-			font-size: 0.28rem;
-			color: #333;
-			line-height: 0.9rem;
-		}
-
-		.contentFlow {
-			margin-top: 0.2rem;
-			padding-left: 0.6rem;
-			overflow: hidden;
-		}
-
-		.contentFlow .listItem {
-			border-left: 2px dotted #ddd;
-			margin-left: 0.34rem;
-			min-height: 2rem;
-			padding-right:0.3rem;
-		}
-
-		.contentFlow .listItem:last-child {
-			border-left: 0px dotted #ddd;
-
-		}
-
-		.contentFlow .listItem:first-child {
-			margin-top: 0.4rem;
-		}
-
-		.contentFlow .listItem p.top {
-			color: #039be5;
-			font-size: 0.32rem;
-			padding-left: 0.24rem;
-		}
-
-		.contentFlow .listItem .inside {
-			position: relative;
-			padding-bottom: 0.32rem;
-			border-bottom: 1px solid #f7f7f7;
-		}
-
-		.contentFlow .listItem .inside img.true {
-			position: absolute;
-			z-index: 100;
-			top: 0.06rem;
-			left: -0.14rem;
-			width: 0.28rem;
-		}
-
-		.contentFlow .listItem:first-child .inside img.true {
-			top: 0.02rem;
-		}
-
-		.contentFlow .listItem p.content {
-			color: #9e9e9e;
-			font-size: 0.28rem;
-			padding-left: 0.24rem;
-		}
-
-		ul.um-tabbar li a {
-			display: inline-block;
-			line-height: 0.7rem;
-			height: 0.7rem;
-		}
-
-		.listContent:first-child {
-			margin-top: 0px;
-		}
-
-		.listContent {
-			border-radius: 5px;
-			margin-top: 0.2rem;
-			background: #fff;
-		}
-
-		.listContent p.title {
-			color: #333;
-			font-size: 0.36rem;
-			position: relative;
-			line-height: 0.9rem;
-			padding-left: 0.5rem;
-		}
-
-		.listContent p {
-			padding: 0 0.54rem;
-			font-size: 0.28rem;
-			line-height: 0.9rem;
-
-		}
-
-		.listContent p span {
-			color: #424242;
-		}
-
-		.um-tabbar-underline>li.active {
-			color: #039be5;
-			border-color: #039be5;
-		}
-
-		.listContent p.title:before {
+		.detail p.title:before {
 			content: "";
 			width: 3px;
 			height: 0.32rem;
@@ -129,81 +25,57 @@
 			left: 0.4rem;
 			top: 0.26rem;
 		}
-
-		.um-tabbar-underline>li.active>a {
-			color: #039be5;
-		}
-
-		.listContent p {
+		.detail p.title {
+			color: #333;
+			font-size: 0.36rem;
+			position: relative;
 			line-height: 0.9rem;
-			border-bottom: 1px solid #f7f7f7;
-			color: #666;
-			font-size: 0.32rem;
+			padding-left: 0.5rem;
+			background-color: #ffffff;
+			border-bottom:1px solid #efefef;
+		}
+		.detail .content{
+			padding-left:0.54rem;
+			color:#424242;
+			font-size:0.28rem;
+			line-height: 0.68rem;
+			padding-right: 0.56rem;
+		}
+		.detail.second{
+			margin-top:0.2rem;
+		}
+		textarea{
+			word-break: break-all;
+			display: block;
+			width: 100%;
+			height: 1.6rem;
+			line-height: 0.4rem;
+			text-indent: 2em;
+			resize: none;
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			text-align: justify;
+			outline: none;
+			border: none;
+			border-color: #fff;
+			font-size: 0.26rem;
+			color:#999;
 		}
 	</style>
-
-</head>
-
 <body>
 	<div class="um-win" id="programDetail">
-		<ul class="um-tabbar um-tabbar-underline um-tabbar-switch">
-			<li data-tar='.base' class="active tc"><a>基本信息</a></li>
-			<li class=" tc" data-tar='.flow'><a>评审流程</a></li>
-		</ul>
 		<div class="um-content">
-			<div class="Artical">
-				<div class="base  active">
-					<div class="list listContent">
-
-						<p class="title">基本信息</p>
-						<p class="pl10 pr10">客户信息<span class="fr">{{dataList?dataList.ProjectObj.CLIENT_NAME:""}}</span></p>
-						<p class="pl10 pr10">合同编号<span class="fr">{{dataList?dataList.ProjectObj.LEASE_CODE:""}}</span></p>
-						<p class="pl10 pr10">业务模式<span class="fr">{{dataList?dataList.ProjectObj.PLATFORM:""}}</span></p>
-						<!--<p class="pl10 pr10">所属门店<span class="fr">{{dataList.ProjectObj.PLATFORM}}</span></p>-->
-						<p class="pl10 pr10">客户经理<span class="fr">{{dataList?dataList.ProjectObj.EMPLOYEE_NAME:""}}</span></p>
-					</div>
-					<div class="list listContent" v-for="(item,index) in dataList.EquipObj">
-						<p class="title pl10">车辆信息{{(dataList.EquipObj.length>1)?index+1:""}}</p>
-						<p class="pl10 pr10">经销商<span class="fr">{{item.SUPPLIERS_NAME}}</span></p>
-						<p class="pl10 pr10">厂商<span class="fr">{{item.COMPANY_NAME}}</span></p>
-						<p class="pl10 pr10">品牌<span class="fr">{{item.PRODUCT_NAME}}</span></p>
-						<p class="pl10 pr10">数量<span class="fr">{{item.AMOUNT}}</span></p>
-						<p class="pl10 pr10">车型<span class="fr">{{item.CATENA_NAME}}</span></p>
-						<!--<p class="pl10 pr10">颜色<span class="fr">{{dataList.prjBscInfo.prjEqiDtlCar.carCl}}</span></p>-->
-						<p class="pl10 pr10">成交价<span class="fr">{{item.TOTAL}}</span></p>
-					</div>
-					<div class="list listContent">
-						<p class="title pl10">报价方案</p>
-						<!-- <p class="pl10 pr10">方案名称<span class="fr">{{dataList.schName}}</span></p> -->
-						<p class="pl10 pr10">租赁物总价值<span class="fr">{{dataSchemeList.TOTAL_MONTH_PRICE}} </span></p>
-						<p class="pl10 pr10">合同额<span class="fr">{{dataSchemeList.LEASE_TOPRIC}} </span></p>
-						<p class="pl10 pr10">首付比例<span class="fr">{{dataSchemeList.START_PERCENT}}%</span></p>
-						<p class="pl10 pr10">首期租金<span class="fr">{{dataSchemeList.FIRST_MONEY}}</span></p>
-						<p class="pl10 pr10">保证金<span class="fr">{{dataSchemeList.DEPOSIT_MONEY}}</span></p>
-						<!--<p class="pl10 pr10">咨询费比例<span class="fr">{{dataSchemeList.TOTAL_MONTH_PRICE}}</span></p>-->
-						<p class="pl10 pr10">咨询费<span class="fr">{{dataSchemeList.POUNDAGE_PRICE}}</span></p>
-						<p class="pl10 pr10">年利率<span class="fr">{{dataSchemeList.YEAR_INTEREST}}%</span></p>
-						<p class="pl10 pr10">租赁期数<span class="fr">{{dataSchemeList.LEASE_TERM}}月</span></p>
-						<p class="pl10 pr10">支付方式<span class="fr">{{dataSchemeList.PAY_WAY_NM}}</span></p>
-					</div>
-				</div>
-				<div class="flow" >
-					<div id="flowContent"></div>
-					<p class="title   tc um-bgc-white" v-show="JBPM_ID_NM" >流程ID：{{JBPM_ID_NM}}</p>
-					<div class="contentFlow um-bgc-white">
-						<div class="listItem" v-for="(item,index) in JBPM_ID">
-							<div class="inside">
-								<img src="../../img/true.png" class="true" alt="" />
-								<p class="top">{{item.TASK_NAME}}</p>
-								<p class="content">【{{item.OP_CODE}}】{{item.OP_NAME}}: {{item.OP_TYPE}} </p>
-									<p class="content">审批意见：{{item.MEMO?item.MEMO:"无"}}  </p>
-								<p class="content"> {{item.OP_TIME}}</p>
-							</div>
-						</div>
-					</div>
-
-
-				</div>
+			<div class="detail">
+				<p class="title">拜访详情</p>
+				<p class="content">计划日期：<span>2016-03-12</span></p>
+				<p class="content">拜访状态：<span class="completeStatus">未完成</span></p>
+			</div>
+			<div class="detail second">
+					<p class="title">客户信息</p>
+					<p class="content">客户：<span class="fr">2016-03-12</span></p>
+					<p class="content">位置信息：<span class="completeStatus fr">北京市海淀区XX路XX号</span></p>
+					<p  class="content">拜访内容:</p>
+					<textarea name="" id="" cols="30" rows="10" placeholder="日常拜访，此处为描述性文字"></textarea>
 			</div>
 		</div>
 	</div>
