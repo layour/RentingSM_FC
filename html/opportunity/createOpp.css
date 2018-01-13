@@ -1,0 +1,76 @@
+.infoList {
+    width: 100%;
+    background-color: #fff;
+}
+
+.infoList li {
+    height: 0.9rem;
+    padding: 0 0.56rem;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.infoList .first {
+    line-height: 0.9rem;
+    font-size: 0.36rem;
+    color: #333;
+}
+
+.infoList .first i {
+    float: left;
+    font-style: normal;
+}
+
+.infoList .first strong {
+    float: left;
+    width: 0.06rem;
+    height: 0.32rem;
+    background-color: #039be5;
+    font-style: normal;
+    margin: 0.28rem 0.08rem 0 0;
+}
+
+.infoList li span{
+    float: left;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    font-size: 0.28rem;
+    color: #333;
+}
+.infoList li span>b{
+    color: #f44336;
+    width: 0.2rem;
+    display: block;
+    height: 0.9rem;
+    line-height: 1rem;
+    float: left;
+}
+.infoList li div i,.infoList li div span{
+   float: right;
+   font-style: normal;
+}
+.infoList li div i{
+   color: #9e9e9e;
+}
+.infoList li div span{
+   margin: 0 0 0 0.1rem;
+   color: #dbdbdb;
+}
+.infoList li div{
+    float: right;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    font-size: 0.28rem;
+    color: #424242;
+}
+.infoList li input{
+    border: 0;
+    background: none;
+    float: right;
+    height: 0.28rem;
+    line-height: 0.28rem;
+    font-size: 0.28rem;
+    text-align: right;
+    outline: none;
+    margin-top: 0.3rem;
+    margin-right: 0.05rem;
+}

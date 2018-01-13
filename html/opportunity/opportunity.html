@@ -82,7 +82,7 @@
 				<div class="headItems">筛选</div>
 			</div>
 			<ul class="opportunity">
-				<li class="opportunityItems" v-for="item in datas">
+				<li class="opportunityItems" v-for="item in datas" @click="oppDetail">
 					<div class="leftCon">
 						<dl>
 							<dt>
@@ -105,67 +105,143 @@
 				</li>
 			</ul>
 		</div>
-		<div class="um-footer">
-			<button type="button">新建商机</button>
-		</div>
+		<!-- <div class="um-footer">
+			<button type="button" @click="createOpp">新建商机</button>
+		</div> -->
 	</div>
 </body>
 <script type="text/javascript">
-	var data = [
-		{
-			process:"1/3",
-			txt1:"测试",
-			txt2:"只是测试",
-			txt3:"售前阶段1 收集客户信息",
-			txt4:"售后 未开启",
-			txt5:"2017年09月22日",
-			txt6:"10.00元"
+	var data = [{
+			process: "1/3",
+			txt1: "测试",
+			txt2: "只是测试",
+			txt3: "售前阶段1 收集客户信息",
+			txt4: "售后 未开启",
+			txt5: "2017年09月22日",
+			txt6: "10.00元"
 		},
 		{
-			process:"2/3",
-			txt1:"测试",
-			txt2:"只是测试",
-			txt3:"售前阶段1 收集客户信息",
-			txt4:"售后 未开启",
-			txt5:"2017年09月22日",
-			txt6:"100.00元"
+			process: "2/3",
+			txt1: "测试",
+			txt2: "只是测试",
+			txt3: "售前阶段1 收集客户信息",
+			txt4: "售后 未开启",
+			txt5: "2017年09月22日",
+			txt6: "100.00元"
 		},
 		{
-			process:"3/3",
-			txt1:"测试",
-			txt2:"只是测试",
-			txt3:"售前阶段1 收集客户信息",
-			txt4:"售后 未开启",
-			txt5:"2017年09月22日",
-			txt6:"1000.00元"
+			process: "3/3",
+			txt1: "测试",
+			txt2: "只是测试",
+			txt3: "售前阶段1 收集客户信息",
+			txt4: "售后 未开启",
+			txt5: "2017年09月22日",
+			txt6: "1000.00元"
+		},
+		{
+			process: "3/3",
+			txt1: "测试",
+			txt2: "只是测试",
+			txt3: "售前阶段1 收集客户信息",
+			txt4: "售后 未开启",
+			txt5: "2017年09月22日",
+			txt6: "1000.00元"
+		},
+		{
+			process: "3/3",
+			txt1: "测试",
+			txt2: "只是测试",
+			txt3: "售前阶段1 收集客户信息",
+			txt4: "售后 未开启",
+			txt5: "2017年09月22日",
+			txt6: "1000.00元"
+		},
+		{
+			process: "3/3",
+			txt1: "测试",
+			txt2: "只是测试",
+			txt3: "售前阶段1 收集客户信息",
+			txt4: "售后 未开启",
+			txt5: "2017年09月22日",
+			txt6: "1000.00元"
 		}
-	]; 
+	];
 	var opportunity = new Vue({
 		el: '#index',
 		data: {
 			datas: data,
-			state:false,
-			sort:false,
-			choose:false
+			state: false,
+			sort: false,
+			choose: false
 		},
 		methods: {
-			showState:function (){
+			showState: function () {
 				this.state = !this.state;
 				this.sort = false;
 				this.choose = false;
+			},
+			createOpp: function () {
+				summer.openWin({
+					id: 'createOpp',
+					url: 'html/opportunity/createOpp.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "新建商机",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "取消",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems: [{
+							type: "text",
+							text: "提交",
+							textColor: "#ffffff",
+							method: "createOpp.createNewOpp()"
+						}]
+					}
+				})
+			},
+			oppDetail: function () {
+				summer.openWin({
+					id: 'oppDetail',
+					url: 'html/opportunity/oppDetail.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "商机详情",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						},
+						rightItems: [{
+							type: "text",
+							text: "编辑",
+							textColor: "#ffffff",
+							method: "oppDetail.changeOpp()"
+						}]
+					}
+				})
 			}
 		},
 		computed: {
-			maskStyle:function (){
+			maskStyle: function () {
 				return {
 					maskActive: this.state || this.sort || this.choose,
-					mask:true
+					mask: true
 				}
 			},
-			stateStyle:function (){
+			stateStyle: function () {
 				return {
-					stateActive:this.state,
-					state:true
+					stateActive: this.state,
+					state: true
 				}
 			}
 		}
@@ -179,6 +255,31 @@
 				url: 'html/fastReport/search.html',
 			});
 		};
+		// 上拉下拉刷新
+		/* summer.setRefreshHeaderInfo({
+			visible: true,
+			loadingImg: 'img/refresh.png',
+			bgColor: '#ffffff',
+			textColor: '#aaaaaa',
+			textDown: '下拉刷新...',
+			textUp: '松开刷新...',
+			showTime: true
+		}, function(ret, err) {
+			//通常在这里从服务器加载数据
+			summer.refreshHeaderLoadDone(); //加载完成后调用方法恢复组件到默认状态
+		});
+		summer.setRefreshFooterInfo({
+			visible: true,
+			loadingImg: 'img/refresh.png',
+			bgColor: '#ffffff',
+			textColor: '#aaaaaa',
+			textDown: '上拉刷新...',
+			textUp: '松开刷新...',
+			showTime: true
+		}, function(ret, err) {
+			//通常在这里从服务器加载数据，
+			summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+		}); */
 	}
 </script>
 
