@@ -726,6 +726,14 @@
 						return;
 					};
 					let self = this;
+					if(self.message.SEX_NM=="男"){
+						self.message.SEX='0'
+					}else{
+						self.message.SEX='1'
+					};
+					if(self.clintId){
+						self.message.CLIENT_ID=self.clintId;
+					}
 					//此处ajax请求
 					summer.openWin({
 						id: 'newCreateCustom2',
