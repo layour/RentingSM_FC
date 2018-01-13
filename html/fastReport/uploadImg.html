@@ -42,7 +42,7 @@
 				width: 26px;
 				height: 26px;
 			}
-			.uploadImg ul li:nth-child(even) .close{			
+			.uploadImg ul li:nth-child(even) .close{
 				position: absolute;
 				top:10px;
 				right:-10px;
@@ -195,7 +195,7 @@
 									_this.videoUrl='oldVideo'
 								}
 							},function(err){
-								alert(err);
+								alert(JSON.stringify(err));
 							})
 						},
 						openPopup(){
@@ -216,7 +216,7 @@
 									summer.hideProgress()
 									summer.toast({msg:'删除成功'})
 								},function(err){
-									alert(err);
+									alert(JSON.stringify(err));
 								})
 						},
 						deleteImg(i){
@@ -281,7 +281,7 @@
 									}
 							});
 						},
-						compressImg(i,args,length){							
+						compressImg(i,args,length){
 							var that=this;
 							console.log("第"+i+"次添加水印")
 							CommonUtil.watermark({
@@ -298,7 +298,7 @@
 									}
 								 }
 							});
-							console.log("程序还在执行")	
+							console.log("程序还在执行")
 						},
 						takeVideo(){
 							var _this=this
@@ -388,7 +388,7 @@
 				}
 				function multiUploadErrCallback(err){
 					console.log("失败"+ JSON.stringify(err));
-						alert("失败"+ JSON.stringify(err));
+						alert(JSON.stringify(err));
 				}
 				function videoSave(){
 					uploadVue.videoSave()
