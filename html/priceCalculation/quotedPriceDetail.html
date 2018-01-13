@@ -105,7 +105,7 @@
 					</li> -->
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
 					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
-					<li><b>期数</b><span>{{resultData.term}}期</span></li>
+					<li><b>期数</b><span>{{resultData.term}}&nbsp;期</span></li>
 				</ul>
 
       </div>
@@ -507,13 +507,13 @@
 								LEASE_SUBFIRENT:parseFloat(_this.quoted.allPrice-_this.quoted.sureFirstPay).toFixed(2),
 								LEASE_TERM:_this.quoted.contractTerm,
 								LEASE_PERIOD:1,
-								YEAR_INTEREST:_this.quoted.rate,
+								YEAR_INTEREST:String(_this.quoted.rate),
 								PAY_WAY:_this.quoted.payType,
-								MONTH_RENT:_this.resultData.termPrice,
+								MONTH_RENT:String(_this.resultData.termPrice),
 								FIRST_MONEY:_this.quoted.sureFirstPay,
-								START_PERCENT:_this.quoted.sureFirstPayRate,
+								START_PERCENT:String(_this.quoted.sureFirstPayRate),
 								DEPOSIT_MONEY:_this.quoted.lastBail,
-								BAIL_PERCENT:_this.quoted.sureBailRate,
+								BAIL_PERCENT:String(_this.quoted.sureBailRate),
 								// '':_this.quoted.sureBailType, 保证金方式
 								POUNDAGE_PRICE:_this.quoted.consultingFee,
 
