@@ -1,0 +1,143 @@
+.infoList {
+    width: 100%;
+    margin-bottom: 0.1rem;
+    background-color: #fff;
+}
+
+.infoList li {
+    height: 0.9rem;
+    padding: 0 0.56rem;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.infoList .first {
+    line-height: 0.9rem;
+    font-size: 0.36rem;
+    color: #333;
+}
+
+.infoList .first i {
+    float: left;
+    font-style: normal;
+}
+
+.infoList .first strong {
+    float: left;
+    width: 0.06rem;
+    height: 0.32rem;
+    background-color: #039be5;
+    font-style: normal;
+    margin: 0.28rem 0.08rem 0 0;
+}
+
+.infoList li span:nth-of-type(1) {
+    float: left;
+    color: #333;
+}
+
+.infoList li span:nth-of-type(2) {
+    color: #333;
+    float: right;
+    min-height: 0.9rem;
+    display: flex;
+    align-items: center;
+    width: 4.5rem;
+}
+
+.infoList li span:nth-of-type(2)>div {
+    font-size: 0.28rem;
+    color: #333;
+    display: block;
+    line-height: 0.9rem;
+    text-align: right;
+    width: 100%;
+}
+
+.infoList li span {
+    height: 0.9rem;
+    line-height: 0.9rem;
+    font-size: 0.28rem;
+    color: #333;
+}
+
+.infoList li span b {
+    font-weight: normal;
+}
+
+.infoList li div i,
+.infoList li div>span.iconfont {
+    float: right;
+    font-style: normal;
+}
+
+.infoList li div i {
+    color: #333;
+}
+
+.infoList li div>span {
+    margin: 0 0 0 0.1rem;
+    color: #dbdbdb;
+}
+
+.infoList li div {
+    float: right;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    font-size: 0.28rem;
+    color: #424242;
+}
+.stateList{
+    width: 100%;
+}
+.stateList>li{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    padding: 0.2rem 0.56rem;
+    margin-bottom: 0.05rem;
+}
+.stateList .left{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+.stateList .left .process{
+    width: 25%;
+    display: flex;
+    align-items: center;
+}
+.stateList .left .process span{
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 1px solid #333;
+    text-align: center;
+    line-height: 0.8rem;
+    font-size: 0.28rem;
+    color: #333;
+    border-radius: 0.4rem;
+}
+.stateList .left .state{
+    width: 75%;
+    justify-content: center;
+}
+.stateList .left .state p{
+    font-size: 0.28rem;
+    line-height: 0.5rem;
+    color: #999;
+}
+.stateList .right{
+    width: 10%;
+    position: relative;
+}
+.stateList .right>span{
+    position: absolute;
+    height: 0.28rem;
+    color: #333;
+    font-size: 0.28rem;
+    line-height: 0.28rem;
+    right: 0;
+    top: 50%;
+    transform: translate(0,-0.14rem);
+}
