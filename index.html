@@ -71,7 +71,7 @@
 							<dd>报价测算器</dd>
 						</dl>
 					</li>
-					<li onclick="openPayTab()">
+					<!-- <li onclick="openPayTab()">
 						<dl>
 							<dt class="iconfont icon-search1" style="color:#88d27c"></dt>
 							<dd>支付表查询</dd>
@@ -88,10 +88,10 @@
 							<dt class="iconfont icon-send_blog" style="color:#c79644"></dt>
 							<dd>对账还款</dd>
 						</dl>
-					</li>
+					</li> -->
 				</ul>
 			</div>
-			<h2 class="crm">
+			<!-- <h2 class="crm">
 					<div>
 						<span></span>
 						<i>CRM</i>
@@ -130,7 +130,7 @@
 						</dl>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 			<h2 class="xmgl">
 					<div>
 						<span></span>
@@ -139,19 +139,19 @@
 				</h2>
 			<div class="xmgl_con">
 				<ul class="xmgl_list clearfix">
-					<li>
+					<li onclick="openOil()">
 						<dl>
 							<dt class="iconfont icon-process" style="color:#403b3a"></dt>
 							<dd>燃油业务</dd>
 						</dl>
 					</li>
-					<li>
+					<li onclick="openGPS()">
 						<dl>
 							<dt class="iconfont icon-place" style="color:#88d27c"></dt>
 							<dd>GPS安装</dd>
 						</dl>
 					</li>
-					<li>
+					<li onclick="openETC()">
 						<dl>
 							<dt class="iconfont icon-submit" style="color:#c79644"></dt>
 							<dd>ETC业务</dd>
@@ -596,6 +596,35 @@
 				}
 			});
 		}
+
+		// 敬请期待
+		function openOil(){
+			if (isLogin()) {
+				summer.toast({
+					"msg": "敬请期待"
+				});
+			} else {
+				toLog();
+			}
+		};
+		function openGPS(){
+			if (isLogin()) {
+				summer.toast({
+					"msg": "敬请期待"
+				});
+			} else {
+				toLog();
+			}
+		};
+		function openETC(){
+			if (isLogin()) {
+				summer.toast({
+					"msg": "敬请期待"
+				});
+			} else {
+				toLog();
+			}
+		};
 
 		//Android返回键监听
 		var turn = 0;
