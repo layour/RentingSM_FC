@@ -44,20 +44,24 @@
 			var workNum = $('.workNum').val();
 			var psw = $('.psw').val();
 			var base = new Base64();
-			psw = base.encode(psw);//ODg4ODg4
+			psw = base.encode(psw); //ODg4ODg4
 			if (workNum == '') {
-				summer.toast({msg:"工号不得为空"});
+				summer.toast({
+					msg: "工号不得为空"
+				});
 				return;
 			}
 			if (psw == '') {
-				summer.toast({msg:"密码不得为空"});
+				summer.toast({
+					msg: "密码不得为空"
+				});
 				return;
 			}
 			summer.showProgress();
 			if (!summer.netAvailable()) {
 				summer.hideProgress();
 				summer.toast({
-					msg : "网络异常，请检查网络"
+					msg: "网络异常，请检查网络"
 				});
 				return false;
 			}
@@ -67,17 +71,17 @@
 			summer.ajax({
 				type: "post",
 				url: "http://122.49.7.88:8080/appservice/login/carLogin",
-				param:{
-					"appFlag":"1",
-					"EMPLOYEE_PWD":"HKSD"+psw+"EFASD",
-					"EMPLOYEE_CODE":workNum,
-					"SYSUSERFLAG":"1",
-					"VER_NO":"2"
+				param: {
+					"appFlag": "1",
+					"EMPLOYEE_PWD": "HKSD" + psw + "EFASD",
+					"EMPLOYEE_CODE": workNum,
+					"SYSUSERFLAG": "1",
+					"VER_NO": "2"
 				},
-				header : {
-			        "Content-Type" : "application/json"
-			    }
-			}, function(response) {
+				header: {
+					"Content-Type": "application/json"
+				}
+			}, function (response) {
 				console.log(response);
 				summer.hideProgress();
 				var Data;
@@ -88,7 +92,9 @@
 				}
 				switch (Data.flag) {
 					case 1:
-						summer.toast({msg:"登录成功"});
+						summer.toast({
+							msg: "登录成功"
+						});
 						var userData = Data.datas;
 						var userId = userData.EMPLOYEE_CODE;
 						var userName = userData.EMPLOYEE_NAME;
@@ -96,27 +102,38 @@
 						var ORG_NAME = userData.ORG_NAME;
 						var EMPLOYEE_ID = userData.EMPLOYEE_ID;
 						var userinfo = {
-							userId:userId,
-							userName:userName,
-							JOB_NAME:JOB_NAME,
-							ORG_NAME:ORG_NAME,
-							EMPLOYEE_ID:EMPLOYEE_ID
+							userId: userId,
+							userName: userName,
+							JOB_NAME: JOB_NAME,
+							ORG_NAME: ORG_NAME,
+							EMPLOYEE_ID: EMPLOYEE_ID
 						};
-						summer.setStorage("userinfo",userinfo);
+						summer.setStorage("userinfo", userinfo);
+						// 调用首页获取代办任务数量
+						summer.execScript({
+							winId: 'homePage',
+							script: "getMissionData()"
+						});
 						summer.closeToWin({
-							id:"homePage"
+							id: "homePage"
 						});
 						break;
 					case 0:
-						summer.toast({msg:"用户名或密码错误"});
+						summer.toast({
+							msg: "用户名或密码错误"
+						});
 						break;
 					default:
-						summer.toast({msg:"登录失败"});
+						summer.toast({
+							msg: "登录失败"
+						});
 				}
-			}, function(error) {
+			}, function (error) {
 				console.log(error);
 				summer.hideProgress();
-				summer.toast({msg:"系统内部异常"});
+				summer.toast({
+					msg: "系统内部异常"
+				});
 			});
 		};
 	</script>

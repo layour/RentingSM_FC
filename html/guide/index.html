@@ -43,64 +43,64 @@
         function openWin() {
             summer.setStorage("welcome", true);
             summer.openWin({
-                id:'homePage',
-                url:'index.html',
+                id: 'homePage',
+                url: 'index.html',
                 isKeep: false,
-                addBackListener:true,
-                create:false,
-                type:'actionBar',
+                addBackListener: true,
+                create: false,
+                type: 'actionBar',
                 actionBar: {
                     title: "",
                     titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
                     backgroundColor: "#039be5",
                     bottomLineColor: "#039be5",
-                    leftItem:{
-                        text:"复昌租赁",
-                        textColor:"#ffffff",
-                        method:"none()",//返回按钮自定义事件
+                    leftItem: {
+                        text: "复昌租赁",
+                        textColor: "#ffffff",
+                        method: "none()", //返回按钮自定义事件
                     },
                     rightItems: [{
                         image: "img/mine.png",
-                        method:"showUserInfo()",//返回按钮自定义事件
+                        method: "showUserInfo()", //返回按钮自定义事件
                     }]
                 }
             });
         }
-        summerready = function() {
+        summerready = function () {
             // 判断是否加载引导页
-			var bool = summer.getStorage("welcome") ? summer.getStorage("welcome") : false;
-			if (bool) {
+            var bool = summer.getStorage("welcome") ? summer.getStorage("welcome") : false;
+            if (bool) {
                 summer.openWin({
-                    id:'homePage',
-                    url:'index.html',
+                    id: 'homePage',
+                    url: 'index.html',
                     isKeep: false,
-                    addBackListener:true,
-                    create:false,
-                    type:'actionBar',
+                    addBackListener: true,
+                    create: false,
+                    type: 'actionBar',
                     actionBar: {
                         title: "",
                         titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
                         backgroundColor: "#039be5",
                         bottomLineColor: "#039be5",
-                        leftItem:{
-                            text:"复昌租赁",
-                            textColor:"#ffffff",
-                            method:"none()",//返回按钮自定义事件
+                        leftItem: {
+                            text: "复昌租赁",
+                            textColor: "#ffffff",
+                            method: "none()", //返回按钮自定义事件
                         },
                         rightItems: [{
                             image: "img/mine.png",
-                            method:"showUserInfo()",//返回按钮自定义事件
+                            method: "showUserInfo()", //返回按钮自定义事件
                         }]
                     }
                 });
-			} else {
+            } else {
                 // 关闭启动图
-                setTimeout(function() {
+                setTimeout(function () {
                     summer.hideLaunch();
                 }, 500);
                 var skip = $summer.dom(".skip");
                 var mySwiper = new Swiper('.swiper-container', {
-                    pagination : '.pagination'
+                    pagination: '.pagination'
                 });
             }
         }
