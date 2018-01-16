@@ -106,12 +106,11 @@
 }
 .tasteBtn {
     position: absolute;
-    width: 3.5rem;
-    height: 0.8rem;
+    width: 4.12rem;
+    height: 1.5rem;
     left: 50%;
     transform: translate(-50%);
-    bottom: 4.65rem;
-    border: 1px solid #000;
+    bottom: 5.75rem;
     line-height: 0.8rem;
     box-sizing: border-box;
     text-align: center;
