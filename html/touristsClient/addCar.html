@@ -114,8 +114,8 @@
 							guidePrice:'',
 							realityPrice:'',
 							holdPrice:'100',
-							safePrice:'',
-							onePrice:'',
+							safePrice:'0',
+							onePrice:'0',
 							number:'',
 							pickerColorStatus:false,
 							pickedColor:'',
@@ -285,7 +285,7 @@
 							}
 						},
 						save(){
-							if(!this.dealer||!this.company||!this.color||!this.carModels||!this.guidePrice||!this.holdPrice||!this.onePrice||!this.safePrice){
+							if(!this.dealer||!this.company||!this.color||!this.carModels||!this.guidePrice||!this.holdPrice||this.onePrice==''||this.safePrice==''){
 								summer.toast({msg:'请填写车辆的所有信息'})
 								return
 							}
