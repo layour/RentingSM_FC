@@ -37,6 +37,9 @@
     position: relative;
     border-bottom: 1px solid #f7f7f7;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .content:after {
@@ -49,29 +52,34 @@
 }
 
 .leftCon {
-    float: left;
     height: 100%;
-    width: 5.5rem;
+    width: 5rem;
 }
 
 .enter {
-    height: 0.4rem;
-    width: 0.5rem;
-    position: absolute;
-    right: 0.56rem;
-    top: 50%;
-    margin-top: -0.25rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 1.5rem;
 }
 
-.enter i{
-    float: right;
+.enterCon{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
 }
-
 .enter .icon-enter {
     width: 0.28rem;
     color: #dbdbdb;
     font-size: 0.28rem;
+    height: 0.4rem;
+}
+
+.enter b {
+    font-weight: normal;
     line-height: 0.4rem;
+    color: #424242;
+    font-size: 0.28rem;
 }
 
 .content p {

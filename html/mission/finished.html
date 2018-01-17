@@ -24,20 +24,19 @@
             <ul class="missionList">
                 <li v-for="k in dataList">
                     <div class="title">
-                        <span class="name">{{k.PRO_NAME}}</span>
+                        <span class="name">{{k.CLAIM_MAN}}</span>
                         <!-- <span class="state">{{k.CUST_NAME}}</span> -->
                     </div>
-                    <div class="content" @click="missionInfo(k.PROJECT_ID,k.EXECUTIONID,k.ID)">
+                    <div class="content">
                         <div class="leftCon">
-                            <p class="p1">任务名：{{k.ACTIVITYNAME}}</p>
-                            <p class="p2">项目编号：{{k.PRO_CODE}}</p>
-                            <p class="p3">流程编号：{{k.EXECUTIONID}}</p>
-                            <p class="p4">审批时间：{{k.CREATETIME}}</p>
+                            <p class="p1">任务名：{{k.NAME}}</p>
+                            <p class="p2">流程创建时间：{{k.TASK_CREATETIME}}</p>
+                            <p class="p3">分配/认领时间：{{k.DISTRIBUTION_DATE}}</p>
+                            <!-- <p class="p4">审批时间：{{k.CREATETIME}}</p> -->
                         </div>
                         <div class="enter">
-                            <div class="enterCon">
-                                <i class="iconfont icon-enter"></i>
-                            </div>
+                            <i class="iconfont icon-enter"></i>
+                            <b>{{k.STATE}}</b>
                         </div>
                     </div>
                 </li>
@@ -98,10 +97,12 @@
                     let self = this;
                     ajaxRequest({
                         type: 'post',
-                        url: 'appservice/bpmtask/myTask',
+                        url: 'appservice/bpmtask/myDoneTask',
                         param: {
                             "pageNo": pageNum,
                             "pageSize": 10,
+                            "STATE": "",
+                            "TASK_NAME": ""
                         }
                     }, function(res) {
                         //alert(res);
@@ -130,31 +131,6 @@
                         summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
                         summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
                     })
-                },
-                missionInfo: function(PROJECT_ID, JBPM_ID, TASK_ID) {
-                    summer.openWin({
-                        id: 'missionInfo',
-                        url: 'html/mission/missionInfo.html',
-                        create: false,
-                        type: 'actionBar',
-                        actionBar: {
-                            title: "审批详情",
-                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-                            backgroundColor: "#039be5",
-                            leftItem: {
-                                image: "img/back.png",
-                                method: "", //返回按钮自定义事件
-                                text: "返回",
-                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-                            }
-                        },
-                        pageParam: {
-                            JBPM_ID: JBPM_ID,
-                            TASK_ID: TASK_ID,
-                            PROJECT_ID: PROJECT_ID
-                        }
-
-                    });
                 }
             }
         });

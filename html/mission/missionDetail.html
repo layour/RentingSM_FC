@@ -14,20 +14,17 @@
     <script src="../../js/font.js" charset="utf-8"></script>
     <script src="../../js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
     <script src="../../js/common.js"></script>
-    <script src="../../js/vue.js" ></script>
+    <script src="../../js/vue.js"></script>
 </head>
 
 <body>
     <div class="um-frame" id="index">
-		<div class="um-content">
+        <div class="um-content">
             <h2 class="processNum">流程编号：{{JBPM_ID}}</h2>
             <ul class="processList">
-                <li
-                    v-for = "(k, index) in items"
-                    v-bind:class="[index == items.length-1 ? '' : 'borderActive']"
-                >
+                <li v-for="(k, index) in items" v-bind:class="[index == items.length-1 ? '' : 'borderActive']">
                     <img src="../../img/true.png" alt="">
-                    <div class = "box">
+                    <div class="box">
                         <p class="p1">{{k.TASK_NAME}}</p>
                         <p class="p2">【{{k.ID}}】{{k.OP_CODE}}：{{k.OP_TYPE}}</p>
                         <p class="p3">审批意见：{{k.MEMO}}</p>
@@ -36,91 +33,102 @@
                 </li>
             </ul>
             <div class="text">
-                <textarea class = "text" placeholder="请输入审批意见" v-model="txt"></textarea>
+                <textarea class="text" placeholder="请输入审批意见" v-model="txt"></textarea>
             </div>
             <div class="btns submitBtn um-box">
-                <span v-for = "k in arr" class="um-bf1" @click=submitMission(k.nodeName_,k.toNode_)>{{k.nodeName_}}  </span>
+                <span v-for="k in arr" class="um-bf1">
+                    <div @click=submitMission(k.nodeName_,k.toNode_) v-bind:class="[arr.length > 1 ? 'buttons more' : 'buttons']">{{k.nodeName_}}</div>
+                </span>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
     <script type="text/javascript">
-       summerready=function(){
-          var JBPM_ID=summer.pageParam.JBPM_ID;
-          var TASK_ID=summer.pageParam.TASK_ID;
-          missionDetail.JBPM_ID=JBPM_ID;
-          missionDetail.TASK_ID=TASK_ID;
-          missionDetail.getData(JBPM_ID,TASK_ID);
-       }
+        summerready = function () {
+            var JBPM_ID = summer.pageParam.JBPM_ID;
+            var TASK_ID = summer.pageParam.TASK_ID;
+            missionDetail.JBPM_ID = JBPM_ID;
+            missionDetail.TASK_ID = TASK_ID;
+            missionDetail.getData(JBPM_ID, TASK_ID);
+        }
         var missionDetail = new Vue({
-    		el: '#index',
-    		data: {
-               JBPM_ID:'',
-               TASK_ID:'',
-                txt:"",
-       			items: '',
-               arr:''/* [{"nodeName_":'提交',"toNode_":"下一步"},{"nodeName_":'提交2',"toNode_":"下一步2"} ,{"nodeName_":'提交3',"toNode_":"下一步3"}]*/
-    		},
-         methods:{
-            getData(JBPM_ID,TASK_ID){
-               let self = this;
-               if (JBPM_ID) {
-                  ajaxRequest({
-                     type: 'post',
-                     url: 'appservice/bpmtask/toShowTaskMemo',
-                     param: {
-                        "JBPM_ID": JBPM_ID,
-                        "TASK_ID":TASK_ID
-                     }
-                  }, function(res) {
-                     summer.hideProgress();
-                     if (res.data.flag == 1) {
-                        self.items=res.data.datas.jbpmMemoModel;
-                        self.arr=res.data.datas.flowNodes
-                        console.log(res);
-                     }
-                  }, function(err) {
-                     alert(err);
-                     console.log(err);
-                     summer.hideProgress();
-                  });
-               } else {
-                  createNull("flowContent", "../../img/empty.png","暂未发起流程")
-               }
+            el: '#index',
+            data: {
+                JBPM_ID: '',
+                TASK_ID: '',
+                txt: "",
+                items: '',
+                arr: '' /* [{"nodeName_":'提交',"toNode_":"下一步"},{"nodeName_":'提交2',"toNode_":"下一步2"} ,{"nodeName_":'提交3',"toNode_":"下一步3"}]*/
             },
-            submitMission(nodeName_,toNode_){
-               let self=this;
-               ajaxRequest({
-                  type: 'post',
-                  url: 'appservice/bpmtask/domyTask',
-                  param: {
-                     "JBPM_ID": self.JBPM_ID,
-                     "TASK_ID":self.TASK_ID,
-                     "MEMO":self.txt,
-                     "nodeName_":nodeName_,
-                     "toNode_":toNode_
-                  }
-               }, function(res) {
-                  summer.hideProgress();
-                  if (res.data.flag == 1) {
-                      summer.toast({msg:"处理成功"});
-                      summer.execScript({
-                          winId: "missionList",
-                          script: " getData('1', 'true');"
-                      });
-                      summer.execScript({
-                          winId: "homePage",
-                          script: " getMissionData();"
-                      });
-                      summer.closeWin();
-                     console.log(res);
-                  }
-               }, function(err) {
-                  console.log(err);
-                  summer.hideProgress();
-               });
+            methods: {
+                getData(JBPM_ID, TASK_ID) {
+                    summer.showProgress();
+                    let self = this;
+                    if (JBPM_ID) {
+                        ajaxRequest({
+                            type: 'post',
+                            url: 'appservice/bpmtask/toShowTaskMemo',
+                            param: {
+                                "JBPM_ID": JBPM_ID,
+                                "TASK_ID": TASK_ID
+                            }
+                        }, function (res) {
+                            summer.hideProgress();
+                            if (res.data.flag == 1) {
+                                self.items = res.data.datas.jbpmMemoModel;
+                                self.arr = res.data.datas.flowNodes
+                                console.log(res);
+                            }
+                        }, function (err) {
+                            alert(err);
+                            console.log(err);
+                            summer.hideProgress();
+                        });
+                    } else {
+                        summer.hideProgress();
+                        createNull("flowContent", "../../img/empty.png", "暂未发起流程")
+                    }
+                },
+                submitMission(nodeName_, toNode_) {
+                    let self = this;
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/bpmtask/domyTask',
+                        param: {
+                            "JBPM_ID": self.JBPM_ID,
+                            "TASK_ID": self.TASK_ID,
+                            "MEMO": self.txt,
+                            "nodeName_": nodeName_,
+                            "toNode_": toNode_
+                        }
+                    }, function (res) {
+                        summer.hideProgress();
+                        if (res.data.flag == 1) {
+                            summer.toast({
+                                msg: "处理成功"
+                            });
+                            summer.execScript({
+                                winId: "missionList",
+                                script: " getData('1', 'true');"
+                            });
+                            summer.execScript({
+                                winId: "homePage",
+                                script: " getMissionData();"
+                            });
+                            summer.closeWin();
+                            console.log(res);
+                        } else if (res.data.flag == 0) {
+                            summer.toast({
+                                msg: res.data.msg
+                            });
+                        }
+                    }, function (err) {
+                        console.log(err);
+                        summer.hideProgress();
+                    });
+                }
             }
-         }
         });
     </script>
 </body>
+
 </html>

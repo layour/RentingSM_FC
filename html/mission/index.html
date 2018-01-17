@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="missionInfo.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js"></script>
+</head>
+
+<body>
+	<div class="um-win" id="index">
+		<div class="um-content">
+			<div class="navbar">
+				<ul class="missionInfo">
+					<li class="active">待办任务</li>
+					<li>已办任务</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		summerready = function() {
+			var top = $('.um-header').height() + $('.navbar').height();
+			summer.openFrameGroup({
+				id: 'todo',
+				background: '#ffffff',
+				scrollEnabled: false,
+				position: {
+					top: top,
+					bottom: 0,
+					left: 0,
+					right: 0
+				},
+				index: 0,
+				frames: [{
+					id: 'missionList',
+					url: 'html/mission/missionList.html',
+					bgColor: '#ffffff',
+					hidden: false
+				}, {
+					id: 'finished',
+					url: 'html/mission/finished.html',
+					bgColor: '#ffffff',
+					hidden: true
+				}]
+			}, function(ret, err) {
+				var index = ret.index;
+			});
+		}
+		$(function() {
+			$('.missionInfo li').on('click', function() {
+				var tar = $(this).index();
+				$('.missionInfo li').removeClass('active');
+				$(this).addClass('active');
+				summer.setFrameGroupAttr({
+					id: 'todo',
+					index: tar
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
