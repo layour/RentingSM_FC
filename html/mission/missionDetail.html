@@ -20,6 +20,7 @@
 <body>
     <div class="um-frame" id="index">
         <div class="um-content">
+            <div id="content"></div>
             <h2 class="processNum">流程编号：{{JBPM_ID}}</h2>
             <ul class="processList">
                 <li v-for="(k, index) in items" v-bind:class="[index == items.length-1 ? '' : 'borderActive']">
@@ -85,7 +86,7 @@
                         });
                     } else {
                         summer.hideProgress();
-                        createNull("flowContent", "../../img/empty.png", "暂未发起流程")
+                        createNull("content", "../../img/empty.png", "暂未发起流程")
                     }
                 },
                 submitMission(nodeName_, toNode_) {

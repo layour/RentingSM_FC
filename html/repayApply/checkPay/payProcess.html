@@ -64,7 +64,7 @@
 						}
 						if (Data.flag == 1) {
 							if (Data.datas.length < 1) {
-								createNull("content", "../../../img/empty.png");
+								createNull("content", "../../../img/empty.png", "暂无付款流程");
 								$('#content').css('display','block');
 							} else {
 								$('#content').css('display','none');
@@ -83,7 +83,8 @@
 						console.log(err);
 					});
 				} else {
-					createNull("content", "../../../img/empty.png");
+					createNull("content", "../../../img/empty.png", "暂无付款流程");
+					$('#content').css('display','block');
 				}
 			}
 		</script>

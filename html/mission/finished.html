@@ -114,8 +114,10 @@
                             self.totalPage = Data.datas.last;
                             if (flag) {
                                 if (Data.datas.list.length < 1) {
-                                    createNull("content", "../../img/empty.png")
+                                    createNull("content", "../../img/empty.png", "暂无已办任务");
+                                    $('#content').css('display','block');
                                 } else {
+                                    $('#content').css('display','none');
                                     self.dataList = Data.datas.list;
                                 }
                             } else {
