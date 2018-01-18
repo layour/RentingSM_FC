@@ -237,6 +237,16 @@
                             msg: "请选择放款方式"
                         });
                         return;
+                    } else if (this.insurerPattern == "请选择") {
+                        summer.toast({
+                            msg: "请选择放款模式"
+                        });
+                        return;
+                    }  else if (this.insurerPay == "请选择") {
+                        summer.toast({
+                            msg: "请选择付款方式"
+                        });
+                        return;
                     } else if (this.insurerReplace == "请选择") {
                         summer.toast({
                             msg: "请选择是否代收"
@@ -252,12 +262,7 @@
                             msg: "请填写GPS费用"
                         });
                         return;
-                    } else if (this.insurerPattern == "请选择") {
-                        summer.toast({
-                            msg: "请选择放款模式"
-                        });
-                        return;
-                    }
+                    } 
                     summer.showProgress();
                     var ISDEKOU, PAYMENT_TYPE, LENDING_MODEL, PAYMONEY_TYPE;
                     this.replaceArr.forEach((e) => {
