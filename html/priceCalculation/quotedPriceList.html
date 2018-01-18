@@ -7,16 +7,12 @@
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="./quotedPrice.min.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		
 	</head>
 	<body>
 		<div class="um-win" id="quotedPrice" v-cloak>
 			<div class="um-content quotedPrice">
-				<section>
+				<!-- <section>
 					<p>已选方案</p>
 					<table class="selectedPlan"  @click="goDetail(selectedPlan.id)">
 						<tr><td><img src="../../img/test1.jpg" alt=""></td>
@@ -29,17 +25,16 @@
 							<td class="iconTd"> <button>已选择</button></td>
 						</tr>
 					</table>
-				</section>
+				</section> -->
 				<section>
-					<p>可选方案</p>
-					<table v-for="(item,index) in quotedPriceList" :key='index'  @click="goDetail(item.id)">
+					<!-- <p>可选方案</p> -->
+					<table v-for="(item,index) in quotedPriceList" :key='index'  @click="goDetail(item.SCHEME_CODE)">
 						<tr>
-							<td><img src="../../img/test1.jpg" alt=""></td>
+							<!-- <td><img src="../../img/test1.jpg" alt=""></td> -->
 							<td>
-								<p class="spanT"><span>快易融：</span>{{item.carModels}}</p>
-								<p><span>期末等额本息：</span>{{item.term}}</p>
-								<p><span>首付：</span>{{item.firstPrice}}</p>
-								<p><span>总价：</span>{{item.allPrice}}</p>
+								<p class="spanT"><span></span>{{item.SCHEME_NAME}}</p>
+								<p><span>类型：</span>{{item.SCHEMETYPE}}</p>
+								<p><span>编号：</span>{{item.SCHEME_CODE}}</p>
 							</td>
 							<td class="iconTd"><i class="icon iconfont icon-enter"></i></td>
 						</tr>
@@ -47,10 +42,20 @@
 				</section>
 
       </div>
-    </div>
+		</div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
+			var quotedPriceList;
+			summerready=function(){
+				quotedPriceList.getPriceList();
+			}
       $(function(){
-        new Vue({
+        quotedPriceList=new Vue({
           el:'#quotedPrice',
           data(){
             return {
@@ -61,25 +66,26 @@
 								firstPrice:'1000.00',
 								allPrice:'360000.00'
 							},
-							quotedPriceList:[
-								{
-									carModels:'新车',
-									term:'36',
-									id:2,
-									firstPrice:'1000.00',
-									allPrice:'360000.00'
-								},
-								{
-									carModels:'二手车',
-									term:'24',
-									id:3,
-									firstPrice:'100.00',
-									allPrice:'360000.00'
-								}
-							]
+							quotedPriceList:[]
             }
           },
 					methods:{
+						getPriceList(){
+							let self = this;
+									ajaxRequest({
+										type: 'post',
+										url: 'appservice/foundproject/toAddProjectScheme',
+										param: {}
+									}, function(res) {
+										 console.log(res);
+										 self.quotedPriceList=res.data.datas;
+									}, function(err) {
+										//alert(err);
+										console.log(err);
+										summer.hideProgress();
+									});
+								 
+						},
 						goDetail(id){
 							summer.openWin({
 								id:'quotedPriceDetail',

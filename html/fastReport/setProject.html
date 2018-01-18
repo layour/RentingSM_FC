@@ -97,7 +97,7 @@
 						<span class="frp"> <i class="addCarList icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div>
 				</a>
-				<a href="javascript:void(0);" id="version" onclick="checkVersion('quotedPriceDetail')">
+				<a href="javascript:void(0);" id="version" onclick="checkVersion('quotedPriceList')">
 					<div class="um-list-item-bodys">
 						报价方案
 						<span class="frp"> <i class="price icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
@@ -374,9 +374,9 @@
 					}
 				})
 				return
-			} else if (param == 'quotedPriceDetail') {
-				url = "html/priceCalculation/quotedPriceDetail.html";
-				title = "报价"
+			} else if (param == 'quotedPriceList') {
+				url = "html/priceCalculation/quotedPriceList.html";
+				title = "报价方案"
 				if(!$(".addCarList").hasClass('active')){
 					summer.toast({
 						msg: '请先添加车辆信息'
@@ -401,12 +401,6 @@
 							text: "返回",
 							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 						},
-						rightItems: [{
-							type: "text",
-							text: "保存",
-							textColor: "#ffffff",
-							method: "save()"
-						}]
 					}
 				})
 				return
