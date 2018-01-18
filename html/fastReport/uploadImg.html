@@ -1,398 +1,482 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/mint.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<style>
-			.uploadImg{
-				font-size: 14px;
-				color:#9E9E9E;
-			}
-			.uploadImg ul{
-				overflow:hidden;
-				padding:0 .56rem;
-			}
-			.uploadImg ul li{
-				padding:.4rem .4rem 0 .4rem;
-				width:50%;
-				float:left;
-				text-align: center;
-				position: relative;
-				border:1px solid #EFEFEF;
-			}
-			.uploadImg ul li:nth-child(even){
-				padding-right: 0;
-			}
-			.uploadImg ul li:nth-child(odd){
-				padding-left: 0;
-			}
-			.uploadImg ul li div{
-				background: #fff;
 
-				height:2.6rem;
-			}
-			.uploadImg ul li:nth-child(odd) .close{
-				position: absolute;
-				top:10px;
-				right:10px;
-				width: 26px;
-				height: 26px;
-			}
-			.uploadImg ul li:nth-child(even) .close{
-				position: absolute;
-				top:10px;
-				right:-10px;
-				width: 26px;
-				height: 26px;
-			}
-			.uploadImg ul li p{margin-top: .2rem;}
-			.uploadImg ul li i {
-				display: inline-block;
-				width:.72rem;
-				height:.72rem;
-				margin: .94rem 0;
-				font-size: 36px;
-				position: relative;
-				top:-.2rem;
-				color:#DEDEDE;
-			}
-			.uploadImg ul li img,.uploadImg ul li video{
-				width:100%;
-				height:2.6rem;
-			}
-			.mint-popup{
-				width:100%;
-				padding-top:.2rem;
-			}
-			.mint-popup p{
-				line-height: .88rem;
-				text-align: center;
-				font-size: 14px;
-			}
-			.mint-popup p.border{
-				border-bottom: 1px solid #EFEFEF;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="um-win" id="uploadImg" v-cloak>
-			<div class="um-content uploadImg">
-				<ul>
-					<template v-if="!isVideo">
-						<li v-for="(item,index) in oldImgList" :key="index">
-							<div @click="lookBig(item.PDF_PATH)" ><img v-if="item.PDF_PATH" :src="item.PDF_PATH" alt="">
-							<i v-else class="icon iconfont icon-add"></i></div>
-							<img class="close" @click="deleteOld(item.ID,index)" src="../../img/close.png" alt="">
-							<p>{{param.TPM_TYPE}}</p>
-						</li>
-						<li v-for="(item,index) in imgList" :key="index">
-							<div @click="lookBig(item)"><img v-if="item" :src="item" alt="">
-							<i v-else class="icon iconfont icon-add"></i></div>
-							<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
-							<p>{{param.TPM_TYPE}}</p>
-						</li>
-						<li @click="openPopup" v-if="imgList.length<9">
-							<div><i  class="icon iconfont icon-add"></i></div>
-							<p>{{param.TPM_TYPE}}</p>
-						</li>
-					</template>
-					<template v-else>
-						<li @click="takeVideo">
-							<div>
-								<!-- <video v-if="videoUrl" :src="videoUrl"></video> -->
-								<img v-if="videoUrl" src="../../img/video.jpeg" alt="">
-								<i v-else class="icon iconfont icon-add"></i>
-							</div>
-							<p>{{param.TPM_TYPE}}</p>
-						</li>
-					</template>
-				</ul>
-      </div>
-			<mt-popup v-model="popupVisible" position="bottom">
-					<p class='border' @click="openCame">打开相机</p>
-					<p class='border' @click="uploadImg">打开相册</p>
-					<p @click="openPopup">取消</p>
-			</mt-popup>
-    </div>
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/mint.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<style>
+		.uploadImg {
+			font-size: 14px;
+			color: #9E9E9E;
+		}
 
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script src="../../js/common.js" ></script>
-    <script>
-				summerready = function() {
-					uploadVue.param=summer.pageParam;
-					if(summer.pageParam.video){uploadVue.isVideo=true}
-					console.log("param",JSON.stringify(uploadVue.param));
-					uploadVue.getData();
-					var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION","android.permission.RECORD_AUDIO"];
-					summer.getPermission(params, function(args) {
-						//alert(args); //成功返回OK
-					}, function(args) {
-						//alert(args); //失败返回illegal access
-					})
+		.uploadImg ul {
+			overflow: hidden;
+			padding: 0 .56rem;
+		}
+
+		.uploadImg ul li {
+			padding: .4rem .4rem 0 .4rem;
+			width: 50%;
+			float: left;
+			text-align: center;
+			position: relative;
+			border: 1px solid #EFEFEF;
+		}
+
+		.uploadImg ul li:nth-child(even) {
+			padding-right: 0;
+		}
+
+		.uploadImg ul li:nth-child(odd) {
+			padding-left: 0;
+		}
+
+		.uploadImg ul li div {
+			background: #fff;
+
+			height: 2.6rem;
+		}
+
+		.uploadImg ul li:nth-child(odd) .close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 26px;
+			height: 26px;
+		}
+
+		.uploadImg ul li:nth-child(even) .close {
+			position: absolute;
+			top: 10px;
+			right: -10px;
+			width: 26px;
+			height: 26px;
+		}
+
+		.uploadImg ul li p {
+			margin-top: .2rem;
+		}
+
+		.uploadImg ul li i {
+			display: inline-block;
+			width: .72rem;
+			height: .72rem;
+			margin: .94rem 0;
+			font-size: 36px;
+			position: relative;
+			top: -.2rem;
+			color: #DEDEDE;
+		}
+
+		.uploadImg ul li img,
+		.uploadImg ul li video {
+			width: 100%;
+			height: 2.6rem;
+		}
+
+		.mint-popup {
+			width: 100%;
+			padding-top: .2rem;
+		}
+
+		.mint-popup p {
+			line-height: .88rem;
+			text-align: center;
+			font-size: 14px;
+		}
+
+		.mint-popup p.border {
+			border-bottom: 1px solid #EFEFEF;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="um-win" id="uploadImg" v-cloak>
+		<div class="um-content uploadImg">
+			<ul>
+				<template v-if="!isVideo">
+					<li v-for="(item,index) in oldImgList" :key="index">
+						<div @click="lookBig(item.PDF_PATH)">
+							<img v-if="item.PDF_PATH" :src="item.PDF_PATH" alt="">
+							<i v-else class="icon iconfont icon-add"></i>
+						</div>
+						<img class="close" @click="deleteOld(item.ID,index)" src="../../img/close.png" alt="">
+						<p>{{param.TPM_TYPE}}</p>
+					</li>
+					<li v-for="(item,index) in imgList" :key="index">
+						<div @click="lookBig(item)">
+							<img v-if="item" :src="item" alt="">
+							<i v-else class="icon iconfont icon-add"></i>
+						</div>
+						<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
+						<p>{{param.TPM_TYPE}}</p>
+					</li>
+					<li @click="openPopup" v-if="imgList.length<9">
+						<div>
+							<i class="icon iconfont icon-add"></i>
+						</div>
+						<p>{{param.TPM_TYPE}}</p>
+					</li>
+				</template>
+				<template v-else>
+					<li @click="takeVideo">
+						<div>
+							<!-- <video v-if="videoUrl" :src="videoUrl"></video> -->
+							<img v-if="videoUrl" src="../../img/video.jpeg" alt="">
+							<i v-else class="icon iconfont icon-add"></i>
+						</div>
+						<p>{{param.TPM_TYPE}}</p>
+					</li>
+				</template>
+			</ul>
+		</div>
+		<mt-popup v-model="popupVisible" position="bottom">
+			<p class='border' @click="openCame">打开相机</p>
+			<p class='border' @click="uploadImg">打开相册</p>
+			<p @click="openPopup">取消</p>
+		</mt-popup>
+	</div>
+
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/font.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/mint.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/common.js"></script>
+	<script>
+		summerready = function () {
+			uploadVue.param = summer.pageParam;
+			if (summer.pageParam.video) {
+				uploadVue.isVideo = true
+			}
+			console.log("param", JSON.stringify(uploadVue.param));
+			uploadVue.getData();
+			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION",
+				"android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE",
+				"android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE",
+				"android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION",
+				"android.permission.RECORD_AUDIO"
+			];
+			summer.getPermission(params, function (args) {
+				//alert(args); //成功返回OK
+			}, function (args) {
+				//alert(args); //失败返回illegal access
+			})
+		}
+		var uploadVue = new Vue({
+			el: '#uploadImg',
+			data() {
+				return {
+					popupVisible: false,
+					fileName: '',
+					param: {},
+					oldImgList: [],
+					imgList: [],
+					uploadImgArr: [],
+					isVideo: false,
+					videoUrl: '',
+					videoImg: ''
 				}
-        var uploadVue=new Vue({
-          el:'#uploadImg',
-          data(){
-            return {
-							popupVisible:false,
-							fileName:'',
-							param:{},
-							oldImgList:[],
-							imgList:[],
-							uploadImgArr:[],
-							isVideo:false,
-							videoUrl:'',
-							videoImg:''
-            }
-          },
-					methods:{
-						lookBig(it){
-							var _this=this;
-              summer.openWin({
-        				id: 'lookBigImg',
-        				url: "html/fastReport/lookBigImg.html",
-        				create: false,
-								animation:{
-									type:"fade",
-									subType:"",
-									duration:300
-								},
-        				pageParam: {
-        					url:it
-        				}
-        			})
+			},
+			methods: {
+				lookBig(it) {
+					var _this = this;
+					summer.openWin({
+						id: 'lookBigImg',
+						url: "html/fastReport/lookBigImg.html",
+						create: false,
+						animation: {
+							type: "fade",
+							subType: "",
+							duration: 300
 						},
-						getData(){
-							var _this=this;
-							ajaxRequest({
-								type:'POST',
-								url:'appservice/business/getFileByProject',
-								param:{
-									PROJECT_ID: _this.param.PROJECT_ID,
-									TPM_BUSINESS_PLATE:_this.param.TPM_BUSINESS_PLATE,
-									TPM_CUSTOMER_TYPE:_this.param.TPM_CUSTOMER_TYPE,
-									TPM_TYPE:_this.param.TPM_TYPE
-								}
-							},function(res){
-								console.log(JSON.stringify(res));
-								if(res.data.datas.length>0){
-										_this.oldImgList=res.data.datas
-										for (var i = 0; i < _this.oldImgList.length; i++) {
-											_this.oldImgList[i].PDF_PATH=window.G_COMMON_URL+"appservice/business/downloadFiles?PATH="+_this.oldImgList[i].PDF_PATH
-
-										}
-								}
-								if(res.data.datas.length>0&&res.data.datas[0].TPM_TYPE=='面签视频材料'){
-									_this.videoUrl='oldVideo'
-								}
-							},function(err){
-								alert(JSON.stringify(err));
-							})
-						},
-						openPopup(){
-							this.popupVisible=!this.popupVisible
-						},
-						deleteOld(id,i){
-								var _this=this;
-								summer.showProgress();
-								ajaxRequest({
-									type:'POST',
-									url:'appservice/business/deleteFile',
-									param:{
-										ID:id
-									}
-								},function(res){
-									console.log(JSON.stringify(res));
-									_this.oldImgList.splice(i,1)
-									summer.hideProgress()
-									summer.toast({msg:'删除成功'})
-								},function(err){
-									alert(JSON.stringify(err));
-								})
-						},
-						deleteImg(i){
-							this.imgList.splice(i,1)
-						},
-						openCame(){
-							// 打开相机
-							var that=this
-     			            this.popupVisible=false;
-							summer.openCamera({
-								compressionRatio:0.5,
-								callback : function(args){
-									 console.log(JSON.stringify(args));
-									// 水印
-										CommonUtil.watermark({
-											srcImage:args.compressImgPath,
-											targetImage:args.compressImgPath,
-											name:that.param.TPM_TYPE,
-											callback:function(arg){
-												 console.log(JSON.stringify(arg));
-													that.imgList.push(arg.target);
-											 }
-										});
-								}
-							});
-
-						},
-						uploadImg(){
-							// 选择相册
-							this.popupVisible=false
-							var that=this
-							summer.openPhotoAlbum({
-									compressionRatio:0.5,
-									type : "multiple",
-							    callback : function (args){
-							     console.log(JSON.stringify(args));
-										var length=args.imgPaths.length;
-										if(that.imgList.length+length>9){
-											summer.toast({msg:"最多上传9张图片"})
-											return
-										}
-										console.log("开始添加水印,图片个数"+length);
-										summer.showProgress();
-										that.compressImg(0,args,length);
-										function compressImg(i){
-											CommonUtil.watermark({
-												srcImage:args.imgPaths[i].imgPath,
-												targetImage:args.imgPaths[i].imgPath,
-												name:that.param.TPM_TYPE,
-												callback:function(res){
-													console.log(i+"水印后的"+res.target)
-														that.imgList.push(res.target);
-														if(i<length-1){
-															console.log("第"+i+"次回掉");
-															compressImg(i+1)
-														}else{
-															summer.hideProgress();
-														}
-												 }
-											});
-										}
-									}
-							});
-						},
-						compressImg(i,args,length){
-							var that=this;
-							console.log("第"+i+"次添加水印")
-							CommonUtil.watermark({
-								srcImage:args.imgPaths[i].imgPath,
-								targetImage:args.imgPaths[i].imgPath,
-								name:that.param.TPM_TYPE,
-								callback:function(res){
-									console.log("第"+i+"次水印后的"+res.target)
-									that.imgList.push(res.target);
-									if(i<length-1){
-										that.compressImg(i+1,args,length)
-									}else{
-										summer.hideProgress();
-									}
-								 }
-							});
-							console.log("程序还在执行")
-						},
-						takeVideo(){
-							var _this=this
-							cordova.require("summer-plugin-video.Video").open({}, function(res) {
-								console.log(JSON.stringify(res));
-							    if (res.type == 1) {
-							        //视频
-							       _this.videoUrl= res.path;
-							    } else if (res.type == 2) {
-										 _this.videoUrl= res.path;
-							    }
-							})
-						},
-						videoSave(){
-							var that=this;
-							if(this.videoUrl=='oldVideo'){
-								summer.toast({msg:'视频已经保存过'})
-								return
-							}
-							summer.showProgress();
-							this.uploadImgArr=[{fileURL:this.videoUrl,type:"image/mp4",name:this.param.TPM_TYPE}]
-							var dataParams={
-									PROJECT_ID: that.param.PROJECT_ID,
-									TPM_BUSINESS_PLATE:that.param.TPM_BUSINESS_PLATE,
-									TPM_CUSTOMER_TYPE:that.param.TPM_CUSTOMER_TYPE,
-									TPM_TYPE:that.param.TPM_TYPE,
-									FILE_NAME:that.param.TPM_TYPE
-							};
-							console.log("上传的参数"+JSON.stringify(dataParams));
-							console.log("文件数组"+JSON.stringify(this.uploadImgArr));
-							if(this.uploadImgArr.length==0){
-								summer.toast({msg:'请先拍摄视频'})
-								return
-							}
-							summer.multiUpload({
-								fileArray : that.uploadImgArr,
-								params : dataParams,
-								// headers :{"Content-Type" : "application/json"},
-								SERVER : window.G_COMMON_URL+"appservice/business/newUploadloadFiles",
-								timeout : 10
-							}, "multiUploadCallback()", "multiUploadErrCallback()");
-						},
-						save(){
-								var that=this;
-								summer.showProgress();
-								console.log(window.G_COMMON_URL);
-								for(var i=0;i<this.imgList.length;i++){
-									if(i==0){this.fileName=this.param.TPM_TYPE+i}else{this.fileName+="#"+this.param.TPM_TYPE+i}
-									this.uploadImgArr.push({fileURL:this.imgList[i],type:"image/jpeg",name:this.param.TPM_TYPE+i})
-								}
-								var dataParams={
-										PROJECT_ID: that.param.PROJECT_ID,
-										TPM_BUSINESS_PLATE:that.param.TPM_BUSINESS_PLATE,
-										TPM_CUSTOMER_TYPE:that.param.TPM_CUSTOMER_TYPE,
-										TPM_TYPE:that.param.TPM_TYPE,
-										FILE_NAME:that.fileName
-								};
-								console.log("上传的参数"+JSON.stringify(dataParams))
-								console.log("文件数组"+JSON.stringify(this.uploadImgArr));
-								if(this.uploadImgArr.length==0){
-									summer.toast({msg:'请先选择图片'})
-									return
-								}
-								summer.multiUpload({
-									fileArray : that.uploadImgArr,
-									params : dataParams,
-									// headers :{"Content-Type" : "application/json"},
-									SERVER : window.G_COMMON_URL+"appservice/business/newUploadloadFiles",
-									timeout : 10
-								}, "multiUploadCallback()", "multiUploadErrCallback()");
+						pageParam: {
+							url: it
 						}
-					}
-        })
-				function save(){
-					uploadVue.save()
-				}
-				function multiUploadCallback(ret){
+					})
+				},
+				getData() {
+					var _this = this;
+					ajaxRequest({
+						type: 'POST',
+						url: 'appservice/business/getFileByProject',
+						param: {
+							PROJECT_ID: _this.param.PROJECT_ID,
+							TPM_BUSINESS_PLATE: _this.param.TPM_BUSINESS_PLATE,
+							TPM_CUSTOMER_TYPE: _this.param.TPM_CUSTOMER_TYPE,
+							TPM_TYPE: _this.param.TPM_TYPE
+						}
+					}, function (res) {
+						console.log(JSON.stringify(res));
+						if (res.data.datas.length > 0) {
+							_this.oldImgList = res.data.datas
+							for (var i = 0; i < _this.oldImgList.length; i++) {
+								_this.oldImgList[i].PDF_PATH = window.G_COMMON_URL + "appservice/business/downloadFiles?PATH=" + _this.oldImgList[
+									i].PDF_PATH
 
-						console.log("成功"+ JSON.stringify(ret));
-						summer.hideProgress();
-						summer.toast({msg:"上传成功"});
-						summer.execScript({
-								winId: "setProject",
-								script: "addRight('uploadImg')"
-						});
-						summer.closeWin()
-				}
-				function multiUploadErrCallback(err){
-					console.log("失败"+ JSON.stringify(err));
+							}
+						}
+						if (res.data.datas.length > 0 && res.data.datas[0].TPM_TYPE == '面签视频材料') {
+							_this.videoUrl = 'oldVideo'
+						}
+					}, function (err) {
 						alert(JSON.stringify(err));
+					})
+				},
+				openPopup() {
+					this.popupVisible = !this.popupVisible
+				},
+				deleteOld(id, i) {
+					var _this = this;
+					summer.showProgress();
+					ajaxRequest({
+						type: 'POST',
+						url: 'appservice/business/deleteFile',
+						param: {
+							ID: id
+						}
+					}, function (res) {
+						console.log(JSON.stringify(res));
+						_this.oldImgList.splice(i, 1)
+						summer.hideProgress()
+						summer.toast({
+							msg: '删除成功'
+						})
+					}, function (err) {
+						alert(JSON.stringify(err));
+					})
+				},
+				deleteImg(i) {
+					this.imgList.splice(i, 1)
+				},
+				openCame() {
+					// 打开相机
+					var that = this
+					this.popupVisible = false;
+					summer.openCamera({
+						compressionRatio: 0.5,
+						callback: function (args) {
+							console.log(JSON.stringify(args));
+							// 水印
+							CommonUtil.watermark({
+								srcImage: args.compressImgPath,
+								targetImage: args.compressImgPath,
+								name: that.param.TPM_TYPE,
+								callback: function (arg) {
+									console.log(JSON.stringify(arg));
+									that.imgList.push(arg.target);
+								}
+							});
+						}
+					});
+
+				},
+				uploadImg() {
+					// 选择相册
+					this.popupVisible = false
+					var that = this
+					summer.openPhotoAlbum({
+						compressionRatio: 0.5,
+						type: "multiple",
+						callback: function (args) {
+							console.log(JSON.stringify(args));
+							var length = args.imgPaths.length;
+							if (that.imgList.length + length > 9) {
+								summer.toast({
+									msg: "最多上传9张图片"
+								})
+								return
+							}
+							console.log("开始添加水印,图片个数" + length);
+							summer.showProgress();
+							that.compressImg(0, args, length);
+
+							function compressImg(i) {
+								CommonUtil.watermark({
+									srcImage: args.imgPaths[i].imgPath,
+									targetImage: args.imgPaths[i].imgPath,
+									name: that.param.TPM_TYPE,
+									callback: function (res) {
+										console.log(i + "水印后的" + res.target)
+										that.imgList.push(res.target);
+										if (i < length - 1) {
+											console.log("第" + i + "次回掉");
+											compressImg(i + 1)
+										} else {
+											summer.hideProgress();
+										}
+									}
+								});
+							}
+						}
+					});
+				},
+				compressImg(i, args, length) {
+					var that = this;
+					console.log("第" + i + "次添加水印")
+					CommonUtil.watermark({
+						srcImage: args.imgPaths[i].imgPath,
+						targetImage: args.imgPaths[i].imgPath,
+						name: that.param.TPM_TYPE,
+						callback: function (res) {
+							console.log("第" + i + "次水印后的" + res.target)
+							that.imgList.push(res.target);
+							if (i < length - 1) {
+								that.compressImg(i + 1, args, length)
+							} else {
+								summer.hideProgress();
+							}
+						}
+					});
+					console.log("程序还在执行")
+				},
+				takeVideo() {
+					var _this = this
+					cordova.require("summer-plugin-video.Video").open({}, function (res) {
+						console.log(JSON.stringify(res));
+						if (res.type == 1) {
+							//视频
+							_this.videoUrl = res.path;
+						} else if (res.type == 2) {
+							_this.videoUrl = res.path;
+						}
+					})
+				},
+				videoSave() {
+					var that = this;
+					if (this.videoUrl == 'oldVideo') {
+						summer.toast({
+							msg: '视频已经保存过'
+						})
+						return
+					}
+					summer.showProgress();
+					this.uploadImgArr = [{
+						fileURL: this.videoUrl,
+						type: "image/mp4",
+						name: this.param.TPM_TYPE
+					}]
+					var dataParams = {
+						PROJECT_ID: that.param.PROJECT_ID,
+						TPM_BUSINESS_PLATE: that.param.TPM_BUSINESS_PLATE,
+						TPM_CUSTOMER_TYPE: that.param.TPM_CUSTOMER_TYPE,
+						TPM_TYPE: that.param.TPM_TYPE,
+						FILE_NAME: that.param.TPM_TYPE
+					};
+					console.log("上传的参数" + JSON.stringify(dataParams));
+					console.log("文件数组" + JSON.stringify(this.uploadImgArr));
+					if (this.uploadImgArr.length == 0) {
+						summer.toast({
+							msg: '请先拍摄视频'
+						})
+						return
+					}
+					summer.multiUpload({
+						fileArray: that.uploadImgArr,
+						params: dataParams,
+						// headers :{"Content-Type" : "application/json"},
+						SERVER: window.G_COMMON_URL + "appservice/business/newUploadloadFiles",
+						timeout: 10
+					}, "multiUploadCallback()", "multiUploadErrCallback()");
+				},
+				save(par) {
+					var that = this;
+					summer.showProgress();
+					console.log(window.G_COMMON_URL);
+					for (var i = 0; i < this.imgList.length; i++) {
+						if (i == 0) {
+							this.fileName = this.param.TPM_TYPE + i
+						} else {
+							this.fileName += "#" + this.param.TPM_TYPE + i
+						}
+						this.uploadImgArr.push({
+							fileURL: this.imgList[i],
+							type: "image/jpeg",
+							name: this.param.TPM_TYPE + i
+						})
+					}
+					var dataParams = {
+						PROJECT_ID: that.param.PROJECT_ID,
+						TPM_BUSINESS_PLATE: that.param.TPM_BUSINESS_PLATE,
+						TPM_CUSTOMER_TYPE: that.param.TPM_CUSTOMER_TYPE,
+						TPM_TYPE: that.param.TPM_TYPE,
+						FILE_NAME: that.fileName
+					};
+					console.log("上传的参数" + JSON.stringify(dataParams))
+					console.log("文件数组" + JSON.stringify(this.uploadImgArr));
+					if (this.uploadImgArr.length == 0) {
+						summer.toast({
+							msg: '请先选择图片'
+						})
+						summer.hideProgress();
+						return
+					}
+					if (par) {
+						summer.multiUpload({
+							fileArray: that.uploadImgArr,
+							params: dataParams,
+							// headers :{"Content-Type" : "application/json"},
+							SERVER: window.G_COMMON_URL + "appservice/business/newUploadloadFiles",
+							timeout: 10
+						}, "multiUploadCallback_repay()", "multiUploadErrCallback()");
+					} else {
+						summer.multiUpload({
+							fileArray: that.uploadImgArr,
+							params: dataParams,
+							// headers :{"Content-Type" : "application/json"},
+							SERVER: window.G_COMMON_URL + "appservice/business/newUploadloadFiles",
+							timeout: 10
+						}, "multiUploadCallback()", "multiUploadErrCallback()");
+					}
 				}
-				function videoSave(){
-					uploadVue.videoSave()
-				}
-    </script>
-  </body>
+			}
+		})
+
+		function save() {
+			uploadVue.save()
+		}
+		function save_payFile() {
+			uploadVue.save("repay")
+		}
+
+		function multiUploadCallback(ret) {
+
+			console.log("成功" + JSON.stringify(ret));
+			summer.hideProgress();
+			summer.toast({
+				msg: "上传成功"
+			});
+			summer.execScript({
+				winId: "setProject",
+				script: "addRight('uploadImg')"
+			});
+			summer.closeWin()
+		}
+		function multiUploadCallback_repay(ret){
+			console.log("成功" + JSON.stringify(ret));
+			summer.hideProgress();
+			summer.toast({
+				msg: "上传成功"
+			});
+			summer.closeWin()
+		}
+
+		function multiUploadErrCallback(err) {
+			console.log("失败" + JSON.stringify(err));
+			alert(JSON.stringify(err));
+		}
+
+		function videoSave() {
+			uploadVue.videoSave()
+		}
+	</script>
+</body>
+
 </html>
