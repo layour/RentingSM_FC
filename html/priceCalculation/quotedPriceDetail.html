@@ -20,6 +20,8 @@
 		<div class="um-win" id="quotedPriceDetail" v-cloak>
 			<div class="um-content quotedPriceDetail">
 				<ul>
+					<li><b>方案名称</b><span>{{SCHEME_NAME}}</span></li>
+					<li><b>方案编号</b><span>{{SCHEME_CODE}}</span></li>
 					<li v-if="PROJECT_ID!=''" class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
 					<li v-else class="spec input">
 						<b>合同金额</b>
@@ -62,6 +64,14 @@
 							<b v-else class="default">请选择</b>
 							<i class="icon iconfont icon-enter"></i>
 						</span>
+					</li>
+					<li class='spec' @click="surePickerCar()">
+							<b>挂靠车队</b>
+							<span>
+								<b v-if="GKCD">{{GKCD}}</b>
+								<b v-else class="default">请选择</b>
+								<i class="icon iconfont icon-enter"></i>
+							</span>
 					</li>
 					<li @click="pickFirstRate">
 						<b>首付比例</b>
@@ -110,6 +120,12 @@
 
       </div>
 			<div class="um-footer" id="footer">
+					<mt-popup v-model="pickerCarStatus" position='bottom' class="pickerPrice">
+							<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+							<p>
+								<span class="fl" @click="surePickerCar">取消</span><span class="fr" @click="surePickerCar('confirm')">确定</span>
+							</p>
+					</mt-popup>
 				<mt-popup v-model="pickerStatus" v-if="pickerStatus" position="bottom" class="pickerPrice">
 					<mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
 					<p><span class="fl" @click="surePicker">取消</span><span class="fr" @click="surePicker('','confirm')">确定</span></p>
@@ -191,8 +207,14 @@
     </div>
     <script>
 			summerready=function(){
-				if(summer.pageParam.id){
-					quotedVue.PROJECT_ID=summer.pageParam.id;
+				if(summer.pageParam.projectId){
+					quotedVue.PROJECT_ID=summer.pageParam.projectId;
+				}
+				if(summer.pageParam.SCHEME_CODE){
+					quotedVue.SCHEME_CODE=summer.pageParam.SCHEME_CODE;
+				}
+				if(summer.pageParam.SCHEME_NAME){
+					quotedVue.SCHEME_NAME=summer.pageParam.SCHEME_NAME;
 				}
 					quotedVue.getData();
 
@@ -210,9 +232,18 @@
 								className: 'slot1',
 								textAlign: 'center'
 							}],
+							slots1: [{
+								flex: 1,
+								values: ['男','女'],
+								defaultIndex: 0,
+								className: 'slot1',
+								textAlign: 'center'
+							}],
 							payTypeList:[],
 							bailList:["融资额","首期款"],
 							termTypeList:['期满处','里方式'],
+							GKCD_CAR_LIST:[],
+							pickerCarStatus:false,
 							pickerStatus:false,
 							pickerPayTypeStatus:false,
 							bailStatue:false,
@@ -222,6 +253,10 @@
 							pickerType:'payType',
 							pickerVal:'',
 							PROJECT_ID:'',
+							SCHEME_CODE:'',//报价方案code
+							SCHEME_NAME:'',
+							pickerCar:'',
+							GKCD:'',//挂靠车队
 							quoted:{
 								allPrice:'',
 								term:'', //租赁期数
@@ -287,6 +322,7 @@
 								url:'appservice/foundproject/queryProjectScheme',
 								param:{PROJECT_ID:_this.PROJECT_ID}
 							},function(res){
+								_this.getCarList();
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
 								var data=res.data.datas.scheme
@@ -319,6 +355,19 @@
 								console.log("err",err);
 							})
 
+						},
+						getCarList(){
+							var _this=this;
+							ajaxRequest({
+								type:'POST',
+								url:'appservice/customer/datadictionary',
+								param:{DATATYPE:"GKCD"}
+							},function(res){
+								_this.slots1=res.data.datas;
+							     console.log(res);
+							},function(err){
+								console.log("err",err);
+							})
 						},
 						surePickerpayType(val){
 							this.pickerPayTypeStatus=!this.pickerPayTypeStatus
@@ -357,6 +406,15 @@
 							this.quoted.sureFirstPay=this.quoted.firstPay
 							this.quoted.sureFirstPayRate=this.quoted.firstPayRate
 							this.firstPayStatu=false
+						},
+						onValuesChange1: function(picker, values) {
+							this.pickerCar= values[0];
+						},
+						surePickerCar: function(param) {
+							this.pickerCarStatus = !this.pickerCarStatus;
+							if (param == 'confirm') {
+								this.GKCD  = this.pickerCar;
+							}
 						},
 						pickFirstRate(){
 							this.firstPayStatu=!this.firstPayStatu
@@ -500,6 +558,8 @@
 							summer.showProgress();
 							var _this=this
 							var param={
+								SCHEME_CODE:_this.SCHEME_CODE,
+								GKCD:_this.GKCD,
 								PROJECT_ID:_this.PROJECT_ID,
 								SCHEME_ID:_this.SCHEME_ID,  //报价单id
 								TOTAL_MONTH_PRICE:_this.testData.TOTAL_REN_PRICE,
