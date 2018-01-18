@@ -35,8 +35,10 @@
                             <!-- <p class="p4">审批时间：{{k.CREATETIME}}</p> -->
                         </div>
                         <div class="enter">
-                            <i class="iconfont icon-enter"></i>
-                            <b>{{k.STATE}}</b>
+                            <div class="enterCon">
+                                <i class="iconfont icon-enter"></i>
+                                <b>{{k.STATE}}</b>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -45,7 +47,7 @@
     </div>
     <script type="text/javascript">
         var _endNum = 1;
-        summerready = function() {
+        summerready = function () {
             summer.showProgress();
             getData(1, true)
             summer.setRefreshHeaderInfo({
@@ -56,7 +58,7 @@
                 textDown: '下拉刷新...',
                 textUp: '松开刷新...',
                 showTime: true
-            }, function(ret, err) {
+            }, function (ret, err) {
                 //通常在这里从服务器加载数据，t
                 getData(1, true);
                 _endNum = 1;
@@ -69,7 +71,7 @@
                 textDown: '上拉刷新...',
                 textUp: '松开刷新...',
                 showTime: true
-            }, function(ret, err) {
+            }, function (ret, err) {
                 //通常在这里从服务器加载数据，
                 _endNum += 1;
                 if (_endNum > missionList.totalPage) {
@@ -104,7 +106,7 @@
                             "STATE": "",
                             "TASK_NAME": ""
                         }
-                    }, function(res) {
+                    }, function (res) {
                         //alert(res);
                         summer.hideProgress();
                         var Data = res.data;
@@ -122,12 +124,12 @@
 
                             console.log(self.dataList);
                         }
-                    }, function(err) {
+                    }, function (err) {
                         //alert(err);
                         console.log(err);
                         summer.hideProgress();
                     });
-                    this.$nextTick(function() {
+                    this.$nextTick(function () {
                         summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
                         summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
                     })
