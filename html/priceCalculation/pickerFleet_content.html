@@ -29,6 +29,10 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
+			summerready=function(){
+				pickerFleetVue.SUP_ID=summer.getStorage("SUP_ID")
+				pickerFleetVue.getData()
+			}
     	var pickerFleetVue=new Vue({
           el:'#pickerDealer',
           data(){
@@ -37,17 +41,23 @@
 							dealerList:[],
 							item:[],
 							searchVal:'',
-							currentPage:1
+							currentPage:1,
+							SUP_ID:''
             }
           },
 					created(){
+
 					},
 					methods:{
 						getData(){
 							var _this=this
+								console.log(JSON.stringify({
+									SUP_ID:_this.SUP_ID,
+									FLAG:_this.searchVal
+								}))
 								ajaxRequest({
 									type:'POST',
-									url:'appservice/customer/datadictionary',
+									url:'appservice/foundproject/toProSche',
 									param:{
 										SUP_ID:_this.SUP_ID,
 										FLAG:_this.searchVal

@@ -301,6 +301,7 @@
 					methods:{
 						selectFleet(){
 							var _this=this;
+							summer.setStorage("SUP_ID",this.SUPPLIERS_ID)
 							summer.openWin({
 								id:'pickerFleet',
 								url:'html/priceCalculation/pickerFleet.html',
@@ -507,7 +508,7 @@
 
 						},
 						quotedTest(){
-							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee){
+							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee){
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}
