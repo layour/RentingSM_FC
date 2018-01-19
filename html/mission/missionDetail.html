@@ -22,7 +22,7 @@
         <div class="um-content">
             <div id="content"></div>
             <h2 class="processNum">流程编号：{{JBPM_ID}}</h2>
-            <ul class="processList">
+            <ul class="processList" v-if="!(KTYPE=='finished')">
                 <li v-for="(k, index) in items" v-bind:class="[index == items.length-1 ? '' : 'borderActive']">
                     <img src="../../img/true.png" alt="">
                     <div class="box">
@@ -33,13 +33,23 @@
                     </div>
                 </li>
             </ul>
-            <div class="text">
-                <textarea class="text" placeholder="请输入审批意见" v-model="txt"></textarea>
-            </div>
-            <div class="btns submitBtn um-box">
-                <span v-for="k in arr" class="um-bf1">
-                    <div @click=submitMission(k.nodeName_,k.toNode_) v-bind:class="[arr.length > 1 ? 'buttons more' : 'buttons']">{{k.nodeName_}}</div>
-                </span>
+            <ul class="processList" v-else>
+                <li>
+                    <img src="../../img/true.png" alt="">
+                    <div class="box">
+                        <p class="p1">任务已完成</p>
+                    </div>
+                </li>
+            </ul>
+            <div v-bind:style="[KTYPE=='finished' ? {display:'none'} : {display:'block'}]">
+                <div class="text">
+                    <textarea class="text" placeholder="请输入审批意见" v-model="txt"></textarea>
+                </div>
+                <div class="btns submitBtn um-box">
+                    <span v-for="k in arr" class="um-bf1">
+                        <div @click=submitMission(k.nodeName_,k.toNode_) v-bind:class="[arr.length > 1 ? 'buttons more' : 'buttons']">{{k.nodeName_}}</div>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
@@ -47,8 +57,10 @@
         summerready = function () {
             var JBPM_ID = summer.pageParam.JBPM_ID;
             var TASK_ID = summer.pageParam.TASK_ID;
+            var KTYPE = summer.pageParam.KTYPE;
             missionDetail.JBPM_ID = JBPM_ID;
             missionDetail.TASK_ID = TASK_ID;
+            missionDetail.KTYPE = KTYPE;
             missionDetail.getData(JBPM_ID, TASK_ID);
         }
         var missionDetail = new Vue({
@@ -56,6 +68,7 @@
             data: {
                 JBPM_ID: '',
                 TASK_ID: '',
+                KTYPE: '',
                 txt: "",
                 items: '',
                 arr: '' /* [{"nodeName_":'提交',"toNode_":"下一步"},{"nodeName_":'提交2',"toNode_":"下一步2"} ,{"nodeName_":'提交3',"toNode_":"下一步3"}]*/

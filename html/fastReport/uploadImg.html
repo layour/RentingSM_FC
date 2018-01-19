@@ -461,9 +461,14 @@
 		}
 		function multiUploadCallback_repay(ret){
 			console.log("成功" + JSON.stringify(ret));
+			var className = uploadVue.param.CLASS_NAME;
 			summer.hideProgress();
 			summer.toast({
 				msg: "上传成功"
+			});
+			summer.execScript({
+				winId: "fileList",
+				script: "addRight('"+className+"')"
 			});
 			summer.closeWin()
 		}

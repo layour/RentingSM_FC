@@ -30,6 +30,7 @@
             var JBPM_ID = summer.pageParam.JBPM_ID;
             var TASK_ID = summer.pageParam.TASK_ID;
             var PROJECT_ID = summer.pageParam.PROJECT_ID;
+			var KTYPE = summer.pageParam.KTYPE;
 			var top = $('.um-header').height() + $('.navbar').height();
 			summer.openFrameGroup({
 				id: 'missionCheck',
@@ -57,7 +58,8 @@
 					hidden: true,
 					pageParam: {
                         JBPM_ID: JBPM_ID,
-                        TASK_ID: TASK_ID
+                        TASK_ID: TASK_ID,
+						KTYPE: KTYPE
 				    }
 				}],
 				pageParam: [
@@ -66,7 +68,8 @@
 					},
 					{
                         JBPM_ID: JBPM_ID,
-                        TASK_ID: TASK_ID
+                        TASK_ID: TASK_ID,
+						KTYPE: KTYPE
 					}
 				]
 			}, function(ret, err) {
