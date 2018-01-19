@@ -284,37 +284,12 @@
 							var _this=this
 							ajaxRequest({
 								type:'POST',
-								url:'appservice/foundproject/queryProjectScheme',
-								param:{PROJECT_ID:_this.PROJECT_ID}
+								url:'appservice/foundproject/toProjectSchemePrice',
+								param:{CODE:''}
 							},function(res){
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
-								var data=res.data.datas.scheme
-								if(data){
-									_this.SCHEME_ID=data.ID
-									_this.quoted.allPrice=data.LEASE_TOPRIC
-									_this.quoted.term=data.LEASE_TERM+"个月"
-									_this.quoted.contractTerm=data.LEASE_TERM
-									_this.quoted.rate=data.YEAR_INTEREST
-									_this.quoted.payType=data.PAY_WAY_NM
-									_this.quoted.sureFirstPayRate=data.START_PERCENT
-									_this.quoted.sureFirstPay=data.FIRST_MONEY
-									_this.quoted.lastBail=data.DEPOSIT_MONEY
-									// _this.quoted.sureBailType=data.LEASE_SUBFIRENT
-									_this.quoted.sureBailRate=data.BAIL_PERCENT
-									_this.quoted.consultingFee=data.POUNDAGE_PRICE
-									// _this.quoted.sureBail=data.DEPOSIT_MONEY
-									_this.resultData.firstPrice=data.FIRST_MONEY
-									_this.resultData.termPrice=data.MONTH_RENT
-									_this.resultData.term=data.LEASE_TERM
-								}else{
-									if(res.data.datas.prj.LEASE_TOPRIC){
-										_this.quoted.allPrice=res.data.datas.prj.LEASE_TOPRIC
-									}else{
-										if(_this.PROJECT_ID!=''){summer.toast({msg:'请先添加车辆'})}
 
-									}
-								}
 							},function(err){
 								console.log("err",err);
 							})

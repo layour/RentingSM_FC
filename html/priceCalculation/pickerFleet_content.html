@@ -51,10 +51,6 @@
 					methods:{
 						getData(){
 							var _this=this
-								console.log(JSON.stringify({
-									SUP_ID:_this.SUP_ID,
-									FLAG:_this.searchVal
-								}))
 								ajaxRequest({
 									type:'POST',
 									url:'appservice/foundproject/toProSche',
