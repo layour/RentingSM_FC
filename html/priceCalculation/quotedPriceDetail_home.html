@@ -20,8 +20,6 @@
 		<div class="um-win" id="quotedPriceDetail" v-cloak>
 			<div class="um-content quotedPriceDetail">
 				<ul>
-					<li><b>方案名称</b><span>{{SCHEME_NAME}}</span></li>
-					<li><b>方案编号</b><span>{{SCHEME_CODE}}</span></li>
 					<li v-if="PROJECT_ID!=''" class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
 					<li v-else class="spec input">
 						<b>合同金额</b>
@@ -64,14 +62,6 @@
 							<b v-else class="default">请选择</b>
 							<i class="icon iconfont icon-enter"></i>
 						</span>
-					</li>
-					<li class='spec' @click="surePickerCar()">
-							<b>挂靠车队</b>
-							<span>
-								<b v-if="GKCD">{{GKCD}}</b>
-								<b v-else class="default">请选择</b>
-								<i class="icon iconfont icon-enter"></i>
-							</span>
 					</li>
 					<li @click="pickFirstRate">
 						<b>首付比例</b>
@@ -201,14 +191,8 @@
     </div>
     <script>
 			summerready=function(){
-				if(summer.pageParam.projectId){
-					quotedVue.PROJECT_ID=summer.pageParam.projectId;
-				}
-				if(summer.pageParam.SCHEME_CODE){
-					quotedVue.SCHEME_CODE=summer.pageParam.SCHEME_CODE;
-				}
-				if(summer.pageParam.SCHEME_NAME){
-					quotedVue.SCHEME_NAME=summer.pageParam.SCHEME_NAME;
+				if(summer.pageParam.id){
+					quotedVue.PROJECT_ID=summer.pageParam.id;
 				}
 					quotedVue.getData();
 
@@ -238,9 +222,6 @@
 							pickerType:'payType',
 							pickerVal:'',
 							PROJECT_ID:'',
-							SCHEME_CODE:'',//报价方案code
-							SCHEME_NAME:'',
-							GKCD:'',//挂靠车队
 							quoted:{
 								allPrice:'',
 								term:'', //租赁期数
@@ -306,7 +287,6 @@
 								url:'appservice/foundproject/queryProjectScheme',
 								param:{PROJECT_ID:_this.PROJECT_ID}
 							},function(res){
-								_this.getCarList();
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
 								var data=res.data.datas.scheme
@@ -520,8 +500,6 @@
 							summer.showProgress();
 							var _this=this
 							var param={
-								SCHEME_CODE:_this.SCHEME_CODE,
-								GKCD:_this.GKCD,
 								PROJECT_ID:_this.PROJECT_ID,
 								SCHEME_ID:_this.SCHEME_ID,  //报价单id
 								TOTAL_MONTH_PRICE:_this.testData.TOTAL_REN_PRICE,
