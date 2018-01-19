@@ -65,13 +65,27 @@
 							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
-					<li class='spec' @click="selectFleet">
+					<li @click="sureGkfsType">
+						<b>挂靠方式</b>
+						<span>
+							<b v-if="GKFS">{{GKFS}}</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
+						</span>
+					</li>
+					<li class='spec' @click="selectFleet" v-if="gkfsCode=='2'||gkfsCode=='3'">
 							<b>挂靠车队</b>
 							<span>
 								<b v-if="GKCD">{{GKCD}}</b>
 								<b v-else class="default">请选择</b>
 								<i class="icon iconfont icon-enter"></i>
 							</span>
+					</li>
+					<li class='spec input' v-else>
+						<b>挂靠车队</b>
+						<span>
+							<input type="text" style="min-width:4rem;" placeholder="请输入挂靠车队" name="gkcd" v-model="GKCD">&nbsp;&nbsp;
+						</span>
 					</li>
 					<li @click="pickFirstRate">
 						<b>首付比例</b>
@@ -127,6 +141,10 @@
 				<mt-popup v-model="pickerPayTypeStatus" class="pickerPrice" v-else-if="pickerPayTypeStatus" position='bottom' >
 					<mt-picker value-key="FLAG" :slots="payTypeSlots" @change="onPayTypeChange"></mt-picker>
 					<p><span class="fl" @click="surePickerpayType">取消</span><span class="fr" @click="surePickerpayType('confirm')">确定</span></p>
+				</mt-popup>
+				<mt-popup v-model="pickerGkfsStatus" class="pickerPrice" v-else-if="pickerGkfsStatus" position='bottom' >
+					<mt-picker value-key="FLAG" :slots="gkfsSlots" @change="onGkfsChange"></mt-picker>
+					<p><span class="fl" @click="sureGkfsType">取消</span><span class="fr" @click="sureGkfsType('confirm')">确定</span></p>
 				</mt-popup>
 				<mt-popup v-model="firstPayStatu" class="firstPayCont" v-else-if="firstPayStatu" position="bottom">
 					<ul v-if="moneyToRate">
@@ -226,11 +244,19 @@
 								className: 'slot1',
 								textAlign: 'center'
 							}],
+							gkfsSlots:[{
+								flex: 1,
+								values: [],
+								defaultIndex:0,
+								className: 'slot2',
+								textAlign: 'center'
+							}],
 							payTypeList:[],
 							bailList:["融资额","首期款"],
 							termTypeList:['期满处','里方式'],
 							pickerStatus:false,
 							pickerPayTypeStatus:false,
+							pickerGkfsStatus:false,
 							bailStatue:false,
 							firstPayStatu:false,
 							moneyToRate:true,
@@ -241,6 +267,9 @@
 							SUPPLIERS_ID:'',
 							SCHEME_CODE:'',//报价方案code
 							SCHEME_NAME:'',
+							GKFS:'',
+							pickerCode:'',
+							gkfsCode:'1',
 							GKCD:'',//挂靠车队
 							quoted:{
 								allPrice:'',
@@ -300,6 +329,10 @@
 					},
 					methods:{
 						selectFleet(){
+							if(!this.GKFS){
+								summer.toast({msg:'请先选择挂靠方式'})
+								return
+							}
 							var _this=this;
 							summer.setStorage("SUP_ID",this.SUPPLIERS_ID)
 							summer.openWin({
@@ -334,7 +367,7 @@
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
 								_this.SUPPLIERS_ID=res.data.datas.prj.SUPPLIERS_ID
-
+								_this.gkfsSlots[0].values=res.data.datas.GKFS
 								var data=res.data.datas.scheme
 								if(data){
 									_this.SCHEME_ID=data.ID
@@ -365,12 +398,20 @@
 							},function(err){
 								console.log("err",err);
 							})
-
 						},
 						surePickerpayType(val){
 							this.pickerPayTypeStatus=!this.pickerPayTypeStatus
 							if(val=='confirm'){
 								this.quoted.payType=this.pickerVal
+								console.log(this.quoted.payType)
+							}
+						},
+						sureGkfsType(val){
+							this.pickerGkfsStatus=!this.pickerGkfsStatus
+							if(val=='confirm'){
+								this.GKFS=this.pickerVal
+								this.gkfsCode=this.pickerCode
+								this.GKCD=''
 								console.log(this.quoted.payType)
 							}
 						},
@@ -413,6 +454,10 @@
 				    },
 						onPayTypeChange(picker,values){
 							this.pickerVal=values[0].FLAG;
+						},
+						onGkfsChange(picker,values){
+							this.pickerVal=values[0].FLAG;
+							this.pickerCode=values[0].CODE;
 						},
 						surePicker(item,status){
 							this.pickerStatus=!this.pickerStatus;
