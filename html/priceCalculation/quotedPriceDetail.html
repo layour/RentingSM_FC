@@ -65,7 +65,7 @@
 							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
-					<li class='spec' @click="surePickerCar()">
+					<li class='spec' @click="selectFleet">
 							<b>挂靠车队</b>
 							<span>
 								<b v-if="GKCD">{{GKCD}}</b>
@@ -238,6 +238,7 @@
 							pickerType:'payType',
 							pickerVal:'',
 							PROJECT_ID:'',
+							SUPPLIERS_ID:'',
 							SCHEME_CODE:'',//报价方案code
 							SCHEME_NAME:'',
 							GKCD:'',//挂靠车队
@@ -298,6 +299,29 @@
 						}
 					},
 					methods:{
+						selectFleet(){
+							var _this=this;
+							summer.openWin({
+								id:'pickerFleet',
+								url:'html/priceCalculation/pickerFleet.html',
+								create:false,
+								type:'actionBar',
+								actionBar: {
+						      title: "添加挂靠车队",
+						      titleColor: "#ffffff",
+						      backgroundColor: "#039BE5",
+						      leftItem:{
+						          image: "img/back.png",
+						          method:'',
+						          text:"返回",
+						          textColor:"#ffffff"
+						      }
+								},
+								pageParam:{
+									SUP_ID:_this.SUPPLIERS_ID
+								}
+							})
+						},
 						getData(){
 							console.log("PROJECT_ID",this.PROJECT_ID);
 							var _this=this
@@ -306,12 +330,14 @@
 								url:'appservice/foundproject/queryProjectScheme',
 								param:{PROJECT_ID:_this.PROJECT_ID}
 							},function(res){
-								_this.getCarList();
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
+								_this.SUPPLIERS_ID=res.data.datas.prj.SUPPLIERS_ID
+
 								var data=res.data.datas.scheme
 								if(data){
 									_this.SCHEME_ID=data.ID
+									_this.GKCD=data.GKCD
 									_this.quoted.allPrice=data.LEASE_TOPRIC
 									_this.quoted.term=data.LEASE_TERM+"个月"
 									_this.quoted.contractTerm=data.LEASE_TERM
@@ -563,6 +589,9 @@
         })
 			function save(){
 				quotedVue.save()
+			}
+			function getFleet(){
+				quotedVue.GKCD=JSON.parse(summer.getStorage('pickerFleet')).FLAG;
 			}
     </script>
   </body>

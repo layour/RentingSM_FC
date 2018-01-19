@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="../touristsClient/car.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="pickerDealer"  v-cloak>
+			<div class="um-content addCar">
+        <ul class="dealerList">
+          <li @click="sureSupplier(item)" v-for="(item,index) in dealerList" :key="index">{{item.FLAG}}</li>
+        </ul>
+				<div class="alignCenter" v-if="dealerList.length==0">
+					<img src="../../img/empty.png" alt="">
+					<p>暂无数据</p>
+				</div>
+      </div>
+    </div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+    <script>
+    	var pickerFleetVue=new Vue({
+          el:'#pickerDealer',
+          data(){
+            return {
+              popupVisible:false,
+							dealerList:[],
+							item:[],
+							searchVal:'',
+							currentPage:1
+            }
+          },
+					created(){
+					},
+					methods:{
+						getData(){
+							var _this=this
+								ajaxRequest({
+									type:'POST',
+									url:'appservice/customer/datadictionary',
+									param:{
+										SUP_ID:_this.SUP_ID,
+										FLAG:_this.searchVal
+									}
+								},function(res){
+									console.log("res",res);
+									_this.dealerList=res.data.datas.GKCD
+								},function(err){
+									console.log("err",err);
+								})
+						},
+						sureSupplier(item){
+							summer.setStorage('pickerFleet',JSON.stringify(item));
+							summer.execScript({
+							    winId: 'quotedPriceDetail',
+							    script: 'getFleet()'
+							});
+							summer.closeWin();
+						}
+					}
+        })
+				function getData(val){
+					pickerFleetVue.searchVal=val
+					pickerFleetVue.getData();
+				}
+    </script>
+  </body>
+</html>
