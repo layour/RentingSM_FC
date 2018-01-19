@@ -27,9 +27,9 @@
                         <span class="name">{{k.CLAIM_MAN}}</span>
                         <!-- <span class="state">{{k.CUST_NAME}}</span> -->
                     </div>
-                    <div class="content">
+                    <div class="content" @click="missionInfo(k.PROJECT_ID,k.EXECUTIONID,k.ID)">
                         <div class="leftCon">
-                            <p class="p1">任务名：{{k.NAME}}</p>
+                            <p class="p1">节点名称：{{k.ACTIVITYNAME}}</p>
                             <p class="p2">流程创建时间：{{k.TASK_CREATETIME}}</p>
                             <p class="p3">分配/认领时间：{{k.DISTRIBUTION_DATE}}</p>
                             <!-- <p class="p4">审批时间：{{k.CREATETIME}}</p> -->
@@ -135,6 +135,32 @@
                         summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
                         summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
                     })
+                },
+                missionInfo: function(PROJECT_ID, JBPM_ID, TASK_ID) {
+                    summer.openWin({
+                        id: 'missionInfo',
+                        url: 'html/mission/missionInfo.html',
+                        create: false,
+                        type: 'actionBar',
+                        actionBar: {
+                            title: "审批详情",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039be5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            }
+                        },
+                        pageParam: {
+                            JBPM_ID: JBPM_ID,
+                            TASK_ID: TASK_ID,
+                            PROJECT_ID: PROJECT_ID,
+                            KTYPE: 'finished' 
+                        }
+
+                    });
                 }
             }
         });
