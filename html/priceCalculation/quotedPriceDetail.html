@@ -84,7 +84,7 @@
 					<li class='spec input' v-else>
 						<b>挂靠车队</b>
 						<span>
-							<input type="text" style="min-width:4rem;" placeholder="请输入挂靠车队" name="gkcd" v-model="GKCD">&nbsp;&nbsp;
+							<input type="text" style="min-width:4rem;" @input="checkGkcd" placeholder="请输入挂靠车队" name="gkcd" v-model="GKCD">&nbsp;&nbsp;
 						</span>
 					</li>
 					<li @click="pickFirstRate">
@@ -269,7 +269,7 @@
 							SCHEME_NAME:'',
 							GKFS:'',
 							pickerCode:'',
-							gkfsCode:'1',
+							gkfsCode:'2',
 							GKCD:'',//挂靠车队
 							quoted:{
 								allPrice:'',
@@ -328,6 +328,13 @@
 						}
 					},
 					methods:{
+						checkGkcd(){
+							if(!this.GKFS){
+								this.GKCD=""
+								summer.toast({msg:'请先选择挂靠方式'})
+								return
+							}
+						},
 						selectFleet(){
 							if(!this.GKFS){
 								summer.toast({msg:'请先选择挂靠方式'})
