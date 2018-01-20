@@ -21,7 +21,8 @@
 			<div class="um-content quotedPriceDetail">
 				<ul>
 					<li><b>方案名称</b><span>{{SCHEME_NAME}}</span></li>
-					<li><b>方案编号</b><span>{{SCHEME_CODE}}</span></li>
+					<!-- 不再显示方案编号了 -->
+					<!-- <li><b>方案编号</b><span>{{SCHEME_CODE}}</span></li> -->
 					<li v-if="PROJECT_ID!=''" class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
 					<li v-else class="spec input">
 						<b>合同金额</b>
