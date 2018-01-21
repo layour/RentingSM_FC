@@ -164,6 +164,7 @@
 					</div>
 					<div class="list listContent" v-for="(item,index) in dataList.EquipObj">
 						<p class="title pl10">车辆信息{{(dataList.EquipObj.length>1)?index+1:""}}</p>
+						<p class="pl10 pr10">车辆种类<span class="fr">{{item.CAR_NAME}}</span></p>
 						<p class="pl10 pr10">经销商<span class="fr">{{item.SUPPLIERS_NAME}}</span></p>
 						<p class="pl10 pr10">厂商<span class="fr">{{item.COMPANY_NAME}}</span></p>
 						<p class="pl10 pr10">品牌<span class="fr">{{item.PRODUCT_NAME}}</span></p>
