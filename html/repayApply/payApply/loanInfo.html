@@ -230,7 +230,7 @@
                         this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
                     }
                 },
-                // 保存
+                // 提交
                 save(){
                     if (this.insurerMethod == "请选择") {
                         summer.toast({
@@ -324,7 +324,11 @@
                                     id: 'payList'
                                 });
                             }
-						} else {
+						} else if (Data.flag == 0) {
+                            summer.toast({
+								msg: "该项目还存在未生成合格证的设备，请先生成合格证"
+							});
+                        } else {
 							summer.toast({
 								msg: Data.msg
 							});
