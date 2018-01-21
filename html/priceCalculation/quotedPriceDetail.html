@@ -380,6 +380,7 @@
 								if(data){
 									_this.SCHEME_ID=data.ID
 									_this.GKCD=data.GKCD
+									_this.GKFS=data.GKFS
 									_this.quoted.allPrice=data.LEASE_TOPRIC
 									_this.quoted.term=data.LEASE_TERM+"个月"
 									_this.quoted.contractTerm=data.LEASE_TERM
@@ -602,6 +603,7 @@
 							var param={
 								SCHEME_CODE:_this.SCHEME_CODE,
 								GKCD:_this.GKCD,
+								GKFS:_this.GKFS,
 								PROJECT_ID:_this.PROJECT_ID,
 								SCHEME_ID:_this.SCHEME_ID,  //报价单id
 								TOTAL_MONTH_PRICE:_this.testData.TOTAL_REN_PRICE,
