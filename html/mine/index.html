@@ -12,6 +12,7 @@
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="../../js/font.js" charset="utf-8"></script>
+	<script src="../../js/common.js"></script>
 </head>
 
 <body>
@@ -43,7 +44,9 @@
 					<span class="iconfont icon-call"></span>
 					<i>客服电话</i>
 					<div class="companyInfo">
-						<b class="company"><a href="tel:010-84705470">010-84705470</a></b>
+						<b class="company">
+							<a href="tel:010-84705470">010-84705470</a>
+						</b>
 					</div>
 				</li>
 				<li onclick="update()">
@@ -71,11 +74,11 @@
 				return false;
 			}
 		}
-        // 如果未登录，按钮改变
+		// 如果未登录，按钮改变
 		if (!isLogin()) {
 			$('.logout').text('立即登录');
 		}
-		summerready = function() {
+		summerready = function () {
 			if (isLogin()) {
 				var userinfo = summer.getStorage("userinfo");
 				var name = userinfo.userName ? userinfo.userName : "张帅经理";
@@ -92,7 +95,7 @@
 					title: '确定要退出吗？',
 					btnText: ["取消", "确定"],
 					overlay: true,
-					ok: function() {
+					ok: function () {
 						summer.setStorage("userinfo", {});
 						summer.openWin({
 							id: 'login',
@@ -154,18 +157,15 @@
 		function update() {
 			if (isLogin()) {
 				summer.showProgress();
-				summer.ajax({
-					type: "post",
-					url: "http://122.49.7.88:8080/appservice/appsys/getNewapp",
+				ajaxRequest({
+					type: 'post',
+					url: 'appservice/appsys/getNewapp',
 					param: {
 						"version": "1",
 						"appFlag": "1",
 						"sysCd": "11002"
-					},
-					header: {
-						"Content-Type": "application/json"
 					}
-				}, function(response) {
+				}, function (response) {
 					summer.hideProgress();
 					var Data;
 					if (Object.prototype.toString.call(response.data) === '[object String]') {
@@ -189,9 +189,9 @@
 								msg: "请求失败"
 							});
 					}
-				}, function(error) {
+				}, function (err) {
 					summer.hideProgress();
-					console.log(error);
+					console.log(err);
 					summer.toast({
 						msg: "系统内部异常"
 					});

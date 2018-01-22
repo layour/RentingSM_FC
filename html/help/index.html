@@ -12,6 +12,7 @@
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
     <script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/common.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,9 @@
         <div class="um-content">
             <div class="box border">
                 <textarea id="question" placeholder="亲，请输入需要解决的问题（必填）" maxlength="200"></textarea>
-                <p class="showBox"><span id="txtShow">0/200</span></p>
+                <p class="showBox">
+                    <span id="txtShow">0/200</span>
+                </p>
             </div>
             <div class="box clearfix border">
                 <div class="title-box">
@@ -42,13 +45,13 @@
     </div>
     <script type="text/javascript">
         var g_pathArr = [];
-        summerready = function() {
+        summerready = function () {
             bindEvents()
-            setTimeout(function() {}, 400)
+            setTimeout(function () {}, 400)
         }
 
         function bindEvents() {
-            $("#question").on("input propertychange", function() {
+            $("#question").on("input propertychange", function () {
                 var length = $(this).val().length;
                 $('#txtShow').text(length + '/200');
             });
@@ -73,10 +76,12 @@
         function camera() { //打开相机
             summer.openCamera({
                 compressionRatio: 0.2,
-                callback: function(args) {
+                callback: function (args) {
                     var imgPath = args.compressImgPath;
                     g_pathArr.push(imgPath);
-                    var picDiv = '<div class="con">' + '<div class="con-con">' + '<img src="' + imgPath + '"><div class="bottomDelete"></div>' + '<span class="close iconfont icon-backspace" onClick="closePic(this);"></span>' +
+                    var picDiv = '<div class="con">' + '<div class="con-con">' + '<img src="' + imgPath +
+                        '"><div class="bottomDelete"></div>' +
+                        '<span class="close iconfont icon-backspace" onClick="closePic(this);"></span>' +
                         '</div></div>';
                     $("#plus").before(picDiv);
                     var len = $("#ibox .con").length - 1;
@@ -91,10 +96,12 @@
         function openPhotoAlbum() { //打开相册
             summer.openPhotoAlbum({
                 compressionRatio: 0.2,
-                callback: function(args) {
+                callback: function (args) {
                     var imgPath = args.compressImgPath;
                     g_pathArr.push(imgPath);
-                    var picDiv = '<div class="con">' + '<div class="con-con">' + '<img src="' + imgPath + '"><div class="bottomDelete"></div>' + '<span class="close iconfont icon-backspace" onClick="closePic(this);"></span>' +
+                    var picDiv = '<div class="con">' + '<div class="con-con">' + '<img src="' + imgPath +
+                        '"><div class="bottomDelete"></div>' +
+                        '<span class="close iconfont icon-backspace" onClick="closePic(this);"></span>' +
                         '</div></div>';
                     $("#plus").before(picDiv);
                     var len = $("#ibox .con").length - 1;
@@ -106,14 +113,14 @@
             });
         }
         //数组新增remove方法
-        Array.prototype.indexOf = function(val) {
+        Array.prototype.indexOf = function (val) {
             for (var i = 0; i < this.length; i++) {
                 if (this[i] == val)
                     return i;
             }
             return -1;
         };
-        Array.prototype.remove = function(val) {
+        Array.prototype.remove = function (val) {
             var index = this.indexOf(val);
             if (index > -1) {
                 this.splice(index, 1);
@@ -137,7 +144,7 @@
                 return false;
             }
             // manyfileupload();
-            feedback();
+            feedback(question);
         }
 
         function manyfileupload() { //多图文上传方法
@@ -165,18 +172,18 @@
                 }
             }
             var params = {
-                "EMPLOYEE_ID":"11350",
-                "EMPLOYEE_NAME":"张仁忠",
-                "FEEDBACKTYPE":"出错",
-                "FEEDTYPECONTENT":$.trim($("#question").val())
+                "EMPLOYEE_ID": "11350",
+                "EMPLOYEE_NAME": "张仁忠",
+                "FEEDBACKTYPE": "出错",
+                "FEEDTYPECONTENT": $.trim($("#question").val())
             };
             summer.multiUpload({
                 fileArray: photoList,
                 params: params,
                 headers: {
-			        "Content-Type" : "application/json"
-			    },
-                SERVER: "http://122.49.7.88:8080/appservice/appsys/getAppfeeback"
+                    "Content-Type": "application/json"
+                },
+                SERVER: window.G_COMMON_URL + "appservice/appsys/getAppfeeback"
             }, "successCallback()", "errorCallback()");
         };
 
@@ -197,22 +204,22 @@
             })
         }
 
-        function feedback(){
+        function feedback(txt) {
             summer.showProgress();
-            summer.ajax({
-				type: "post",
-				url: "http://122.49.7.88:8080/appservice/appsys/getAppfeeback",
-				param:{
-                    "EMPLOYEE_ID":"11350",
-                	"EMPLOYEE_NAME":"张仁忠",
-                	"FEEDBACKTYPE":"出错",
-                	"FEEDTYPECONTENT":$.trim($("#question").val())
-				},
-				header : {
-			        "Content-Type" : "application/json"
-			    }
-			}, function(response) {
-				summer.hideProgress();
+            var userinfo = summer.getStorage("userinfo");
+            var name = userinfo.userName;
+            var EMPLOYEE_ID = userinfo.EMPLOYEE_ID;
+            ajaxRequest({
+                type: 'post',
+                url: 'appservice/appsys/getAppfeeback',
+                param:{
+                    "EMPLOYEE_ID": EMPLOYEE_ID,
+                	"EMPLOYEE_NAME": name,
+                	"FEEDBACKTYPE": "出错",
+                	"FEEDTYPECONTENT": txt
+				}
+            }, function (response) {
+                summer.hideProgress();
                 var Data;
 				if (Object.prototype.toString.call(response.data) === '[object String]') {
 					Data = JSON.parse(response.data);
@@ -232,11 +239,11 @@
 					default:
 						summer.toast({msg:"提交失败"});
 				}
-			}, function(error) {
-				summer.hideProgress();
-				console.log(error);
+            }, function (err) {
+                summer.hideProgress();
+				console.log(err);
 				summer.toast({msg:"系统内部异常"});
-			});
+            });
         };
     </script>
 </body>
