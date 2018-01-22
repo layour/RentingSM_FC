@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 	<link rel="stylesheet" href="../../css/login.css">
 	<script src="../../js/summer.js"></script>
+	<script src="../../js/common.js"></script>
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="../../js/font.js"></script>
@@ -70,7 +71,7 @@
 			}; //设置5秒超时
 			summer.ajax({
 				type: "post",
-				url: "http://47.93.60.139:80/appservice/login/carLogin",
+				url: G_COMMON_URL + "appservice/login/carLogin",
 				param: {
 					"appFlag": "1",
 					"EMPLOYEE_PWD": "HKSD" + psw + "EFASD",
