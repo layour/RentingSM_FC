@@ -117,7 +117,7 @@
 			mounted() {},
 			methods: {
 				getData(pageNum, flag) {
-					let self = this;
+					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/promc/projectList',

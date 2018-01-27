@@ -173,9 +173,9 @@
 	<script src="../../js/mint.js"></script>
 	<script>
 		summerready = function() {
-			let projectId = summer.pageParam.projectId;
-			let clintId = summer.pageParam.clientId;
-			let isAdd = summer.pageParam.isAdd;
+			var projectId = summer.pageParam.projectId;
+			var clintId = summer.pageParam.clientId;
+			var isAdd = summer.pageParam.isAdd;
 			mySponsor.PROJECT_ID = projectId;
 			mySponsor.CLIENT_ID = clintId;
 			if (!isAdd) {
@@ -221,7 +221,7 @@
 			},
 			methods: {
 				getSponsorList() {
-					let self = this;
+					var self = this;
 					summer.showProgress();
 					ajaxRequest({
 						type: 'post',
@@ -249,7 +249,7 @@
 				surePickerSponsorType(param) {
 					this.pickerSponsorTypeStatus = !this.pickerSponsorTypeStatus;
 					if (param == 'confirm') {
-						let sponsorType = this.pickerSponsorType;
+						var sponsorType = this.pickerSponsorType;
 						if (sponsorType == "个人") {
 							openSponsor('newSponsor');
 						} else {
@@ -263,7 +263,7 @@
 				},
 				deleteItem(id){
 					//此处需要调后端接口
-					let This=this;
+					var This=this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/delGuarantee',
@@ -285,7 +285,7 @@
 
 				},
 				openSponsorDetail(TYPE, item) {
-					let id;
+					var id;
 					if (TYPE == "LP") {
 						id = "newSponsor_company"
 					} else {
@@ -379,8 +379,8 @@
 		}
 
 		function openSponsor(id) {
-			let projectId = mySponsor.PROJECT_ID;
-			let clientId = mySponsor.CLIENT_ID
+			var projectId = mySponsor.PROJECT_ID;
+			var clientId = mySponsor.CLIENT_ID
 			summer.openWin({
 				id: id,
 				url: 'html/fastReport/' + id + '.html',

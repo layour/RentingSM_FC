@@ -101,7 +101,7 @@
 			mounted() {},
 			methods: {
 				getData(end, searchValue,flag) {
-						let self=this;
+						var self=this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/custaccdetail/getCustacclist',
@@ -137,7 +137,7 @@
 					})
 				},
 				completeCustom(id,name){
-					let pageFromSource=summer.getStorage("pageFromSource");
+					var pageFromSource=summer.getStorage("pageFromSource");
 					if (pageFromSource=="programSelect") {
 						summer.openWin({
 							id : 'setProject',

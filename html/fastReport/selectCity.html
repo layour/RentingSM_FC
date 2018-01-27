@@ -57,7 +57,7 @@
 						},
 						pickerModels(it){
               summer.setStorage('selectCity',JSON.stringify(it));
-				  let fromSelect=summer.getStorage("selectFrom");
+				  var fromSelect=summer.getStorage("selectFrom");
 				  summer.execScript({
 						winId: fromSelect,
 						script: 'getAddr()'

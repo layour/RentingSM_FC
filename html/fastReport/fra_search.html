@@ -120,7 +120,7 @@
 			mounted() {},
 			methods: {
 				getData(end, searchValue,flag) {
-					let self=this;
+					var self=this;
 					if (searchValue) {
 						ajaxRequest({
 							type: 'post',

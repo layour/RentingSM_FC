@@ -240,7 +240,7 @@
 		},
 		methods: {
 			getData(id) {
-				let self = this;
+				var self = this;
 				ajaxRequest({
 					type: 'post',
 					url: 'appservice/foundproject/loadProjectPage',
@@ -262,7 +262,7 @@
 
 			},
 			getSchemeData(id){
-				let self = this;
+				var self = this;
 				ajaxRequest({
 					type: 'post',
 					url: 'appservice/foundproject/queryProjectScheme',
@@ -283,7 +283,7 @@
 
 			},
 		  getJBPMData(JBPM_ID){
-				let self = this;
+				var self = this;
 				if (JBPM_ID) {
 					$("#content").css('display', 'none');
 					self.JBPM_ID_NM=JBPM_ID;

@@ -192,7 +192,7 @@
 			},
 			methods: {
 				getData(projectId, clintId) {
-					let self = this;
+					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/custDetail',
@@ -338,7 +338,7 @@
 					return true;
 				},
 				savePerson: function() {
-					let self=this;
+					var self=this;
 					if (!this.messageTest()) {
 						return;
 					};
@@ -348,7 +348,7 @@
 					} else {
 						self.personMes.spoustObj.SPOUST_SEX="1"
 					}
-					let finanlInput=JSON.parse(JSON.stringify(self.personMes));
+					var finanlInput=JSON.parse(JSON.stringify(self.personMes));
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/saveCust',
@@ -359,7 +359,7 @@
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
 							summer.toast({msg:"保存成功"});
-							let clint_Id=res.data.datas.CLIENT_ID;
+							var clint_Id=res.data.datas.CLIENT_ID;
 							if (self.sourceFrom=="newCustom") {
 								summer.openWin({
 									id : 'setProject',
@@ -413,9 +413,9 @@
 			newCreateCustom.savePerson();
 		}
 		summerready = function() {
-			let personMessage = summer.pageParam.personMessage;
-			let spoustObjMes=summer.pageParam.spoustObjMes;
-			let sourceFrom=summer.pageParam.sourceFrom;
+			var personMessage = summer.pageParam.personMessage;
+			var spoustObjMes=summer.pageParam.spoustObjMes;
+			var sourceFrom=summer.pageParam.sourceFrom;
 			newCreateCustom.sourceFrom=sourceFrom;
 			if(spoustObjMes){
 				newCreateCustom.message.spoustObj.SPOUST_NAME=spoustObjMes.SPOUST_NAME

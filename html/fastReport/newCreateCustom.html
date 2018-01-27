@@ -287,7 +287,7 @@
 			},
 			methods: {
 				getData(projectId, clintId) {
-					let self = this;
+					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/custDetail',
@@ -297,11 +297,11 @@
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							let holeData = res.data.datas.custinfo;
-							let totalData=res.data.datas;
+							var  holeData = res.data.datas.custinfo;
+							var  totalData=res.data.datas;
 							self.isNativeData_total=totalData.caste;
 							self.transportData_total=totalData.industry;
-							let isNativeData=[],transportData=[],houseData=[];
+							var isNativeData=[],transportData=[],houseData=[];
 							for(var i=0;i<totalData.caste.length;i++){
 								isNativeData.push(totalData.caste[i].FLAG);
 							}
@@ -611,12 +611,12 @@
 					return true;
 				},
 				savePerson: function() {
-					let self = this;
+					var self = this;
 					if (!this.messageTest()) {
 						return;
 					};
 					summer.showProgress();
-					let paramData={
+					var paramData={
 						NAME: self.message.NAME,
 						ID_CARD_NO: self.message.ID_CARD_NO,
 						SEX: self.message.SEX_NM == "男" ? "0" : "1",
@@ -647,7 +647,7 @@
 								msg: "保存成功"
 							});
 							if (self.sourceFrom=="newCustom") {
-									let clint_Id=res.data.datas.CLIENT_ID;
+									var clint_Id=res.data.datas.CLIENT_ID;
 								summer.openWin({
 									id : 'setProject',
 									url : 'html/fastReport/setProject.html',
@@ -725,7 +725,7 @@
 					if (!this.messageTest()) {
 						return;
 					};
-					let self = this;
+					var  self = this;
 					if(self.message.SEX_NM=="男"){
 						self.message.SEX='0'
 					}else{
@@ -786,9 +786,9 @@
 			//newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_NAME
 		}
 		summerready = function() {
-			let projectId = summer.pageParam.projectId;
-			let clintId = summer.pageParam.clintId;
-			let sourceFrom=summer.pageParam.sourceFrom;
+			var projectId = summer.pageParam.projectId;
+			var clintId = summer.pageParam.clintId;
+			var sourceFrom=summer.pageParam.sourceFrom;
 			newCreateCustom.sourceFrom=sourceFrom;
 			newCreateCustom.clintId=clintId;
 			newCreateCustom.getData(projectId, clintId);

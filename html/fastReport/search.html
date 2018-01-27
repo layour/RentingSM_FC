@@ -51,12 +51,11 @@
 <script src="../../js/common.js"></script>
 <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 <script>
-    let url, frameId;
+    var url, frameId;
     summerready = function() {
         $('#header').css('padding-top', '40px')
         var top = $summer.offset($summer.byId('header')).h;
-        // let source=summer.pageParam.fromSurce;
-        let source = summer.getStorage('searchFromSource');
+        var source = summer.getStorage('searchFromSource');
 
         if (source == "program") {
             searchD.program = true;

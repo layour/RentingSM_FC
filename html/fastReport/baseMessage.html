@@ -103,7 +103,7 @@
 			  var baseData=summer.pageParam.baseData;
 			  var customId=summer.pageParam.customId;
 			  baseMessage.customId=customId;
-			  let _project_Id=summer.pageParam.project_Id;
+			  var _project_Id=summer.pageParam.project_Id;
 
 			  if(_project_Id){
 				  baseMessage.hasProjectId=true;
@@ -158,7 +158,7 @@
 			},
 			 methods: {
 				 getData(id){
-					 let self=this;
+					 var self=this;
 					 ajaxRequest({
 						 type: 'post',
 						 url: 'appservice/foundproject/loadProjectPage',
@@ -221,7 +221,7 @@
 					}
 				},
 				save() {
-					let self=this;
+					var self=this;
 					if(this.programStyle==""){
 						summer.toast({msg:"请选择项目类型"});
 						return;
@@ -230,10 +230,10 @@
 						return;
 					}
 					//此时需要调后端的ajax请求数据
-					let _programStyle=this.programStyle;
-					let _area_id=this.taskStyle;
-					let PLATFORM_TYPE;
-					let customId=this.customId;
+					var _programStyle=this.programStyle;
+					var _area_id=this.taskStyle;
+					var PLATFORM_TYPE;
+					var customId=this.customId;
 					baseMessage.totalData.business.map((e,i)=>{
 						if(e.FLAG==_programStyle){
 							PLATFORM_TYPE=baseMessage.totalData.business[i].CODE;
@@ -253,7 +253,7 @@
 					 }, function (res) {
 							  if(res.data.flag==1){
 								  console.log(res);
-								  let projectId=res.data.datas.PROJECT_ID;
+								  var projectId=res.data.datas.PROJECT_ID;
 								  summer.hideProgress();
 								  summer.toast({msg:"保存成功"});
 									summer.execScript({

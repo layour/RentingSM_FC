@@ -179,7 +179,7 @@
 			},
 			methods: {
 				getData(projectId) {
-					let self = this;
+					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/guaranteeList',
@@ -190,7 +190,7 @@
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							console.log(res.data.datas);
-							let sponsor=res.data.datas.guaranteeList[0];
+							var sponsor=res.data.datas.guaranteeList[0];
 							if (!isEmpty(sponsor)) {
 								self.isSelect=true;
 								self.message.NAME=sponsor.NAME;
@@ -346,11 +346,11 @@
 					return true;
 				},
 				complete: function() {
-					let self=this;
+					var self=this;
 					/*if (!this.messageTest()) {
 						return;
 					};*/
-					let paramData;
+					var paramData;
 					if(self.isSelect){
 							self.message.GID=self.GID
 							self.message.CLIENT_ID=self.CLIENT_ID
@@ -428,11 +428,11 @@
 			//newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_NAME
 		}
 		summerready = function() {
-			let projectId = summer.pageParam.projectId;
+			var projectId = summer.pageParam.projectId;
 			newCreateCustom.message.PROJECT_ID=projectId;
-			let clintId = summer.pageParam.clientId;
+			var clintId = summer.pageParam.clientId;
 			newCreateCustom.CLIENT_ID=clintId;
-			let item= summer.pageParam.item;
+			var item= summer.pageParam.item;
 			if(item){
 				newCreateCustom.message.NAME=item.NAME;
 				newCreateCustom.message.CORP_BUSINESS_LICENSE=item.CORP_BUSINESS_LICENSE;

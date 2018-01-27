@@ -76,7 +76,7 @@
             methods: {
                 getData(JBPM_ID, TASK_ID) {
                     summer.showProgress();
-                    let self = this;
+                    var self = this;
                     if (JBPM_ID) {
                         ajaxRequest({
                             type: 'post',
@@ -103,7 +103,7 @@
                     }
                 },
                 submitMission(nodeName_, toNode_) {
-                    let self = this;
+                    var self = this;
                     ajaxRequest({
                         type: 'post',
                         url: 'appservice/bpmtask/domyTask',

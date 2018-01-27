@@ -191,7 +191,7 @@
 					this.$refs.picker.open();
 				},
 				getData(id) {
-					let self = this;
+					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/foundproject/addProject',
@@ -211,7 +211,7 @@
 					});
 				},
 				getProjectId(__projectid) {
-					let self = this;
+					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/foundproject/loadProjectPage',
@@ -235,7 +235,7 @@
 					});
 				},
 				getCompleteStatus(clintId,projectId){
-					let self = this;
+					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/foundproject/qloadProjectPage',
@@ -246,7 +246,7 @@
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							 let finanlData=res.data.datas;
+							 var finanlData=res.data.datas;
 							if (finanlData.eID) {
 							 	addRight('emergencyContract');
 							}
@@ -271,9 +271,9 @@
 				},
 				openBaseMessage(data) {
 					console.log(data);
-					let self = this;
-					let baseData = JSON.parse(JSON.stringify(self.baseMessageData));
-					let _project_Id = self.project_Id;
+					var self = this;
+					var baseData = JSON.parse(JSON.stringify(self.baseMessageData));
+					var _project_Id = self.project_Id;
 						if (_project_Id) {
 							summer.openWin({
 								id: "baseMessage",
@@ -511,15 +511,15 @@
 		}
 
 		function openSponsor(id) {
-			let projectId = setProgect.project_Id;
-			let clientId = setProgect.customId
+			var projectId = setProgect.project_Id;
+			var clientId = setProgect.customId
 			if (!projectId) {
 				summer.toast({
 					msg: "请先完善项目基本信息"
 				});
 				return;
 			} else {
-				let isAdd;
+				var isAdd;
 				if(!$(".sponsor").hasClass('active')){
 					isAdd= true;
 				}else{
