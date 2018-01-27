@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="bindBankCard.css">
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="um-win" id="index">
+        <div class="um-content">
+            <h2 class="tip">*请绑定承租人本人的储蓄卡</h2>
+            <div class="items">
+                <span>持卡人</span>
+                <input type="text" placeholder="请输入持卡人姓名" v-model="cardholder">
+            </div>
+            <div class="items">
+                <span>银行卡号</span>
+                <input type="number" placeholder="请输入承租人本人银行卡号" v-model="bankNum">
+                <i class="iconfont icon-camera"></i>
+            </div>
+            <h3>
+                <i class="iconfont icon-card"></i>
+                <span>查看支持银行</span>
+            </h3>
+            <div class="items">
+                <span>开户城市</span>
+                <p>{{city}}</p>
+                <i class="iconfont icon-enter"></i>
+            </div>
+            <div class="items">
+                <span>预留手机号</span>
+                <input type="tel" placeholder="请输入您在银行开户时留存的手机号" v-model="phoneNum">
+            </div>
+            <div class="items">
+                <span>验证码</span>
+                <input type="text" placeholder="请输入六位验证码" v-model="code">
+                <div class="code" @click="achieveCode" v-bind:class="codeClassObject">{{codeTxt}}</div>
+            </div>
+            <h3>
+                <span>收不到验证码，获取语音验证码</span>
+            </h3>
+            <div class="agreement">
+                <span class="gou" v-bind:class="gouStyle" @click="checkAgreement">
+                    <i class="iconfont icon-yes" v-bind:class="iStyle"></i>
+                </span>
+                <span class="txt" @click="checkAgreement">我已阅读并同意</span>
+                <b @click="seeAgreement">《还款协议》</b>
+            </div>
+            <div class="bindBtn" @click="bindBankCard">绑定银行卡</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var bindBank = new Vue({
+            el: "#index",
+            data: {
+                // 验证码区域文本
+                codeTxt: "获取验证码",
+                // 定时器ID
+                codeTimer: null,
+                // 协议打勾
+                checkedAgreement: false,
+                // 持卡人
+                cardholder: "",
+                // 银行卡号
+                bankNum: "",
+                // 开户城市
+                city: "请选择您开户银行所属城市",
+                // 预留手机号
+                phoneNum: "",
+                // 验证码
+                code: "",
+                // 获取的验证码
+                getCode: ""
+            },
+            computed: {
+                gouStyle: function () {
+                    return {
+                        gouBorderNone: this.checkedAgreement
+                    }
+                },
+                iStyle: function () {
+                    return {
+                        iNone: !this.checkedAgreement
+                    }
+                },
+                codeClassObject: function () {
+					return {
+						getcodeUnClick: this.codeTxt != "获取验证码"
+					}
+				}
+            },
+            methods: {
+                // 点击同意协议
+                checkAgreement: function () {
+                    this.checkedAgreement = !this.checkedAgreement
+                },
+                // 查看协议
+                seeAgreement: function () {
+                    console.log("查看协议");
+                },
+                // 绑定银行卡
+                bindBankCard: function () {
+                    if (!this.cardholder) {
+                        summer.toast({
+                            msg: "请输入持卡人"
+                        });
+                    } else if (!this.bankNum) {
+                        summer.toast({
+                            msg: "请输入银行卡号"
+                        });
+                    } else if (this.city = "请选择您开户银行所属城市") {
+                        summer.toast({
+                            msg: "请选择您开户银行所属城市"
+                        });
+                    } else if (!this.phoneNum) {
+                        summer.toast({
+                            msg: "请输入您在银行开户时留存的手机号"
+                        });
+                    } else if (!this.phoneNum) {
+                        summer.toast({
+                            msg: "请输入您在银行开户时留存的手机号"
+                        });
+                    } else if (!this.getCode) {
+                        summer.toast({
+                            msg: "请先获取验证码"
+                        });
+                    } else if (!this.code) {
+                        summer.toast({
+                            msg: "请输入六位验证码"
+                        });
+                    } else if (this.code != this.getCode) {
+                        summer.toast({
+                            msg: "您输入的验证码有误"
+                        });
+                    } else if (!this.checkedAgreement) {
+                        summer.toast({
+                            msg: "请阅读并同意《还款协议》"
+                        });
+                    } else {
+                        summer.toast({
+                            msg: "绑定成功"
+                        });
+                        summer.closeWin();
+                    }
+                },
+                // 获取验证码
+                achieveCode: function () {
+                    var This = this;
+                    var re = /^1[3|4|5|7|8][0-9]{9}$/;
+                    if (!this.phoneNum) {
+                        summer.toast({
+                            msg: "请输入手机号"
+                        });
+                        return;
+                    }
+                    if (!re.test(this.phoneNum)) {
+						summer.toast({
+							msg: "手机号格式有误"
+						});
+						return;
+					}
+                    if (this.codeTxt == "获取验证码") {
+                        This.getCode = "";
+                        This.codeTxt = "60s";
+                        var n = 59;
+                        this.codeTimer = setInterval(() => {
+                            This.codeTxt = n + "s";
+                            if (n < 0) {
+                                This.codeTxt = "获取验证码";
+                                clearInterval(this.codeTimer);
+                                This.codeTimer = null;
+                            };
+                            n--;
+                        }, 1000);
+                        /* summer.showProgress();
+                        // 获取验证码接口
+                        ajaxRequest({
+                        	type: 'post',
+                        	url: 'appservice/login/custLogin',
+                        	param: {
+                        		PHONE: This.phoneNum
+                        	}
+                        }, function (res) {
+                        	summer.hideProgress();
+                        	var Data;
+                        	if (Object.prototype.toString.call(res.data) === '[object String]') {
+                        		Data = JSON.parse(res.data);
+                        	} else {
+                        		Data = res.data;
+                        	}
+                        	if (Data.flag == 1) {
+                        		if (Data.datas.FLAG == "true") {
+                        			summer.toast({
+                        				msg: "验证码已发送"
+                        			});
+                        			This.customerInfo = Data.datas;
+                        			This.getCode = Data.datas.SMSCODE;
+                        			This.codeTxt = "60s";
+                        			var n = 59;
+                        			this.codeTimer = setInterval(() => {
+                        				This.codeTxt = n + "s";
+                        				if (n < 0) {
+                        					This.codeTxt = "获取验证码";
+                        					clearInterval(this.codeTimer);
+                        					This.codeTimer = null;
+                        				};
+                        				n--;
+                        			}, 1000);
+                        		} else if (Data.datas.FLAG == "false") {
+                        			summer.toast({
+                        				msg: "发送短信失败"
+                        			});
+                        		} else if (Data.datas.FLAG == "ufalse") {
+                        			summer.toast({
+                        				msg: Data.datas.STATE ? Data.datas.STATE : "未找到该用户"
+                        			});
+                        		} else {
+                        			summer.toast({
+                        				msg: "获取验证码失败"
+                        			});
+                        		}
+                        	} else {
+                        		summer.toast({
+                        			msg: "获取验证码失败"
+                        		});
+                        	}
+                        }, function (err) {
+                        	summer.hideProgress();
+                        	summer.toast({
+                        		msg: "系统内部异常"
+                        	});
+                        	console.log(err);
+                        }); */
+                    } else {
+                        summer.toast({
+                            msg: "请勿连续发送"
+                        });
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

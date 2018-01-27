@@ -12,28 +12,28 @@
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="../../js/font.js" charset="utf-8"></script>
-    <script src="../../js/vue.js" charset="utf-8"></script>
+	<script src="../../js/vue.js" charset="utf-8"></script>
 </head>
 
 <body>
 	<div class="um-win" id="index">
 		<div class="um-content">
-            <div class="box">
+			<div class="box">
 				<img src="../../img/timg.jpg" alt="">
 				<p>个人中心</p>
 				<div class="userInfo">
 				</div>
 			</div>
 			<ul class="userList">
-				<li onclick = "lease()">
+				<li onclick="lease()">
 					<span class="iconfont icon-version"></span>
 					<i>租赁物</i>
 					<div class="companyInfo">
-                        <b class="company"></b>
+						<b class="company"></b>
 						<span class="iconfont icon-enter"></span>
 					</div>
 				</li>
-				<li>
+				<li onclick="addBankCard()">
 					<span class="iconfont icon-honor2"></span>
 					<i>银行卡</i>
 					<div class="companyInfo">
@@ -41,10 +41,10 @@
 						<span class="iconfont icon-enter"></span>
 					</div>
 				</li>
-                <li>
+				<li>
 					<span class="iconfont icon-login"></span>
 					<i>关于我们</i>
-                    <div class="companyInfo">
+					<div class="companyInfo">
 						<span class="iconfont icon-enter"></span>
 					</div>
 				</li>
@@ -52,7 +52,9 @@
 					<span class="iconfont icon-call"></span>
 					<i>客服电话</i>
 					<div class="companyInfo">
-						<b class="company"><a href="tel:010-84705470">010-84705470</a></b>
+						<b class="company">
+							<a href="tel:010-84705470">010-84705470</a>
+						</b>
 					</div>
 				</li>
 				<li>
@@ -68,8 +70,8 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-        // 租赁物
-		function lease(){
+		// 租赁物
+		function lease() {
 			summer.openWin({
 				id: 'stockPersonal',
 				url: 'html/stock/lease.html',
@@ -88,14 +90,40 @@
 				}
 			})
 		};
-        // 退出登陆
+		// 银行卡页面
+		function addBankCard() {
+			summer.openWin({
+				id: 'addBankCard',
+				url: 'html/stock/addBankCard.html',
+				create: false,
+				type: 'actionBar',
+				actionBar: {
+					title: "银行卡",
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039be5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems: [{
+						type: "text",
+						text: "管理",
+						textColor: "#ffffff",
+						method: ""
+					}]
+				}
+			});
+		};
+		// 退出登陆
 		function logout() {
 			var os = $summer.os;
 			UM.confirm({
 				title: '确定要退出吗？',
 				btnText: ["取消", "确定"],
 				overlay: true,
-				ok: function() {
+				ok: function () {
 					summer.setStorage("userinfo", {});
 					summer.closeToWin({
 						id: 'login'

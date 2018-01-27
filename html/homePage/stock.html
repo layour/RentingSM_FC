@@ -19,6 +19,7 @@
 	<div class="um-win" id="index">
 		<!-- 底部遮罩弹层 -->
 		<div v-bind:class="botMaskStyle">
+			<div class="t-con" @click="closeMask"></div>
 			<div v-bind:class="choosePayMethodStyle">
 				<div class="headBar">
 					<span class="iconfont icon-wrong1" @click="closeMask"></span>
@@ -34,7 +35,7 @@
 						></i>
 					</li>
 				</ul>
-				<div class="addBankCard">
+				<div class="addBankCard" @click="addBankCard">
 					<span class="iconfont icon-honor2"></span>
 					<div class="bankName">添加本人储蓄卡还款(<b>无限额</b>)</div>
 					<i class="iconfont icon-enter"></i>
@@ -43,6 +44,8 @@
 			</div>
 		</div>
 		<div class="um-content">
+			<!-- 空图片展示 -->
+			<div id="content"></div>
             <div class="banner">
                 <img src="../../img/banner.png" alt="">
             </div>
@@ -109,6 +112,9 @@
 			},
 			{
 				name:"中国工商银行"
+			},
+			{
+				name:"中国招商银行"
 			}
 		];
 		stockData.forEach((e) => {
@@ -198,13 +204,14 @@
 				},
 				// 还款记录
 				record:function (){
-					/* summer.openWin({
+					this.mask = false;
+					summer.openWin({
 						id:'payRecord',
-						url:'html/stock/personal.html',
+						url:'html/stock/payRecord.html',
 						create:false,
 						type:'actionBar',
 						actionBar: {
-							title: "个人中心",
+							title: "还款记录",
 							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							backgroundColor: "#039be5",
 							leftItem:{
@@ -214,10 +221,38 @@
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							}
 						}
-					}); */
+					});
+				},
+				// 添加银行卡
+				addBankCard:function (){
+					this.mask = false;
+					summer.openWin({
+						id:'addBankCard',
+						url:'html/stock/addBankCard.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "银行卡",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems: [{
+								type: "text",
+								text: "管理",
+								textColor: "#ffffff",
+								method: ""
+							}]
+						}
+					});
 				},
 				// 进个人中心
 				personal:function (){
+					this.mask = false;
 					summer.openWin({
 						id:'personal',
 						url:'html/stock/personal.html',

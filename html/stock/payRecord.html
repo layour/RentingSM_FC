@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="payRecord.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+</head>
+
+<body>
+	<div class="um-win" id="index">
+		<div class="um-content">
+            <ul class="recordList" v-cloak>
+                
+            </ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+        // 数据
+        data = [
+            {
+                car:"别克 昂科威 2017 破产版",
+                num:"CNCARZ04893058384",
+                periods:"12"
+            },
+            {
+                car:"别克 昂科威 2017 低配版",
+                num:"CNCARZ04893058384",
+                periods:"24"
+            },
+            {
+                car:"别克 昂科威 2017 高配版",
+                num:"CNCARZ04893058384",
+                periods:"36"
+            },
+            {
+                car:"别克 昂科威 2017 豪华版",
+                num:"CNCARZ04893058384",
+                periods:"48"
+            }
+        ];
+        var payRecord = new Vue({
+            el: '#index',
+            data: {
+                items:data
+            },
+            methods: {
+                
+            }
+        });
+	</script>
+</body>
+
+</html>
