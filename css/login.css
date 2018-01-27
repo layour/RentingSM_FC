@@ -87,6 +87,10 @@ dl dd input{
    text-align: center;
    font-size: 0.28rem;
 }
+.getcodeUnClick{
+    border: 1px solid #999;
+    color: #999;
+}
 .loginBtn{
    width: 6.34rem;
    height: 0.9rem;

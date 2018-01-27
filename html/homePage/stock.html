@@ -17,6 +17,31 @@
 
 <body>
 	<div class="um-win" id="index">
+		<!-- 底部遮罩弹层 -->
+		<div v-bind:class="botMaskStyle">
+			<div v-bind:class="choosePayMethodStyle">
+				<div class="headBar">
+					<span class="iconfont icon-wrong1" @click="closeMask"></span>
+					<div>选择付款方式</div>
+				</div>
+				<ul class="bankList">
+					<li v-for = "(k, index) in bankList" @click="checkBank(index)">
+						<span class="iconfont icon-card"></span>
+						<div class="bankName">{{k.name}}</div>
+						<i 
+							class="iconfont icon-yes" 
+							v-bind:class="[k.checked ? 'active' : '']"
+						></i>
+					</li>
+				</ul>
+				<div class="addBankCard">
+					<span class="iconfont icon-honor2"></span>
+					<div class="bankName">添加本人储蓄卡还款(<b>无限额</b>)</div>
+					<i class="iconfont icon-enter"></i>
+				</div>
+				<div v-bind:class="submitPayStyle" @click="payIt">确认还款</div>
+			</div>
+		</div>
 		<div class="um-content">
             <div class="banner">
                 <img src="../../img/banner.png" alt="">
@@ -75,17 +100,61 @@
 				surplus:"2"
 			}
 		];
+		var bankData = [
+			{
+				name:"中国建设银行"
+			},
+			{
+				name:"中国农业银行"
+			},
+			{
+				name:"中国工商银行"
+			}
+		];
 		stockData.forEach((e) => {
+			e.checked = false;
+		});
+		bankData.forEach((e) => {
 			e.checked = false;
 		});
         var stock = new Vue({
             el:'#index',
 			data:{
+				// 账单列表
 				items:stockData,
+				// 银行列表
+				bankList:bankData,
+				// 还款总额
 				total:"0.00",
-				submit:false
+				// 是否可点击还款
+				submit:false,
+				// 遮罩层显隐
+				mask:false,
+				// 银行选择
+				bankChoose:""
+			},
+			computed: {
+				botMaskStyle:function () {
+					return {
+						botMask: true,
+						botMaskActive: this.mask
+					}
+				},
+				choosePayMethodStyle:function () {
+					return {
+						choosePayMethod: true,
+						choosePayMethodActive: this.mask
+					}
+				},
+				submitPayStyle:function () {
+					return {
+						submitPay: true,
+						submitPayActive: this.bankChoose
+					}
+				}
 			},
 			methods:{
+				// 选择账单项
 				checkIt:function (index){
 					this.items[index].checked = !this.items[index].checked;
 					this.submit = this.items.some((e) => {
@@ -99,10 +168,53 @@
 						this.total = Math.floor(this.total * 100) / 100;
 					}
 				},
+				// 点击还款按钮
 				toSubmit:function (){
 					if (this.submit) {
-						console.log(1);
+						this.mask = true;
+						this.bankChoose = "";
+						this.bankList.forEach((e) => {
+							e.checked = false;
+						});
 					}
+				},
+				// 关闭遮罩层
+				closeMask:function (){
+					this.mask = false;
+				},
+				// 选择银行
+				checkBank:function (index){
+					this.bankList.forEach((e) => {
+						e.checked = false;
+					});
+					this.bankList[index].checked = !this.bankList[index].checked;
+					this.bankChoose = this.bankList[index].name;
+				},
+				// 确认还款
+				payIt:function (){
+					if (this.bankChoose) {
+						console.log("打开支付界面");
+					}
+				},
+				// 还款记录
+				record:function (){
+					/* summer.openWin({
+						id:'payRecord',
+						url:'html/stock/personal.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "个人中心",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						}
+					}); */
 				},
 				// 进个人中心
 				personal:function (){
