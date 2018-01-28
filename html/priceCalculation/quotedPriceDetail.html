@@ -155,17 +155,17 @@
 						</li>
 						<li class="alertLi">当前为金额计算，<button @click="moneyToRateStatus">改为百分比计算</button></li>
 						<li>
-							<b>百分百</b>
+							<b>百分比</b>
 							<span> <b v-if="quoted.firstPayRate">{{quoted.firstPayRate}}</b>
 							<b v-else class="default">自动计算</b>&nbsp;%</span>
 						</li>
 					</ul>
 					<ul v-else>
 						<li class="input">
-							<b>百分百</b>
-							<span><input type="text" maxlength='5' @input="changeFirstPay" placeholder='请输入百分百' name="firstPayRate" v-model="quoted.firstPayRate">&nbsp;%</span>
+							<b>百分比</b>
+							<span><input type="text" maxlength='5' @input="changeFirstPay" placeholder='请输入百分比' name="firstPayRate" v-model="quoted.firstPayRate">&nbsp;%</span>
 						</li>
-						<li class="alertLi">当前为百分百计算，<button @click="moneyToRateStatus">改为金额计算</button></li>
+						<li class="alertLi">当前为百分比计算，<button @click="moneyToRateStatus">改为金额计算</button></li>
 						<li class="input">
 							<b>首付金额</b>
 							<span>
@@ -192,17 +192,17 @@
 						</li>
 						<li class="alertLi">当前为金额计算，<button @click="bailToRateStatus">改为百分比计算</button></li>
 						<li>
-							<b>百分百</b>
+							<b>百分比</b>
 							<span> <b v-if="quoted.bailRate">{{quoted.bailRate}}</b>
 							<b v-else class="default">自动计算</b>&nbsp;%</span>
 						</li>
 					</ul>
 					<ul v-else>
 						<li class="input">
-							<b>百分百</b>
-							<span><input type="text" maxlength='5' @input="changeBail" placeholder="请输入百分百" name="bail" v-model="quoted.bailRate">&nbsp;%</span>
+							<b>百分比</b>
+							<span><input type="text" maxlength='5' @input="changeBail" placeholder="请输入百分比" name="bail" v-model="quoted.bailRate">&nbsp;%</span>
 						</li>
-						<li class="alertLi">当前为百分百计算，<button @click="bailToRateStatus">改为金额计算</button></li>
+						<li class="alertLi">当前为百分比计算，<button @click="bailToRateStatus">改为金额计算</button></li>
 						<li class="input">
 							<b>保证金金额</b>
 							<span>
