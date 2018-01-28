@@ -41,13 +41,13 @@
 						<span class="iconfont icon-enter"></span>
 					</div>
 				</li>
-				<li>
+				<!-- <li>
 					<span class="iconfont icon-login"></span>
 					<i>关于我们</i>
 					<div class="companyInfo">
 						<span class="iconfont icon-enter"></span>
 					</div>
-				</li>
+				</li> -->
 				<li>
 					<span class="iconfont icon-call"></span>
 					<i>客服电话</i>
@@ -58,7 +58,7 @@
 					</div>
 				</li>
 				<li>
-					<strong>新</strong>
+					<strong></strong>
 					<span class="iconfont icon-version"></span>
 					<i>版本更新</i>
 					<div class="companyInfo">
@@ -70,6 +70,10 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		summerready = function () {
+			var appVersion = JSON.parse(summer.getAppVersion()).versionName;
+			$('strong').eq(0).text(appVersion);
+		};
 		// 租赁物
 		function lease() {
 			summer.openWin({
