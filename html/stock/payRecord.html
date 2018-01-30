@@ -18,34 +18,49 @@
 <body>
 	<div class="um-win" id="index">
 		<div class="um-content">
-            <ul class="recordList" v-cloak>
-                
+            <h2 class="title">
+                <span>还款时间</span>
+                <span>还款金额（元）</span>
+            </h2>
+            <ul class = "billList">
+                <li v-for="(k,index) in items" v-bind:class="[(index%2) == 0 ? '' : 'billListActive']">
+                    <span>{{k.date}}</span>
+                    <span>{{k.money}}</span>
+                </li>
             </ul>
 		</div>
 	</div>
 	<script type="text/javascript">
         // 数据
         data = [
-            {
-                car:"别克 昂科威 2017 破产版",
-                num:"CNCARZ04893058384",
-                periods:"12"
-            },
-            {
-                car:"别克 昂科威 2017 低配版",
-                num:"CNCARZ04893058384",
-                periods:"24"
-            },
-            {
-                car:"别克 昂科威 2017 高配版",
-                num:"CNCARZ04893058384",
-                periods:"36"
-            },
-            {
-                car:"别克 昂科威 2017 豪华版",
-                num:"CNCARZ04893058384",
-                periods:"48"
-            }
+        {
+				date:"2017年05月20日",
+				money:"2819.23"
+			},
+			{
+				date:"2017年05月21日",
+				money:"3819.23"
+			},
+			{
+				date:"2017年05月22日",
+				money:"3859.23"
+			},
+			{
+				date:"2017年05月23日",
+				money:"3219.23"
+			},
+			{
+				date:"2017年05月24日",
+				money:"4819.23"
+			},
+			{
+				date:"2017年05月25日",
+				money:"5829.23"
+			},
+			{
+				date:"2017年05月26日",
+				money:"7817.23"
+			}
         ];
         var payRecord = new Vue({
             el: '#index',
