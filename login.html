@@ -25,20 +25,6 @@
 	</div>
 	<script type="text/javascript">
 		summerready = function() {
-			// 判断是否加载引导页
-			var bool = summer.getStorage("welcome") ? summer.getStorage("welcome") : false;
-			if (!bool) {
-				summer.openWin({
-					"id" : 'guide',
-					"url" : 'html/guide/index.html',
-					"isKeep" : false
-				});
-				return;
-			}
-			// 关闭启动图
-			setTimeout(function() {
-                summer.hideLaunch();
-            }, 500);
 			var bot = $('#bot').height() + $('.um-header').height();
 			summer.openFrameGroup({
 				id: 'login',
