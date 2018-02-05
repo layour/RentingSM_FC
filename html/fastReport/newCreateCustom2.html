@@ -156,7 +156,7 @@
 	<script>
 		var newCreateCustom = new Vue({
 			el: '#app',
-			data() {
+			data:function() {
 				return {
 					cardShow: false,
 					cardUrl: "",
@@ -191,7 +191,7 @@
 				}
 			},
 			methods: {
-				getData(projectId, clintId) {
+				getData:function(projectId, clintId) {
 					var self = this;
 					ajaxRequest({
 						type: 'post',
@@ -211,7 +211,7 @@
 						summer.hideProgress();
 					});
 				},
-				selectAddr() {
+				selectAddr:function() {
 					summer.setStorage("selectFrom", "newCreateCustom");
 					summer.openWin({
 						id: 'selectProvince',

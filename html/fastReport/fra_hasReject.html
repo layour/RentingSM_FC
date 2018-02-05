@@ -108,15 +108,14 @@
 		}
 		var fra_hasReject = new Vue({
 			el: '#fra_hasReject',
-			data() {
+			data:function() {
 				return {
 					dataList: '',
 					totalPage: ""
 				}
 			},
-			mounted() {},
 			methods: {
-				getData(pageNum, flag) {
+				getData:function(pageNum, flag) {
 					var self = this;
 					ajaxRequest({
 						type: 'post',
@@ -161,7 +160,7 @@
 						summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
 					})
 				},
-				openOpacity(id, code) {
+				openOpacity:function(id, code) {
 					console.log(id);
 					summer.openFrame({
 						id: 'Opacity',
@@ -180,7 +179,7 @@
 						}
 					})
 				},
-				openDetail(id,JBPM_ID) {
+				openDetail:function(id,JBPM_ID) {
 					summer.openWin({
 						id: 'programDetail',
 						url: 'html/fastReport/programDetail.html',
@@ -203,7 +202,7 @@
 						}
 					});
 				},
-				upload(id) {
+				upload:function(id) {
 					summer.openWin({
 						id: 'uploadImg',
 						url: 'html/fastReport/uploadImg.html',
@@ -232,7 +231,7 @@
 						}
 					});
 				},
-				submit(id) {
+				submit:function(id) {
 					summer.openWin({
 						id: 'submitSure',
 						url: 'html/fastReport/submitSure.html',
@@ -255,7 +254,7 @@
 						}
 					});
 				},
-				edit(id) {
+				edit:function(id) {
 					summer.openWin({
 						id: 'setProject',
 						url: 'html/fastReport/setProject.html',

@@ -126,8 +126,7 @@
 			}
 			var baseMessage=new Vue({
 			el:'#baseMessageElement',
-			data() {
-				return {
+			data:{
 					contractStatus : 'electron',
 					GroupStatus : 'no',
 					programStyle : '',
@@ -151,13 +150,9 @@
 					hasProjectId:false,
 					PROJECT_NAME:'',
 					PROJECT_ID:''
-				}
-			},
-			created() {
-
 			},
 			 methods: {
-				 getData(id){
+				 getData:function(id){
 					 var self=this;
 					 ajaxRequest({
 						 type: 'post',
@@ -180,7 +175,7 @@
 						 summer.hideProgress();
 					 });
 				 },
-				 selectAddr(){
+				 selectAddr:function(){
  					summer.setStorage("selectFrom","baseMessage");
  					summer.openWin({
  						id:'selectProvince',
@@ -200,27 +195,27 @@
  						}
  					})
  				},
-				goBack() {
+				goBack:function() {
 					summer.closeWin();
 				},
-				changContractStatus(e, status) {
+				changContractStatus:function(e, status) {
 					$(e.currentTarget).addClass('active').siblings('.active').removeClass('active');
 					this.contractStatus = status;
 				},
-				changGroupStatus(e, status) {
+				changGroupStatus:function(e, status) {
 					$(e.currentTarget).addClass('active').siblings('.active').removeClass('active');
 					this.GroupStatus = status;
 				},
-				onValuesChange1(picker, values) {
+				onValuesChange1:function(picker, values) {
 					this.pickerProgram = values[0];
 				},
-				surePickerProgram(param) {
+				surePickerProgram:function(param) {
 					this.pickerProgramStatus = !this.pickerProgramStatus;
 					if (param == 'confirm') {
 						this.programStyle = this.pickerProgram;
 					}
 				},
-				save() {
+				save:function() {
 					var self=this;
 					if(this.programStyle==""){
 						summer.toast({msg:"请选择项目类型"});

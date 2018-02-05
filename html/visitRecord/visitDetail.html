@@ -97,7 +97,7 @@
 	};
 	var programDetail = new Vue({
 		el: '#programDetail',
-		data() {
+		data:function() {
 			return {
 				dataList: "",
 				dataSchemeList:"",
@@ -106,12 +106,8 @@
 				JBPM_ID:""
 			}
 		},
-		created() {
-
-
-		},
 		methods: {
-			getData(id) {
+			getData:function(id) {
 				var self = this;
 				ajaxRequest({
 					type: 'post',
@@ -133,7 +129,7 @@
 				});
 
 			},
-			getSchemeData(id){
+			getSchemeData:function(id){
 				var self = this;
 				ajaxRequest({
 					type: 'post',
@@ -154,7 +150,7 @@
 				});
 
 			},
-		  getJBPMData(JBPM_ID){
+		  getJBPMData:function(JBPM_ID){
 				var self = this;
 				if (JBPM_ID) {
 					$("#content").css('display', 'none');
