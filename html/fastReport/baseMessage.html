@@ -111,7 +111,7 @@
 			  }
 			  baseMessage.totalData=baseData;
 			  baseMessage.project_Id=_project_Id;
-			  baseData.business.map((e,i) =>{
+			  baseData.business.map(function(e,i){
 					baseMessage.slots1[0].values.push(e.FLAG);
 			  })
 		  }
@@ -229,7 +229,7 @@
 					var _area_id=this.taskStyle;
 					var PLATFORM_TYPE;
 					var customId=this.customId;
-					baseMessage.totalData.business.map((e,i)=>{
+					baseMessage.totalData.business.map(function(e,i){
 						if(e.FLAG==_programStyle){
 							PLATFORM_TYPE=baseMessage.totalData.business[i].CODE;
 						}

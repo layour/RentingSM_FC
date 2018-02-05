@@ -148,17 +148,15 @@
 		}
 		var newCustom=new Vue({
 			el:"#newCustom",
-			data(){
+			data:function(){
 				return{
 					dataSource:"",
 					totalPage:'',
 					pageSource:''
 				}
 			},
-			mounted(){
-			},
 			methods:{
-				getData(end,flag){
+				getData:function(end,flag){
 					var self=this;
 						ajaxRequest({
 					        type: 'post',
@@ -201,7 +199,7 @@
 			                 summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
 			            })
 					},
-				completeCustom(id,name){
+				completeCustom:function(id,name){
 					var self=this;
 					if (self.pageSource=='programSelect') {
 						summer.openWin({
