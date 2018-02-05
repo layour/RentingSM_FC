@@ -148,7 +148,7 @@
         }
         var vueTemplate=new Vue({
           el:'#addCarList',
-          data(){
+          data:function(){
             return {
 							// addCarList:[{ACTUAL_PRICE:1},{ACTUAL_PRICE:1}],
 							addCarList:[],
@@ -165,7 +165,7 @@
             }
           },
 					methods:{
-						gotoDetail(item){
+						gotoDetail:function(item){
 							console.log("传参",JSON.stringify(item));
 							summer.openWin({
 								id:'addCar',
@@ -194,7 +194,7 @@
 								}
 							})
 						},
-						getData(id){
+						getData:function(id){
 							var _this=this;
 							console.log(_this.PROJECT_ID);
 							summer.showProgress();
@@ -216,11 +216,11 @@
 								console.log("err",err);
 							})
 						},
-						deleteItem(i,id){
+						deleteItem:function(i,id){
 							this.addCarList.splice(i,1)
 							summer.toast({msg:'删除成功'})
 						},
-						addItem(){
+						addItem:function(){
 							var _this=this
 							summer.openWin({
 								id:'addCar',
@@ -249,7 +249,7 @@
 								}
 							})
 						},
-						toggleItem(itemData){
+						toggleItem:function(itemData){
 							if(itemData.ROWNUM){
 								for(var i=0;i<this.addCarList.length;i++){
 									if(itemData.ROWNUM==this.addCarList[i].ROWNUM){
@@ -284,7 +284,7 @@
 							if(this.addCarList.length>0){this.dataLength=true}
 							console.log("最终结果",JSON.stringify(this.addCarList));
 						},
-						save(){
+						save:function(){
 							//发请求
 							console.log(JSON.stringify(this.addCarList));
 							if(this.addCarList.length==0){

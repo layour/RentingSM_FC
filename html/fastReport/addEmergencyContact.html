@@ -155,7 +155,7 @@
 				}
         var vueTemplate=new Vue({
           el:'#addContact',
-          data(){
+          data:function(){
             return {
 							datas:{
 								ID:'',
@@ -172,7 +172,7 @@
             }
           },
 					methods:{
-						getData(){
+						getData:function(){
 							var _this=this;
 							ajaxRequest({
 								type:'POST',
@@ -199,7 +199,7 @@
 								alert(err);
 							})
 						},
-						selectAddr(){
+						selectAddr:function(){
 							summer.setStorage("selectFrom","emergencyContract");
 							summer.openWin({
 								id:'selectProvince',
@@ -219,7 +219,7 @@
 							}
 							})
 						},
-						save(){
+						save:function(){
 							//发请求
 							var _this=this;
 							console.log(_this.datas);

@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="./quotedPrice.min.css">
-		
+
 	</head>
 	<body>
 		<div class="um-win" id="quotedPrice" v-cloak>
@@ -57,13 +57,13 @@
 				if(projectId){
 					quotedPriceList.projectId=projectId;
 				}
-				
+
 				quotedPriceList.getPriceList();
 			}
       $(function(){
         quotedPriceList=new Vue({
           el:'#quotedPrice',
-          data(){
+          data:function(){
             return {
 							selectedPlan:{
 								carModels:'二手车',
@@ -77,7 +77,7 @@
             }
           },
 					methods:{
-						getPriceList(){
+						getPriceList:function(){
 							var self = this;
 									ajaxRequest({
 										type: 'post',
@@ -91,9 +91,9 @@
 										console.log(err);
 										summer.hideProgress();
 									});
-								 
+
 						},
-						goDetail(id,name){
+						goDetail:function(id,name){
 							var self=this;
 							summer.openWin({
 								id:'quotedPriceDetail',

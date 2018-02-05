@@ -45,7 +45,7 @@
     <script>
     	var pickerDealerVue=new Vue({
           el:'#pickerDealer',
-          data(){
+          data:function(){
             return {
               popupVisible:false,
 							dealerList:[],
@@ -59,10 +59,9 @@
 							currentPage:1
             }
           },
-					created(){
-					},
+
 					methods:{
-						getData(){
+						getData:function(){
 							// alert(this.searchVal)
 							// alert(this.currentPage)
 							var _this=this
@@ -88,14 +87,14 @@
  			       //   summer.refreshFooterLoadDone();
  			       //  })
 						},
-						pickerAcc(){
+						pickerAcc:function(){
 							this.popupVisible=!this.popupVisible;
 						},
-						pickerIt(e,item){
+						pickerIt:function(e,item){
 							$(e.currentTarget).addClass('active').siblings('li').removeClass('active')
 							this.item=item
 						},
-						pickerDealer(){
+						pickerDealer:function(){
 							this.popupVisible=false;
 							summer.setStorage('pickerDealer',JSON.stringify(this.item));
 							summer.execScript({
@@ -104,7 +103,7 @@
 							});
 							summer.closeWin();
 						},
-						sureSupplier(item){
+						sureSupplier:function(item){
 							summer.setStorage('pickerDealer',JSON.stringify(item));
 							summer.execScript({
 							    winId: 'addCar',

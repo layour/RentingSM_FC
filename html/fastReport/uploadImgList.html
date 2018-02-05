@@ -85,14 +85,13 @@
 				}
 				var projectImgList=new Vue({
 					el:'#projectImgList',
-					data(){
+					data:function(){
 						return{
               projectId:''
 						}
 					},
-					created(){},
 					methods:{
-            openContWin(val,title,customerType,type){
+            openContWin:function(val,title,customerType,type){
               var _this=this;
               summer.openWin({
         				id: val,

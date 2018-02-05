@@ -56,17 +56,15 @@
 			}
       var pickerCompanyVue=new Vue({
           el:'#pickerCompany',
-          data(){
+          data:function(){
             return {
               companyList:[],
               searchVal:'',
               id:''
             }
           },
-          mounted(){
-					},
           methods:{
-            getData(val) {
+            getData:function(val) {
                 var _this=this
                 console.log("val===="+val,"id==="+_this.id);
   								ajaxRequest({
@@ -88,7 +86,7 @@
   									console.log("err",err);
   								})
             },
-            sureCompany(item){
+            sureCompany:function(item){
               summer.setStorage('pickerCompany',JSON.stringify(item));
 							summer.execScript({
 							    winId: 'addCar',

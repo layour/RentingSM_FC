@@ -35,7 +35,7 @@
 			}
     	var pickerFleetVue=new Vue({
           el:'#pickerDealer',
-          data(){
+          data:function(){
             return {
               popupVisible:false,
 							dealerList:[],
@@ -45,11 +45,8 @@
 							SUP_ID:''
             }
           },
-					created(){
-
-					},
 					methods:{
-						getData(){
+						getData:function(){
 							var _this=this
 								ajaxRequest({
 									type:'POST',
@@ -65,7 +62,7 @@
 									console.log("err",err);
 								})
 						},
-						sureSupplier(item){
+						sureSupplier:function(item){
 							summer.setStorage('pickerFleet',JSON.stringify(item));
 							summer.execScript({
 							    winId: 'quotedPriceDetail',

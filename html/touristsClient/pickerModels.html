@@ -63,14 +63,14 @@
 				}
         var pickerModelsVue=new Vue({
           el:'#pickerModels',
-          data(){
+          data:function(){
             return {
               modelsList:[],
 							id:''
             }
           },
 					methods:{
-						getData(val){
+						getData:function(val){
 							var _this=this;
 							console.log(this.id);
 							ajaxRequest({
@@ -92,7 +92,7 @@
 								console.log("err",err);
 							})
 						},
-						pickerCarModels(it){
+						pickerCarModels:function(it){
 							summer.setStorage('pickerModels1',JSON.stringify(it));
 							summer.openWin({
 								id:'pickerModels-2',

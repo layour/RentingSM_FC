@@ -29,14 +29,14 @@
       }
       var pickerModelsVue2=new Vue({
           el:'#pickerModels-2',
-          data(){
+          data:function(){
             return {
 							id:'',
               modelsList:[]
             }
           },
 					methods:{
-						getData(){
+						getData:function(){
 							var _this=this;
 							ajaxRequest({
 								type:'POST',
@@ -49,7 +49,7 @@
 								console.log("err",err);
 							})
 						},
-						pickerModels(it){
+						pickerModels:function(it){
 							summer.setStorage('selectProvince',JSON.stringify(it));
 							summer.openWin({
 								id:'selectCity',

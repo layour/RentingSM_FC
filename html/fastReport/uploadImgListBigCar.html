@@ -115,14 +115,13 @@
 				}
 				var projectImgListBigCar=new Vue({
 					el:'#projectImgListBigCar',
-					data(){
+					data:function(){
 						return{
               projectId:''
 						}
 					},
-					created(){},
 					methods:{
-            openContWin(val,title,customerType,type){
+            openContWin:function(val,title,customerType,type){
               var _this=this;
               summer.openWin({
         				id: val,
@@ -155,7 +154,7 @@
         				}
         			})
             },
-						openVideo(val,title,customerType,type){
+						openVideo:function(val,title,customerType,type){
 							var _this=this;
 							summer.openWin({
 								id: val,

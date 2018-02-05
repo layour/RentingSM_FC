@@ -199,7 +199,7 @@
 			}
       var quotedVue=new Vue({
           el:'#quotedPriceDetail',
-          data(){
+          data:function(){
             return {
 							termList:['3个月','6个月','12个月','18个月','24个月','48个月'],
 							// termType:['月'],
@@ -253,7 +253,7 @@
             }
           },
 					computed:{
-						slots(){
+						slots:function(){
 							var pickerObj={
 								flex: 1,
 								values: [],
@@ -279,7 +279,7 @@
 						}
 					},
 					methods:{
-						getData(){
+						getData:function(){
 							console.log("PROJECT_ID",this.PROJECT_ID);
 							var _this=this
 							ajaxRequest({
@@ -295,23 +295,23 @@
 							})
 
 						},
-						surePickerpayType(val){
+						surePickerpayType:function(val){
 							this.pickerPayTypeStatus=!this.pickerPayTypeStatus
 							if(val=='confirm'){
 								this.quoted.payType=this.pickerVal
 								console.log(this.quoted.payType)
 							}
 						},
-						sureBail(){
+						sureBail:function(){
 							this.quoted.lastBail=this.quoted.bail
 							this.quoted.sureBailRate=this.quoted.bailRate
 							this.quoted.sureBailType=this.quoted.bailType
 							this.bailStatue=false
 						},
-						bailToRateStatus(){
+						bailToRateStatus:function(){
 							this.bailToRate=!this.bailToRate
 						},
-						toggleClass(e,str){
+						toggleClass:function(e,str){
 							if(str=="首期款"&&!this.quoted.sureFirstPay){
 								// summer.toast({msg:"请先选择首付比例"})
 								console.log("ss");
@@ -322,27 +322,27 @@
 							$(e.currentTarget).addClass('active').siblings().removeClass('active')
 							this.quoted.bailType=str
 						},
-						pickerBail(){
+						pickerBail:function(){
 							this.bailStatue=!this.bailStatue
 						},
-						moneyToRateStatus(){
+						moneyToRateStatus:function(){
 							this.moneyToRate=!this.moneyToRate
 						},
-						sureFristPay(){
+						sureFristPay:function(){
 							this.quoted.sureFirstPay=this.quoted.firstPay
 							this.quoted.sureFirstPayRate=this.quoted.firstPayRate
 							this.firstPayStatu=false
 						},
-						pickFirstRate(){
+						pickFirstRate:function(){
 							this.firstPayStatu=!this.firstPayStatu
 						},
-						onValuesChange(picker,values) {
+						onValuesChange:function(picker,values) {
 							this.pickerVal=values[0];
 				    },
-						onPayTypeChange(picker,values){
+						onPayTypeChange:function(picker,values){
 							this.pickerVal=values[0].FLAG;
 						},
-						surePicker(item,status){
+						surePicker:function(item,status){
 							this.pickerStatus=!this.pickerStatus;
 							if(status=='confirm'){
 								if(this.pickerType=='term'){
@@ -358,13 +358,13 @@
 								this.pickerType=item;
 							}
 						},
-						rateCheck(){
+						rateCheck:function(){
 							var val=String(this.quoted.rate).trim();
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,6})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.rate=''
 							}
 						},
-						changeFirstPay(){
+						changeFirstPay:function(){
 							var val=String(this.quoted.firstPayRate).trim();
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,6})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.firstPayRate=''
@@ -375,7 +375,7 @@
 							}
 
 						},
-						changeFirstPayRate(){
+						changeFirstPayRate:function(){
 							var val=String(this.quoted.firstPay).trim();
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>parseFloat(this.quoted.allPrice)){
 								this.quoted.firstPay=''
@@ -384,7 +384,7 @@
 								this.quoted.firstPayRate=parseFloat(100*this.quoted.firstPay/this.quoted.allPrice).toFixed(6);
 							}
 						},
-						changeBail(){
+						changeBail:function(){
 							var val=parseFloat(String(this.quoted.bailRate).trim());
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,6})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.bailRate=''
@@ -395,7 +395,7 @@
 								this.quoted.bail=parseFloat(this.quoted.bailRate*number*0.01).toFixed(2)
 							}
 						},
-						bailTypeReset(){
+						bailTypeReset:function(){
 							var number=0;
 							if(this.quoted.bailType=="融资额"){
 								number=this.quoted.allPrice;
@@ -404,7 +404,7 @@
 							}
 							return parseFloat(number)
 						},
-						changBailRate(){
+						changBailRate:function(){
 							var val=parseFloat(String(this.quoted.bail).trim()),number=this.bailTypeReset();
 							console.log(val,number);
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>number){
@@ -414,7 +414,7 @@
 								this.quoted.bailRate=parseFloat(100*this.quoted.bail/number).toFixed(6);
 							}
 						},
-						checkVal(value){
+						checkVal:function(value){
 							var val='';
 							if(value=='fee'){
 								val=this.quoted.consultingFee;
@@ -435,7 +435,7 @@
 							}
 
 						},
-						quotedTest(){
+						quotedTest:function(){
 							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee){
 								summer.toast({msg:'请先完善报价信息'})
 								return
@@ -466,7 +466,7 @@
 							})
 
 						},
-						save(){
+						save:function(){
 							// http
 							if(!this.isTest){
 								summer.toast({msg:'请先测算报价'})

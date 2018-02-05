@@ -98,7 +98,7 @@
 	<script>
 		var submitSure = new Vue({
 			el: '#submit',
-			data() {
+			data:function() {
 				return {
 					data: {
 						userName: "徐毅",
@@ -109,7 +109,7 @@
 				}
 			},
 			methods: {
-				getData(id) {
+				getData:function(id) {
 					var self = this;
 					ajaxRequest({
 						type: 'post',
@@ -131,7 +131,7 @@
 					});
 
 				},
-				getSchemeData(id) {
+				getSchemeData:function(id) {
 					var self = this;
 					ajaxRequest({
 						type: 'post',
@@ -151,7 +151,7 @@
 						summer.hideProgress();
 					});
 				},
-				opensubmitFinanl() {
+				opensubmitFinanl:function() {
 					var _this=this;
 					summer.showProgress()
 					ajaxRequest({

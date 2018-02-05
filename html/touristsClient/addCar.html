@@ -104,7 +104,7 @@
 				}
 				var addCar=new Vue({
 					el:'#addCar',
-					data(){
+					data:function(){
 						return{
 							dealer:'',
 							company:'',
@@ -133,9 +133,8 @@
 							]
 						}
 					},
-					created(){},
 					methods:{
-						initDate(data){
+						initDate:function(data){
 								var _this=this;
 								_this.dealer=data.SUPPLIERS_NAME;
 								_this.company=data.COMPANY_NAME;
@@ -159,7 +158,7 @@
 								summer.setStorage('pickerModels3',JSON.stringify({NAME:data.SPEC_NAME,ID:data.SPEC_ID}))
 
 						},
-						getData(){
+						getData:function(){
 							var _this=this;
 							// ajaxRequest({
 							// 	type:'POST',
@@ -187,7 +186,7 @@
 								console.log("err",err);
 							})
 						},
-						checkNumber(e,param){
+						checkNumber:function(e,param){
 							var val=$(e.currentTarget).val()
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)){
 								if(param=='guidePrice'){
@@ -201,7 +200,7 @@
 								}
 							}
 						},
-						pickerDealer(){
+						pickerDealer:function(){
 							summer.openWin({
 								id:'pickerDealer',
 								url:'html/touristsClient/pickerDealer.html',
@@ -220,7 +219,7 @@
 								}
 							})
 						},
-						pickerCompany(){
+						pickerCompany:function(){
 							var dealer=summer.getStorage('pickerDealer');
 							if(dealer){
 								summer.openWin({
@@ -245,7 +244,7 @@
 								summer.toast({msg:'请先选择经销商'})
 							}
 						},
-						pickerModels(){
+						pickerModels:function(){
 							var company=summer.getStorage('pickerCompany');
 							if(company){
 								summer.openWin({
@@ -270,21 +269,21 @@
 								summer.toast({msg:'请先选择厂商'})
 							}
 						},
-						changCarStatus(e,status){
+						changCarStatus:function(e,status){
 							$(e.currentTarget).addClass('active').siblings('.active').removeClass('active');
 							this.carStatus=status;
 						},
-						onValuesChange(picker,values) {
+						onValuesChange:function(picker,values) {
 							this.pickedColor=values[0];
 				    },
-						surePickerColor(param){
+						surePickerColor:function(param){
 							this.pickerColorStatus=!this.pickerColorStatus;
 							if(param=='confirm'){
 								this.color=this.pickedColor.FLAG;
 								this.colorId=this.pickedColor.CODE;
 							}
 						},
-						save(){
+						save:function(){
 							if(!this.dealer||!this.company||!this.color||!this.carModels||!this.guidePrice||!this.holdPrice||this.onePrice==''||this.safePrice==''){
 								summer.toast({msg:'请填写车辆的所有信息'})
 								return

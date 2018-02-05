@@ -172,7 +172,7 @@
 		}
 		var uploadVue = new Vue({
 			el: '#uploadImg',
-			data() {
+			data:function() {
 				return {
 					popupVisible: false,
 					fileName: '',
@@ -186,7 +186,7 @@
 				}
 			},
 			methods: {
-				lookBig(it) {
+				lookBig:function(it) {
 					var _this = this;
 					summer.openWin({
 						id: 'lookBigImg',
@@ -202,7 +202,7 @@
 						}
 					})
 				},
-				getData() {
+				getData:function() {
 					var _this = this;
 					ajaxRequest({
 						type: 'POST',
@@ -230,10 +230,10 @@
 						alert(JSON.stringify(err));
 					})
 				},
-				openPopup() {
+				openPopup:function() {
 					this.popupVisible = !this.popupVisible
 				},
-				deleteOld(id, i) {
+				deleteOld:function(id, i) {
 					var _this = this;
 					summer.showProgress();
 					ajaxRequest({
@@ -253,10 +253,10 @@
 						alert(JSON.stringify(err));
 					})
 				},
-				deleteImg(i) {
+				deleteImg:function(i) {
 					this.imgList.splice(i, 1)
 				},
-				openCame() {
+				openCame:function() {
 					// 打开相机
 					var that = this
 					this.popupVisible = false;
@@ -278,7 +278,7 @@
 					});
 
 				},
-				uploadImg() {
+				uploadImg:function() {
 					// 选择相册
 					this.popupVisible = false
 					var that = this
@@ -318,7 +318,7 @@
 						}
 					});
 				},
-				compressImg(i, args, length) {
+				compressImg:function(i, args, length) {
 					var that = this;
 					console.log("第" + i + "次添加水印")
 					CommonUtil.watermark({
@@ -337,7 +337,7 @@
 					});
 					console.log("程序还在执行")
 				},
-				takeVideo() {
+				takeVideo:function() {
 					var _this = this
 					cordova.require("summer-plugin-video.Video").open({}, function (res) {
 						console.log(JSON.stringify(res));
@@ -349,7 +349,7 @@
 						}
 					})
 				},
-				videoSave() {
+				videoSave:function() {
 					var that = this;
 					if (this.videoUrl == 'oldVideo') {
 						summer.toast({
@@ -386,7 +386,7 @@
 						timeout: 10
 					}, "multiUploadCallback()", "multiUploadErrCallback()");
 				},
-				save(par) {
+				save:function(par) {
 					var that = this;
 					summer.showProgress();
 					console.log(window.G_COMMON_URL);
