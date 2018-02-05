@@ -142,19 +142,25 @@ html,body{
     left: 0;
     right: 0;
     bottom: 0;
-    /* top: 0; */
     background: rgba(0, 0, 0, 0.4);
     overflow: hidden;
 }
 .botMaskActive{
     top: 0;
 }
+.t-con{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 5.7rem;
+}
 .choosePayMethod{
     position: absolute;
     left: 0;
-    bottom: -4.8rem;
+    bottom: -5.7rem;
     width: 100%;
-    height: 4.8rem;
+    height: 5.7rem;
     background: #fff;
     transition: bottom 0.5s;
 }
@@ -189,7 +195,7 @@ html,body{
 }
 .bankList{
     width: 100%;
-    height: 1.8rem;
+    max-height: 2.7rem;
     overflow-x: hidden;
     overflow-y: auto;
 }

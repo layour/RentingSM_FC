@@ -1,0 +1,202 @@
+html,
+body {
+    background: #f6f6f6;
+}
+
+.tip {
+    height: 0.68rem;
+    width: 100%;
+    padding-left: 0.32rem;
+    font-size: 0.26rem;
+    color: #999;
+    font-weight: normal;
+    line-height: 0.68rem;
+    margin: 0;
+}
+
+.items {
+    box-sizing: content-box;
+    height: 0.28rem;
+    border: 0.5px solid rgb(239, 239, 239);
+    background: #fff;
+    padding: 0.31rem 0;
+    position: relative;
+}
+
+.items>span {
+    float: left;
+    height: 0.28rem;
+    line-height: 0.28rem;
+    width: 2.46rem;
+    font-size: 0.28rem;
+    padding-left: 0.56rem;
+    color: #333;
+}
+
+.items>input,
+.items>p {
+    font-size: 0.28rem;
+    line-height: 0.28rem;
+    height: 0.28rem;
+    width: 3.36rem;
+    border: 0;
+    outline: none;
+    float: left;
+    color: #333;
+}
+
+.items>p {
+    color: #dedede;
+}
+
+.items>i {
+    position: absolute;
+    right: 0.4rem;
+    width: 0.9rem;
+    text-align: center;
+    height: 0.9rem;
+    top: 0;
+    line-height: 0.85rem;
+    color: #039be5;
+    font-size: 0.4rem;
+}
+
+.items>i.icon-enter {
+    color: #dbdbdb;
+    font-size: 0.32rem;
+}
+
+h3 {
+    padding-left: 0.58rem;
+    width: 100%;
+    height: 0.68rem;
+    color: #039be5;
+    font-weight: normal;
+    margin: 0;
+}
+
+h3>i,
+h3>span {
+    float: left;
+}
+
+h3>i.icon-card {
+    height: 0.68rem;
+    line-height: 0.68rem;
+    font-size: 0.26rem;
+    margin-right: 0.1rem;
+}
+
+h3>span {
+    height: 0.68rem;
+    line-height: 0.68rem;
+    font-size: 0.28rem;
+}
+
+.items:nth-of-type(3) {
+    margin-bottom: 0.2rem;
+}
+
+.items:nth-of-type(4)>input {
+    width: 4.48rem;
+}
+
+.items:nth-of-type(5)>input {
+    width: 2.24rem;
+    margin-right: 0.84rem;
+}
+
+.items>.code{
+    float: left;
+    margin-top: -0.08rem;
+    width: 1.36rem;
+    height: 0.44rem;
+    border-radius: 0.04rem;
+    background-color: #039be5;
+    line-height: 0.44rem;
+    text-align: center;
+    font-size: 0.24rem;
+    color: #fff;
+}
+
+.items>input::-webkit-input-placeholder {
+    /* WebKit browsers*/
+    color: #dedede;
+}
+
+.items>input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18*/
+    color: #dedede;
+}
+
+.items>input::-moz-placeholder {
+    /* Mozilla Firefox 19+*/
+    color: #dedede;
+}
+
+.items>input:-ms-input-placeholder {
+    /* Internet Explorer 10+*/
+    color: #dedede;
+}
+h3:nth-of-type(2){
+    margin-bottom: 0.2rem;
+}
+.agreement{
+    width: 4.8rem;
+    height: 0.4rem;
+    padding-left: 0.56rem;
+    margin-bottom: 1.2rem;
+}
+.gou{
+    float: left;
+    margin-right: 0.1rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    border-radius: 0.2rem;
+    overflow: hidden;
+}
+.gouBorderNone{
+    border: 0;
+}
+.gou>i{
+    float: left;
+    width: 0.36rem;
+    height: 0.36rem;
+    border-radius: 0.18rem;
+    background: #039be5;
+    font-size: 0.24rem;
+    color: #fff;
+    text-align: center;
+    line-height: 0.36rem;
+}
+.iNone{
+    display: none;
+}
+.txt,.agreement>b{
+    float: left;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    color: #262626;
+    font-size: 0.28rem;
+}
+.agreement>b{
+    font-weight: normal;
+    color: #039be5;
+}
+.bindBtn{
+    width: 6.34rem;
+    height: 0.9rem;
+    border-radius: 0.08rem;
+    background: #039be5;
+    line-height: 0.9rem;
+    color: #fff;
+    text-align: center;
+    font-size: 0.32rem;
+    transform: translate(-50%);
+    margin-left: 50%;
+}
+.getcodeUnClick{
+    background: #999 !important;
+}

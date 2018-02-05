@@ -50,7 +50,7 @@
 					</div>
 				</li>
 				<li onclick="update()">
-					<strong>新</strong>
+					<strong></strong>
 					<span class="iconfont icon-version"></span>
 					<i>版本更新</i>
 					<div class="companyInfo">
@@ -86,6 +86,8 @@
 			} else {
 				$('.box').find('p').text("请登录");
 			}
+			var appVersion = JSON.parse(summer.getAppVersion()).versionName;
+			$('strong').eq(0).text(appVersion);
 		};
 
 		function logout() {

@@ -46,6 +46,7 @@
 			data: {
 				/* 验证码区域文本 */
 				codeTxt: "获取验证码",
+				/* 手机号 */
 				phoneNum: "",
 				code: "",
 				/* 后台返回验证码 */
@@ -117,9 +118,16 @@
 				/* 获取验证码 */
 				achieveCode() {
 					var This = this;
+					var re = /^1[3|4|5|7|8][0-9]{9}$/;
 					if (!this.phoneNum) {
 						summer.toast({
 							msg: "请输入手机号"
+						});
+						return;
+					}
+					if (!re.test(this.phoneNum)) {
+						summer.toast({
+							msg: "手机号格式有误"
 						});
 						return;
 					}
