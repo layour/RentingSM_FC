@@ -187,14 +187,13 @@
 		}
 		var fra_visitRecord = new Vue({
 			el: '#fra_visitRecord',
-			data() {
+			data:function() {
 				return {
 					dataList: ''
 				}
 			},
-			mounted() {},
 			methods: {
-				getData(end) {
+				getData:function(end) {
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/promc/projectList',
@@ -219,7 +218,7 @@
 						summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
 					})
 				},
-				openOpacity(id, code) {
+				openOpacity:function(id, code) {
 					console.log(id);
 					summer.openFrame({
 						id: 'Opacity',
@@ -238,7 +237,7 @@
 						}
 					})
 				},
-				openDetail(id) {
+				openDetail:function(id) {
 					console.log(id);
 					summer.openWin({
 						id: 'programDetail',
@@ -261,7 +260,7 @@
 						}
 					});
 				},
-				upload(id) {
+				upload:function(id) {
 					summer.openWin({
 						id: 'uploadImg',
 						url: 'html/fastReport/uploadImg.html',
@@ -290,7 +289,7 @@
 						}
 					});
 				},
-				submit(id) {
+				submit:function(id) {
 					summer.openWin({
 						id: 'submitSure',
 						url: 'html/fastReport/submitSure.html',
@@ -313,7 +312,7 @@
 						}
 					});
 				},
-				edit(id) {
+				edit:function(id) {
 					summer.openWin({
 						id: 'setProject',
 						url: 'html/fastReport/setProject.html',
