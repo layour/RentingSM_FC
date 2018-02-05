@@ -39,7 +39,10 @@
 				<li>
 					<span>投保期限</span>
 					<div>
-						<i>请选择</i><span>至</span><i>请选择</i><span>自</span>
+						<i>请选择</i>
+						<span>至</span>
+						<i>请选择</i>
+						<span>自</span>
 					</div>
 				</li>
 				<li>
@@ -58,7 +61,10 @@
 			</ul>
 			<section v-if="insurerStatus" class="insurer">
 				<mt-picker :slots="slots" @change="onInsurerChange"></mt-picker>
-				<p><span class="" @click="sureInsurer">取消</span><span class="" @click="sureInsurer('confirm')">确定</span></p>
+				<p>
+					<span class="" @click="sureInsurer">取消</span>
+					<span class="" @click="sureInsurer('confirm')">确定</span>
+				</p>
 			</section>
 			<mt-popup v-model="popupVisible" position="bottom">
 				<p class='border' @click="openCame">打开相机</p>
@@ -71,33 +77,31 @@
 	<script type="text/javascript">
 		var addWarranty = new Vue({
 			el: '#index',
-			data() {
-				return {
-					insurerStatus: false,
-					pickedInsurer: '',
-					// 保险公司
-					insurer: '请选择',
-					slots: [{
-						flex: 1,
-						values: ['太平洋保险', '平安保险', '安心财产', '人寿保险'],
-						defaultIndex: 2,
-						className: 'slot1',
-						textAlign: 'center'
-					}],
-					// 保费总额
-					warrantyMoney: '',
-					popupVisible: false,
-					// 保单
-					warrantyImg: ''
-				}
+			data: {
+				insurerStatus: false,
+				pickedInsurer: '',
+				// 保险公司
+				insurer: '请选择',
+				slots: [{
+					flex: 1,
+					values: ['太平洋保险', '平安保险', '安心财产', '人寿保险'],
+					defaultIndex: 2,
+					className: 'slot1',
+					textAlign: 'center'
+				}],
+				// 保费总额
+				warrantyMoney: '',
+				popupVisible: false,
+				// 保单
+				warrantyImg: ''
 			},
 			methods: {
 				// 选择保险公司
-				onInsurerChange(picker, values) {
+				onInsurerChange:function (picker, values) {
 					this.pickedInsurer = values[0];
 				},
 				// 选择保险公司
-				sureInsurer(param) {
+				sureInsurer:function (param) {
 					this.insurerStatus = !this.insurerStatus;
 					this.popupVisible = false;
 					if (param == 'confirm') {
@@ -105,7 +109,7 @@
 					}
 				},
 				// 点击保存
-				save() {
+				save:function () {
 					var insurer = this.insurer;
 					var warrantyMoney = this.warrantyMoney;
 					var warrantyImg = this.warrantyImg;
@@ -119,39 +123,41 @@
 					});
 				},
 				// 上传保单
-				uploadWarranty() {
+				uploadWarranty:function () {
 					this.popupVisible = !this.popupVisible;
 					this.insurerStatus = false;
 				},
 				// 打开相机
-				openCame() {
+				openCame:function () {
 					this.popupVisible = false;
 					var that = this;
-					summer.getPermission(["android.permission.CAMERA", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE"],
+					summer.getPermission(["android.permission.CAMERA", "android.permission.READ_PHONE_STATE",
+							"android.permission.WRITE_EXTERNAL_STORAGE"
+						],
 						function successFn() {},
 						function errorFn(err) {
 							alert(err)
 						});
 					summer.openCamera({
 						compressionRatio: 0.5,
-						callback: function(args) {
+						callback: function (args) {
 							that.warrantyImg = args.compressImgPath;
 						}
 					});
 				},
 				// 打开相册
-				uploadImg() {
+				uploadImg:function () {
 					this.popupVisible = false;
 					var that = this;
 					summer.openPhotoAlbum({
 						compressionRatio: 0.5,
-						callback: function(args) {
+						callback: function (args) {
 							that.warrantyImg = args.compressImgPath;
 						}
 					});
 				},
 				// 关闭弹层
-				claosePopup() {
+				claosePopup:function () {
 					this.popupVisible = false;
 				}
 			}

@@ -1,243 +1,246 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../../css/fonts/iconfont.css">
-      <link rel="stylesheet" href="../../../css/mint.css">
-		<link rel="stylesheet" href="index.css">
-		<script src="../../../js/summer.js" ></script>
-		<script src="../../../js/jquery.min.js" ></script>
-		<script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script src="../../../js/font.js" ></script>
-      <script src="../../../js/vue.js" ></script>
-		<script src="../../../js/mint.js" ></script>
-	</head>
-	<body>
-		<div class="um-win" id="index">
-			<div class="um-content">
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../../css/mint.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="../../../js/summer.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../../js/font.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <script src="../../../js/mint.js"></script>
+</head>
+
+<body>
+    <div class="um-win" id="index">
+        <div class="um-content">
             <ul class="list_1">
-               <li>
-                  <span>车架号</span>
-                  <input v-model="vin" type="text" placeholder="请输入" />
-               </li>
-               <li>
-                  <span>车辆型号</span>
-                  <input v-model="version" type="text" placeholder="请输入" />
-               </li>
-               <li>
-                  <span>发动机号</span>
-                  <input v-model="motorNum" type="text" placeholder="请输入" />
-               </li>
+                <li>
+                    <span>车架号</span>
+                    <input v-model="vin" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>车辆型号</span>
+                    <input v-model="version" type="text" placeholder="请输入" />
+                </li>
+                <li>
+                    <span>发动机号</span>
+                    <input v-model="motorNum" type="text" placeholder="请输入" />
+                </li>
             </ul>
             <ul class="GPS">
-               <li>
-						<b></b>
-                  <span>GPS1</span>
-               </li>
-               <li>
-                  <span>GPS1厂家</span>
-                  <div @click="sureGps_1">
-                     <span class="iconfont icon-enter"></span>
-                     <i>{{GPS_1}}</i>
-                  </div>
-               </li>
-               <li>
-                  <span>GPS1类型</span>
-                  <div class="type">
-                     <span v-bind:class="{ active: isActive_1 }" @click="gps_1_wired">有线</span>
-                     <span v-bind:class="{ active: !isActive_1 }" @click="gps_1_wireless">无线</span>
-                  </div>
-               </li>
-               <li>
-                  <span>GPS1卡号</span>
-                  <input v-model="GPS_1_num" type="text" placeholder="请输入" />
-               </li>
+                <li>
+                    <b></b>
+                    <span>GPS1</span>
+                </li>
+                <li>
+                    <span>GPS1厂家</span>
+                    <div @click="sureGps_1">
+                        <span class="iconfont icon-enter"></span>
+                        <i>{{GPS_1}}</i>
+                    </div>
+                </li>
+                <li>
+                    <span>GPS1类型</span>
+                    <div class="type">
+                        <span v-bind:class="{ active: isActive_1 }" @click="gps_1_wired">有线</span>
+                        <span v-bind:class="{ active: !isActive_1 }" @click="gps_1_wireless">无线</span>
+                    </div>
+                </li>
+                <li>
+                    <span>GPS1卡号</span>
+                    <input v-model="GPS_1_num" type="text" placeholder="请输入" />
+                </li>
             </ul>
             <ul class="GPS">
-               <li>
-						<b></b>
-                  <span>GPS2</span>
-               </li>
-               <li>
-                  <span>GPS2厂家</span>
-                  <div @click="sureGps_2">
-                     <span class="iconfont icon-enter"></span>
-                     <i>{{GPS_2}}</i>
-                  </div>
-               </li>
-               <li>
-                  <span>GPS2类型</span>
-                  <div class="type">
-                     <span v-bind:class="{ active: isActive_2 }" @click="gps_2_wired">有线</span>
-                     <span v-bind:class="{ active: !isActive_2 }" @click="gps_2_wireless">无线</span>
-                  </div>
-               </li>
-               <li>
-                  <span>GPS2卡号</span>
-                  <input v-model="GPS_2_num" type="text" placeholder="请输入" />
-               </li>
+                <li>
+                    <b></b>
+                    <span>GPS2</span>
+                </li>
+                <li>
+                    <span>GPS2厂家</span>
+                    <div @click="sureGps_2">
+                        <span class="iconfont icon-enter"></span>
+                        <i>{{GPS_2}}</i>
+                    </div>
+                </li>
+                <li>
+                    <span>GPS2类型</span>
+                    <div class="type">
+                        <span v-bind:class="{ active: isActive_2 }" @click="gps_2_wired">有线</span>
+                        <span v-bind:class="{ active: !isActive_2 }" @click="gps_2_wireless">无线</span>
+                    </div>
+                </li>
+                <li>
+                    <span>GPS2卡号</span>
+                    <input v-model="GPS_2_num" type="text" placeholder="请输入" />
+                </li>
             </ul>
             <div class="uploadCertificate">
-               <span>上传合格证</span>
-               <div @click="uploadCertificate">
-                  <span class="iconfont icon-enter"></span>
-                  <i v-if = "certificateImg">已上传</i>
-                  <i v-else>开始上传</i>
-               </div>
+                <span>上传合格证</span>
+                <div @click="uploadCertificate">
+                    <span class="iconfont icon-enter"></span>
+                    <i v-if="certificateImg">已上传</i>
+                    <i v-else>开始上传</i>
+                </div>
             </div>
             <section v-if="GPS_1_state" class="gpsChoose">
-					<mt-picker :slots="slots_1" @change="onGpsChange_1"></mt-picker>
-					<p><span class="" @click="sureGps_1">取消</span><span class="" @click="sureGps_1('confirm')">确定</span></p>
-				</section>
+                <mt-picker :slots="slots_1" @change="onGpsChange_1"></mt-picker>
+                <p>
+                    <span class="" @click="sureGps_1">取消</span>
+                    <span class="" @click="sureGps_1('confirm')">确定</span>
+                </p>
+            </section>
             <section v-if="GPS_2_state" class="gpsChoose">
-					<mt-picker :slots="slots_2" @change="onGpsChange_2"></mt-picker>
-					<p><span class="" @click="sureGps_2">取消</span><span class="" @click="sureGps_2('confirm')">确定</span></p>
-				</section>
+                <mt-picker :slots="slots_2" @change="onGpsChange_2"></mt-picker>
+                <p>
+                    <span class="" @click="sureGps_2">取消</span>
+                    <span class="" @click="sureGps_2('confirm')">确定</span>
+                </p>
+            </section>
             <mt-popup v-model="popupVisible" position="bottom">
-					<p class='border' @click="openCame">打开相机</p>
-					<p class='border' @click="uploadImg">打开相册</p>
-					<p @click="claosePopup">取消</p>
-				</mt-popup>
-			</div>
-		</div>
-		<script type="text/javascript">
-      var addCertificate = new Vue({
-         el:'#index',
-         data(){
-            return{
-					// 车架号，车辆型号，发动机号
-               vin:'',
-               version:'',
-               motorNum:'',
-               popupVisible:false,
-					// 合格证
-               certificateImg:'',
-               // GPS1 卡号，类型，厂家
-               GPS_1_num:'',
-               GPS_1_type:'',
-					GPS_1:'请选择',
-               pickedGPS_1:'',
-               GPS_1_state:false,
-               slots_1: [
-                  {
-                     flex: 1,
-                     values: ['厂家一', '厂家二', '厂家三', '厂家四'],
-                     defaultIndex:2,
-                     className: 'slot1',
-                     textAlign: 'center'
-                  }
-               ],
-               // GPS2 卡号，类型，厂家
-               GPS_2_num:'',
-               GPS_2_type:'',
-					GPS_2:'请选择',
-               pickedGPS_2:'',
-               GPS_2_state:false,
-               slots_2: [
-                  {
-                     flex: 1,
-                     values: ['厂家五', '厂家六', '厂家七', '厂家八'],
-                     defaultIndex:2,
-                     className: 'slot2',
-                     textAlign: 'center'
-                  }
-               ],
-               isActive_1:true,
-               isActive_2:true
+                <p class='border' @click="openCame">打开相机</p>
+                <p class='border' @click="uploadImg">打开相册</p>
+                <p @click="claosePopup">取消</p>
+            </mt-popup>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var addCertificate = new Vue({
+            el: '#index',
+            data: {
+                // 车架号，车辆型号，发动机号
+                vin: '',
+                version: '',
+                motorNum: '',
+                popupVisible: false,
+                // 合格证
+                certificateImg: '',
+                // GPS1 卡号，类型，厂家
+                GPS_1_num: '',
+                GPS_1_type: '',
+                GPS_1: '请选择',
+                pickedGPS_1: '',
+                GPS_1_state: false,
+                slots_1: [{
+                    flex: 1,
+                    values: ['厂家一', '厂家二', '厂家三', '厂家四'],
+                    defaultIndex: 2,
+                    className: 'slot1',
+                    textAlign: 'center'
+                }],
+                // GPS2 卡号，类型，厂家
+                GPS_2_num: '',
+                GPS_2_type: '',
+                GPS_2: '请选择',
+                pickedGPS_2: '',
+                GPS_2_state: false,
+                slots_2: [{
+                    flex: 1,
+                    values: ['厂家五', '厂家六', '厂家七', '厂家八'],
+                    defaultIndex: 2,
+                    className: 'slot2',
+                    textAlign: 'center'
+                }],
+                isActive_1: true,
+                isActive_2: true
+            },
+            methods: {
+                // 点击保存
+                save:function () {
+                    // 点击保存携带参数到payApply页面
+                    summer.closeToWin({
+                        id: 'payApply'
+                    });
+                },
+                // 上传合格证
+                uploadCertificate:function () {
+                    this.popupVisible = !this.popupVisible;
+                    this.GPS_1_state = false;
+                    this.GPS_2_state = false;
+                },
+                // 打开相机
+                openCame:function () {
+                    this.popupVisible = false;
+                    var that = this;
+                    summer.getPermission(["android.permission.CAMERA", "android.permission.READ_PHONE_STATE",
+                            "android.permission.WRITE_EXTERNAL_STORAGE"
+                        ],
+                        function successFn() {},
+                        function errorFn(err) {
+                            alert(err)
+                        });
+                    summer.openCamera({
+                        compressionRatio: 0.5,
+                        callback: function (args) {
+                            that.certificateImg = args.compressImgPath;
+                        }
+                    });
+                },
+                // 打开相册
+                uploadImg:function () {
+                    this.popupVisible = false;
+                    var that = this;
+                    summer.openPhotoAlbum({
+                        compressionRatio: 0.5,
+                        callback: function (args) {
+                            that.certificateImg = args.compressImgPath;
+                        }
+                    });
+                },
+                // 关闭弹层
+                claosePopup:function () {
+                    this.popupVisible = false;
+                },
+                // 选择GPS1
+                onGpsChange_1:function (picker, values) {
+                    this.pickedGPS_1 = values[0];
+                },
+                sureGps_1:function (param) {
+                    this.GPS_1_state = !this.GPS_1_state;
+                    this.GPS_2_state = false;
+                    this.popupVisible = false;
+                    if (param == 'confirm') {
+                        this.GPS_1 = this.pickedGPS_1;
+                    }
+                },
+                // 选择GPS2
+                onGpsChange_2:function (picker, values) {
+                    this.pickedGPS_2 = values[0];
+                },
+                sureGps_2:function (param) {
+                    this.GPS_2_state = !this.GPS_2_state;
+                    this.GPS_1_state = false;
+                    this.popupVisible = false;
+                    if (param == 'confirm') {
+                        this.GPS_2 = this.pickedGPS_2;
+                    }
+                },
+                gps_1_wired:function () {
+                    this.isActive_1 = true;
+                    this.GPS_1_type = '有线';
+                },
+                gps_1_wireless:function () {
+                    this.isActive_1 = false;
+                    this.GPS_1_type = '无线';
+                },
+                gps_2_wired:function () {
+                    this.isActive_2 = true;
+                    this.GPS_2_type = '有线';
+                },
+                gps_2_wireless:function () {
+                    this.isActive_2 = false;
+                    this.GPS_2_type = '无线';
+                }
             }
-         },
-         methods:{
-            // 点击保存
-            save(){
-					// 点击保存携带参数到payApply页面
-					
-               summer.closeToWin({
-   				   id: 'payApply'
-   				});
-            },
-            // 上传合格证
-            uploadCertificate(){
-               this.popupVisible = !this.popupVisible;
-               this.GPS_1_state = false;
-               this.GPS_2_state = false;
-            },
-            // 打开相机
-            openCame(){
-               this.popupVisible = false;
-               var that=this;
-               summer.getPermission(["android.permission.CAMERA","android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE"],
-                  function successFn(){
-                  },
-                  function errorFn(err){
-                     alert(err)
-               });
-               summer.openCamera({
-                  compressionRatio:0.5,
-                  callback : function(args){
-                     that.certificateImg = args.compressImgPath;
-                  }
-               });
-            },
-            // 打开相册
-            uploadImg(){
-               this.popupVisible = false;
-               var that = this;
-               summer.openPhotoAlbum({
-                  compressionRatio:0.5,
-                  callback : function (args){
-                     that.certificateImg = args.compressImgPath;
-                  }
-               });
-            },
-            // 关闭弹层
-            claosePopup(){
-               this.popupVisible = false;
-            },
-            // 选择GPS1
-            onGpsChange_1(picker,values){
-               this.pickedGPS_1 = values[0];
-            },
-            sureGps_1(param){
-               this.GPS_1_state = !this.GPS_1_state;
-               this.GPS_2_state = false;
-               this.popupVisible = false;
-               if(param=='confirm'){
-                  this.GPS_1 = this.pickedGPS_1;
-               }
-            },
-            // 选择GPS2
-            onGpsChange_2(picker,values){
-               this.pickedGPS_2 = values[0];
-            },
-            sureGps_2(param){
-               this.GPS_2_state = !this.GPS_2_state;
-               this.GPS_1_state = false;
-               this.popupVisible = false;
-               if(param=='confirm'){
-                  this.GPS_2 = this.pickedGPS_2;
-               }
-            },
-            gps_1_wired(){
-               this.isActive_1 = true;
-               this.GPS_1_type = '有线';
-            },
-            gps_1_wireless(){
-               this.isActive_1 = false;
-               this.GPS_1_type = '无线';
-            },
-            gps_2_wired(){
-               this.isActive_2 = true;
-               this.GPS_2_type = '有线';
-            },
-            gps_2_wireless(){
-               this.isActive_2 = false;
-               this.GPS_2_type = '无线';
-            }
-         }
-      });
-		</script>
-	</body>
+        });
+    </script>
+</body>
+
 </html>

@@ -78,7 +78,7 @@
             searchValue:""
 		},
 		methods: {
-			payDetail(userId,PROJECT_ID,JBPM_ID,PAYMENT_ID) {
+			payDetail:function (userId,PROJECT_ID,JBPM_ID,PAYMENT_ID) {
 				summer.openWin({
 					id: 'checkPay',
 					url: 'html/repayApply/checkPay/index.html',
@@ -105,7 +105,7 @@
 					}
 				});
 			},
-			advance(userId,PROJECT_ID,PAY_ID,PAYMENT_ID) {
+			advance:function (userId,PROJECT_ID,PAY_ID,PAYMENT_ID) {
 				summer.openWin({
 					id: 'payApply',
 					url: 'html/repayApply/payApply/index.html',
@@ -137,7 +137,7 @@
 					}
 				});
 			},
-			normal(userId,PROJECT_ID,PAY_ID,PAYMENT_ID) {
+			normal:function (userId,PROJECT_ID,PAY_ID,PAYMENT_ID) {
 				summer.openWin({
 					id: 'payApply',
 					url: 'html/repayApply/payApply/index.html',

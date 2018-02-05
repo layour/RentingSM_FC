@@ -117,10 +117,10 @@
 				name:"中国招商银行"
 			}
 		];
-		stockData.forEach((e) => {
+		stockData.forEach(function (e) {
 			e.checked = false;
 		});
-		bankData.forEach((e) => {
+		bankData.forEach(function (e) {
 			e.checked = false;
 		});
         var stock = new Vue({
@@ -163,7 +163,7 @@
 				// 选择账单项
 				checkIt:function (index){
 					this.items[index].checked = !this.items[index].checked;
-					this.submit = this.items.some((e) => {
+					this.submit = this.items.some(function (e) {
 						return e.checked == true;
 					});
 					if (this.items[index].checked) {
@@ -179,7 +179,7 @@
 					if (this.submit) {
 						this.mask = true;
 						this.bankChoose = "";
-						this.bankList.forEach((e) => {
+						this.bankList.forEach(function (e) {
 							e.checked = false;
 						});
 					}
@@ -190,7 +190,7 @@
 				},
 				// 选择银行
 				checkBank:function (index){
-					this.bankList.forEach((e) => {
+					this.bankList.forEach(function (e) {
 						e.checked = false;
 					});
 					this.bankList[index].checked = !this.bankList[index].checked;
@@ -273,9 +273,6 @@
 				}
 			}
         });
-		function showUserInfo(){
-			
-		};
 	</script>
 </body>
 

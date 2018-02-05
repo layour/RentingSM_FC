@@ -141,7 +141,7 @@
 		<div class="um-content">
 			<div id="content"></div>
 			<div class="list customList um-bgc-white" @click='openSponsorDetail(item.TYPE,item)' v-for="(item,index) in sponsorListData" >
-			<mt-cell-swipe :title="item.NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(item.ID)}]">
+			<mt-cell-swipe :title="item.NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: function(){deleteItem(item.ID)}}]">
 				<div class="center" v-if="item.TYPE=='LP'" >
 				 	<p class="type ">  <span>担保人类型 :</span> <span>企业</span> </p>
 					<p class="type "> <span>法人 :</span> <span>{{item.LEGAL_PERSON}}</span> </p>

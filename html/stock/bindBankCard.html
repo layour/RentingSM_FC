@@ -173,7 +173,7 @@
                         This.getCode = "";
                         This.codeTxt = "60s";
                         var n = 59;
-                        this.codeTimer = setInterval(() => {
+                        this.codeTimer = setInterval(function () {
                             This.codeTxt = n + "s";
                             if (n < 0) {
                                 This.codeTxt = "获取验证码";
@@ -207,7 +207,7 @@
                         			This.getCode = Data.datas.SMSCODE;
                         			This.codeTxt = "60s";
                         			var n = 59;
-                        			this.codeTimer = setInterval(() => {
+                        			this.codeTimer = setInterval(function () {
                         				This.codeTxt = n + "s";
                         				if (n < 0) {
                         					This.codeTxt = "获取验证码";

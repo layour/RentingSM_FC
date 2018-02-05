@@ -48,13 +48,13 @@ dl dd{
 dl dd input{
    border: 0;
    outline: none;
-   height: 0.28rem;
+   height: 0.34rem;
    width: 4.6rem;
    background: none;
    color: #424242;
    font-size: 0.28rem;
-   line-height: 0.28rem;
-   margin-top: 0.25rem;
+   line-height: 0.34rem;
+   margin-top: 0.2rem;
 }
 *::-webkit-input-placeholder {
     color: #e0e0e0;

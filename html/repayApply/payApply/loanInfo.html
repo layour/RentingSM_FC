@@ -158,10 +158,10 @@
             },
             methods: {
                 // 选择是否代收
-				onReplaceChange(picker, values) {
+				onReplaceChange:function (picker, values) {
 					this.pickedReplace = values[0];
 				},
-				sureReplace(param) {
+				sureReplace:function (param) {
 					this.replaceStatus = !this.replaceStatus;
                     this.methodStatus = false;
                     this.patternStatus = false;
@@ -176,10 +176,10 @@
 					}
 				},
                 // 选择放款方式
-                onMethodChange(picker, values) {
+                onMethodChange:function (picker, values) {
 					this.pickedMethod = values[0];
 				},
-				sureMethod(param) {
+				sureMethod:function (param) {
 					this.methodStatus = !this.methodStatus;
                     this.replaceStatus = false;
                     this.patternStatus = false;
@@ -189,10 +189,10 @@
 					}
 				},
                 // 选择放款模式
-                onPatternChange(picker, values) {
+                onPatternChange:function (picker, values) {
 					this.pickedPattern = values[0];
 				},
-				surePattern(param) {
+				surePattern:function (param) {
 					this.patternStatus = !this.patternStatus;
                     this.replaceStatus = false;
                     this.methodStatus = false;
@@ -202,10 +202,10 @@
 					}
 				},
                 // 选择付款方式
-                onPayChange(picker, values) {
+                onPayChange:function (picker, values) {
 					this.pickedPay = values[0];
 				},
-				surePay(param) {
+				surePay:function (param) {
 					this.payStatus = !this.payStatus;
                     this.replaceStatus = false;
                     this.methodStatus = false;
@@ -215,7 +215,7 @@
 					}
 				},
                 // 抵押保证金输入监听
-                pledgeInps() {
+                pledgeInps:function () {
                     if (this.insurerReplace == "差额") {
                         this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
                     } else if (this.insurerReplace == "全额") {
@@ -223,7 +223,7 @@
                     }
                 },
                 // GPS费用输入监听
-                GPSinps() {
+                GPSinps:function () {
                     if (this.insurerReplace == "差额") {
                         this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
                     } else if (this.insurerReplace == "全额") {
@@ -231,7 +231,7 @@
                     }
                 },
                 // 提交
-                save(){
+                save:function () {
                     if (this.insurerMethod == "请选择") {
                         summer.toast({
                             msg: "请选择放款方式"
@@ -265,22 +265,22 @@
                     } 
                     summer.showProgress();
                     var ISDEKOU, PAYMENT_TYPE, LENDING_MODEL, PAYMONEY_TYPE;
-                    this.replaceArr.forEach((e) => {
+                    this.replaceArr.forEach(function (e) {
                         if (e.FLAG == this.insurerReplace) {
                             ISDEKOU = e.CODE;
                         }
                     });
-                    this.methodArr.forEach((e) => {
+                    this.methodArr.forEach(function (e) {
                         if (e.FLAG == this.insurerMethod) {
                             PAYMENT_TYPE = e.CODE;
                         }
                     });
-                    this.patternArr.forEach((e) => {
+                    this.patternArr.forEach(function (e) {
                         if (e.FLAG == this.insurerPattern) {
                             LENDING_MODEL = e.CODE;
                         }
                     });
-                    this.payArr.forEach((e) => {
+                    this.payArr.forEach(function (e) {
                         if (e.FLAG == this.insurerPay) {
                             PAYMONEY_TYPE = e.CODE;
                         }
@@ -365,19 +365,19 @@
                 }
                 if (Data.flag == 1) {
                     loanInfo.methodArr = Data.datas.PAYMENT_TYPE;
-                    loanInfo.methodSlots[0].values = loanInfo.methodArr.map((e) => {
+                    loanInfo.methodSlots[0].values = loanInfo.methodArr.map(function (e) {
                         return e.FLAG;
                     });
                     loanInfo.patternArr = Data.datas.LENDING_MODEL;
-                    loanInfo.patternSlots[0].values = loanInfo.patternArr.map((e) => {
+                    loanInfo.patternSlots[0].values = loanInfo.patternArr.map(function (e) {
                         return e.FLAG;
                     });
                     loanInfo.replaceArr = Data.datas.ISDEKOU;
-                    loanInfo.replaceSlots[0].values = loanInfo.replaceArr.map((e) => {
+                    loanInfo.replaceSlots[0].values = loanInfo.replaceArr.map(function (e) {
                         return e.FLAG;
                     });
                     loanInfo.payArr = Data.datas.PAYMONEY_TYPE;
-                    loanInfo.paySlots[0].values = loanInfo.payArr.map((e) => {
+                    loanInfo.paySlots[0].values = loanInfo.payArr.map(function (e) {
                         return e.FLAG;
                     });
                     // loanInfo.pledge = Data.datas.paymentMap.CS_PRICE;

@@ -74,7 +74,7 @@
                 arr: '' /* [{"nodeName_":'提交',"toNode_":"下一步"},{"nodeName_":'提交2',"toNode_":"下一步2"} ,{"nodeName_":'提交3',"toNode_":"下一步3"}]*/
             },
             methods: {
-                getData(JBPM_ID, TASK_ID) {
+                getData:function (JBPM_ID, TASK_ID) {
                     summer.showProgress();
                     var self = this;
                     if (JBPM_ID) {
@@ -102,7 +102,7 @@
                         createNull("content", "../../img/empty.png", "暂未发起流程")
                     }
                 },
-                submitMission(nodeName_, toNode_) {
+                submitMission:function (nodeName_, toNode_) {
                     var self = this;
                     ajaxRequest({
                         type: 'post',

@@ -109,7 +109,7 @@
 								<i class="icon iconfont icon-enter"></i>
 							</div>
 						</template> -->
-						<mt-cell-swipe :title="item.PRODUCT_NAME+' | '+item.CATENA_NAME+' | '+item.SPEC_NAME" :label="item.COMPANY_NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: () =>deleteItem(index,ID)}]">
+						<mt-cell-swipe :title="item.PRODUCT_NAME+' | '+item.CATENA_NAME+' | '+item.SPEC_NAME" :label="item.COMPANY_NAME"  :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'2.4rem', background: '#f44336', color: '#fff' },handler: function(){deleteItem(index,ID)}}]">
 								 <div class="price">
 									<p>数量：{{item.AMOUNT}}台</p>
 								 	<p>单台成交价：&yen;{{item.ACTUAL_PRICE}}</p>
@@ -149,6 +149,7 @@
         var vueTemplate=new Vue({
           el:'#addCarList',
           data:function(){
+			  var This = this;
             return {
 							// addCarList:[{ACTUAL_PRICE:1},{ACTUAL_PRICE:1}],
 							addCarList:[],
@@ -159,7 +160,9 @@
 						    {
 						      content: '删除',
 						      style: { background: 'red', color: '#fff' },
-						      handler: () => this.$messagebox('delete')
+						      handler: function () {
+								This.$messagebox('delete')
+							  }
 						    }
 						  ]
             }
