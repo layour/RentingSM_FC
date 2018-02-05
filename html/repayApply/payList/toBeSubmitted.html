@@ -201,7 +201,9 @@
 							if (toBeSubmitted.resetData) {
 								toBeSubmitted.items = Data.datas.list;
 							} else {
-								toBeSubmitted.items.push(...Data.datas.list);
+								Data.datas.list.forEach(function (e) {
+									toBeSubmitted.items.push(e);
+								});
 							}
 						}
 					}

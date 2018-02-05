@@ -121,7 +121,9 @@
 							if (passed.resetData) {
 								passed.items = Data.datas.list;
 							} else {
-								passed.items.push(...Data.datas.list);
+								Data.datas.list.forEach(function (e) {
+									passed.items.push(e);
+								});
 							}
 						}
 					}

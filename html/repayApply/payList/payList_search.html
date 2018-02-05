@@ -204,7 +204,9 @@
                         if (all.resetData) {
                             all.items = Data.datas.list;
                         } else {
-                            all.items.push(...Data.datas.list);
+							Data.datas.list.forEach(function (e) {
+								all.items.push(e);
+							});
                         }
                     }
                 }

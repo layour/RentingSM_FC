@@ -63,7 +63,7 @@
 				resetData: false
 			},
 			methods: {
-				payDetail:function (userId, PROJECT_ID, JBPM_ID, PAYMENT_ID) {
+				payDetail: function (userId, PROJECT_ID, JBPM_ID, PAYMENT_ID) {
 					summer.openWin({
 						id: 'checkPay',
 						url: 'html/repayApply/checkPay/index.html',
@@ -92,7 +92,7 @@
 				}
 			}
 		});
-		summerready = function() {
+		summerready = function () {
 			function getData(pageNum) {
 				summer.showProgress();
 				ajaxRequest({
@@ -101,9 +101,9 @@
 					param: {
 						"pageNo": pageNum,
 						"pageSize": 10,
-						"PSTATUS":"2"
+						"PSTATUS": "2"
 					}
-				}, function(res) {
+				}, function (res) {
 					summer.hideProgress();
 					var Data;
 					if (Object.prototype.toString.call(res.data) === '[object String]') {
@@ -115,18 +115,20 @@
 						loaning.totalPage = Data.datas.totalPage;
 						if (Data.datas.list.length < 1) {
 							createNull("content", "../../../img/empty.png");
-							$('#content').css('display','block');
+							$('#content').css('display', 'block');
 						} else {
-							$('#content').css('display','none');
+							$('#content').css('display', 'none');
 							if (loaning.resetData) {
 								loaning.items = Data.datas.list;
 							} else {
-								loaning.items.push(...Data.datas.list);
+								Data.datas.list.forEach(function (e) {
+									loaning.items.push(e);
+								});
 							}
 						}
 					}
 					console.log(loaning.items);
-				}, function(err) {
+				}, function (err) {
 					summer.hideProgress();
 					summer.toast({
 						msg: "暂无数据"
@@ -143,7 +145,7 @@
 				textDown: '下拉刷新...',
 				textUp: '松开刷新...',
 				showTime: true
-			}, function(ret, err) {
+			}, function (ret, err) {
 				//通常在这里从服务器加载数据
 				loaning.resetData = true;
 				getData(1);
@@ -157,7 +159,7 @@
 				textDown: '上拉刷新...',
 				textUp: '松开刷新...',
 				showTime: true
-			}, function(ret, err) {
+			}, function (ret, err) {
 				//通常在这里从服务器加载数据，
 				var num = loaning.num++;
 				if (num > loaning.totalPage) {

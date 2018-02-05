@@ -121,7 +121,9 @@
 							if (loaned.resetData) {
 								loaned.items = Data.datas.list;
 							} else {
-								loaned.items.push(...Data.datas.list);
+								Data.datas.list.forEach(function (e) {
+									loaned.items.push(e);
+								});
 							}
 						}
 					}
