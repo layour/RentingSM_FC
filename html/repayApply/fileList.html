@@ -18,22 +18,24 @@
     <style>
         .um-list-item-bodys {
             align-self: center;
-            line-height: .88rem;
-            height: .88rem;
-            padding: 0;
+            line-height: .46rem;
+            padding: 0.2rem 0.55rem 0.2rem 0.56rem;
             font-size: 0.32rem;
             color: #333;
-            padding-left: 0.56rem;
-            padding-right: .44rem;
             border-bottom: 1px solid #EFEFEF;
             background: #fff;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .frp {
             position: absolute;
             right: .6rem;
             top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
         }
 
         .iconfont.icon-right {
@@ -59,20 +61,6 @@
 <body>
     <div class="um-win" id="projectImgListBigCar" v-cloak>
         <div class="um-content addCar">
-            <div class="um-list-item-bodys" @click="openContWin('oJiaoJie','放款资料交接清单','承租人自然人','放款前')">
-                放款资料交接清单
-                <span class="frp">
-                    <i class="oJiaoJie icon iconfont icon-right"></i>&nbsp;
-                    <i class="icon iconfont icon-enter"></i>
-                </span>
-            </div>
-            <div class="um-list-item-bodys" @click="openContWin('oMaiMai','车辆买卖合同','承租人自然人','放款前')">
-                车辆买卖合同
-                <span class="frp">
-                    <i class="oMaiMai icon iconfont icon-right"></i>&nbsp;
-                    <i class="icon iconfont icon-enter"></i>
-                </span>
-            </div>
             <div class="um-list-item-bodys" @click="openContWin('oZuLin','融资租赁合同','承租人自然人','放款前')">
                 融资租赁合同
                 <span class="frp">
@@ -87,6 +75,13 @@
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
+            <div class="um-list-item-bodys" @click="openContWin('oZhiFu','租金支付表','承租人自然人','放款前')">
+                租金支付表
+                <span class="frp">
+                    <i class="oZhiFu icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
             <div class="um-list-item-bodys" @click="openContWin('oShenQing','复昌租赁放款申请表','承租人自然人','放款前')">
                 复昌租赁放款申请表
                 <span class="frp">
@@ -94,38 +89,31 @@
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
-            <div class="um-list-item-bodys" @click="openContWin('oWeiTuo','租金扣划授权委托书','承租人自然人','放款前')">
-                租金扣划授权委托书
-                <span class="frp">
-                    <i class="oWeiTuo icon iconfont icon-right"></i>&nbsp;
-                    <i class="icon iconfont icon-enter"></i>
-                </span>
-            </div>
-            <div class="um-list-item-bodys" @click="openContWin('oDaiKou','代扣卡','承租人自然人','放款前')">
-                代扣卡
-                <span class="frp">
-                    <i class="oDaiKou icon iconfont icon-right"></i>&nbsp;
-                    <i class="icon iconfont icon-enter"></i>
-                </span>
-            </div>
-            <div class="um-list-item-bodys" @click="openContWin('oZhuanRang','应收租金债权转让通知书','承租人自然人','放款前')">
-                应收租金债权转让通知书
-                <span class="frp">
-                    <i class="oZhuanRang icon iconfont icon-right"></i>&nbsp;
-                    <i class="icon iconfont icon-enter"></i>
-                </span>
-            </div>
-            <div class="um-list-item-bodys" @click="openContWin('oGaoZhi','收车告知函','承租人自然人','放款前')">
-                收车告知函
-                <span class="frp">
-                    <i class="oGaoZhi icon iconfont icon-right"></i>&nbsp;
-                    <i class="icon iconfont icon-enter"></i>
-                </span>
-            </div>
             <div class="um-list-item-bodys" @click="openContWin('oZhuangPei','机动车统一发票及上装配件票（如有上装）','承租人自然人','放款前')">
                 机动车统一发票及上装配件票（如有上装）
                 <span class="frp">
                     <i class="oZhuangPei icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
+            <div class="um-list-item-bodys" @click="openContWin('oFaPiao','购置税发票','承租人自然人','放款前')">
+                购置税发票
+                <span class="frp">
+                    <i class="oFaPiao icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
+            <div class="um-list-item-bodys" @click="openContWin('oWanShui','车辆完税证明','承租人自然人','放款前')">
+                车辆完税证明
+                <span class="frp">
+                    <i class="oWanShui icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
+            <div class="um-list-item-bodys" @click="openContWin('oBaoXian','保险发票（如参与融资请提供）','承租人自然人','放款前')">
+                保险发票（如参与融资请提供）
+                <span class="frp">
+                    <i class="oBaoXian icon iconfont icon-right"></i>&nbsp;
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
@@ -143,10 +131,17 @@
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
-            <div class="um-list-item-bodys" @click="openContWin('oYaoShi','车钥匙','承租人自然人','放款前')">
-                车钥匙
+            <div class="um-list-item-bodys" @click="openContWin('oShangYe','商业险保单','承租人自然人','放款前')">
+                商业险保单
                 <span class="frp">
-                    <i class="oYaoShi icon iconfont icon-right"></i>&nbsp;
+                    <i class="oShangYe icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
+            <div class="um-list-item-bodys" @click="openContWin('oJiaoQiang','交强险保单（复印件）（如参与融资请提供）','承租人自然人','放款前')">
+                交强险保单（复印件）（如参与融资请提供）
+                <span class="frp">
+                    <i class="oJiaoQiang icon iconfont icon-right"></i>&nbsp;
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
@@ -154,13 +149,6 @@
                 交车照片
                 <span class="frp">
                     <i class="oJiaoChe icon iconfont icon-right"></i>&nbsp;
-                    <i class="icon iconfont icon-enter"></i>
-                </span>
-            </div>
-            <div class="um-list-item-bodys" @click="openContWin('oShouKuan','首付款收款证明','承租人自然人','放款前')">
-                首付款收款证明
-                <span class="frp">
-                    <i class="oShouKuan icon iconfont icon-right"></i>&nbsp;
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
@@ -176,7 +164,7 @@
                 projectId: ''
             },
             methods: {
-                openContWin:function (val, title, customerType, type) {
+                openContWin: function (val, title, customerType, type) {
                     var _this = this;
                     summer.openWin({
                         id: val,
@@ -209,7 +197,7 @@
                         }
                     })
                 },
-                openVideo:function (val, title, customerType, type) {
+                openVideo: function (val, title, customerType, type) {
                     var _this = this;
                     summer.openWin({
                         id: val,
