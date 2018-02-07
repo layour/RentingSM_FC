@@ -118,18 +118,18 @@ html{
    display: flex;
    align-items:center;
    justify-content:center;
-   font-size: 0.4rem;
+   font-size: 0.5rem;
 }
 .crm_list li dl dd,.xmgl_list li dl dd{
    text-align: center;
    height: 0.36rem;
    line-height: 0.36rem;
-   font-size: 0.24rem;
+   font-size: 0.28rem;
    color: #424242;
 }
 .missionNum{
    position: absolute;;
-   top:0.1rem;
+   top:0rem;
    right:0.4rem;
    color:white;
    width: 18px;

@@ -51,12 +51,12 @@
 					</div>
 					<div class="footer" v-bind:style="[k.PSTATUS_NM == '未放款' ? {'display':'block'} : {'display':'none'}]">
 						<ul class="footerList">
-							<li class="first" @click="advance(k.ID,k.PROJECT_ID,k.PAY_ID,k.PAYMENT_ID)">
+							<!-- <li class="first" @click="advance(k.ID,k.PROJECT_ID,k.PAY_ID,k.PAYMENT_ID)">
 								<div>
 									<i class="iconfont icon-tiqianfangkuan"></i>
 									<span>提前放款</span>
 								</div>
-							</li>
+							</li> -->
 							<li @click="normal(k.ID,k.PROJECT_ID,k.PAY_ID,k.PAYMENT_ID)">
 								<div>
 									<i class="iconfont icon-zhengchangfangkuan"></i>
