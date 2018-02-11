@@ -169,8 +169,10 @@
 					if (param == 'confirm') {
 						this.insurerReplace = this.pickedReplace;
                         if (this.pickedReplace == "差额") {
+                            // 实付金额 = 应付金额 - 抵押保证金 - GPS费用 - 代收金额
                             this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
                         } else if (this.pickedReplace == "全额") {
+                            // 实付金额 = 应付金额 - 抵押保证金 - GPS费用
                             this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
                         }
 					}
@@ -380,9 +382,6 @@
                     loanInfo.paySlots[0].values = loanInfo.payArr.map(function (e) {
                         return e.FLAG;
                     });
-                    // loanInfo.pledge = Data.datas.paymentMap.CS_PRICE;
-                    // loanInfo.gps = Data.datas.paymentMap.GPS_MONEY;
-                    // loanInfo.LAST_MONEY = Data.datas.paymentMap.LAST_MONEY;
                     loanInfo.collection = Data.datas.paymentMap.DEKOU_SQ;
                     loanInfo.PAY_MONEY = Data.datas.paymentMap.PAY_MONEY;
                 } else {
