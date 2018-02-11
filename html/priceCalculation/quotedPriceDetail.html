@@ -401,7 +401,7 @@
 									// _this.quoted.sureBailType=data.LEASE_SUBFIRENT
 									_this.quoted.sureBailRate=data.BAIL_PERCENT
 									_this.quoted.consultingFee=data.POUNDAGE_PRICE
-									_this.quoted.feeOn=data.
+									_this.quoted.feeOn=data.RenewalMargin_MONEY
 									// _this.quoted.sureBail=data.DEPOSIT_MONEY
 									_this.resultData.firstPrice=data.FIRST_MONEY
 									_this.resultData.termPrice=data.MONTH_RENT
@@ -577,7 +577,7 @@
 
 						},
 						quotedTest:function(){
-							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee){
+							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn){
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}
@@ -588,6 +588,7 @@
 								LEASE_TERM:_this.quoted.contractTerm,
 								PAY_WAY:_this.quoted.payType,
 								LEASE_PERIOD:1,
+								RenewalMargin_MONEY:_this.quoted.feeOn
 							};
 							console.log(JSON.stringify(params));
 							ajaxRequest({
@@ -636,7 +637,7 @@
 								BAIL_PERCENT:String(_this.quoted.sureBailRate),
 								// '':_this.quoted.sureBailType, 保证金方式
 								POUNDAGE_PRICE:_this.quoted.consultingFee,
-
+								RenewalMargin_MONEY:_this.quoted.feeOn
 								// LEASE_SUBFIRENT:_this.quoted.sureBail, 保险保证金
 							};
 							console.log(JSON.stringify(param));
