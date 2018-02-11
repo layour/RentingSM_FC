@@ -109,6 +109,12 @@
 							<input type="text" name="bail" @blur="changBailRate" v-model="quoted.bail">&nbsp;元 -->
 						</span>
 					</li>
+					<li class="input">
+						<b>续保保证金</b>
+						<span>
+							<input type="text" @input="checkVal('feeOn')" placeholder="请输入续保保证金" name="feeOn" v-model="quoted.feeOn">&nbsp;元
+						</span>
+					</li>
 					<li class="input spec">
 						<b>咨询费</b>
 						<span>
@@ -293,6 +299,7 @@
 								gps:'',
 								consultingFee:'',
 								sureBail:'',
+								feeOn:''
 							},
 							resultData:{
 								firstPrice:'',
@@ -394,6 +401,7 @@
 									// _this.quoted.sureBailType=data.LEASE_SUBFIRENT
 									_this.quoted.sureBailRate=data.BAIL_PERCENT
 									_this.quoted.consultingFee=data.POUNDAGE_PRICE
+									_this.quoted.feeOn=data.
 									// _this.quoted.sureBail=data.DEPOSIT_MONEY
 									_this.resultData.firstPrice=data.FIRST_MONEY
 									_this.resultData.termPrice=data.MONTH_RENT
@@ -559,6 +567,11 @@
 								val=this.quoted.gps;
 								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
 									this.quoted.gps=''
+								}
+							}else if(value=='feeOn'){
+								val=this.quoted.feeOn;
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
+									this.quoted.feeOn=''
 								}
 							}
 

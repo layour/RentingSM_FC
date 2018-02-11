@@ -405,14 +405,16 @@
 				})
 				return
 			} else if (param == 'uploadImg') {
-				var carType=setProgect.carName||summer.getStorage('carType');
-				if(carType=="轻卡"){
-					id="uploadImg"
-					url = "html/fastReport/uploadImgList.html";
-				}else{
-					id="uploadImgListBigCar"
-					url = "html/fastReport/uploadImgListBigCar.html";				
-				}
+				// var carType=setProgect.carName||summer.getStorage('carType');
+				// if(carType=="轻卡"){
+				// 	id="uploadImg"
+				// 	url = "html/fastReport/uploadImgList.html";
+				// }else{
+				// 	id="uploadImgListBigCar"
+				// 	url = "html/fastReport/uploadImgListBigCar.html";
+				// }
+				id="uploadImgListBigCar"
+				url = "html/fastReport/uploadImgListBigCar.html";
 				title = '资料上传';
 				summer.openWin({
 					id: id,
