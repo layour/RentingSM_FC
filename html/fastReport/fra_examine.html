@@ -25,7 +25,7 @@
 		</div>
 		<div class="um-content" >
 			<div  id="content"></div>
-			<div class="list customList um-bgc-white" v-for="(item,index) in dataList">
+			<div class="list customList um-bgc-white" v-for="(item,index) in dataList"  v-bind:class="[index==0 ? marginTop0 : '']">
 				<p class="pl10 title pr10">
 					{{item.CR_BECR_NAME}}<span class="status fr">
 						<i class="iconfont icon-customer mr5"></i>{{item.CLERK_NAME}}</span>
@@ -111,7 +111,8 @@
 			data:function() {
 				return {
 					dataList: '',
-					totalPage: ""
+					totalPage: "",
+					marginTop0:"marginTop0" 
 				}
 			},
 			methods: {

@@ -506,7 +506,7 @@
 						this.message.INDUSTRY_FICATION_NM= this.pickerTransport;
 						for(var i=0;i<this.transportData_total.length;i++){
 							if(this.pickerTransport==this.transportData_total[i].FLAG){
-								this.message.INDUSTRY_FICATION=this.transportData_total[i].ID
+								this.message.INDUSTRY_FICATION=this.transportData_total[i].CODE
 							}
 						}
 					}
@@ -801,6 +801,9 @@
 				//alert(args); //失败返回illegal access
 			})
 		}
+		$(function(){
+			$('body').height($('body')[0].clientHeight);
+		});
 	</script>
 </body>
 

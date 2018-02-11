@@ -10,6 +10,9 @@
 	background:#f6f6f6;
 
 }
+.marginTop0{
+	margin-top:0px !important
+}
 .sera p.txt{
 	display:inline-block;
 }
@@ -39,6 +42,9 @@
 .customList{
 	 position: relative;
 	 margin-top:0.2rem;
+}
+.customList:first-child{
+	margin-top:0px;
 }
 	.customList p.title{
 	font-size:0.32rem;
