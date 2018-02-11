@@ -170,10 +170,10 @@
 						this.insurerReplace = this.pickedReplace;
                         if (this.pickedReplace == "差额") {
                             // 实付金额 = 应付金额 - 抵押保证金 - GPS费用 - 代收金额
-                            this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
+                            this.LAST_MONEY = (this.PAY_MONEY - this.pledge - this.gps - this.collection).toFixed(2);
                         } else if (this.pickedReplace == "全额") {
                             // 实付金额 = 应付金额 - 抵押保证金 - GPS费用
-                            this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
+                            this.LAST_MONEY = (this.PAY_MONEY - this.pledge - this.gps).toFixed(2);
                         }
 					}
 				},
@@ -219,17 +219,17 @@
                 // 抵押保证金输入监听
                 pledgeInps:function () {
                     if (this.insurerReplace == "差额") {
-                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
+                        this.LAST_MONEY = (this.PAY_MONEY - this.pledge - this.gps - this.collection).toFixed(2);
                     } else if (this.insurerReplace == "全额") {
-                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
+                        this.LAST_MONEY = (this.PAY_MONEY - this.pledge - this.gps).toFixed(2);
                     }
                 },
                 // GPS费用输入监听
                 GPSinps:function () {
                     if (this.insurerReplace == "差额") {
-                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps - this.collection;
+                        this.LAST_MONEY = (this.PAY_MONEY - this.pledge - this.gps - this.collection).toFixed(2);
                     } else if (this.insurerReplace == "全额") {
-                        this.LAST_MONEY = this.PAY_MONEY - this.pledge - this.gps;
+                        this.LAST_MONEY = (this.PAY_MONEY - this.pledge - this.gps).toFixed(2);
                     }
                 },
                 // 提交
