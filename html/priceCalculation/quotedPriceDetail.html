@@ -604,7 +604,7 @@
 								summer.toast({msg:"测算完成"});
 								_this.isTest=true;
 								_this.testData=res.data.datas
-								_this.resultData.firstPrice=_this.quoted.sureFirstPay
+								_this.resultData.firstPrice=res.data.datas.FIRST_MONEY
 								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
 								_this.resultData.term=_this.quoted.contractTerm
 							},function(err){
