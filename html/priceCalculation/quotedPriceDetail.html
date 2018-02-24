@@ -470,7 +470,7 @@
 						},
 						onValuesChange:function(picker,values) {
 							this.pickerVal=values[0];
-				    },
+				   		},
 						onPayTypeChange:function(picker,values){
 							this.pickerVal=values[0].FLAG;
 						},
@@ -588,6 +588,10 @@
 								LEASE_TERM:_this.quoted.contractTerm,
 								PAY_WAY:_this.quoted.payType,
 								LEASE_PERIOD:1,
+ 								DEPOSIT_MONEY:_this.quoted.lastBail,
+ 								POUNDAGE_PRICE:_this.quoted.consultingFee,
+ 								BAIL_PERCENT:_this.quoted.sureBailRate,
+ 								FIRST_MONEY:_this.quoted.sureFirstPay,
 								RenewalMargin_MONEY:_this.quoted.feeOn
 							};
 							console.log(JSON.stringify(params));
