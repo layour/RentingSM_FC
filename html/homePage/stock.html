@@ -23,9 +23,10 @@
 			<div v-bind:class="choosePayMethodStyle">
 				<div class="headBar">
 					<span class="iconfont icon-wrong1" @click="closeMask"></span>
-					<div>选择付款方式</div>
+					<div v-bind:class="[isTestPhNum ? 'notShowIt' : '']">选择付款方式</div>
+					<div v-bind:class="[isTestPhNum ? '' : 'notShowIt']">手机号验证 {{phNum}}</div>
 				</div>
-				<ul class="bankList">
+				<ul v-bind:class="[isTestPhNum ? 'notShowIt bankList' : 'bankList']">
 					<li v-for = "(k, index) in bankList" @click="checkBank(index)">
 						<span class="iconfont icon-card"></span>
 						<div class="bankName">{{k.name}}</div>
@@ -35,12 +36,26 @@
 						></i>
 					</li>
 				</ul>
-				<div class="addBankCard" @click="addBankCard">
+				<div v-bind:class="[(isTestPhNum && !codePass) ? 'payCode' : 'payCode notShowIt']">
+					<div>
+						<span>验证码：</span>
+						<div class="codeText">
+							<input type="text" v-model="payCode" />
+						</div>
+						<div class="code" @click="achieveCode" v-bind:class="codeClassObject">{{codeTxt}}</div>
+					</div>
+					<p>请输入银联发送的6位短信验证码</p>
+					<p>收不到短信，获取语音验证码 &gt;</p>
+				</div>
+				<div v-bind:class="[(isTestPhNum && !codePass) ? 'payCode' : 'payCode notShowIt']">
+					
+				</div>
+				<div v-bind:class="[isTestPhNum ? 'notShowIt addBankCard' : 'addBankCard']" @click="addBankCard">
 					<span class="iconfont icon-honor2"></span>
 					<div class="bankName">添加本人储蓄卡还款(<b>无限额</b>)</div>
 					<i class="iconfont icon-enter"></i>
 				</div>
-				<div v-bind:class="submitPayStyle" @click="payIt">确认还款</div>
+				<div v-bind:class="[codePass ? 'notShowIt' : submitPayStyle]" @click="payIt">确认还款</div>
 			</div>
 		</div>
 		<div class="um-content">
@@ -101,6 +116,18 @@
 				money:"3819.23",
 				car:"别克昂科威2017豪华型",
 				surplus:"2"
+			},
+			{
+				date:"12/29",
+				money:"3819.23",
+				car:"别克昂科威2017豪华型",
+				surplus:"2"
+			},
+			{
+				date:"12/29",
+				money:"3819.23",
+				car:"别克昂科威2017豪华型",
+				surplus:"2"
 			}
 		];
 		var bankData = [
@@ -137,7 +164,23 @@
 				// 遮罩层显隐
 				mask:false,
 				// 银行选择
-				bankChoose:""
+				bankChoose:"",
+				// 确认还款步骤
+				isTestPhNum:false,
+				// 确认还款手机验证码
+				payCode:"",
+				// 用户手机号
+				phNum:"186****8888",
+				// 验证码区域文本
+				codeTxt:"免费获取",
+				// 获取的验证码
+				getCode:"",
+				// 定时器ID
+				codeTimer: null,
+				// 确认还款手机验证码是否正确
+				codePass:false,
+				// 付款是否成功
+				paySuccess:false
 			},
 			computed: {
 				botMaskStyle:function () {
@@ -155,7 +198,12 @@
 				submitPayStyle:function () {
 					return {
 						submitPay: true,
-						submitPayActive: this.bankChoose
+						submitPayActive: (this.bankChoose && !this.isTestPhNum) || (this.payCode)
+					}
+				},
+				codeClassObject:function () {
+					return {
+						getcodeUnClick: this.codeTxt != "免费获取"
 					}
 				}
 			},
@@ -167,18 +215,19 @@
 						return e.checked == true;
 					});
 					if (this.items[index].checked) {
-						this.total = parseFloat(this.total) + parseFloat(this.items[index].money);
-						this.total = Math.floor(this.total * 100) / 100;
+						this.total = (Number(this.total) + Number(this.items[index].money)).toFixed(2);
 					} else {
-						this.total = parseFloat(this.total) - parseFloat(this.items[index].money);
-						this.total = Math.floor(this.total * 100) / 100;
+						this.total = (Number(this.total) - Number(this.items[index].money)).toFixed(2);
 					}
 				},
 				// 点击还款按钮
 				toSubmit:function (){
 					if (this.submit) {
+						/* 重置状态 */
 						this.mask = true;
 						this.bankChoose = "";
+						this.isTestPhNum = false;
+						this.payCode = "";
 						this.bankList.forEach(function (e) {
 							e.checked = false;
 						});
@@ -198,8 +247,20 @@
 				},
 				// 确认还款
 				payIt:function (){
-					if (this.bankChoose) {
-						console.log("打开支付界面");
+					if (!this.isTestPhNum) {
+						// 选择银行时点击确认还款
+						if (this.bankChoose) {
+							this.isTestPhNum = true;
+						}
+					} else {
+						// 手机验证时点击确认还款
+						if (this.payCode) {
+							// 在此请求，判断codePass
+							this.codePass = true;
+							// codePass正确回调中请求付款
+							// 付款成功
+							this.paySuccess = true;
+						}
 					}
 				},
 				// 还款记录
@@ -270,7 +331,88 @@
 							}
 						}
 					});
-				}
+				},
+				// 获取验证码
+                achieveCode: function () {
+                    var This = this;
+                    if (this.codeTxt == "免费获取") {
+                        This.getCode = "";
+                        This.codeTxt = "60s";
+                        var n = 59;
+                        this.codeTimer = setInterval(function () {
+                            This.codeTxt = n + "s";
+                            if (n < 0) {
+                                This.codeTxt = "免费获取";
+                                clearInterval(this.codeTimer);
+                                This.codeTimer = null;
+                            };
+                            n--;
+                        }, 1000);
+                        /* summer.showProgress();
+                        // 获取验证码接口
+                        ajaxRequest({
+                        	type: 'post',
+                        	url: 'appservice/login/custLogin',
+                        	param: {
+                        		PHONE: This.phoneNum
+                        	}
+                        }, function (res) {
+                        	summer.hideProgress();
+                        	var Data;
+                        	if (Object.prototype.toString.call(res.data) === '[object String]') {
+                        		Data = JSON.parse(res.data);
+                        	} else {
+                        		Data = res.data;
+                        	}
+                        	if (Data.flag == 1) {
+                        		if (Data.datas.FLAG == "true") {
+                        			summer.toast({
+                        				msg: "验证码已发送"
+                        			});
+                        			This.customerInfo = Data.datas;
+                        			This.getCode = Data.datas.SMSCODE;
+                        			This.codeTxt = "60s";
+                        			var n = 59;
+                        			this.codeTimer = setInterval(function () {
+                        				This.codeTxt = n + "s";
+                        				if (n < 0) {
+                        					This.codeTxt = "获取验证码";
+                        					clearInterval(this.codeTimer);
+                        					This.codeTimer = null;
+                        				};
+                        				n--;
+                        			}, 1000);
+                        		} else if (Data.datas.FLAG == "false") {
+                        			summer.toast({
+                        				msg: "发送短信失败"
+                        			});
+                        		} else if (Data.datas.FLAG == "ufalse") {
+                        			summer.toast({
+                        				msg: Data.datas.STATE ? Data.datas.STATE : "未找到该用户"
+                        			});
+                        		} else {
+                        			summer.toast({
+                        				msg: "获取验证码失败"
+                        			});
+                        		}
+                        	} else {
+                        		summer.toast({
+                        			msg: "获取验证码失败"
+                        		});
+                        	}
+                        }, function (err) {
+                        	summer.hideProgress();
+                        	summer.toast({
+                        		msg: "系统内部异常"
+                        	});
+                        	console.log(err);
+                        }); */
+                    } else {
+                        summer.toast({
+                            msg: "请勿连续发送"
+                        });
+                    }
+                }
 			}
         });
 	</script>
