@@ -14,12 +14,12 @@
 			<div class="um-content payTableList">
 				<ul>
 					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
-            <p>{{item.name}} <span v-if="item.state=='0'">作废</span></p>
+            <p>{{item.RENTER_NAME}} <span class="fr">{{item.PSTATUS_NM}}</span></p>
             <div>
-              <p>{{item.number}}</p>
-              <p>创建时间:{{item.date}}<span class="fr">客户经理{{item.custerName}}</span></p>
+              <p>{{item.PAYLIST_CODE}}</p>
+              <p>创建时间:{{item.CREATE_DATE}}<span class="fr">客户经理{{item.CLERK_NAME}}</span></p>
             </div>
-            <button class="fr" @click="goDetail(item.id)">支付明细</button>
+            <button class="fr" @click="goDetail(item.PAY_ID)">支付明细</button>
 					</li>
 				</ul>
 			</div>
@@ -31,54 +31,53 @@
     <script src="../../js/jquery.min.js" ></script>
     <script src="../../js/font.js" ></script>
     <script src="../../js/vue.js" ></script>
-    <script src="../../js/mint.js" ></script>
+		<script src="../../js/mint.js" ></script>
+    <script src="../../js/common.js" ></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
 				var payTableListVue=new Vue({
 					el:'#payTableList',
-					data(){
+					data:function(){
 						return{
-							list:[
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:2},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
-                {id:1,name:"赵六",date:'2017-12-21',custerName:'天行者科技',number:'CNCAHP13146829922-2',status:0},
-              ],
+							list:[],
 							searchVal:'',
 							currentPage:1
 
 						}
 					},
-					created(){
-
-					},
 					methods:{
-						getData(){
-							alert(this.searchVal)
-							alert(this.currentPage)
-							this.$nextTick(function(){
- 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
- 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
- 			        })
+						getData:function(){
+							var _this=this
+							summer.showProgress();
+							ajaxRequest({
+								type:"POST",
+								url:'appservice/paytable/paylist',
+								param:{
+									pageNo:_this.currentPage,
+									pageSize:15,
+									CR_BECR_NAME:_this.searchVal,
+									PSTATUS:''
+								}
+							},function(res){
+								console.log(JSON.stringify(res));
+								summer.hideProgress();
+								_this.list=res.data.datas.list
+								_this.$nextTick(function(){
+									summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+									summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+								})
+							},function(err){
+								console.log(JSON.stringify(err));
+								summer.hideProgress();
+							})
 						},
-            goDetail(id){
+            goDetail:function(id){
               summer.openWin({
                 id:'payTableDetail',
                 url:'html/payTableQuery/payTableDetail.html',
                 create:false,
                 type:'actionBar',
-                pageParam:{id:id},
+                pageParam:{PAY_ID:id},
                 actionBar: {
                   title: "支付表明细",
                   titleColor: "#ffffff",
@@ -100,6 +99,7 @@
 					payTableListVue.getData();
 				}
 				summerready=function(){
+					payTableListVue.getData();
 					summer.setRefreshHeaderInfo({
 						visible: true,
 						loadingImg: 'img/refresh.png',

@@ -8,44 +8,38 @@
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
 		<link rel="stylesheet" href="./index.min.css">
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 	</head>
 	<body>
 		<div class="um-win" id="payTableDetail" v-cloak>
 			<div class="um-content payTableDetail">
 				<ul>
           <li class="title"><span></span>基本信息</li>
-          <li>客服信息 <span class="fr">{{name}}</span></li>
-          <li>合同号 <span class="fr">{{name}}</span></li>
-          <li>项目类型 <span class="fr">{{name}}</span></li>
-          <li>业务模式 <span class="fr">{{name}}</span></li>
-          <li>所属机构 <span class="fr">{{name}}</span></li>
-          <li>客户经理 <span class="fr">{{name}}</span></li>
+          <li>客户姓名 <span class="fr">{{res.TABLE_HEAD.RENTER_NAME}}</span></li>
+          <li>合同号 <span class="fr">{{res.TABLE_HEAD.LEASE_CODE}}</span></li>
+          <li>项目类型 <span class="fr">{{res.TABLE_HEAD.PLATFORM_TYPE}}</span></li>
+          <li>业务模式 <span class="fr">{{res.TABLE_HEAD.PLATFORM}}</span></li>
+          <li>所属机构 <span class="fr">{{NAME}}</span></li>
+          <li>客户经理 <span class="fr">{{res.TABLE_HEAD.CLERK_NAME}}</span></li>
 				</ul>
         <ul>
           <li class="title"><span></span>车辆信息</li>
-          <li>车型 <span class="fr">{{name}}</span></li>
-          <li>颜色 <span class="fr">{{name}}</span></li>
-          <li>成交价 <span class="fr">{{name}}</span></li>
+          <li>车型 <span class="fr">{{res.LEASEOBJ.CATENA_NAME}}</span></li>
+          <li>颜色 <span class="fr">{{NAME}}</span></li>
+          <li>成交价 <span class="fr">{{res.LEASEOBJ.TOTAL}}</span></li>
         </ul>
         <ul>
           <li class="title"><span></span>报价方案</li>
-          <li>方案名称 <span class="fr">{{name}}</span></li>
-          <li>租赁物总价值 <span class="fr">{{name}}</span></li>
-          <li>合同额 <span class="fr">{{name}}</span></li>
-          <li>首付比例 <span class="fr">{{name}}</span></li>
-          <li>首期租金 <span class="fr">{{name}}</span></li>
-          <li>保证金 <span class="fr">{{name}}</span></li>
-          <li>咨询费比例 <span class="fr">{{name}}</span></li>
-          <li>咨询费 <span class="fr">{{name}}</span></li>
-          <li>年利率 <span class="fr">{{name}}</span></li>
-          <li>租赁期数 <span class="fr">{{name}}</span></li>
-          <li>支付方式 <span class="fr">{{name}}</span></li>
+          <li>方案名称 <span class="fr">{{res.TABLE_HEAD.PRO_NAME}}</span></li>
+          <li>租赁物总价值 <span class="fr">{{res.TABLE_HEAD.LEASE_TOPRIC}}</span></li>
+          <li>合同额 <span class="fr">{{res.TABLE_HEAD.LEASE_TOPRIC}}</span></li>
+          <li>首付比例 <span class="fr">{{res.TABLE_HEAD.FIRSTRENT_RATE}}%</span></li>
+          <li>首期租金 <span class="fr">{{res.TABLE_HEAD.name}}</span></li>
+          <li>保证金 <span class="fr">{{res.TABLE_HEAD.DEPOSIT_VALUE}}</span></li>
+          <li>咨询费比例 <span class="fr">{{res.TABLE_HEAD.name}}</span></li>
+          <li>咨询费 <span class="fr">{{res.TABLE_HEAD.LEASE_TOPRIC}}</span></li>
+          <li>年利率 <span class="fr">{{res.TABLE_HEAD.YEAR_INTEREST}}</span></li>
+          <li>租赁期数 <span class="fr">{{res.TABLE_HEAD.LEASE_TERM}}</span></li>
+          <li>支付方式 <span class="fr">{{res.TABLE_HEAD.PAY_WAY}}</span></li>
         </ul>
         <ul>
           <li class="title"><span></span>付款通知(收款方)</li>
@@ -61,44 +55,68 @@
 					<li class="bgLi">其他费用</li>
 					<li>留购价 <span class="fr">{{name}}</span></li>
 					<li>管理费 <span class="fr">{{name}}</span></li>
-					<li>保险金 <span class="fr">{{name}}</span></li>
-					<li>首期租金 <span class="fr">{{name}}</span></li>
+					<li>保证金 <span class="fr">{{res.TABLE_HEAD.DEPOSIT_VALUE}}</span></li>
+					<li>首期租金 <span class="fr">{{res.PAY_OTHERDETAIL.ITEM_MONEY}}</span></li>
 					<li class="bgLi">合计</li>
-					<li>租金 <span class="fr">{{name}}</span></li>
-					<li>本金 <span class="fr">{{name}}</span></li>
-					<li>利息 <span class="fr">{{name}}</span></li>
-					<template v-for="(item,index) in list">
-						<li class="bgLi">期数{{index+1}}</li>
-						<li>租金: &yen;{{item.money}} <span class="fr">本金: &yen;{{item.hasMoney}}</span></li>
-						<li>利息: &yen;{{item.rateMoney}} <span class="fr">剩余本金: &yen;{{item.lastMoney}}</span></li>
+					<li>租金 <span class="fr">{{res.ALL.MONTHPRICE_ALL}}</span></li>
+					<li>本金 <span class="fr">{{res.ALL.OWNPRICE_ALL}}</span></li>
+					<li>利息 <span class="fr">{{res.ALL.RENPRICE_ALL}}</span></li>
+					<template v-for="(item,index) in res.PAY_DETAILS">
+						<li class="bgLi">期数{{item.PERIOD_NUM}}</li>
+						<li>租金: &yen;{{item.MONTHPRICE}} <span class="fr">本金: &yen;{{item.OWNPRICE}}</span></li>
+						<li>利息: &yen;{{item.RENPRICE}} <span class="fr">剩余本金: &yen;{{item.LASTPRICE}}</span></li>
 					</template>
 				</ul>
 			</div>
 
 		</div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
+				summerready=function(){
+					payTableDetailVue.PAY_ID=summer.pageParam.PAY_ID
+					payTableDetailVue.getData()
+				}
 				var payTableDetailVue=new Vue({
 					el:'#payTableDetail',
-					data(){
+					data:function(){
 						return{
-							name:'张六',
-              list:[
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'}
-              ]
+							PAY_ID:'',
+							NAME:'没有字段',
+							name:'没有字段',
+              res:{
+								TABLE_HEAD:{},
+								LEASEOBJ:{},
+								PAY_OTHERDETAIL:{},
+								ALL:{},
+								PAY_DETAILS:[]
+							}
 						}
 					},
-					created(){
-
-					},
 					methods:{
-
+						getData:function(){
+							var _this=this
+							summer.showProgress();
+							ajaxRequest({
+								type:"POST",
+								url:'appservice/paytable/payinfo',
+								param:{
+									PAY_ID:_this.PAY_ID
+								}
+							},function (res) {
+								console.log(JSON.stringify(res));
+								summer.hideProgress();
+								_this.res=res.data.datas
+							},function(err){
+								summer.hideProgress();
+								console.log(err);
+							})
+						}
 					}
 				});
 		</script>
