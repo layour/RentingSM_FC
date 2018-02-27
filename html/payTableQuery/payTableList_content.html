@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<div class="um-win" id="payTableList" v-cloak>
-			<div class="um-content payTableList">
+			<div class="payTableList">
 				<ul>
 					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
             <p>{{item.RENTER_NAME}} <span class="fr">{{item.PSTATUS_NM}}</span></p>
@@ -54,14 +54,18 @@
 								url:'appservice/paytable/paylist',
 								param:{
 									pageNo:_this.currentPage,
-									pageSize:15,
+									pageSize:5,
 									CR_BECR_NAME:_this.searchVal,
 									PSTATUS:''
 								}
 							},function(res){
 								console.log(JSON.stringify(res));
 								summer.hideProgress();
-								_this.list=res.data.datas.list
+								if(res.data.datas.hasNextPage){
+									_this.list=_this.list.concat(res.data.datas.list)
+								}else {
+									summer.toast({msg:'没有更多了'})
+								}
 								_this.$nextTick(function(){
 									summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
 									summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
@@ -110,6 +114,8 @@
 						showTime: true
 					}, function(ret, err) {
 						//通常在这里从服务器加载数据，t
+						payTableListVue.currentPage=1;
+						payTableListVue.list=[]
 						payTableListVue.getData();
 					});
 					summer.setRefreshFooterInfo({
@@ -124,6 +130,7 @@
 						//通常在这里从服务器加载数据，
 						payTableListVue.currentPage+=1;
 						payTableListVue.getData();
+
 					});
 				}
 		</script>
