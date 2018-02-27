@@ -69,6 +69,10 @@ html,body{
     left: 0.7rem;
     top: 0.05rem;
 }
+.repayList li .l-con .repayDate>b{
+    font-weight: normal;
+    color: #424242;
+}
 .repayList li .l-con .money{
     height: 0.4rem;
     line-height: 0.4rem;
@@ -92,9 +96,19 @@ html,body{
 .repayList li .r-con{
     height: 2.12rem;
     float: right;
-    line-height: 1.9rem;
-    font-size: 0.28rem;
     color: #424242;
+}
+.repayList li .r-con i{
+    display: block;
+    width: 0.4rem;
+    height: 0.4rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.2rem;
+    margin-top: 0.72rem;
+    line-height: 0.4rem;
+    text-align: center;
+    font-size: 0.24rem;
+    color: #e0e0e0;
 }
 .um-footer{
     width: 100%;
@@ -148,13 +162,6 @@ html,body{
 }
 .botMaskActive{
     top: 0;
-}
-.t-con{
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 5.7rem;
 }
 .choosePayMethod{
     position: absolute;
@@ -342,5 +349,106 @@ html,body{
     color: #999;
 }
 .payCode>p:nth-of-type(2){
+    color: #039be5;
+}
+.paySuc{
+    position: relative;
+    height: 100%;
+}
+.paySuc>div{
+    position: absolute;
+    width: 1.2rem;
+    height: 1.2rem;
+    left: 50%;
+    top: 10%;
+    margin-left: -0.6rem;
+}
+.paySuc>div i{
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+    color: #039be5;
+}
+.paySuc>div img{
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+.paySuc>p{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 2.4rem;
+    font-size: 0.32rem;
+    color: #333;
+}
+.infoWin{
+    position: absolute;
+    width: 7rem;
+    background: #fff;
+    left: 50%;
+    top: 50%;
+    margin-left: -3.5rem;
+    margin-top: -2.5rem;
+    border-radius: 0.14rem;
+    overflow: hidden;
+    padding: 0 0.2rem 0.6rem 0.2rem;
+}
+.infoWin>span{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0.7rem;
+    height: 0.7rem;
+    font-size: 0.32rem;
+    color: #dbdbdb;
+    text-align: center;
+    line-height: 0.7rem;
+}
+.infoWin .header{
+    border-bottom: 1px solid rgb(239, 239, 239);
+    width: 100%;
+    padding: 0.8rem 0.4rem 0.4rem 0.4rem;
+    margin-bottom: 0.2rem;
+}
+.infoWin .header p:nth-of-type(1){
+    width: 100%;
+    font-size: 0.32rem;
+    line-height: 0.32rem;
+    color: #333;
+    margin-bottom: 0.2rem;
+}
+.infoWin .header p:nth-of-type(2){
+    width: 100%;
+    font-size: 0.28rem;
+    line-height: 0.28rem;
+    color: #999;
+}
+.infoWin>ul{
+    padding: 0 0.6rem;
+}
+.infoWin>ul li{
+    width: 100%;
+    border-bottom: 1px solid rgb(239, 239, 239);
+    height: 0.88rem;
+}
+.infoWin>ul li span{
+    float: left;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    font-size: 0.32rem;
+    color: #333;
+}
+.infoWin>ul li b{
+    float: right;
+    font-weight: normal;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    font-size: 0.32rem;
+    color: #333;
+}
+.infoWin>ul li b i{
+    font-style: normal;
     color: #039be5;
 }

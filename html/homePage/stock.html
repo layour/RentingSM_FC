@@ -17,10 +17,32 @@
 
 <body>
 	<div class="um-win" id="index">
-		<!-- 底部遮罩弹层 -->
-		<div v-bind:class="botMaskStyle">
-			<div class="t-con" @click="closeMask"></div>
-			<div v-bind:class="choosePayMethodStyle">
+		<!-- 遮罩层 -->
+		<div v-bind:class="botMaskStyle" @click="closeMask">
+			<!-- 详情弹层 -->
+			<div v-bind:class="[payInfo ? 'infoWin' : 'notShowIt infoWin']" @click = "cancelBubble">
+				<span class="iconfont icon-wrong1" @click="closeMask"></span>
+				<div class="header">
+					<p>{{payInfoData.car}}</p>
+					<p>{{payInfoData.num}}</p>
+				</div>
+				<ul>
+					<li>
+						<span>期数</span>
+						<b>{{payInfoData.periods}}期</b>
+					</li>
+					<li>
+						<span>租金</span>
+						<b><i>{{payInfoData.money}}</i>元</b>
+					</li>
+					<li>
+						<span>罚息</span>
+						<b><i>{{payInfoData.interest}}</i>元</b>
+					</li>
+				</ul>
+			</div>
+			<!-- 底部弹层 -->
+			<div v-bind:class="choosePayMethodStyle" @click = "cancelBubble">
 				<div class="headBar">
 					<span class="iconfont icon-wrong1" @click="closeMask"></span>
 					<div v-bind:class="[isTestPhNum ? 'notShowIt' : '']">选择付款方式</div>
@@ -36,7 +58,7 @@
 						></i>
 					</li>
 				</ul>
-				<div v-bind:class="[(isTestPhNum && !codePass) ? 'payCode' : 'payCode notShowIt']">
+				<div v-bind:class="[(isTestPhNum && !codePass) ? 'payCode' : 'notShowIt']">
 					<div>
 						<span>验证码：</span>
 						<div class="codeText">
@@ -47,8 +69,12 @@
 					<p>请输入银联发送的6位短信验证码</p>
 					<p>收不到短信，获取语音验证码 &gt;</p>
 				</div>
-				<div v-bind:class="[(isTestPhNum && !codePass) ? 'payCode' : 'payCode notShowIt']">
-					
+				<div v-bind:class="[(isTestPhNum && codePass) ? 'paySuc' : 'notShowIt']">
+					<div>
+						<img src="" alt="" v-bind:class="[paySuccess ? 'notShowIt' : '']">
+						<i class="iconfont icon-done" v-bind:class="[paySuccess ? '' : 'notShowIt']"></i>
+					</div>
+					<p>{{payState}}</p>
 				</div>
 				<div v-bind:class="[isTestPhNum ? 'notShowIt addBankCard' : 'addBankCard']" @click="addBankCard">
 					<span class="iconfont icon-honor2"></span>
@@ -76,11 +102,13 @@
                             	class="iconfont icon-yes"
                             ></i>
                         </span>
-                        <span class="repayDate">还款日{{k.date}}</span>
+                        <span class="repayDate">还款日{{k.date}}&nbsp;&nbsp;&nbsp;<b>剩余{{k.surplus}}天</b></span>
                         <span class="money">￥{{k.money}}</span>
                         <span class="car">{{k.car}}</span>
                     </div>
-                    <div class="r-con">剩余<span>{{k.surplus}}</span>天</div>
+                    <div class="r-con">
+						<i class="iconfont icon-weixinushentubiao01" @click = "checkInfo(null,index)"></i>
+					</div>
                 </li>
             </ul>
 		</div>
@@ -180,7 +208,17 @@
 				// 确认还款手机验证码是否正确
 				codePass:false,
 				// 付款是否成功
-				paySuccess:false
+				paySuccess:false,
+				// 还款信息弹层显隐
+				payInfo:false,
+				// 还款信息详情
+				payInfoData:{
+					car:"北奔牵引车",
+					num:"CNZKRZ000093782623826",
+					periods:"1/24",
+					money:"7192.83",
+					interest:"0"
+				}
 			},
 			computed: {
 				botMaskStyle:function () {
@@ -192,7 +230,7 @@
 				choosePayMethodStyle:function () {
 					return {
 						choosePayMethod: true,
-						choosePayMethodActive: this.mask
+						choosePayMethodActive: this.mask && !this.payInfo
 					}
 				},
 				submitPayStyle:function () {
@@ -205,9 +243,22 @@
 					return {
 						getcodeUnClick: this.codeTxt != "免费获取"
 					}
+				},
+				// 支付状态
+				payState:function () {
+					if (this.paySuccess) {
+						return "还款成功"
+					} else {
+						return "支付中"
+					}
 				}
 			},
 			methods:{
+				// 阻止冒泡
+				cancelBubble:function (ev) {
+					var ev = ev || window.event;
+					ev.cancelBubble = true;
+				},
 				// 选择账单项
 				checkIt:function (index){
 					this.items[index].checked = !this.items[index].checked;
@@ -220,17 +271,31 @@
 						this.total = (Number(this.total) - Number(this.items[index].money)).toFixed(2);
 					}
 				},
+				// 查看详情
+				checkInfo:function (ev,index) {
+					var ev = ev || window.event;
+					ev.cancelBubble = true;
+					this.payInfo = true;
+					this.mask = true;
+					console.log(index);
+				},
 				// 点击还款按钮
 				toSubmit:function (){
 					if (this.submit) {
-						/* 重置状态 */
 						this.mask = true;
+						/* 重置状态 */
 						this.bankChoose = "";
 						this.isTestPhNum = false;
 						this.payCode = "";
+						this.codePass = false;
+						this.paySuccess = false;
 						this.bankList.forEach(function (e) {
 							e.checked = false;
 						});
+						this.codeTxt = "免费获取";
+						clearInterval(this.codeTimer);
+						this.codeTimer = null;
+						this.payInfo = false;
 					}
 				},
 				// 关闭遮罩层
@@ -247,6 +312,7 @@
 				},
 				// 确认还款
 				payIt:function (){
+					var This = this;
 					if (!this.isTestPhNum) {
 						// 选择银行时点击确认还款
 						if (this.bankChoose) {
@@ -260,6 +326,10 @@
 							// codePass正确回调中请求付款
 							// 付款成功
 							this.paySuccess = true;
+							// 弹层延时消失，刷新页面
+							setTimeout(function () { 
+								This.mask = false;
+							},1500);
 						}
 					}
 				},
@@ -343,7 +413,7 @@
                             This.codeTxt = n + "s";
                             if (n < 0) {
                                 This.codeTxt = "免费获取";
-                                clearInterval(this.codeTimer);
+                                clearInterval(This.codeTimer);
                                 This.codeTimer = null;
                             };
                             n--;
@@ -377,7 +447,7 @@
                         				This.codeTxt = n + "s";
                         				if (n < 0) {
                         					This.codeTxt = "获取验证码";
-                        					clearInterval(this.codeTimer);
+                        					clearInterval(This.codeTimer);
                         					This.codeTimer = null;
                         				};
                         				n--;

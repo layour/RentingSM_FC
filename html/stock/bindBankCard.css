@@ -16,17 +16,17 @@ body {
 
 .items {
     box-sizing: content-box;
-    height: 0.28rem;
+    height: 0.36rem;
     border: 0.5px solid rgb(239, 239, 239);
     background: #fff;
-    padding: 0.31rem 0;
+    padding: 0.28rem 0;
     position: relative;
 }
 
 .items>span {
     float: left;
-    height: 0.28rem;
-    line-height: 0.28rem;
+    height: 0.36rem;
+    line-height: 0.36rem;
     width: 2.46rem;
     font-size: 0.28rem;
     padding-left: 0.56rem;
@@ -36,8 +36,8 @@ body {
 .items>input,
 .items>p {
     font-size: 0.28rem;
-    line-height: 0.28rem;
-    height: 0.28rem;
+    line-height: 0.36rem;
+    height: 0.36rem;
     width: 3.36rem;
     border: 0;
     outline: none;
