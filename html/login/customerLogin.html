@@ -67,7 +67,7 @@
 			methods: {
 				/* 登录 */
 				toLogin: function () {
-					if (!this.phoneNum) {
+					/* if (!this.phoneNum) {
 						summer.toast({
 							msg: "请输入手机号"
 						});
@@ -113,7 +113,32 @@
 								customerInfo: this.customerInfo
 							}
 						});
-					}
+					} */
+					summer.openWin({
+						id: 'stock',
+						url: 'html/homePage/stock.html',
+						addBackListener: true,
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "账单管理",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								type: "text",
+								text: "还款记录",
+								textColor: "#ffffff",
+								method: "stock.record()"
+							},
+							rightItems: [{
+								image: "img/mine.png",
+								method: "stock.personal()", //返回按钮自定义事件
+							}]
+						},
+						pageParam: {
+							customerInfo: this.customerInfo
+						}
+					});
 				},
 				/* 获取验证码 */
 				achieveCode: function () {

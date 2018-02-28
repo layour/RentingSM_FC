@@ -45,6 +45,17 @@ body,html{
    top: 2.2rem;
    z-index: 999;
 }
+.box span{
+    position: absolute;
+    font-size: 0.24rem;
+    height: 0.24rem;
+    line-height: 0.24rem;
+    color: #fff;
+    left: 50%;
+    transform: translate(-50%);
+    top: 2.68rem;
+    z-index: 999;
+ }
 .userList{
    width: 100%;
 }

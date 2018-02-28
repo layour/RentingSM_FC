@@ -12,61 +12,97 @@
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="../../js/font.js" charset="utf-8"></script>
-    <script src="../../js/vue.js" charset="utf-8"></script>
+	<script src="../../js/vue.js" charset="utf-8"></script>
+	<script src="../../js/common.js"></script>
 </head>
 
 <body>
 	<div class="um-win" id="index">
 		<div class="um-content">
-            <h2 class="title">
-                <span>还款时间</span>
-                <span>还款金额（元）</span>
-            </h2>
-            <ul class = "billList">
-                <li v-for="(k,index) in items" v-bind:class="[(index%2) == 0 ? '' : 'billListActive']">
-                    <span>{{k.date}}</span>
-                    <span>{{k.money}}</span>
-                </li>
-            </ul>
+			<h2 class="title">
+				<span>还款时间</span>
+				<span>还款金额（元）</span>
+			</h2>
+			<div id="content"></div>
+			<ul class="billList">
+				<li v-for="(k,index) in items" v-bind:class="[(index%2) == 0 ? '' : 'billListActive']">
+					<span>{{k.date}}</span>
+					<span>{{k.money}}</span>
+				</li>
+			</ul>
 		</div>
 	</div>
 	<script type="text/javascript">
-		var data = [
-			{
-				date:"2017年05月20日",
-				money:"2819.23"
+		var data = [{
+				date: "2017年05月20日",
+				money: "2819.23"
 			},
 			{
-				date:"2017年05月21日",
-				money:"3819.23"
+				date: "2017年05月21日",
+				money: "3819.23"
 			},
 			{
-				date:"2017年05月22日",
-				money:"3859.23"
+				date: "2017年05月22日",
+				money: "3859.23"
 			},
 			{
-				date:"2017年05月23日",
-				money:"3219.23"
+				date: "2017年05月23日",
+				money: "3219.23"
 			},
 			{
-				date:"2017年05月24日",
-				money:"4819.23"
+				date: "2017年05月24日",
+				money: "4819.23"
 			},
 			{
-				date:"2017年05月25日",
-				money:"5829.23"
+				date: "2017年05月25日",
+				money: "5829.23"
 			},
 			{
-				date:"2017年05月26日",
-				money:"7817.23"
+				date: "2017年05月26日",
+				money: "7817.23"
 			}
 		];
 		var billDetail = new Vue({
-            el: '#index',
-            data: {
-                items:data
-            }
-        });
+			el: '#index',
+			data: {
+				items: data
+			}
+		});
+		summerready = function () {
+			/* summer.showProgress();
+			ajaxRequest({
+				type: 'post',
+				url: 'appservice/risk/billDetailsList',
+				param: {
+					"ID": summer.pageParam.EMPLOYEE_ID,
+					"CAR_SYMBOL": summer.pageParam.CAR_SYMBOL,
+					"PAYLIST_CODE": summer.pageParam.PAYLIST_CODE
+				}
+			}, function (res) {
+				summer.hideProgress();
+				var Data;
+				if (Object.prototype.toString.call(res.data) === '[object String]') {
+					Data = JSON.parse(res.data);
+				} else {
+					Data = res.data;
+				}
+				if (Data.flag == 1) {
+					if (Data.datas.billDetailsList.length < 1) {
+						createNull("content", "../../img/empty.png","暂无还款记录");
+						$('#content').css('display', 'block');
+					} else {
+						$('#content').css('display', 'none');
+						billDetail.items = Data.datas.billDetailsList;
+					}
+				}
+			}, function (err) {
+				summer.hideProgress();
+				summer.toast({
+					msg: "暂无数据"
+				});
+				console.log(err);
+			}); */
+		};
 	</script>
 </body>
 

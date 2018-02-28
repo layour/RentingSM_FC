@@ -13,6 +13,7 @@
 	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="../../js/font.js" charset="utf-8"></script>
 	<script src="../../js/vue.js" charset="utf-8"></script>
+	<script src="../../js/common.js"></script>
 </head>
 
 <body>
@@ -20,12 +21,13 @@
 		<div class="um-content">
 			<div class="box">
 				<img src="../../img/timg.jpg" alt="">
-				<p>个人中心</p>
+				<p>{{NAME}}</p>
+				<span>{{TEL_PHONE}}</span>
 				<div class="userInfo">
 				</div>
 			</div>
 			<ul class="userList">
-				<li onclick="lease()">
+				<li @click="lease()">
 					<span class="iconfont icon-version"></span>
 					<i>租赁物</i>
 					<div class="companyInfo">
@@ -33,7 +35,7 @@
 						<span class="iconfont icon-enter"></span>
 					</div>
 				</li>
-				<li onclick="addBankCard()">
+				<li @click="addBankCard()">
 					<span class="iconfont icon-honor2"></span>
 					<i>银行卡</i>
 					<div class="companyInfo">
@@ -66,74 +68,95 @@
 					</div>
 				</li>
 			</ul>
-			<button class="logout" type="button" onclick="logout()">退出登陆</button>
+			<button class="logout" type="button" @click="logout()">退出登陆</button>
 		</div>
 	</div>
 	<script type="text/javascript">
+		var personal = new Vue({
+			el: '#index',
+			data: {
+				EMPLOYEE_ID: "",
+				NAME: "",
+				TEL_PHONE: ""
+			},
+			methods: {
+				// 租赁物
+				lease: function () {
+					summer.openWin({
+						id: 'stockPersonal',
+						url: 'html/stock/lease.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "租赁信息",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						},
+						pageParam: {
+							// 客户ID
+							EMPLOYEE_ID: this.EMPLOYEE_ID
+						}
+					})
+				},
+				// 银行卡页面
+				addBankCard: function () {
+					summer.openWin({
+						id: 'addBankCard',
+						url: 'html/stock/addBankCard.html',
+						create: false,
+						type: 'actionBar',
+						actionBar: {
+							title: "银行卡",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem: {
+								image: "img/back.png",
+								method: "", //返回按钮自定义事件
+								text: "返回",
+								textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							},
+							rightItems: [{
+								type: "text",
+								text: "管理",
+								textColor: "#ffffff",
+								method: ""
+							}]
+						},
+						pageParam: {
+							// 客户ID
+							EMPLOYEE_ID: this.EMPLOYEE_ID
+						}
+					});
+				},
+				// 退出登陆
+				logout: function () {
+					var os = $summer.os;
+					UM.confirm({
+						title: '确定要退出吗？',
+						btnText: ["取消", "确定"],
+						overlay: true,
+						ok: function () {
+							summer.setStorage("userinfo", {});
+							summer.closeToWin({
+								id: 'login'
+							});
+						}
+					});
+				}
+			}
+		});
 		summerready = function () {
 			var appVersion = JSON.parse(summer.getAppVersion()).versionName;
 			$('strong').eq(0).text(appVersion);
-		};
-		// 租赁物
-		function lease() {
-			summer.openWin({
-				id: 'stockPersonal',
-				url: 'html/stock/lease.html',
-				create: false,
-				type: 'actionBar',
-				actionBar: {
-					title: "租赁信息",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					leftItem: {
-						image: "img/back.png",
-						method: "", //返回按钮自定义事件
-						text: "返回",
-						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					}
-				}
-			})
-		};
-		// 银行卡页面
-		function addBankCard() {
-			summer.openWin({
-				id: 'addBankCard',
-				url: 'html/stock/addBankCard.html',
-				create: false,
-				type: 'actionBar',
-				actionBar: {
-					title: "银行卡",
-					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					backgroundColor: "#039be5",
-					leftItem: {
-						image: "img/back.png",
-						method: "", //返回按钮自定义事件
-						text: "返回",
-						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-					},
-					rightItems: [{
-						type: "text",
-						text: "管理",
-						textColor: "#ffffff",
-						method: ""
-					}]
-				}
-			});
-		};
-		// 退出登陆
-		function logout() {
-			var os = $summer.os;
-			UM.confirm({
-				title: '确定要退出吗？',
-				btnText: ["取消", "确定"],
-				overlay: true,
-				ok: function () {
-					summer.setStorage("userinfo", {});
-					summer.closeToWin({
-						id: 'login'
-					});
-				}
-			});
+			personal.EMPLOYEE_ID = summer.pageParam.EMPLOYEE_ID;
+			personal.NAME = summer.pageParam.NAME;
+			personal.TEL_PHONE = summer.pageParam.TEL_PHONE;
 		};
 	</script>
 </body>
