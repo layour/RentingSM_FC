@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="bankCity.css">
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body>
+	<div class="um-win" id="index">
+
+		<div class="um-content">
+            <div id="content"></div>
+            <div class="header">
+                <span v-bind:class="span1" @click = "goBack">省份</span>
+                <span v-bind:class="span2">城市</span>
+            </div>
+            <ul class="cityList clearfix" v-cloak>
+                <li v-for="(k,index) in cities" @click = "chooseNextCity(k)">
+                    {{k}}
+                </li>
+            </ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+        var bankCity = new Vue({
+            el: '#index',
+            data: {
+                // 银行编号
+                FST_ORG: "",
+                // 银行名称
+                BANK_NAME: "",
+                // 银行卡类型
+                CARD_TYPE: "",
+                //省市
+                cities:[],
+                // 选择省
+                checkFirst: true,
+                // 选择市
+                checkNext: false,
+                // 省
+                province: "",
+                // 市
+                city: ""
+            },
+            computed: {
+                span1: function () {
+                    return {
+                        spanActive: this.checkFirst
+                    }
+                },
+                span2: function () {
+                    return {
+                        spanActive: this.checkNext
+                    }
+                }
+            },
+            methods: {
+                getCityData: function () {
+                    var This = this;
+                    this.checkFirst = true;
+                    this.checkNext = false;
+                    summer.showProgress();
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/customer/queryBankBin',
+                        param: {
+                            "PHONE": summer.pageParam.PHONE,
+                            "CARD_NO": summer.pageParam.CARD_NO
+                        }
+                    }, function (res) {
+                        summer.hideProgress();
+                        var Data;
+                        if (Object.prototype.toString.call(res.data) === '[object String]') {
+                            Data = JSON.parse(res.data);
+                        } else {
+                            Data = res.data;
+                        }
+                        if (Data.flag == 1) {
+                            if (Data.datas.SEC_ORG.length < 1) {
+                                createNull("content", "../../img/empty.png");
+                                $('#content').css('display', 'block');
+                            } else {
+                                $('#content').css('display', 'none');
+                                This.cities = Data.datas.SEC_ORG;
+                            }
+                            This.BANK_NAME = Data.datas.BANK_NAME;
+                            This.FST_ORG = Data.datas.FST_ORG;
+                            This.CARD_TYPE = Data.datas.CARD_TYPE;
+                        }
+                    }, function (err) {
+                        summer.hideProgress();
+                        summer.toast({
+                            msg: "暂无数据"
+                        });
+                        console.log(err);
+                    });
+                },
+                chooseNextCity:function (val){
+                    var This = this;
+                    if (this.checkNext) {
+                        this.city = val;
+                        summer.execScript({
+							winId: 'bindBankCard',
+							script: "getBankCity('"+This.province+"','"+This.city+"','"+This.BANK_NAME+"','"+This.CARD_TYPE+"','"+This.FST_ORG+"')"
+						});
+                        summer.closeWin();
+                        return;
+                    }
+                    this.checkFirst = false;
+                    this.checkNext = true;
+                    this.province = val;
+                    summer.showProgress();
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/customer/queryThdOrg',
+                        param: {
+                            "FST_ORG": this.FST_ORG,
+                            "SEC_ORG": val
+                        }
+                    }, function (res) {
+                        summer.hideProgress();
+                        var Data;
+                        if (Object.prototype.toString.call(res.data) === '[object String]') {
+                            Data = JSON.parse(res.data);
+                        } else {
+                            Data = res.data;
+                        }
+                        if (Data.flag == 1) {
+                            if (Data.datas.THD_ORG.length < 1) {
+                                createNull("content", "../../img/empty.png");
+                                $('#content').css('display', 'block');
+                            } else {
+                                $('#content').css('display', 'none');
+                                This.cities = Data.datas.THD_ORG;
+                            }
+                        }
+                    }, function (err) {
+                        summer.hideProgress();
+                        summer.toast({
+                            msg: "暂无数据"
+                        });
+                        console.log(err);
+                    });
+                },
+                goBack: function () {
+                    this.getCityData();
+                }
+            }
+        });
+        summerready = function () {
+			bankCity.getCityData();
+		};
+	</script>
+</body>
+
+</html>

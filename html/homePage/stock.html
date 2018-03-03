@@ -126,59 +126,6 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		// 数据
-		/* var stockData = [
-			{
-				date:"12/27",
-				money:"3819.23",
-				car:"别克昂科威2017豪华型",
-				surplus:"12"
-			},
-			{
-				date:"12/28",
-				money:"3819.23",
-				car:"别克昂科威2017豪华型",
-				surplus:"0"
-			},
-			{
-				date:"12/29",
-				money:"3819.23",
-				car:"别克昂科威2017豪华型",
-				surplus:"2"
-			},
-			{
-				date:"12/29",
-				money:"3819.23",
-				car:"别克昂科威2017豪华型",
-				surplus:"2"
-			},
-			{
-				date:"12/29",
-				money:"3819.23",
-				car:"别克昂科威2017豪华型",
-				surplus:"2"
-			}
-		]; */
-		var bankData = [
-			{
-				name:"中国建设银行"
-			},
-			{
-				name:"中国农业银行"
-			},
-			{
-				name:"中国工商银行"
-			},
-			{
-				name:"中国招商银行"
-			}
-		];
-		/* stockData.forEach(function (e) {
-			e.checked = false;
-		}); */
-		bankData.forEach(function (e) {
-			e.checked = false;
-		});
         var stock = new Vue({
             el:'#index',
 			data:{
@@ -282,12 +229,40 @@
 					ev.cancelBubble = true;
 					this.payInfo = true;
 					this.mask = true;
-					console.log(index);
 					this.payInfoData.car = this.items[index].THING_NAME;
-					this.payInfoData.num = this.items[index].CAR_SYMBOL;
+					this.payInfoData.num = this.items[index].LEASE_CODE;
 					this.payInfoData.periods = this.items[index].BEGINNING_NUM + '/' + this.items[index].LEASE_TERM;
 					this.payInfoData.money = this.items[index].BEGINNING_MONEY;
-					this.payInfoData.interest = "0";
+					var This = this;
+					summer.showProgress();
+					ajaxRequest({
+						type: 'post',
+						url: 'appservice/risk/remoneyDetails',
+						param: {
+							"ID": This.EMPLOYEE_ID,
+							"BEGINNING_NUM": This.items[index].BEGINNING_NUM,
+							"CAR_SYMBOL": This.items[index].LEASE_CODE,
+							"PAYLIST_CODE": This.items[index].PAYLIST_CODE
+						}
+					}, function(res) {
+						summer.hideProgress();
+						var Data;
+						if (Object.prototype.toString.call(res.data) === '[object String]') {
+							Data = JSON.parse(res.data);
+						} else {
+							Data = res.data;
+						}
+						if (Data.flag == 1) {
+							// 罚息
+							// This.payInfoData.interest = Data.datas.remoneyDetails[0].PENALTY_RECE;
+						}
+					}, function(err) {
+						summer.hideProgress();
+						summer.toast({
+							msg: "暂无数据"
+						});
+						console.log(err);
+					});
 				},
 				// 点击还款按钮
 				toSubmit:function (){
@@ -395,7 +370,11 @@
 						},
 						pageParam: {
 							// 客户ID
-							EMPLOYEE_ID:this.EMPLOYEE_ID
+							EMPLOYEE_ID: this.EMPLOYEE_ID,
+							// 客户手机号
+							PHONE: this.TEL_PHONE,
+							// 客户姓名
+							NAME: this.NAME
 						}
 					});
 				},
@@ -517,7 +496,8 @@
 						type: 'post',
 						url: 'appservice/risk/returnmoneylist',
 						param: {
-							"ID": This.EMPLOYEE_ID
+							"ID": This.EMPLOYEE_ID,
+							"CLIENT_ID": This.EMPLOYEE_ID
 						}
 					}, function(res) {
 						summer.hideProgress();
@@ -553,40 +533,43 @@
 					});
 				},
 				// 绑定的银行卡数据
-				getBankListData:function () {
+				/* getBankListData:function () {
 					var This = this;
-					summer.showProgress();
-					ajaxRequest({
-						type: 'post',
-						url: 'appservice/customer/findBank',
-						param: {
-							"EMPLOYEE_ID": This.EMPLOYEE_ID
-						}
-					}, function(res) {
-						summer.hideProgress();
-						var Data;
-						if (Object.prototype.toString.call(res.data) === '[object String]') {
-							Data = JSON.parse(res.data);
-						} else {
-							Data = res.data;
-						}
-						if (Data.flag == 1) {
-							Data.datas.cstbank.forEach(function (e,i) {
-								// 重置为未选中状态
-								e.checked = false;
-							});
-							This.bankList = Data.datas.cstbank;
-						}
-					}, function(err) {
-						summer.hideProgress();
-						summer.toast({
-							msg: "暂无数据"
-						});
-						console.log(err);
-					});
-				}
+					
+				} */
 			}
 		});
+		function getBankListData () {
+			summer.showProgress();
+			ajaxRequest({
+				type: 'post',
+				url: 'appservice/customer/findBank',
+				param: {
+					"EMPLOYEE_ID": stock.EMPLOYEE_ID
+				}
+			}, function(res) {
+				summer.hideProgress();
+				var Data;
+				if (Object.prototype.toString.call(res.data) === '[object String]') {
+					Data = JSON.parse(res.data);
+				} else {
+					Data = res.data;
+				}
+				if (Data.flag == 1) {
+					Data.datas.cstbank.forEach(function (e,i) {
+						// 重置为未选中状态
+						e.checked = false;
+					});
+					stock.bankList = Data.datas.cstbank;
+				}
+			}, function(err) {
+				summer.hideProgress();
+				summer.toast({
+					msg: "暂无数据"
+				});
+				console.log(err);
+			});
+		};
 		summerready = function () {
 			/* stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
 			stock.NAME = summer.pageParam.customerInfo.NAME;
@@ -594,15 +577,16 @@
 			/* 我自己的 */
 			// stock.EMPLOYEE_ID = 165185264;
 			/* 有还款列表的 */
-			stock.EMPLOYEE_ID = 165176774;
+			// stock.EMPLOYEE_ID = 165185465;
 			/* 有绑定银行卡的 */
 			// stock.EMPLOYEE_ID = 165176614;
-			stock.NAME = "孙风凉";
-			stock.TEL_PHONE = "15040570501";
+			stock.EMPLOYEE_ID = 165176774;
+			stock.NAME = "唐飞";
+			stock.TEL_PHONE = "15019443442";
 			/* 请求代付款列表 */
 			stock.getRepayData();
 			/* 请求绑定的银行卡列表 */
-			stock.getBankListData();
+			getBankListData();
 		};
 	</script>
 </body>

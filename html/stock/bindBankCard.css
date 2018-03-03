@@ -200,3 +200,6 @@ h3:nth-of-type(2){
 .getcodeUnClick{
     background: #999 !important;
 }
+.items>.pActive{
+    color: #333;
+}

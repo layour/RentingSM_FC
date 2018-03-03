@@ -1,0 +1,43 @@
+.clearfix:after{
+    content: ".";
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    display: block;
+}
+.header{
+    width: 6.3rem;
+    box-sizing: content-box;
+    border: 1px solid #039be5;
+    height: 0.52rem;
+    margin: 0.4rem auto;
+    border-radius: 0.08rem;
+    display: flex;
+}
+.header>span{
+    width: 50%;
+    text-align: center;
+    font-size: 0.28rem;
+    line-height: 0.52rem;
+    color: #333;
+}
+.cityList{
+    width: 7.2rem;
+    margin: 0 auto;
+}
+.cityList li{
+    width: 1.6rem;
+    height: 0.8rem;
+    background: #b3e5fc;
+    float: left;
+    margin: 0.1rem;
+    text-align: center;
+    line-height: 0.8rem;
+    color: #333;
+    font-size: 0.32rem;
+}
+.header>.spanActive{
+    color: #fff;
+    background: #039be5;
+}
