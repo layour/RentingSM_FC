@@ -159,11 +159,11 @@
 				payInfo:false,
 				// 还款信息详情
 				payInfoData:{
-					car:"北奔牵引车",
-					num:"CNZKRZ000093782623826",
-					periods:"1/24",
-					money:"7192.83",
-					interest:"0"
+					car:"",
+					num:"",
+					periods:"",
+					money:"",
+					interest:""
 				},
 				// 客户ID
 				EMPLOYEE_ID:"",
@@ -281,6 +281,7 @@
 						clearInterval(this.codeTimer);
 						this.codeTimer = null;
 						this.payInfo = false;
+						this.getCode = "";
 					}
 				},
 				// 关闭遮罩层
@@ -306,15 +307,27 @@
 					} else {
 						// 手机验证时点击确认还款
 						if (this.payCode) {
-							// 在此请求，判断codePass
-							this.codePass = true;
-							// codePass正确回调中请求付款
-							// 付款成功
-							this.paySuccess = true;
-							// 弹层延时消失，刷新页面
-							setTimeout(function () { 
-								This.mask = false;
-							},1500);
+							if (!this.getCode) {
+								summer.toast({
+									msg: "请先获取验证码"
+								});
+								return;
+							}
+							// 判断codePass
+							if (this.getCode == this.payCode) {
+								this.codePass = true;	
+								// 请求付款
+								// 付款成功
+								this.paySuccess = true;
+								// 弹层延时消失，刷新页面
+								setTimeout(function () { 
+									This.mask = false;
+								},1500);
+							} else {
+								summer.toast({
+									msg: "您输入的验证码有误"
+								});
+							}
 						}
 					}
 				},
@@ -423,13 +436,14 @@
                             };
                             n--;
                         }, 1000);
-                        /* summer.showProgress();
+                        summer.showProgress();
                         // 获取验证码接口
                         ajaxRequest({
                         	type: 'post',
-                        	url: 'appservice/login/custLogin',
+                        	url: 'appservice/fund/getVerifiCode',
                         	param: {
-                        		PHONE: This.phoneNum
+                        		PHONE: This.TEL_PHONE
+								// PHONE: "15040570501"
                         	}
                         }, function (res) {
                         	summer.hideProgress();
@@ -440,36 +454,10 @@
                         		Data = res.data;
                         	}
                         	if (Data.flag == 1) {
-                        		if (Data.datas.FLAG == "true") {
-                        			summer.toast({
-                        				msg: "验证码已发送"
-                        			});
-                        			This.customerInfo = Data.datas;
-                        			This.getCode = Data.datas.SMSCODE;
-                        			This.codeTxt = "60s";
-                        			var n = 59;
-                        			this.codeTimer = setInterval(function () {
-                        				This.codeTxt = n + "s";
-                        				if (n < 0) {
-                        					This.codeTxt = "获取验证码";
-                        					clearInterval(This.codeTimer);
-                        					This.codeTimer = null;
-                        				};
-                        				n--;
-                        			}, 1000);
-                        		} else if (Data.datas.FLAG == "false") {
-                        			summer.toast({
-                        				msg: "发送短信失败"
-                        			});
-                        		} else if (Data.datas.FLAG == "ufalse") {
-                        			summer.toast({
-                        				msg: Data.datas.STATE ? Data.datas.STATE : "未找到该用户"
-                        			});
-                        		} else {
-                        			summer.toast({
-                        				msg: "获取验证码失败"
-                        			});
-                        		}
+                        		This.getCode = Data.datas.SMSCODE;
+                                summer.toast({
+                                    msg: "验证码已发送"
+                                });
                         	} else {
                         		summer.toast({
                         			msg: "获取验证码失败"
@@ -481,7 +469,7 @@
                         		msg: "系统内部异常"
                         	});
                         	console.log(err);
-                        }); */
+                        });
                     } else {
                         summer.toast({
                             msg: "请勿连续发送"

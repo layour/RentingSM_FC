@@ -159,8 +159,34 @@
 			var appVersion = JSON.parse(summer.getAppVersion()).versionName;
 			$('strong').eq(0).text(appVersion);
 			personal.EMPLOYEE_ID = summer.pageParam.EMPLOYEE_ID;
-			personal.NAME = summer.pageParam.NAME;
-			personal.TEL_PHONE = summer.pageParam.TEL_PHONE;
+			/* personal.NAME = summer.pageParam.NAME;
+			personal.TEL_PHONE = summer.pageParam.TEL_PHONE; */
+			summer.showProgress();
+			ajaxRequest({
+				type: 'post',
+				url: 'appservice/customer/findCusName',
+				param: {
+					"EMPLOYEE_ID": personal.EMPLOYEE_ID
+				}
+			}, function(res) {
+				summer.hideProgress();
+				var Data;
+				if (Object.prototype.toString.call(res.data) === '[object String]') {
+					Data = JSON.parse(res.data);
+				} else {
+					Data = res.data;
+				}
+				if (Data.flag == 1) {
+					personal.NAME = Data.datas.name;
+					personal.TEL_PHONE = Data.datas.phone;
+				}
+			}, function(err) {
+				summer.hideProgress();
+				summer.toast({
+					msg: "暂无数据"
+				});
+				console.log(err);
+			});
 		};
 	</script>
 </body>
