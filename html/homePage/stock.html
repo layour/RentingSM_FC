@@ -365,7 +365,7 @@
 									CLIENT_PHONE: This.TEL_PHONE,
 									// 没有
 									CLIENT_IP: "",
-									payment_list: This.payment_list
+									payment_list: JSON.stringify(This.payment_list)
 								}
 							}, function (res) {
 								summer.hideProgress();
@@ -568,6 +568,7 @@
 						}
 						if (Data.flag == 1) {
 							if (Data.datas.remoneylist.length < 1) {
+								This.items = [];
 								createNull("content", "../../img/empty.png","暂无还款信息");
 								$('#content').css('display','block');
 							} else {
