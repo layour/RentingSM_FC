@@ -72,7 +72,7 @@
 				</div>
 				<div v-bind:class="[(isTestPhNum && codePass) ? 'paySuc' : 'notShowIt']">
 					<div>
-						<img src="" alt="" v-bind:class="[paySuccess ? 'notShowIt' : '']">
+						<img src="../../img/loadingPost.gif" alt="" v-bind:class="[paySuccess ? 'notShowIt' : '']">
 						<i class="iconfont icon-done" v-bind:class="[paySuccess ? '' : 'notShowIt']"></i>
 					</div>
 					<p>{{payState}}</p>
@@ -163,14 +163,19 @@
 					num:"",
 					periods:"",
 					money:"",
-					interest:""
+					interest:"",
+					PAYLIST_CODE:""
 				},
 				// 客户ID
 				EMPLOYEE_ID:"",
 				// 客户姓名
 				NAME:"",
 				// 登陆手机号
-				TEL_PHONE:""
+				TEL_PHONE:"",
+				// 支付信息列表
+				payment_list:[],
+				// 选择的银行卡ID
+				bankId:""
 			},
 			computed: {
 				botMaskStyle:function () {
@@ -213,15 +218,32 @@
 				},
 				// 选择账单项
 				checkIt:function (index){
+					var This = this;
 					this.items[index].checked = !this.items[index].checked;
 					this.submit = this.items.some(function (e) {
 						return e.checked == true;
 					});
 					if (this.items[index].checked) {
 						this.total = (Number(this.total) + Number(this.items[index].BEGINNING_MONEY)).toFixed(2);
+						this.payment_list.push({
+							"index": index,
+							"EQUIPMENT_NAME": this.items[index].THING_NAME,
+							"PAYLIST_CODE": this.items[index].PAYLIST_CODE,
+							"TERM_TOTAL": this.items[index].LEASE_TERM,
+							"TERM_CURRENT": this.items[index].BEGINNING_NUM,
+							"RENT_MONEY": this.items[index].BEGINNING_MONEY,
+							"FINE_MONEY": ""
+						});
 					} else {
 						this.total = (Number(this.total) - Number(this.items[index].BEGINNING_MONEY)).toFixed(2);
+						this.payment_list.forEach(function (e,i) {
+							if (e.index == index) {
+								This.payment_list.splice(i,1);
+								i--;
+							}
+						});
 					}
+					// console.log(this.payment_list);
 				},
 				// 查看详情
 				checkInfo:function (ev,index) {
@@ -233,6 +255,7 @@
 					this.payInfoData.num = this.items[index].LEASE_CODE;
 					this.payInfoData.periods = this.items[index].BEGINNING_NUM + '/' + this.items[index].LEASE_TERM;
 					this.payInfoData.money = this.items[index].BEGINNING_MONEY;
+					this.payInfoData.PAYLIST_CODE = this.items[index].PAYLIST_CODE;
 					var This = this;
 					summer.showProgress();
 					ajaxRequest({
@@ -295,6 +318,7 @@
 					});
 					this.bankList[index].checked = !this.bankList[index].checked;
 					this.bankChoose = this.bankList[index].BK_NM;
+					this.bankId = this.bankList[index].ID;
 				},
 				// 确认还款
 				payIt:function (){
@@ -307,7 +331,7 @@
 					} else {
 						// 手机验证时点击确认还款
 						if (this.payCode) {
-							if (!this.getCode) {
+							/* if (!this.getCode) {
 								summer.toast({
 									msg: "请先获取验证码"
 								});
@@ -327,7 +351,52 @@
 								summer.toast({
 									msg: "您输入的验证码有误"
 								});
-							}
+							} */
+							this.codePass = true;
+							// 请求付款
+							ajaxRequest({
+								type: 'post',
+								url: 'appservice/fund/xlGenPayMoney',
+								param: {
+									TRANS_AMT: This.total,
+									EMPLOYEE_ID: This.EMPLOYEE_ID,
+									BANK_ID: This.bankId,
+									CLIENT_NAME: This.NAME,
+									CLIENT_PHONE: This.TEL_PHONE,
+									// 没有
+									CLIENT_IP: "",
+									payment_list: This.payment_list
+								}
+							}, function (res) {
+								summer.hideProgress();
+								var Data;
+								if (Object.prototype.toString.call(res.data) === '[object String]') {
+									Data = JSON.parse(res.data);
+								} else {
+									Data = res.data;
+								}
+								if (Data.flag == 1) {
+									This.paySuccess = true;
+									// 弹层延时消失，刷新页面
+									setTimeout(function () { 
+										This.mask = false;
+									},1500);
+									This.total = "0.00";
+									This.payment_list = [];
+									This.submit = false;
+									This.getRepayData();
+								} else {
+									summer.toast({
+										msg: "付款失败"
+									});
+								}
+							}, function (err) {
+								summer.hideProgress();
+								summer.toast({
+									msg: "系统内部异常"
+								});
+								console.log(err);
+							});
 						}
 					}
 				},
@@ -506,8 +575,12 @@
 									e.checked = false;
 									// 计算剩余还款天数
 									var seconds = new Date().getTime() - new Date(e.BEGINNING_RECEIVE_DATA).getTime();
-									var dayNum = Math.floor(seconds/(24*3600*1000));
-									e.dayNum = dayNum;
+									var dayNum = -Math.floor(seconds/(24*3600*1000));
+									if (dayNum < 0) {
+										e.dayNum = 0;
+									} else {
+										e.dayNum = dayNum;
+									}
 								});
 								This.items = Data.datas.remoneylist;
 							}
@@ -564,8 +637,8 @@
 			/* 有绑定银行卡的 */
 			// stock.EMPLOYEE_ID = 165176614;
 			stock.EMPLOYEE_ID = 165176774;
-			stock.NAME = "唐飞";
-			stock.TEL_PHONE = "15019443442";
+			stock.NAME = "冯志杰";
+			stock.TEL_PHONE = "13936778297";
 			/* 请求代付款列表 */
 			stock.getRepayData();
 			/* 请求绑定的银行卡列表 */

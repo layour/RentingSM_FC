@@ -21,8 +21,8 @@
 		<div class="um-content">
 			<div class="box">
 				<img src="../../img/timg.jpg" alt="">
-				<p>{{NAME}}</p>
-				<span>{{TEL_PHONE}}</span>
+				<p>{{NAME_SHOW}}</p>
+				<span>{{TEL_PHONE_SHOW}}</span>
 				<div class="userInfo">
 				</div>
 			</div>
@@ -77,7 +77,9 @@
 			data: {
 				EMPLOYEE_ID: "",
 				NAME: "",
-				TEL_PHONE: ""
+				TEL_PHONE: "",
+				NAME_SHOW: "",
+				TEL_PHONE_SHOW: ""
 			},
 			methods: {
 				// 租赁物
@@ -159,8 +161,8 @@
 			var appVersion = JSON.parse(summer.getAppVersion()).versionName;
 			$('strong').eq(0).text(appVersion);
 			personal.EMPLOYEE_ID = summer.pageParam.EMPLOYEE_ID;
-			/* personal.NAME = summer.pageParam.NAME;
-			personal.TEL_PHONE = summer.pageParam.TEL_PHONE; */
+			personal.NAME = summer.pageParam.NAME;
+			personal.TEL_PHONE = summer.pageParam.TEL_PHONE;
 			summer.showProgress();
 			ajaxRequest({
 				type: 'post',
@@ -177,8 +179,8 @@
 					Data = res.data;
 				}
 				if (Data.flag == 1) {
-					personal.NAME = Data.datas.name;
-					personal.TEL_PHONE = Data.datas.phone;
+					personal.NAME_SHOW = Data.datas.name;
+					personal.TEL_PHONE_SHOW = Data.datas.phone;
 				}
 			}, function(err) {
 				summer.hideProgress();
