@@ -293,7 +293,7 @@
 						e.checked = false;
 					});
 					this.bankList[index].checked = !this.bankList[index].checked;
-					this.bankChoose = this.bankList[index].name;
+					this.bankChoose = this.bankList[index].BK_NM;
 				},
 				// 确认还款
 				payIt:function (){
@@ -531,12 +531,7 @@
 						});
 						console.log(err);
 					});
-				},
-				// 绑定的银行卡数据
-				/* getBankListData:function () {
-					var This = this;
-					
-				} */
+				}
 			}
 		});
 		function getBankListData () {
