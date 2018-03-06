@@ -331,7 +331,7 @@
 					} else {
 						// 手机验证时点击确认还款
 						if (this.payCode) {
-							/* if (!this.getCode) {
+							if (!this.getCode) {
 								summer.toast({
 									msg: "请先获取验证码"
 								});
@@ -340,19 +340,57 @@
 							// 判断codePass
 							if (this.getCode == this.payCode) {
 								this.codePass = true;	
-								// 请求付款
-								// 付款成功
-								this.paySuccess = true;
-								// 弹层延时消失，刷新页面
-								setTimeout(function () { 
-									This.mask = false;
-								},1500);
+                                // 请求付款
+                                ajaxRequest({
+                                    type: 'post',
+                                    url: 'appservice/fund/xlGenPayMoney',
+                                    param: {
+                                        TRANS_AMT: This.total,
+                                        EMPLOYEE_ID: This.EMPLOYEE_ID,
+                                        BANK_ID: This.bankId,
+                                        CLIENT_NAME: This.NAME,
+                                        CLIENT_PHONE: This.TEL_PHONE,
+                                        // 没有
+                                        CLIENT_IP: "",
+                                        payment_list: JSON.stringify(This.payment_list)
+                                    }
+                                }, function (res) {
+                                    summer.hideProgress();
+                                    var Data;
+                                    if (Object.prototype.toString.call(res.data) === '[object String]') {
+                                        Data = JSON.parse(res.data);
+                                    } else {
+                                        Data = res.data;
+                                    }
+                                    if (Data.flag == 1) {
+                                        // 付款成功
+                                        This.paySuccess = true;
+                                        // 弹层延时消失，刷新页面
+                                        setTimeout(function () { 
+                                            This.mask = false;
+                                        },1500);
+                                        This.total = "0.00";
+                                        This.payment_list = [];
+                                        This.submit = false;
+                                        This.getRepayData();
+                                    } else {
+                                        summer.toast({
+                                            msg: "付款失败"
+                                        });
+                                    }
+                                }, function (err) {
+                                    summer.hideProgress();
+                                    summer.toast({
+                                        msg: "系统内部异常"
+                                    });
+                                    console.log(err);
+                                });
 							} else {
 								summer.toast({
 									msg: "您输入的验证码有误"
 								});
-							} */
-							this.codePass = true;
+							}
+							/* this.codePass = true;
 							// 请求付款
 							ajaxRequest({
 								type: 'post',
@@ -396,7 +434,7 @@
 									msg: "系统内部异常"
 								});
 								console.log(err);
-							});
+							}); */
 						}
 					}
 				},
@@ -632,18 +670,16 @@
 			});
 		};
 		summerready = function () {
-			/* stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
+			stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
 			stock.NAME = summer.pageParam.customerInfo.NAME;
-			stock.TEL_PHONE = summer.pageParam.customerInfo.TEL_PHONE; */
-			/* 我自己的 */
-			// stock.EMPLOYEE_ID = 165185264;
-			/* 有还款列表的 */
-			// stock.EMPLOYEE_ID = 165185465;
-			/* 有绑定银行卡的 */
-			// stock.EMPLOYEE_ID = 165176614;
-			stock.EMPLOYEE_ID = 165176774;
+            stock.TEL_PHONE = summer.pageParam.customerInfo.TEL_PHONE;
+            
+
+			/* stock.EMPLOYEE_ID = 165176774;
 			stock.NAME = "冯志杰";
-			stock.TEL_PHONE = "13936778297";
+            stock.TEL_PHONE = "13936778297"; */
+            
+
 			/* 请求代付款列表 */
 			stock.getRepayData();
 		};
