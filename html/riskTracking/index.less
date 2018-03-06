@@ -16,7 +16,7 @@
       height: .6rem;
       line-height: .6rem;
       padding:0 .3rem;
-      width: 1.6rem;
+      // width: 1.6rem;
       font-size: 14px;
       &:first-child{
         border-top-left-radius:.16rem;
@@ -42,22 +42,27 @@
     li{
       border-bottom: 1px solid @borderColor;
       position: relative;
-      height: 1.76rem;
-      padding: .5rem  .6rem  .32rem .56rem;
+      // height: 1.76rem;
+      padding: .34rem .56rem;
       font-size: 14px;
-      >p:first-child{
-        font-size: 16px;
-        color: @fontColor;
-      }
       .ps{
-        position: absolute;
-        right:.6rem;
-        top:.34rem;
+        // position: absolute;
+        // right:.6rem;
+        // top:.34rem;
+        >table{width: 100%;}
         td{
-          padding-left: .16rem;
-          padding-top: .18rem;
+          // padding-left: .16rem;
+          // padding-top: .18rem;
+          text-align: right;
           >span{color:@grayBlue;}
-          >p{
+          &.first{
+            text-align: left;
+            >p.first-child{
+              font-size: 16px;
+              color: @fontColor;
+            }
+          }
+          .money{
             font-size: 18px;
             color:#424242;
           }

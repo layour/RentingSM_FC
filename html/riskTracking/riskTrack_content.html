@@ -11,20 +11,45 @@
 	</head>
 	<body>
 		<div class="um-win" id="riskTrackContent" v-cloak>
-			<div class="um-content riskTrackContent">
-				<ul>
-					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
-            <p>{{item.name}}</p>
-            <p>{{item.status}}</p>
+			<div class="riskTrackContent">
+				<ul v-if="stateVal=='repayment'">
+					<li v-for="(item,index) in payList" :key="index" @click="goDetail(item)">
+            <span class="ps">
+              <table>
+								<tr>
+									<td class="first">
+										<p class="first-child">{{item.NAME}}</p>
+									</td>
+									<td>
+										<span>{{item.BEGINNING_RECEIVE_DATA}}</span>
+									</td>
+									<td rowspan="2">  <i class="icon iconfont icon-enter"></i></td>
+	                </tr>
+									<tr>
+											<td class="first"><p>{{item.BEGINNING_NUM}}</p></td>
+											<td><p class="money">&yen;{{item.BEGINNING_MONEY}}</p></td>
+									</tr>
+              </table>
+            </span>
+					</li>
+				</ul>
+				<ul v-if="stateVal=='expected'">
+					<li v-for="(item,index) in expectedList" :key="index" @click="goMoney(item.PAYLIST_CODE)">
             <span class="ps">
               <table>
                 <tr>
-                  <td>
-                    <span>{{item.date}}</span>
-                    <p>&yen;{{item.money}}</p>
-                  </td>
-                  <td>  <i class="icon iconfont icon-enter"></i></td>
-                </tr>
+									<td class="first">
+										<p>{{item.CUST_NAME}}</p>
+									</td>
+									<td>
+										<span style="opacity:0;">金额</span>
+									</td>
+									<td rowspan="2">  <i class="icon iconfont icon-enter"></i></td>
+	                </tr>
+									<tr>
+											<td class="first"><p>逾期天数：{{item.PENALTY_DAY}}</p></td>
+											<td><p class="money">&yen;{{item.RENT_RECE_ALL}}</p></td>
+									</tr>
               </table>
             </span>
 					</li>
@@ -35,67 +60,108 @@
     <script src="../../js/jquery.min.js" ></script>
     <script src="../../js/font.js" ></script>
     <script src="../../js/vue.js" ></script>
-    <!-- <script src="../../js/mint.js" ></script> -->
+		<script src="../../js/common.js" ></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
 				var riskTrackContentVue=new Vue({
 					el:'#riskTrackContent',
-					data(){
+					data:function(){
 						return{
-							list:[],
-              payList:[
-                  {id:1,name:"倾世皇",date:'2017-12-20',money:'1314.25',status:"还款提醒"},
-                  {id:1,name:"风气长林",date:'2017-12-20',money:'1314.25',status:"还款提醒"},
-                  {id:1,name:"赵六",date:'2017-12-20',money:'1314.25',status:"还款提醒"}
-              ],
-              expectedList:[
-                {id:1,name:"琅琊榜",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"九州牧云记",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"北雁云依",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"赵六",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"琅琊榜",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"九州牧云记",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"北雁云依",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"赵六",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"琅琊榜",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"九州牧云记",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"北雁云依",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"赵六",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"琅琊榜",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"九州牧云记",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"北雁云依",date:'2017-12-20',money:'1314.25',status:"逾期催收"},
-                {id:1,name:"赵六",date:'2017-12-20',money:'1314.25',status:"逾期催收"}
-              ],
-							stateVal:'',
+              expectedList:[],
+              payList:[],
+							stateVal:'repayment',
 							currentPage:1
 
 						}
 					},
-					created(){
-            this.list=this.payList
-					},
 					methods:{
-						getData(){
+						getData:function(){
+							var _this=this
+							console.log(JSON.stringify({
+								pageSize:5,
+								pageNo:_this.currentPage
+							}),this.currentPage);
+							summer.showProgress();
 							if(this.stateVal=="repayment"){
-                this.list=this.payList
+								ajaxRequest({
+									type:"POST",
+									url:'appservice/risk/returnmoney',
+									param:{
+										pageSize:10,
+										pageNo:_this.currentPage
+									}
+								},function (res) {
+									console.log(JSON.stringify(res));
+									summer.hideProgress();
+									if(res.data.datas.hasNextPage){
+										_this.payList=_this.payList.concat(res.data.datas.list)
+									}else{
+										summer.toast({msg:'没有更多了'})
+									}
+									_this.$nextTick(function(){
+		 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+		 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+		 			        })
+								},function(err){
+									summer.hideProgress();
+									console.log(err);
+								})
               }else if (this.stateVal=="expected") {
-                this.list=this.expectedList
+								ajaxRequest({
+									type:"POST",
+									url:'appservice/risk/overduerush',
+									param:{
+										pageSize:10,
+										pageNo:_this.currentPage
+									}
+								},function (res) {
+									console.log(JSON.stringify(res));
+									summer.hideProgress();
+									// if(_this.currentPage==1){
+										_this.expectedList=_this.expectedList.concat(res.data.datas.overduelist)
+									// }else{
+									// 	summer.toast({msg:'没有更多了'})
+									// }
+									_this.$nextTick(function(){
+		 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+		 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+		 			        })
+								},function(err){
+									summer.hideProgress();
+									console.log(err);
+								})
               }
-              alert(this.currentPage)
-							this.$nextTick(function(){
- 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
- 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
- 			        })
+
 						},
-            goDetail(id){
+            goDetail:function(data){
               summer.openWin({
                 id:'payTableDetail',
-                url:'html/payTableQuery/payTableDetail.html',
+                url:'html/riskTracking/riskTrackingMsg.html',
                 create:false,
                 type:'actionBar',
-                pageParam:{id:id},
+                pageParam:{data:JSON.stringify(data)},
                 actionBar: {
-                  title: "支付表明细",
+                  title: "还款提醒",
+                  titleColor: "#ffffff",
+                  backgroundColor: "#039BE5",
+                  leftItem:{
+                      image: "img/back.png",
+                      method:'',
+                      text:"返回",
+                      textColor:"#ffffff"
+                  }
+                }
+              })
+            },
+						goMoney:function(id){
+              summer.openWin({
+                id:'payTableDetail',
+                url:'html/riskTracking/riskTrackingMoney.html',
+                create:false,
+                type:'actionBar',
+                pageParam:{PAYLIST_CODE:id},
+                actionBar: {
+                  title: "逾期催收",
                   titleColor: "#ffffff",
                   backgroundColor: "#039BE5",
                   leftItem:{
@@ -107,7 +173,6 @@
                 }
               })
             }
-
 					}
 				});
 				function getData(val){
@@ -115,7 +180,9 @@
           riskTrackContentVue.currentPage=1
 					riskTrackContentVue.getData();
 				}
+
 				summerready=function(){
+					getData('repayment');
 					summer.setRefreshHeaderInfo({
 						visible: true,
 						loadingImg: 'img/refresh.png',
@@ -126,6 +193,9 @@
 						showTime: true
 					}, function(ret, err) {
 						//通常在这里从服务器加载数据，t
+						riskTrackContentVue.currentPage=1;
+						riskTrackContentVue.payList=[]
+						riskTrackContentVue.expectedList=[]
 						riskTrackContentVue.getData();
 					});
 					summer.setRefreshFooterInfo({

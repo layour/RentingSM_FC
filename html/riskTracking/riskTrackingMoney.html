@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+    <link rel="stylesheet" href="../payTableQuery/index.min.css">
+	</head>
+	<body>
+		<div class="um-win" id="payTableDetail" v-cloak>
+			<div class="um-content payTableDetail">
+				<ul v-for="(item,index) in list" :key="index">
+          <li>期次  <span class="fr">第{{item.PERIOD}}次</span></li>
+          <li>应收日期 <span class="fr">{{item.BEGINNING_RECEIVE_DATA}}</span></li>
+          <li>应收租金总额 <span class="fr">{{item.RENT_RECE}}</span></li>
+          <li>应收违约金总额 <span class="fr">{{item.PENALTY_RECE}}</span></li>
+          <li>实收租金总额 <span class="fr">{{item.RENT_PAID}}</span></li>
+          <li>实收违约金总额 <span class="fr">{{item.PENALTY_PAID}}</span></li>
+				</ul>
+
+			</div>
+
+		</div>
+		<script src="../../js/summer.js" ></script>
+		<script src="../../js/jquery.min.js" ></script>
+		<script src="../../js/font.js" ></script>
+		<script src="../../js/vue.js" ></script>
+		<script src="../../js/common.js" ></script>
+		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
+		<script>
+				summerready=function(){
+					payTableDetailVue.PAYLIST_CODE=summer.pageParam.PAYLIST_CODE
+					payTableDetailVue.getData()
+				}
+				var payTableDetailVue=new Vue({
+					el:'#payTableDetail',
+					data:function(){
+						return{
+              PAYLIST_CODE:'',
+              list:[]
+						}
+					},
+					methods:{
+						getData:function(){
+							var _this=this
+							summer.showProgress();
+							ajaxRequest({
+								type:"POST",
+								url:'appservice/risk/overdueDetail',
+								param:{
+									PAYLIST_CODE:_this.PAYLIST_CODE
+								}
+							},function (res) {
+								console.log(JSON.stringify(res));
+								summer.hideProgress();
+								_this.list=res.data.datas.overList
+							},function(err){
+								summer.hideProgress();
+								console.log(err);
+							})
+						}
+					}
+				});
+		</script>
+	</body>
+</html>
