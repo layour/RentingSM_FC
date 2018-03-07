@@ -14,12 +14,12 @@
 			<div class="payTableList">
 				<ul>
 					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
-            <p>{{item.RENTER_NAME}} <span class="fr">{{item.PSTATUS_NM}}</span></p>
+            <p>{{item.RENTER_NAME}} <span class="fr">{{item.STATUS_NAME}}</span></p>
             <div>
               <p>{{item.PAYLIST_CODE}}</p>
-              <p>创建时间:{{item.CREATE_DATE}}<span class="fr">客户经理{{item.CLERK_NAME}}</span></p>
+              <p>创建时间:{{item.CREATE_DATE}}<span class="fr">客户经理:{{item.CLERK_NAME}}</span></p>
             </div>
-            <button class="fr" @click="goDetail(item.PAY_ID)">支付明细</button>
+            <button class="fr" @click="goDetail(item.ID)">支付明细</button>
 					</li>
 				</ul>
 			</div>
@@ -51,12 +51,11 @@
 							summer.showProgress();
 							ajaxRequest({
 								type:"POST",
-								url:'appservice/paytable/paylist',
+								url:'appservice/paytable/paytablelist',
 								param:{
 									pageNo:_this.currentPage,
-									pageSize:5,
-									CR_BECR_NAME:_this.searchVal,
-									PSTATUS:''
+									pageSize:10,
+									RENTER_NAME:_this.searchVal
 								}
 							},function(res){
 								console.log(JSON.stringify(res));
