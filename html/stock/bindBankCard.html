@@ -266,38 +266,38 @@
 					}
                     if (this.codeTxt == "获取验证码") {
                         This.getCode = "";
-                        This.codeTxt = "60s";
-                        var n = 59;
-                        this.codeTimer = setInterval(function () {
-                            This.codeTxt = n + "s";
-                            if (n < 0) {
-                                This.codeTxt = "获取验证码";
-                                clearInterval(this.codeTimer);
-                                This.codeTimer = null;
-                            };
-                            n--;
-                        }, 1000);
                         summer.showProgress();
                         ajaxRequest({
-                        	type: 'post',
+                            type: 'post',
                         	url: 'appservice/fund/getVerifiCode',
                         	param: {
-                        		PHONE: This.phoneNum
+                                PHONE: This.phoneNum
                                 // PHONE: 15040570501
                         	}
                         }, function (res) {
-                        	summer.hideProgress();
+                            summer.hideProgress();
                         	var Data;
                         	if (Object.prototype.toString.call(res.data) === '[object String]') {
-                        		Data = JSON.parse(res.data);
+                                Data = JSON.parse(res.data);
                         	} else {
-                        		Data = res.data;
+                                Data = res.data;
                         	}
                         	if (Data.flag == 1) {
-                                This.getCode = Data.datas.SMSCODE;
                                 summer.toast({
                                     msg: "验证码已发送"
                                 });
+                                This.getCode = Data.datas.SMSCODE;
+                                This.codeTxt = "60s";
+                                var n = 59;
+                                this.codeTimer = setInterval(function () {
+                                    This.codeTxt = n + "s";
+                                    if (n < 0) {
+                                        This.codeTxt = "获取验证码";
+                                        clearInterval(this.codeTimer);
+                                        This.codeTimer = null;
+                                    };
+                                    n--;
+                                }, 1000);
                         	} else {
                         		summer.toast({
                         			msg: "获取验证码失败"

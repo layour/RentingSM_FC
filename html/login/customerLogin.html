@@ -67,7 +67,7 @@
 			methods: {
 				/* 登录 */
 				toLogin: function () {
-					if (!this.phoneNum) {
+					/* if (!this.phoneNum) {
 						summer.toast({
 							msg: "请输入手机号"
 						});
@@ -114,8 +114,10 @@
 								customerInfo: this.customerInfo
 							}
 						});
-					}
-					/* summer.openWin({
+                    } */
+                    
+
+					summer.openWin({
 						id: 'stock',
 						url: 'html/homePage/stock.html',
 						addBackListener: true,
@@ -140,7 +142,7 @@
 						pageParam: {
 							customerInfo: this.customerInfo
 						}
-					}); */
+					});
 				},
 				/* 获取验证码 */
 				achieveCode: function () {
