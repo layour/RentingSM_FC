@@ -104,7 +104,7 @@
                             ></i>
                         </span>
                         <span class="repayDate">还款日{{k.BEGINNING_RECEIVE_DATA}}&nbsp;&nbsp;&nbsp;<b>{{k.dayNum}}</b></span>
-                        <span class="money">￥{{k.BEGINNING_TATAL_MONEY}}</span>
+                        <span class="money">￥{{k.showZuJin}}</span>
                         <span class="car">{{k.THING_NAME}}</span>
                     </div>
                     <div class="r-con">
@@ -597,7 +597,9 @@
                                         e.dayNum = "剩余"+ String(Math.abs(e.DIFFDATE)) +"天";
                                     } else {
                                         e.dayNum = "逾期"+ String(Math.abs(e.DIFFDATE)) +"天";
-                                    }
+                                    };
+                                    // 列表租金金额展示
+                                    e.showZuJin = Number(e.BEGINNING_TATAL_MONEY).toFixed(2);
 								});
 								This.items = Data.datas.remoneylist;
 							}
