@@ -244,6 +244,7 @@
 				},
 				// 点击还款按钮
 				toSubmit:function (){
+                    var This = this;
 					if (this.submit) {
 						this.mask = true;
 						/* 重置状态 */
@@ -254,10 +255,10 @@
 						this.paySuccess = false;
 						this.bankList.forEach(function (e) {
 							e.checked = false;
-						});
-						this.codeTxt = "免费获取";
-						clearInterval(this.codeTimer);
-						this.codeTimer = null;
+                        });
+                        clearInterval(this.codeTimer);
+                        this.codeTimer = null;
+                        this.codeTxt = "免费获取";
 						this.payInfo = false;
 						this.getCode = "";
 					}
@@ -294,7 +295,7 @@
 							}
 							// 判断codePass
 							if (this.getCode == this.payCode) {
-                                this.codePass = true;	
+                                this.codePass = true;
                                 // 生成payment_list
                                 this.items.forEach(function (e,i) {
                                     if (e.checked) {
@@ -528,7 +529,7 @@
                                 This.getCode = Data.datas.SMSCODE;
                                 This.codeTxt = "60s";
                                 var n = 59;
-                                this.codeTimer = setInterval(function () {
+                                This.codeTimer = setInterval(function () {
                                     This.codeTxt = n + "s";
                                     if (n < 0) {
                                         This.codeTxt = "免费获取";
