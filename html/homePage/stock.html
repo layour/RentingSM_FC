@@ -133,8 +133,10 @@
 				items:[],
 				// 银行列表
 				bankList:[],
-				// 还款总额
-				total:"0.00",
+				// 还款总额（展示）
+                total:"0.00",
+                // 还款总额（计算）
+                TOTAL: 0,
 				// 是否可点击还款
 				submit:false,
 				// 遮罩层显隐
@@ -224,9 +226,11 @@
 						return e.checked == true;
 					});
 					if (this.items[index].checked) {
-						this.total = (Number(this.total) + Number(this.items[index].BEGINNING_TATAL_MONEY)).toFixed(2);
+                        this.total = (Number(this.total) + Number(this.items[index].BEGINNING_TATAL_MONEY)).toFixed(2);
+                        this.TOTAL = this.TOTAL + Number(this.items[index].BEGINNING_TATAL_MONEY);
 					} else {
-						this.total = (Number(this.total) - Number(this.items[index].BEGINNING_TATAL_MONEY)).toFixed(2);
+                        this.total = (Number(this.total) - Number(this.items[index].BEGINNING_TATAL_MONEY)).toFixed(2);
+                        this.TOTAL = this.TOTAL - Number(this.items[index].BEGINNING_TATAL_MONEY);
 					}
 				},
 				// 查看详情
@@ -238,7 +242,7 @@
 					this.payInfoData.periods = this.items[index].BEGINNING_NUM + '/' + this.items[index].LEASE_TERM;
 					this.payInfoData.money = this.items[index].BEGINNING_MONEY;
                     this.payInfoData.PAYLIST_CODE = this.items[index].PAYLIST_CODE;
-                    this.payInfoData.interest = this.items[index].PENALTY_RECE;
+                    this.payInfoData.interest = Number(this.items[index].PENALTY_RECE).toFixed(2);
 					this.payInfo = true;
 					this.mask = true;
 				},
@@ -315,7 +319,7 @@
                                     type: 'post',
                                     url: 'appservice/fund/xlGenPayMoney',
                                     param: {
-                                        TRANS_AMT: This.total,
+                                        TRANS_AMT: This.TOTAL,
                                         EMPLOYEE_ID: This.EMPLOYEE_ID,
                                         BANK_ID: This.bankId,
                                         CLIENT_NAME: This.NAME,
@@ -339,6 +343,7 @@
                                         setTimeout(function () { 
                                             This.mask = false;
                                         },1500);
+                                        This.TOTAL = 0;
                                         This.total = "0.00";
                                         This.payment_list = [];
                                         This.submit = false;
