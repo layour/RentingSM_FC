@@ -37,6 +37,8 @@
           <li>方案名称 <span class="fr">{{res.RENTHEAD.SCHEME_NAME}}</span></li>
           <li>设备总价值 <span class="fr">&yen;{{res.RENTHEAD.LEASE_TOPRIC}}</span></li>
           <li>项目融资额 <span class="fr">&yen;{{res.RENTHEAD.TOPRIC_SUBFIRENT}}</span></li>
+          <li>租赁利率 <span class="fr">&yen;{{res.RENTHEAD.YEAR_INTEREST}}</span></li>
+          <li>租赁期数 <span class="fr">&yen;{{res.RENTHEAD.LEASE_TERM}}</span></li>
           <li v-for="(v,i) in res.SCHEMELIST" :key="i">
 						{{v.KEY_NAME_ZN}} <span class="fr">
 							<template v-if="(String(v.KEY_NAME_ZN).indexOf('租金')>0 || String(v.KEY_NAME_ZN).indexOf('金额')>0)&&String(v.KEY_NAME_ZN).indexOf('租金比例')<0">&yen;</template>
@@ -49,7 +51,7 @@
           <li class="title"><span></span>支付清单</li>
 					<li class="bgLi">其他费用</li>
 					<li v-for="(item,index) in res.OTHERFEElIST" :key="index">
-						{{item.ITEM_NAME}} <span class="fr">&yen;{{item.BEGINNING_PAID}}</span>
+						{{item.ITEM_NAME}} <span class="fr">&yen;{{item.ITEM_MONEY}}</span>
 					</li>
 
 					<li class="bgLi">合计</li>

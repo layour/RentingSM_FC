@@ -14,12 +14,12 @@
 			<div class="um-content statementList">
 				<ul>
 					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
-            <p>{{item.name}} {{item.date}}</p>
+            <p>{{item.CLIENT_NAME}}</p>
             <div>
-              <p>联系方式：{{item.phone}}</p>
-              <p>客服编号：{{item.number}}</p>
+              <p>支付表编号：{{item.PAYLIST_CODE}}</p>
+              <p>客户编号：{{item.PAYLIST_CODE}}</p>
             </div>
-            <button class="fr" @click="goDetail(item.id)">对账单</button>
+            <button class="fr" @click="goDetail(item.PAYLIST_CODE)">对账单</button>
 					</li>
 				</ul>
 			</div>
@@ -28,44 +28,52 @@
     <script src="../../js/jquery.min.js" ></script>
     <script src="../../js/font.js" ></script>
     <script src="../../js/vue.js" ></script>
-    <script src="../../js/mint.js" ></script>
+		<script src="../../js/common.js" ></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
 				var statementListVue=new Vue({
 					el:'#statementList',
-					data(){
+					data:function(){
 						return{
-							list:[
-                {id:1,name:"赵六",date:'2017-12-21',phone:'13146829922',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',phone:'13146829922',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',phone:'13146829922',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',phone:'13146829922',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',phone:'13146829922',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',phone:'13146829922',number:'CNCAHP13146829922-2',status:1},
-                {id:1,name:"赵六",date:'2017-12-21',phone:'13146829922',number:'CNCAHP13146829922-2',status:1},
-
-              ],
+							list:[],
 							searchVal:'',
 							currentPage:1
 
 						}
 					},
-					created(){
-
-					},
 					methods:{
-						openPicker() {
+						openPicker:function() {
 			        this.$refs.picker.open();
 			      },
-						getData(){
-							alert(this.searchVal)
-							alert(this.currentPage)
-							this.$nextTick(function(){
- 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
- 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
- 			        })
+						getData:function(){
+							var _this=this
+							summer.showProgress();
+							ajaxRequest({
+								type:"POST",
+								url:'appservice/custaccdetail/getCustAccList',
+								param:{
+									pageNo:_this.currentPage,
+									pageSize:10,
+									RENTER_NAME:_this.searchVal
+								}
+							},function(res){
+								console.log(JSON.stringify(res));
+								summer.hideProgress();
+								if(res.data.datas.hasNextPage){
+									_this.list=_this.list.concat(res.data.datas.list)
+								}else {
+									summer.toast({msg:'没有更多了'})
+								}
+								_this.$nextTick(function(){
+									summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
+									summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
+								})
+							},function(err){
+								console.log(JSON.stringify(err));
+								summer.hideProgress();
+							})
 						},
-            goDetail(id){
+            goDetail:function(id){
               summer.openWin({
                 id:'statementDetaill',
                 url:'html/statement/statementDetail.html',
@@ -93,6 +101,8 @@
 					statementListVue.getData();
 				}
 				summerready=function(){
+					statementListVue.getData();
+
 					summer.setRefreshHeaderInfo({
 						visible: true,
 						loadingImg: 'img/refresh.png',
@@ -103,6 +113,8 @@
 						showTime: true
 					}, function(ret, err) {
 						//通常在这里从服务器加载数据，t
+						statementListVue.currentPage=1;
+						statementListVue.list=[]
 						statementListVue.getData();
 					});
 					summer.setRefreshFooterInfo({

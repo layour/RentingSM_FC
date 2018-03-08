@@ -56,7 +56,7 @@
 		<script>
 				var salesDetailVue=new Vue({
 					el:'#statementDetail',
-					data(){
+					data:function(){
 						return{
 							name:'张六',
 							number:'2016-VO3242',
@@ -79,11 +79,8 @@
               ]
 						}
 					},
-					created(){
-
-					},
 					methods:{
-						handleConfirm(value){
+						handleConfirm:function(value){
 							this.pickerValue=value;
 							console.log(value);
 							if(this.state=='start'){
@@ -103,7 +100,7 @@
 							 return  year +'年' + month +'月'+ strDate;
 						 }
 						},
-						openPicker(val) {
+						openPicker:function(val) {
 							this.state=val
 							if(this.count=='1'){
 								this.handleConfirm(new Date());
