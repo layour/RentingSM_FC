@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<div class="um-win" id="statementList" v-cloak>
-			<div class="um-content statementList">
+			<div class="statementList">
 				<ul>
 					<li v-for="(item,index) in list" :key="index">
             <p>{{item.CLIENT_NAME}}</p>
@@ -48,20 +48,24 @@
 						getData:function(){
 							var _this=this
 							summer.showProgress();
+							console.log(JSON.stringify({
+								pageNo:_this.currentPage,
+								pageSize:10,
+								content:_this.searchVal
+							}));
 							ajaxRequest({
 								type:"POST",
 								url:'appservice/custaccdetail/getCustAccList',
 								param:{
 									pageNo:_this.currentPage,
 									pageSize:10,
-									RENTER_NAME:_this.searchVal
+									content:_this.searchVal
 								}
 							},function(res){
 								console.log(JSON.stringify(res));
 								summer.hideProgress();
-								if(res.data.datas.hasNextPage){
-									_this.list=_this.list.concat(res.data.datas.list)
-								}else {
+								_this.list=_this.list.concat(res.data.datas.list)
+								if(!res.data.datas.hasNextPage){
 									summer.toast({msg:'没有更多了'})
 								}
 								_this.$nextTick(function(){
@@ -102,6 +106,8 @@
 				});
 				function getData(val){
 					statementListVue.searchVal=val
+					statementListVue.currentPage=1;
+					statementListVue.list=[]
 					statementListVue.getData();
 				}
 				summerready=function(){

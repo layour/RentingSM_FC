@@ -93,9 +93,9 @@
 								},function (res) {
 									console.log(JSON.stringify(res));
 									summer.hideProgress();
-									if(res.data.datas.hasNextPage){
-										_this.payList=_this.payList.concat(res.data.datas.list)
-									}else{
+									_this.payList=_this.payList.concat(res.data.datas.list)
+
+									if(!res.data.datas.hasNextPage){
 										summer.toast({msg:'没有更多了'})
 									}
 									_this.$nextTick(function(){
