@@ -107,9 +107,9 @@
 
 <body>
 	<div class="um-win" id="app" v-cloak>
-		<!-- <div class="topheader tc um-header-light" @click="cardIdentify">
+		 <div class="topheader tc um-header-light" @click="cardIdentify">
 			<img v-bind:src="cardUrl" v-show="cardShow" alt="" />
-		</div> -->
+		</div> 
 		<div class="um-content">
 			<mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.spoustObj.SPOUST_NAME"> </mt-field>
 			<mt-field label="身份证" placeholder="请输入您的身份证号码" v-model="message.spoustObj.SPOUST_ID_CARD_NO"></mt-field>
@@ -234,30 +234,71 @@
 				handleClick: function() {
 					this.$toast('Hello world!')
 				},
+				ajaxCardMessage:function(args,path){
+					var _self=this;
+					summer.showProgress();
+					window.cordovaHTTP.settings={timeout:5000}; //设置5秒超时
+						var bTemp = args.replace(/(\n)+|(\r\n)+/g, "");
+						summer.ajax({
+							type : "post",
+							url : "https://api.tongdun.cn/identification/ocr/v1?partner_code=FCRZ&partner_key=17aa5172c3084c64b8b4d86a71432970",
+							param : {
+								image:bTemp
+							},
+						}, function(response) {
+							console.log(response);
+							var cardMessage=JSON.parse(response.data).display;
+
+						_self.message.spoustObj.SPOUST_NAME = cardMessage.name;
+						_self.message.spoustObj.SPOUST_ID_CARD_NO = cardMessage.id_number;
+						function getFormatDate(date) {
+							var date = new Date(date),
+								seperator1 = "-";
+							var year = date.getFullYear(),
+								month = date.getMonth() + 1,
+								strDate = date.getDate();
+							if (month >= 1 && month <= 9) {
+								month = "0" + month;
+							}
+							if (strDate >= 0 && strDate <= 9) {
+								strDate = "0" + strDate;
+							}
+							return year +'-' +month +'-'+ strDate;
+						}
+						_self.message.spoustObj.SPOUST_SEX_NM = cardMessage.gender;
+						_self.message.spoustObj.SPOUST_BIRTHDAY = getFormatDate(cardMessage.birthday);
+						_self.message.spoustObj.SPOUST_HOUSR_RE_ADDRESS = cardMessage.address;
+						_self.cardUrl = path;
+						_self.cardShow = true;
+						summer.hideProgress();
+						}, function(err) {
+							//alert("失败"+JSON.stringify(err));
+							summer.toast({msg:"识别失败"});
+						});
+				},
 				cardIdentify: function() {
 					var _self = this;
-					PersonScan.scan({}, function(args) {
-						console.log(args);
-						_self.message.spoustObj.SPOUST_NAME = args.name;
-						_self.message.spoustObj.SPOUST_ID_CARD_NO = args.id;
-						_self.message.spoustObj.SPOUST_SEX_NM = args.sex;
-						_self.message.spoustObj.SPOUST_BIRTHDAY = args.birth_date;
-						_self.message.spoustObj.SPOUST_HOUSR_RE_ADDRESS = args.address;
-						CommonUtil.watermark({
-							srcImage: args.imagePath,
-							targetImage: args.imagePath,
-							name: args.name,
-							callback: function(arg) {
-								if (!arg.target) {
-									_self.cardUrl = arg.watermarkFile;
-								} else {
-									_self.cardUrl = arg.target;
-								}
-								_self.cardShow = true;
-							}
-						});
-					}, function(args) {
-						console.log(args);
+					summer.openCamera({
+						"callback" : function(args){
+							summer.compressImage({
+								"src" : args.imgPath, //待压缩图片的路径
+								"path" : "", //压缩完图片保存的路径，该参数可选
+								"compressWidth" : "1000", //图片压缩的宽度
+								"compressHeight" : "1000", //图片压缩的高度
+								"quality" : "0.2", //图片压缩的清晰度，取值范围：0~1
+								"callback" : function(arg){
+									summer.fileToBase64({
+										"filePath" : arg.savepath, //文件路径
+										"callback" : function(ret){
+											//alert("file转base64成功");
+											//alert(ret.result);
+											console.log(ret);
+											_self.ajaxCardMessage(ret.result,arg.savepath);
+										} 
+									})
+								} //压缩完成之后的回调函数
+							})
+						}
 					});
 				},
 				successCallBack: function(args) {
