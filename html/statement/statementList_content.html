@@ -13,13 +13,13 @@
 		<div class="um-win" id="statementList" v-cloak>
 			<div class="um-content statementList">
 				<ul>
-					<li v-for="(item,index) in list" :key="index" @click="goDetail(item.id)">
+					<li v-for="(item,index) in list" :key="index">
             <p>{{item.CLIENT_NAME}}</p>
             <div>
               <p>支付表编号：{{item.PAYLIST_CODE}}</p>
-              <p>客户编号：{{item.PAYLIST_CODE}}</p>
+              <p>客户编号：{{item.CLIENT_CODE}}</p>
             </div>
-            <button class="fr" @click="goDetail(item.PAYLIST_CODE)">对账单</button>
+            <button class="fr" @click="goDetail(item.PAYLIST_CODE,item.CLIENT_NAME,item.CLIENT_CODE)">对账单</button>
 					</li>
 				</ul>
 			</div>
@@ -73,15 +73,19 @@
 								summer.hideProgress();
 							})
 						},
-            goDetail:function(id){
+            goDetail:function(id,name,number){
               summer.openWin({
                 id:'statementDetaill',
                 url:'html/statement/statementDetail.html',
                 create:false,
                 type:'actionBar',
-                pageParam:{id:id},
+                pageParam:JSON.stringify({
+									PAYLIST_CODE:id,
+									CLIENT_NAME:name,
+									CLIENT_CODE:number
+								}),
                 actionBar: {
-                  title: "支付表明细",
+                  title: "对账单明细",
                   titleColor: "#ffffff",
                   backgroundColor: "#039BE5",
                   leftItem:{

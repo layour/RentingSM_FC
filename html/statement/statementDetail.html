@@ -7,44 +7,34 @@
 		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/mint.css">
-		<link rel="stylesheet" href="./index.min.css">
+		<link rel="stylesheet" href="../payTableQuery/index.min.css">
 	</head>
 	<body>
-		<div class="um-win" id="statementDetail" v-cloak>
-			<div class="um-content statementDetail">
-				<table>
-					<tr>
-						<td class="first"><i class="icon iconfont icon-user"></i></td>
-						<td>
-							<p>{{name}}</p>
-							<p>{{number}}</p>
-						</td>
-					</tr>
-				</table>
-				<section>
-					<p>来款时间</p>
-					<div>
-						<p>
-							<span @click="openPicker('start')" :class="{default:!startDate}"><template v-if="!startDate" class="default">请选择开始日期</template><template v-else>{{startDate}}</template></span>
-							<b>至</b>
-							<span  @click="openPicker('end')" :class="{default:!endDate}"><template v-if="!endDate">请选择开始日期</template><template v-else>{{endDate}}</template></span>
-						</p>
-						<p>	例：2016年01月01日</p>
-					</div>
-					<button class="fr">查询</button>
-				</section>
+		<div class="um-win" id="payTableDetail">
+			<div class="um-content payTableDetail">
+				<ul>
+          <li class="title"><span></span>对账单</li>
+          <li>客户姓名 <span class="fr">{{CLIENT_NAME}}</span></li>
+          <li>客户编号 <span class="fr">{{CLIENT_CODE}}</span></li>
+					<li>支付表编号 <span class="fr">{{PAYLIST_CODE}}</span></li>
+				</ul>
+				<ul>
+          <li class="title"><span></span>对账单明细</li>
+					<template v-for="(item,index) in res.list">
+						<li class="bgLi">期数{{item.QC}}</li>
+						<li>应还款时间: <span class="fr"> {{item.YSRQ}}</span></li>
+						<li>应还款金额: <span class="fr"> &yen;{{item.YSJE}}</span></li>
+						<li>实收日期: <span class="fr"> {{item.SSRQ}}</span></li>
+						<li>实收金额: <span class="fr"> &yen;{{item.SSJE_}}</span></li>
+					</template>
+					<li class="bgLi">合计</li>
+					<li>应收租金总额(元) <span class="fr">&yen;{{res.map3.BEGINNING_MONEY}}</span></li>
+					<li>实收租金总额(元) <span class="fr">&yen;{{res.map3.BEGINNING_PAID}}</span></li>
+					<li>剩余租金总额(元) <span class="fr">&yen;{{res.map3.SY}}</span></li>
+					<li>逾期租金(元) <span class="fr">&yen;{{res.map3.YQZJ}}</span></li>
+					<li>未到期租金(元) <span class="fr">&yen;{{res.map3.WDQZJ}}</span></li>
+				</ul>
 			</div>
-
-			<mt-datetime-picker  ref="picker"  type="date"  v-model="pickerValue"
-				cancel-text='取消'
-				confirm-text='确定'
-				:start-date='startdata'
-				:end-date='enddata'
-				@confirm="handleConfirm"
-				year-format="{value} 年"
-				month-format="{value} 月"
-				date-format="{value} 日">
-			</mt-datetime-picker>
 		</div>
 		<script src="../../js/summer.js" ></script>
 		<script src="../../js/jquery.min.js" ></script>
@@ -54,65 +44,44 @@
 		<script src="../../js/common.js" ></script>
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
 		<script>
-				var salesDetailVue=new Vue({
-					el:'#statementDetail',
+				summerready=function(){
+					payTableDetailVue.PAYLIST_CODE=summer.pageParam.PAYLIST_CODE;
+					payTableDetailVue.CLIENT_NAME=summer.pageParam.CLIENT_NAME;
+					payTableDetailVue.CLIENT_CODE=summer.pageParam.CLIENT_CODE;
+					payTableDetailVue.getData();
+				}
+				var payTableDetailVue=new Vue({
+					el:'#payTableDetail',
 					data:function(){
 						return{
-							name:'张六',
-							number:'2016-VO3242',
-							startDate:"",
-							endDate:"",
-							startdata:new Date("1990-01-01"),
-							enddata:new Date(),
-							state:'',
-							pickerValue:'',
-							count:1,
-              list:[
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'},
-                {money:'4015.87',hasMoney:"3221.96",rateMoney:'774.15',lastMoney:'1263.93'}
-              ]
+							PAYLIST_CODE:'',
+							CLIENT_NAME:'',
+							CLIENT_CODE:'',
+              res:{
+								map3:{},
+								list:[]
+							}
 						}
 					},
 					methods:{
-						handleConfirm:function(value){
-							this.pickerValue=value;
-							console.log(value);
-							if(this.state=='start'){
-								this.startDate=getFormatDate(value)
-							}else if(this.state=='end'){
-								this.endDate=getFormatDate(value)
-							}
-							function getFormatDate(date){
-								var date=new Date(date), seperator1 = "-";
-								var year = date.getFullYear(), month = date.getMonth() + 1, strDate = date.getDate();
-								if (month >= 1 && month <= 9) {
-									month = "0" + month;
+						getData:function(){
+							var _this=this
+							summer.showProgress();
+							ajaxRequest({
+								type:"POST",
+								url:'appservice/custaccdetail/getsigleinfo',
+								param:{
+									PAYLIST_CODE:_this.PAYLIST_CODE
 								}
-								if (strDate >= 0 && strDate <= 9) {
-									strDate = "0" + strDate;
-								}
-							 return  year +'年' + month +'月'+ strDate;
-						 }
-						},
-						openPicker:function(val) {
-							this.state=val
-							if(this.count=='1'){
-								this.handleConfirm(new Date());
-								this.count=0;
-							}
-							// if(val=='start'){
-							// 	if(this.endDate){this.enddata=new Date(this.endDate)}
-							// }else if (val=='end') {
-							// 	if(this.startDate){this.startdata=new Date(this.startDate)}
-							// }
-							this.$refs.picker.open();
-						},
+							},function (res) {
+								console.log(JSON.stringify(res));
+								summer.hideProgress();
+								_this.res=res.data.datas
+							},function(err){
+								summer.hideProgress();
+								console.log(err);
+							})
+						}
 					}
 				});
 		</script>
