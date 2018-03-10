@@ -153,11 +153,12 @@
 				getData: function () {
 					var _this = this
 					summer.showProgress();
+					var payId=_this.PAY_ID;
 					ajaxRequest({
 						type: "POST",
 						url: 'appservice/paytable/paytableinfo',
 						param: {
-							PAY_ID: _this.PAY_ID
+							PAY_ID: payId
 						}
 					}, function (res) {
 						console.log(JSON.stringify(res));
