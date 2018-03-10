@@ -21,7 +21,7 @@
         <div class="um-content">
             <div id="content"></div>
             <ul class="bankCardList">
-                <li v-for="(k, index) in items">
+                <li v-for="(k, index) in items" @click = "chooseBank(k.ID,k.BK_NM)">
                     <div class="l-con">
                         <span>
                             <img src="" alt="">
@@ -47,7 +47,11 @@
         var bankList = new Vue({
             el: "#index",
             data: {
-                items: []
+                items: [],
+                // 是否可以点选银行卡
+                chouldChoose: false,
+                // 已绑定好的ID
+                BANK_ID: ""
             },
             methods: {
                 addBank: function () {
@@ -77,7 +81,7 @@
 						}
                     });
                 },
-                manage: function () {
+                manage: function (BANK_ID,BK_NM,btnActive,getBankInfo,alreadyChoose) {
                     summer.openWin({
                         id: 'bindBankCard',
                         url: 'html/stock/bankManage.html',
@@ -93,8 +97,30 @@
                                 text: "返回",
                                 textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
                             }
-                        }
+                        },
+						pageParam: {
+                            EMPLOYEE_ID: summer.pageParam.EMPLOYEE_ID,
+                            CLIENT_NAME: summer.pageParam.NAME,
+                            CLIENT_PHONE: summer.pageParam.PHONE,
+                            BANK_ID: BANK_ID ? BANK_ID : "",
+                            BK_NM: BK_NM ? BK_NM : "选择扣款银行",
+                            btnActive: btnActive ? btnActive : false,
+                            getBankInfo: (getBankInfo === "false") ? false : true,
+                            alreadyChoose: alreadyChoose ? alreadyChoose : false
+						}
                     });
+                },
+                chooseBank: function (BANK_ID,BK_NM) {
+                    if (this.chouldChoose) {
+                        if (this.BANK_ID == BANK_ID) {
+                            // 已经绑定过了
+                            this.manage(BANK_ID,BK_NM,true,"false",true);
+                        } else {
+                            // 未绑定
+                            this.manage(BANK_ID,BK_NM,true,"false",false);
+                        }
+                        this.chouldChoose = false;
+                    }
                 }
             }
         });
@@ -137,6 +163,11 @@
                 });
                 console.log(err);
             });
+        };
+        // 设置为可以点选银行卡（代扣页面执行）
+        function couldChooseBank (BANK_ID) {
+            bankList.chouldChoose = true;
+            bankList.BANK_ID = BANK_ID;
         };
         summerready = function () {
 			showBankList();
