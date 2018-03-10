@@ -1,0 +1,97 @@
+html,body{
+    background: #f6f6f6;
+}
+.item {
+    height: 0.92rem;
+    border-top: 1px solid rgb(239, 239, 239);
+    border-bottom: 1px solid rgb(239, 239, 239);
+    background: #fff;
+    margin: 0.2rem 0 0.4rem 0;
+    box-sizing: content-box;
+    padding: 0 0.2rem;
+}
+.item-l{
+    float: left;
+    height: 0.92rem;
+    line-height: 0.92rem;
+    font-size: 0.28rem;
+    color: #333;
+}
+.item-r{
+    float: right;
+    height: 0.92rem;
+    color: #dbdbdb;
+}
+.item-r>span,.item-r>i{
+    float: right;
+    height: 0.92rem;
+    line-height: 0.92rem;
+    font-size: 0.28rem;
+}
+.item-r>.active{
+    color: #F44336;
+}
+.item-r>.bankActive{
+    color: #333;
+}
+.agreement{
+    width: 5.8rem;
+    height: 0.4rem;
+    padding-left: 0.18rem;
+    margin-bottom: 1.2rem;
+}
+.gou{
+    float: left;
+    margin-right: 0.1rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    border-radius: 0.2rem;
+    overflow: hidden;
+}
+.gouBorderNone{
+    border: 0;
+}
+.gou>i{
+    float: left;
+    width: 0.36rem;
+    height: 0.36rem;
+    border-radius: 0.18rem;
+    background: #039be5;
+    font-size: 0.24rem;
+    color: #fff;
+    text-align: center;
+    line-height: 0.36rem;
+}
+.iNone{
+    display: none;
+}
+.txt,.agreement>b{
+    float: left;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    color: #262626;
+    font-size: 0.28rem;
+}
+.agreement>b{
+    font-weight: normal;
+    color: #039be5;
+}
+.bindBtn{
+    width: 7rem;
+    height: 0.9rem;
+    border-radius: 0.08rem;
+    line-height: 0.9rem;
+    text-align: center;
+    font-size: 0.32rem;
+    transform: translate(-50%);
+    margin-left: 50%;
+    color: #fff;
+}
+.btnActive{
+    background: #039be5;
+}
+.btnDisabled{
+    background: #9e9e9e;
+}
