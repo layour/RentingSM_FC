@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="bankManage.css">
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body>
+    <div class="um-win" id="index">
+        <div class="um-content">
+            <div class="item">
+                <div class="item-l">自动扣款</div>
+                <div class="item-r">
+                    <span v-bind:class="paymentTextStyle">{{ paymentText }}</span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-l">扣款银行</div>
+                <div class="item-r" @click = "openBankList">
+                    <i class="iconfont icon-enter"></i>
+                    <span v-bind:class="bankTextStyle">{{ bankText }}</span>
+                </div>
+            </div>
+            <div class="agreement">
+                <span class="gou" v-bind:class="gouStyle" @click="checkAgreement">
+                    <i class="iconfont icon-yes" v-bind:class="iStyle"></i>
+                </span>
+                <span class="txt" @click="checkAgreement">我已阅读并同意</span>
+                <b @click="seeAgreement">《自动还款用户协议》</b>
+            </div>
+            <div v-bind:class="btnStyle" @click="btnClick">{{ btnText }}</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var bankManage = new Vue({
+            el: "#index",
+            data: {
+                // 银行内容
+                bankText: "选择扣款银行",
+                // 协议打勾
+                checkedAgreement: false,
+                // 按钮内容
+                btnText: "确认自动还款",
+                // 按钮可点击（默认false）
+                btnShouldClick: false,
+                // 自动代扣银行卡信息
+                bankCardDatas:{
+                    "CARD_TYPE": "",
+                    "BK_NM": "",
+                    "ACC_NO": "",
+                    "IS_AUTO": "",
+                    // 已经绑定的银行卡ID
+                    "BANK_ID": ""
+                },
+                // 客户ID
+                EMPLOYEE_ID: "",
+                // 客户姓名
+                CLIENT_NAME: "",
+                // 客户电话
+                CLIENT_PHONE: "",
+                // 银行ID
+                BANK_ID: ""
+            },
+            computed: {
+                gouStyle: function () {
+                    return {
+                        gouBorderNone: this.checkedAgreement
+                    }
+                },
+                iStyle: function () {
+                    return {
+                        iNone: !this.checkedAgreement
+                    }
+                },
+                btnStyle: function () {
+                    return {
+                        bindBtn: true,
+                        btnActive: this.btnShouldClick,
+                        btnDisabled: !this.btnShouldClick
+                    }
+                },
+                paymentTextStyle: function () {
+                    return {
+                        active: this.bankCardDatas.IS_AUTO
+                    }
+                },
+                paymentText: function () {
+                    if (this.bankCardDatas.IS_AUTO) {
+                        return "已开启";
+                    } else {
+                        return "未开启";
+                    }
+                },
+                bankTextStyle: function () {
+                    return {
+                        bankActive: this.bankText != "选择扣款银行"
+                    }
+                }
+            },
+            methods: {
+                // 点击同意协议
+                checkAgreement: function () {
+                    this.checkedAgreement = !this.checkedAgreement
+                },
+                // 查看协议
+                seeAgreement: function () {
+                    console.log("查看协议");
+                },
+                // 点击按钮
+                btnClick: function () {
+                    var This = this;
+                    if (this.btnShouldClick && this.btnText == "确认自动还款") {
+                        if (!this.checkedAgreement) {
+                            summer.toast({
+                                msg: "请阅读并同意《自动还款用户协议》"
+                            });
+                            return;    
+                        }
+                        // 开启代扣
+                        summer.showProgress();
+                        ajaxRequest({
+                            type: 'post',
+                            url: 'appservice/customer/autocharge',
+                            param: {
+                                "EMPLOYEE_ID": This.EMPLOYEE_ID,
+                                "CLIENT_NAME": This.NAME,
+                                "CLIENT_PHONE": This.PHONE,
+                                "BANK_ID": This.BANK_ID,
+                                "IS_AUTO": "1"
+                            }
+                        }, function (res) {
+                            summer.hideProgress();
+                            var Data;
+                            if (Object.prototype.toString.call(res.data) === '[object String]') {
+                                Data = JSON.parse(res.data);
+                            } else {
+                                Data = res.data;
+                            }
+                            if (Data.flag == 1) {
+                                // 开启成功，重新请求数据刷新页面
+                                getBankInfo();
+                            }
+                        }, function (err) {
+                            summer.hideProgress();
+                            summer.toast({
+                                msg: "开启自动代扣失败"
+                            });
+                            console.log(err);
+                        });
+                    } else if (this.btnShouldClick && this.btnText == "关闭自动还款") {
+                        if (!this.checkedAgreement) {
+                            summer.toast({
+                                msg: "请阅读并同意《自动还款用户协议》"
+                            });
+                            return;    
+                        }
+                        // 关闭代扣
+                        summer.showProgress();
+                        ajaxRequest({
+                            type: 'post',
+                            url: 'appservice/customer/autocharge',
+                            param: {
+                                "EMPLOYEE_ID": This.EMPLOYEE_ID,
+                                "CLIENT_NAME": This.NAME,
+                                "CLIENT_PHONE": This.PHONE,
+                                "BANK_ID": This.BANK_ID,
+                                "IS_AUTO": "0"
+                            }
+                        }, function (res) {
+                            summer.hideProgress();
+                            var Data;
+                            if (Object.prototype.toString.call(res.data) === '[object String]') {
+                                Data = JSON.parse(res.data);
+                            } else {
+                                Data = res.data;
+                            }
+                            if (Data.flag == 1) {
+                                // 关闭成功，重新请求数据刷新页面
+                                getBankInfo();
+                            }
+                        }, function (err) {
+                            summer.hideProgress();
+                            summer.toast({
+                                msg: "开启自动代扣失败"
+                            });
+                            console.log(err);
+                        });
+                    }
+                },
+                // 打开银行卡列表页
+                openBankList: function () {
+                    var This = this;
+                    summer.execScript({
+                        winId: 'addBankCard',
+                        script: "couldChooseBank('"+ This.bankCardDatas.BANK_ID +"')"
+                    });
+                    summer.closeWin();
+                }
+            }
+        });
+        function getBankInfo () {
+            // 获取自动代扣银行信息
+            summer.showProgress();
+                ajaxRequest({
+                    type: 'post',
+                    url: 'appservice/customer/findAutocharge',
+                    param: {
+                        "EMPLOYEE_ID": summer.pageParam.EMPLOYEE_ID
+                    }
+                }, function (res) {
+                    summer.hideProgress();
+                    var Data;
+                    if (Object.prototype.toString.call(res.data) === '[object String]') {
+                        Data = JSON.parse(res.data);
+                    } else {
+                        Data = res.data;
+                    }
+                    if (Data.flag == 1) {
+                        if (Data.datas) {
+                            // 有绑定
+                            bankManage.bankCardDatas = Data.datas;
+                            bankManage.BANK_ID = Data.datas.BANK_ID;
+                            bankManage.bankText = Data.datas.BK_NM;
+                            bankManage.checkedAgreement = false;
+                            bankManage.btnShouldClick = true;
+                            bankManage.btnText = "关闭自动还款"
+                        } else {
+                            // 无绑定
+                            bankManage.bankCardDatas = {
+                                "CARD_TYPE": "",
+                                "BK_NM": "",
+                                "ACC_NO": "",
+                                "IS_AUTO": "",
+                                // 已经绑定的银行卡ID
+                                "BANK_ID": ""
+                            };
+                            bankManage.BANK_ID = "";
+                            bankManage.bankText = "选择扣款银行";
+                            bankManage.checkedAgreement = false;
+                            bankManage.btnShouldClick = false;
+                            bankManage.btnText = "确认自动还款"
+                        }
+                    }
+                }, function (err) {
+                    summer.hideProgress();
+                    summer.toast({
+                        msg: "暂无数据"
+                    });
+                    console.log(err);
+                });
+        };
+        summerready = function () {
+            // 绑定数据
+            bankManage.EMPLOYEE_ID = summer.pageParam.EMPLOYEE_ID;
+            bankManage.CLIENT_NAME = summer.pageParam.CLIENT_NAME;
+            bankManage.CLIENT_PHONE = summer.pageParam.CLIENT_PHONE;
+            bankManage.BANK_ID = summer.pageParam.BANK_ID;
+            bankManage.bankText = summer.pageParam.BK_NM;
+            if (summer.pageParam.alreadyChoose) {
+                bankManage.btnShouldClick = true;
+                bankManage.btnText = "关闭自动还款"
+                bankManage.bankCardDatas.IS_AUTO = "1";
+            } else {
+                bankManage.btnShouldClick = summer.pageParam.btnActive;
+                bankManage.bankCardDatas.IS_AUTO = "";
+            }
+            if (summer.pageParam.getBankInfo) {
+                getBankInfo();
+            }
+        };
+    </script>
+</body>
+
+</html>

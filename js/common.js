@@ -93,7 +93,7 @@ function ajaxRequest(paramObj, successCallback, errorCallback) {
 	}
 	//设置超时
 	window.cordovaHTTP.settings = {
-		timeout : 5000
+		timeout : 120000
 	};
 	if (userId()) {
 		paramData = paramObj.param;

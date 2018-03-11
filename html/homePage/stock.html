@@ -45,7 +45,7 @@
 			<!-- 底部弹层 -->
 			<div v-bind:class="choosePayMethodStyle" @click = "cancelBubble">
 				<div class="headBar">
-					<span class="iconfont icon-wrong1" @click="closeMask"></span>
+					<span v-bind:class="[codePass ? 'notShowIt' : 'iconfont icon-wrong1']" @click="closeMask"></span>
 					<div v-bind:class="[isTestPhNum ? 'notShowIt' : '']">选择付款方式</div>
 					<div v-bind:class="[isTestPhNum ? '' : 'notShowIt']">手机号验证 {{TEL_PHONE}}</div>
 				</div>
@@ -269,6 +269,9 @@
 				},
 				// 关闭遮罩层
 				closeMask:function (){
+                    if (this.codePass) {
+                        return;
+                    }
 					this.mask = false;
 				},
 				// 选择银行
@@ -319,7 +322,7 @@
                                     type: 'post',
                                     url: 'appservice/fund/xlGenPayMoney',
                                     param: {
-                                        TRANS_AMT: This.TOTAL,
+                                        TRANS_AMT: String(This.TOTAL),
                                         EMPLOYEE_ID: This.EMPLOYEE_ID,
                                         BANK_ID: This.bankId,
                                         CLIENT_NAME: This.NAME,
@@ -342,6 +345,7 @@
                                         // 弹层延时消失，刷新页面
                                         setTimeout(function () { 
                                             This.mask = false;
+                                            This.codePass = false;
                                         },1500);
                                         This.TOTAL = 0;
                                         This.total = "0.00";
@@ -457,13 +461,13 @@
 								method:"",//返回按钮自定义事件
 								text:"返回",
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-							},
+							}/* ,
 							rightItems: [{
 								type: "text",
 								text: "管理",
 								textColor: "#ffffff",
-								method: ""
-							}]
+								method: "bankList.manage()"
+							}] */
 						},
 						pageParam: {
 							// 客户ID
@@ -658,8 +662,8 @@
             stock.TEL_PHONE = "13936778297"; */
 
             // 自己（方便测试）
-            /* stock.EMPLOYEE_ID = 165178556;
-			stock.NAME = "白从文";
+            /* stock.EMPLOYEE_ID = 165183301;
+			stock.NAME = "张运银";
             stock.TEL_PHONE = "15040570501"; */
             
 

@@ -1,129 +1,185 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="../../css/mint.css">
-		<link rel="stylesheet" href="./index.min.css">
-	</head>
-	<body>
-		<div class="um-win" id="payTableDetail">
-			<div class="um-content payTableDetail">
-				<ul>
-          <li class="title"><span></span>基本信息</li>
-          <li>客户姓名 <span class="fr">{{res.RENTHEAD.NAME}}</span></li>
-          <li>支付表编号 <span class="fr">{{res.RENTHEAD.PAYLIST_CODE}}</span></li>
-          <li>项目编号 <span class="fr">{{res.RENTHEAD.PRO_CODE}}</span></li>
-          <li>客户经理 <span class="fr">{{res.RENTHEAD.CLERK_NAME}}</span></li>
-          <li>项目名称 <span class="fr">{{res.RENTHEAD.PRO_NAME}}</span></li>
-          <li>业务类型 <span class="fr">{{res.RENTHEAD.PLATFORM_TYPE}}</span></li>
-				</ul>
-        <ul>
-          <li class="title"><span></span>车辆信息</li>
-					<template v-for="(it,i) in res.PROEQULIST">
-	          <li>厂商 <span class="fr">{{it.COMPANY_NAME}}</span></li>
-	          <li>供应商 <span class="fr">{{it.SUPPLIERS_NAME}}</span></li>
-	          <li>设备名称 <span class="fr">{{it.PRODUCT_NAME}}</span></li>
-	          <li>型号 <span class="fr">{{it.SPEC_NAME}}</span></li>
-	          <li>单价 <span class="fr">&yen;{{it.ACTUAL_PRICE}}</span></li>
-	          <li>数量 <span class="fr">{{it.AMOUNT}}</span></li>
-					</template>
-        </ul>
-        <ul>
-          <li class="title"><span></span>报价方案</li>
-          <li>方案名称 <span class="fr">{{res.RENTHEAD.SCHEME_NAME}}</span></li>
-          <li>设备总价值 <span class="fr">&yen;{{res.RENTHEAD.LEASE_TOPRIC}}</span></li>
-          <li>项目融资额 <span class="fr">&yen;{{res.RENTHEAD.TOPRIC_SUBFIRENT}}</span></li>
-          <li>租赁利率 <span class="fr">&yen;{{res.RENTHEAD.YEAR_INTEREST}}</span></li>
-          <li>租赁期数 <span class="fr">&yen;{{res.RENTHEAD.LEASE_TERM}}</span></li>
-          <li v-for="(v,i) in res.SCHEMELIST" :key="i">
-						{{v.KEY_NAME_ZN}} <span class="fr">
-							<template v-if="(String(v.KEY_NAME_ZN).indexOf('租金')>0 || String(v.KEY_NAME_ZN).indexOf('金额')>0)&&String(v.KEY_NAME_ZN).indexOf('租金比例')<0">&yen;</template>
-							{{v.VALUE_STR}}
-							<template v-if="String(v.KEY_NAME_ZN).indexOf('比例')>0">%</template>
-						</span>
-					</li>
-        </ul>
-				<ul>
-          <li class="title"><span></span>支付清单</li>
-					<li class="bgLi">其他费用</li>
-					<li v-for="(item,index) in res.OTHERFEElIST" :key="index">
-						{{item.ITEM_NAME}} <span class="fr">&yen;{{item.ITEM_MONEY}}</span>
-					</li>
 
-					<li class="bgLi">合计</li>
-					<li>租金 <span class="fr">&yen;{{(allZJ).toFixed(2)}}</span></li>
-					<li>本金 <span class="fr">&yen;{{allBJ.toFixed(2)}}</span></li>
-					<li>利息 <span class="fr">&yen;{{allLX.toFixed(2)}}</span></li>
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/mint.css">
+	<link rel="stylesheet" href="./index.min.css">
+</head>
 
-					<template v-for="(item,index) in res.detailList">
-						<li class="bgLi">期数{{item.PERIOD_NUM}}</li>
-						<li>租金: &yen;{{item.ZJ}} <span class="fr">本金: &yen;{{item.BJ}}</span></li>
-						<li>利息: &yen;{{item.LX}} <span class="fr">剩余本金: &yen;{{item.SYBJ}}</span></li>
-					</template>
-				</ul>
-			</div>
+<body>
+	<div class="um-win" id="payTableDetail">
+		<div class="um-content payTableDetail">
+			<ul>
+				<li class="title">
+					<span></span>基本信息</li>
+				<li>客户姓名
+					<span class="fr">{{res.RENTHEAD.NAME}}</span>
+				</li>
+				<li>支付表编号
+					<span class="fr">{{res.RENTHEAD.PAYLIST_CODE}}</span>
+				</li>
+				<li>项目编号
+					<span class="fr">{{res.RENTHEAD.PRO_CODE}}</span>
+				</li>
+				<li>客户经理
+					<span class="fr">{{res.RENTHEAD.CLERK_NAME}}</span>
+				</li>
+				<li>项目名称
+					<span class="fr">{{res.RENTHEAD.PRO_NAME}}</span>
+				</li>
+				<li>业务类型
+					<span class="fr">{{res.RENTHEAD.PLATFORM_TYPE}}</span>
+				</li>
+			</ul>
+			<ul>
+				<li class="title">
+					<span></span>车辆信息</li>
+				<template v-for="(it,i) in res.PROEQULIST">
+					<li>厂商
+						<span class="fr">{{it.COMPANY_NAME}}</span>
+					</li>
+					<li>供应商
+						<span class="fr">{{it.SUPPLIERS_NAME}}</span>
+					</li>
+					<li>设备名称
+						<span class="fr">{{it.PRODUCT_NAME}}</span>
+					</li>
+					<li>型号
+						<span class="fr">{{it.SPEC_NAME}}</span>
+					</li>
+					<li>单价
+						<span class="fr">&yen;{{it.ACTUAL_PRICE}}</span>
+					</li>
+					<li>数量
+						<span class="fr">{{it.AMOUNT}}</span>
+					</li>
+				</template>
+			</ul>
+			<ul>
+				<li class="title">
+					<span></span>报价方案</li>
+				<li>方案名称
+					<span class="fr">{{res.RENTHEAD.SCHEME_NAME}}</span>
+				</li>
+				<li>设备总价值
+					<span class="fr">&yen;{{res.RENTHEAD.LEASE_TOPRIC}}</span>
+				</li>
+				<li>项目融资额
+					<span class="fr">&yen;{{res.RENTHEAD.TOPRIC_SUBFIRENT}}</span>
+				</li>
+				<li>租赁利率
+					<span class="fr">&yen;{{res.RENTHEAD.YEAR_INTEREST}}</span>
+				</li>
+				<li>租赁期数
+					<span class="fr">&yen;{{res.RENTHEAD.LEASE_TERM}}</span>
+				</li>
+				<li v-for="(v,i) in res.SCHEMELIST" :key="i">
+					{{v.KEY_NAME_ZN}}
+					<span class="fr">
+						<template v-if="(String(v.KEY_NAME_ZN).indexOf('租金')>0 || String(v.KEY_NAME_ZN).indexOf('金额')>0)&&String(v.KEY_NAME_ZN).indexOf('租金比例')<0">&yen;</template>
+						{{v.VALUE_STR}}
+						<template v-if="String(v.KEY_NAME_ZN).indexOf('比例')>0">%</template>
+					</span>
+				</li>
+			</ul>
+			<ul>
+				<li class="title">
+					<span></span>支付清单</li>
+				<li class="bgLi">其他费用</li>
+				<li v-for="(item,index) in res.OTHERFEElIST" :key="index">
+					{{item.ITEM_NAME}}
+					<span class="fr">&yen;{{item.ITEM_MONEY}}</span>
+				</li>
+
+				<li class="bgLi">合计</li>
+				<li>租金
+					<span class="fr">&yen;{{(allZJ).toFixed(2)}}</span>
+				</li>
+				<li>本金
+					<span class="fr">&yen;{{allBJ.toFixed(2)}}</span>
+				</li>
+				<li>利息
+					<span class="fr">&yen;{{allLX.toFixed(2)}}</span>
+				</li>
+
+				<template v-for="(item,index) in res.detailList">
+					<li class="bgLi">期数{{item.PERIOD_NUM}}</li>
+					<li>租金: &yen;{{item.ZJ}}
+						<span class="fr">本金: &yen;{{item.BJ}}</span>
+					</li>
+					<li>利息: &yen;{{item.LX}}
+						<span class="fr">剩余本金: &yen;{{item.SYBJ}}</span>
+					</li>
+				</template>
+			</ul>
 		</div>
-		<script src="../../js/summer.js" ></script>
-		<script src="../../js/jquery.min.js" ></script>
-		<script src="../../js/font.js" ></script>
-		<script src="../../js/vue.js" ></script>
-		<script src="../../js/mint.js" ></script>
-		<script src="../../js/common.js" ></script>
-		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script>
-				summerready=function(){
-					payTableDetailVue.PAY_ID=summer.pageParam.PAY_ID
-					console.log(payTableDetailVue.PAY_ID);
-					payTableDetailVue.getData()
-				}
-				var payTableDetailVue=new Vue({
-					el:'#payTableDetail',
-					data:function(){
-						return{
-							PAY_ID:'',
-							allZJ:0,
-							allBJ:0,
-							allLX:0,
-              res:{
-								SCHEMELIST:{},
-								PROEQULIST:[],
-								detailList:[],
-								RENTHEAD:{},
-								OTHERFEElIST:[]
-							}
-						}
-					},
-					methods:{
-						getData:function(){
-							var _this=this
-							summer.showProgress();
-							ajaxRequest({
-								type:"POST",
-								url:'appservice/paytable/paytableinfo',
-								param:{
-									PAY_ID:_this.PAY_ID
-								}
-							},function (res) {
-								console.log(JSON.stringify(res));
-								summer.hideProgress();
-								_this.res=res.data.datas
-								for (var i = 0; i < _this.res.detailList.length; i++) {
-									_this.allZJ+=_this.res.detailList[i].ZJ
-									_this.allBJ+=_this.res.detailList[i].BJ
-									_this.allLX+=_this.res.detailList[i].LX
-								}
-
-							},function(err){
-								summer.hideProgress();
-								console.log(err);
-							})
-						}
+	</div>
+	<script src="../../js/summer.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/font.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/mint.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+	<script>
+		summerready = function () {
+			payTableDetailVue.PAY_ID = summer.pageParam.PAY_ID
+			console.log(payTableDetailVue.PAY_ID);
+			payTableDetailVue.getData()
+		}
+		var payTableDetailVue = new Vue({
+			el: '#payTableDetail',
+			data: function () {
+				return {
+					PAY_ID: '',
+					allZJ: 0,
+					allBJ: 0,
+					allLX: 0,
+					res: {
+						SCHEMELIST: {},
+						PROEQULIST: [],
+						detailList: [],
+						RENTHEAD: {},
+						OTHERFEElIST: []
 					}
-				});
-		</script>
-	</body>
+				}
+			},
+			methods: {
+				getData: function () {
+					var _this = this
+					summer.showProgress();
+					var payId=_this.PAY_ID;
+					ajaxRequest({
+						type: "POST",
+						url: 'appservice/paytable/paytableinfo',
+						param: {
+							PAY_ID: payId
+						}
+					}, function (res) {
+						console.log(JSON.stringify(res));
+						summer.hideProgress();
+						_this.res = res.data.datas;
+						//alert(JSON.stringify(res));
+
+						for (var i = 0; i < _this.res.detailList.length; i++) {
+							_this.allZJ += _this.res.detailList[i].ZJ
+							_this.allBJ += _this.res.detailList[i].BJ
+							_this.allLX += _this.res.detailList[i].LX
+						}
+
+					}, function (err) {
+						summer.hideProgress();
+						console.log(err);
+					})
+				}
+			}
+		});
+	</script>
+</body>
+
 </html>
