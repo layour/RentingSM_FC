@@ -128,7 +128,6 @@
                             return;    
                         }
                         // 开启代扣
-                        summer.showProgress();
                         ajaxRequest({
                             type: 'post',
                             url: 'appservice/customer/autocharge',
@@ -166,7 +165,6 @@
                             return;    
                         }
                         // 关闭代扣
-                        summer.showProgress();
                         ajaxRequest({
                             type: 'post',
                             url: 'appservice/customer/autocharge',
@@ -266,6 +264,7 @@
             bankManage.CLIENT_NAME = summer.pageParam.CLIENT_NAME;
             bankManage.CLIENT_PHONE = summer.pageParam.CLIENT_PHONE;
             bankManage.BANK_ID = summer.pageParam.BANK_ID;
+            bankManage.bankCardDatas.BANK_ID = summer.pageParam.bankCardDatasBANK_ID;
             bankManage.bankText = summer.pageParam.BK_NM;
             if (summer.pageParam.alreadyChoose) {
                 bankManage.btnShouldClick = true;

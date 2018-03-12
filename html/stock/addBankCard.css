@@ -61,13 +61,9 @@
     align-items: center;
     justify-content: center;
 }
-.bankCardList li .l-con span img{
-    display: block;
-    border: 0;
-    width: 0.62rem;
-    height: 0.62rem;
-    border-radius: 0.31rem;
-    overflow: hidden;
+.bankCardList li .l-con span i{
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.5);
 }
 .bankCardList li .r-con{
     padding-top: 0.44rem;
