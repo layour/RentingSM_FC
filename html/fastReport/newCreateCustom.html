@@ -397,7 +397,7 @@
 				ajaxCardMessage:function(args,path){
 					var _self=this;
 					summer.showProgress();
-					window.cordovaHTTP.settings={timeout:5000}; //设置5秒超时
+					//window.cordovaHTTP.settings={timeout:50000}; //设置5秒超时
 						var bTemp = args.replace(/(\n)+|(\r\n)+/g, "");
 						summer.ajax({
 							type : "post",
@@ -407,7 +407,7 @@
 							},
 						}, function(response) {
 							console.log(response);
-						//	alert("成功"+JSON.stringify(response));
+							//alert("成功"+JSON.stringify(response));
 							var cardMessage=JSON.parse(response.data).display;
 							_self.message.NAME = cardMessage.name;
 						_self.message.ID_CARD_NO = cardMessage.id_number;
@@ -451,8 +451,8 @@
 									summer.fileToBase64({
 										"filePath" : arg.savepath, //文件路径
 										"callback" : function(ret){
-											//alert("file转base64成功");
-											//alert(ret.result);
+											alert("file转base64成功");
+											alert(ret.result);
 											console.log(ret);
 											_self.ajaxCardMessage(ret.result,arg.savepath);
 										} 
