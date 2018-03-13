@@ -411,23 +411,11 @@
 							var cardMessage=JSON.parse(response.data).display;
 							_self.message.NAME = cardMessage.name;
 						_self.message.ID_CARD_NO = cardMessage.id_number;
-						function getFormatDate(date) {
-						var date = new Date(date),
-							seperator1 = "-";
-						var year = date.getFullYear(),
-							month = date.getMonth() + 1,
-							strDate = date.getDate();
-						if (month >= 1 && month <= 9) {
-							month = "0" + month;
-						}
-						if (strDate >= 0 && strDate <= 9) {
-							strDate = "0" + strDate;
-						}
-						return year +'-' +month +'-'+ strDate;
-					}
 						_self.message.SEX_NM = cardMessage.gender;
 						cardMessage.gender=="男"?_self.message.SEX="0":_self.message.SEX="1";
-						_self.message.BIRTHDAY = getFormatDate(cardMessage.birthday);
+						var cardM=cardMessage.birthday;
+						cardM=String(cardM.replace(/\./g, "-"));
+						_self.message.BIRTHDAY =cardM ;
 						_self.message.HOUSE_ADDRESS = cardMessage.address;
 						_self.cardUrl = path;
 						_self.cardShow = true;
@@ -451,8 +439,8 @@
 									summer.fileToBase64({
 										"filePath" : arg.savepath, //文件路径
 										"callback" : function(ret){
-											alert("file转base64成功");
-											alert(ret.result);
+											//alert("file转base64成功");
+											//alert(ret.result);
 											console.log(ret);
 											_self.ajaxCardMessage(ret.result,arg.savepath);
 										} 
