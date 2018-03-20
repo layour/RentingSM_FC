@@ -28,8 +28,9 @@
                     <div class="box">
                         <p class="p1">{{k.TASK_NAME}}</p>
                         <p class="p2">【{{k.ID}}】{{k.OP_CODE}}：{{k.OP_TYPE}}</p>
-                        <p class="p3">审批意见：{{k.MEMO}}</p>
-                        <p class="p4">{{k.OP_TIME}}</p>
+                        <p class="p3" v-if="!memoFlag">内部意见：{{k.MEMO ? k.MEMO : "无"}}</p>
+                        <p class="p4">外部意见：{{k.WMEMO ? k.WMEMO : "无"}}</p>
+                        <p class="p5">{{k.OP_TIME}}</p>
                     </div>
                 </li>
             </ul>
@@ -43,7 +44,10 @@
             </ul>
             <div v-bind:style="[KTYPE=='finished' ? {display:'none'} : {display:'block'}]">
                 <div class="text">
-                    <textarea class="text" placeholder="请输入审批意见" v-model="txt"></textarea>
+                    <textarea class="text" placeholder="请输入内部审批意见" v-model="txt"></textarea>
+                </div>
+                <div class="text">
+                    <textarea class="text" placeholder="请输入外部审批意见" v-model="txt_w"></textarea>
                 </div>
                 <div class="btns submitBtn um-box">
                     <span v-for="k in arr" class="um-bf1">
@@ -59,7 +63,8 @@
             var TASK_ID = summer.pageParam.TASK_ID;
             var KTYPE = summer.pageParam.KTYPE;
             var userinfo = summer.getStorage("userinfo");
-			missionDetail.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+            missionDetail.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+            missionDetail.EMPLOYEE_ID = userinfo.EMPLOYEE_ID ? userinfo.EMPLOYEE_ID : "";
             missionDetail.JBPM_ID = JBPM_ID;
             missionDetail.TASK_ID = TASK_ID;
             missionDetail.KTYPE = KTYPE;
@@ -68,11 +73,14 @@
         var missionDetail = new Vue({
             el: '#index',
             data: {
+                memoFlag: false,
                 ORG_ID: '',
+                EMPLOYEE_ID: '',
                 JBPM_ID: '',
                 TASK_ID: '',
                 KTYPE: '',
                 txt: "",
+                txt_w: "",
                 items: '',
                 arr: '' /* [{"nodeName_":'提交',"toNode_":"下一步"},{"nodeName_":'提交2',"toNode_":"下一步2"} ,{"nodeName_":'提交3',"toNode_":"下一步3"}]*/
             },
@@ -93,7 +101,8 @@
                             summer.hideProgress();
                             if (res.data.flag == 1) {
                                 self.items = res.data.datas.jbpmMemoModel;
-                                self.arr = res.data.datas.flowNodes
+                                self.arr = res.data.datas.flowNodes;
+                                self.memoFlag = res.data.datas.memoFlag;
                                 console.log(res);
                             }
                         }, function (err) {
@@ -115,8 +124,11 @@
                             "JBPM_ID": self.JBPM_ID,
                             "TASK_ID": self.TASK_ID,
                             "MEMO": self.txt,
+                            "EMPLOYEE_ID": self.EMPLOYEE_ID,
                             "nodeName_": nodeName_,
-                            "toNode_": toNode_
+                            "toNode_": toNode_,
+                            "WMEMO": self.txt_w,
+                            "ORG_ID": self.ORG_ID
                         }
                     }, function (res) {
                         summer.hideProgress();
