@@ -78,14 +78,16 @@
           },
 					methods:{
 						getPriceList:function(){
+							summer.showProgress()
 							var self = this;
 									ajaxRequest({
 										type: 'post',
 										url: 'appservice/foundproject/toAddProjectScheme',
-										param: {}
+										param: {PROJECT_ID:self.projectId}
 									}, function(res) {
 										 console.log(res);
 										 self.quotedPriceList=res.data.datas;
+										 summer.hideProgress()
 									}, function(err) {
 										//alert(err);
 										console.log(err);
