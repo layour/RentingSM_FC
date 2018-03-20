@@ -4,6 +4,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
 	<title></title>
 	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
 	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
@@ -251,22 +252,10 @@
 
 						_self.message.spoustObj.SPOUST_NAME = cardMessage.name;
 						_self.message.spoustObj.SPOUST_ID_CARD_NO = cardMessage.id_number;
-						function getFormatDate(date) {
-							var date = new Date(date),
-								seperator1 = "-";
-							var year = date.getFullYear(),
-								month = date.getMonth() + 1,
-								strDate = date.getDate();
-							if (month >= 1 && month <= 9) {
-								month = "0" + month;
-							}
-							if (strDate >= 0 && strDate <= 9) {
-								strDate = "0" + strDate;
-							}
-							return year +'-' +month +'-'+ strDate;
-						}
 						_self.message.spoustObj.SPOUST_SEX_NM = cardMessage.gender;
-						_self.message.spoustObj.SPOUST_BIRTHDAY = getFormatDate(cardMessage.birthday);
+						var cardM=cardMessage.birthday;
+						cardM=String(cardM.replace(/\./g, "-"));
+						_self.message.spoustObj.SPOUST_BIRTHDAY =cardM ;
 						_self.message.spoustObj.SPOUST_HOUSR_RE_ADDRESS = cardMessage.address;
 						_self.cardUrl = path;
 						_self.cardShow = true;

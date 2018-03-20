@@ -128,14 +128,13 @@
                             return;    
                         }
                         // 开启代扣
-                        summer.showProgress();
                         ajaxRequest({
                             type: 'post',
                             url: 'appservice/customer/autocharge',
                             param: {
                                 "EMPLOYEE_ID": This.EMPLOYEE_ID,
-                                "CLIENT_NAME": This.NAME,
-                                "CLIENT_PHONE": This.PHONE,
+                                "CLIENT_NAME": This.CLIENT_NAME,
+                                "CLIENT_PHONE": This.CLIENT_PHONE,
                                 "BANK_ID": This.BANK_ID,
                                 "IS_AUTO": "1"
                             }
@@ -166,14 +165,13 @@
                             return;    
                         }
                         // 关闭代扣
-                        summer.showProgress();
                         ajaxRequest({
                             type: 'post',
                             url: 'appservice/customer/autocharge',
                             param: {
                                 "EMPLOYEE_ID": This.EMPLOYEE_ID,
-                                "CLIENT_NAME": This.NAME,
-                                "CLIENT_PHONE": This.PHONE,
+                                "CLIENT_NAME": This.CLIENT_NAME,
+                                "CLIENT_PHONE": This.CLIENT_PHONE,
                                 "BANK_ID": This.BANK_ID,
                                 "IS_AUTO": "0"
                             }
@@ -266,6 +264,7 @@
             bankManage.CLIENT_NAME = summer.pageParam.CLIENT_NAME;
             bankManage.CLIENT_PHONE = summer.pageParam.CLIENT_PHONE;
             bankManage.BANK_ID = summer.pageParam.BANK_ID;
+            bankManage.bankCardDatas.BANK_ID = summer.pageParam.bankCardDatasBANK_ID;
             bankManage.bankText = summer.pageParam.BK_NM;
             if (summer.pageParam.alreadyChoose) {
                 bankManage.btnShouldClick = true;

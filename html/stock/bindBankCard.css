@@ -93,15 +93,15 @@ h3>span {
     font-size: 0.28rem;
 }
 
-.items:nth-of-type(3) {
+/* .items:nth-of-type(3) {
     margin-bottom: 0.2rem;
-}
+} */
 
-.items:nth-of-type(4)>input {
+.items:nth-of-type(3)>input {
     width: 4.48rem;
 }
 
-.items:nth-of-type(5)>input {
+.items:nth-of-type(4)>input {
     width: 2.24rem;
     margin-right: 0.84rem;
 }

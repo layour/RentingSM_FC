@@ -24,7 +24,8 @@
                 <li v-for="(k, index) in items" @click = "chooseBank(k.ID,k.BK_NM)">
                     <div class="l-con">
                         <span>
-                            <img src="" alt="">
+                            <!-- <i class="iconfont icon-gongshangyinhang-"></i> -->
+                            <i v-bind:class="bankIcon(k.BK_NM)"></i>
                         </span>
                     </div>
                     <div class="r-con">
@@ -54,6 +55,35 @@
                 BANK_ID: ""
             },
             methods: {
+                bankIcon: function (BK_NM) {
+                    if (/中国银行/g.test(BK_NM)) {
+                        return "iconfont icon-zhongguoyinhang-"
+                    } else if (/工商银行/g.test(BK_NM)) {
+                        return "iconfont icon-gongshangyinhang-"
+                    } else if (/建设银行/g.test(BK_NM)) {
+                        return "iconfont icon-jiansheyinxing"
+                    } else if (/农业银行/g.test(BK_NM)) {
+                        return "iconfont icon-nongyeyinhang-"
+                    } else if (/交通银行/g.test(BK_NM)) {
+                        return "iconfont icon-jiaotongyinhang-"
+                    } else if (/招商银行/g.test(BK_NM)) {
+                        return "iconfont icon-zhaoshangyinhang-"
+                    } else if (/邮政/g.test(BK_NM)) {
+                        return "iconfont icon-youzhengyinhang-"
+                    } else if (/民生银行/g.test(BK_NM)) {
+                        return "iconfont icon-minshengyinxing"
+                    } else if (/浦发银行/g.test(BK_NM)) {
+                        return "iconfont icon-pufayinxing"
+                    } else if (/兴业银行/g.test(BK_NM)) {
+                        return "iconfont icon-changyonglogo05"
+                    } else if (/华夏银行/g.test(BK_NM)) {
+                        return "iconfont icon-huaxiayinhang-"
+                    } else if (/中信银行/g.test(BK_NM)) {
+                        return "iconfont icon-zhongxinyinhangbank1193438easyiconnet"
+                    } else {
+                        return "iconfont icon-yinxingqiarenzheng"
+                    }
+                },
                 addBank: function () {
                     summer.openWin({
                         id: 'bindBankCard',
@@ -81,7 +111,7 @@
 						}
                     });
                 },
-                manage: function (BANK_ID,BK_NM,btnActive,getBankInfo,alreadyChoose) {
+                manage: function (BANK_ID,BK_NM,btnActive,getBankInfo,alreadyChoose,bankCardDatasBANK_ID) {
                     summer.openWin({
                         id: 'bindBankCard',
                         url: 'html/stock/bankManage.html',
@@ -106,7 +136,8 @@
                             BK_NM: BK_NM ? BK_NM : "选择扣款银行",
                             btnActive: btnActive ? btnActive : false,
                             getBankInfo: (getBankInfo === "false") ? false : true,
-                            alreadyChoose: alreadyChoose ? alreadyChoose : false
+                            alreadyChoose: alreadyChoose ? alreadyChoose : false,
+                            bankCardDatasBANK_ID: bankCardDatasBANK_ID ? bankCardDatasBANK_ID : ""
 						}
                     });
                 },
@@ -114,10 +145,10 @@
                     if (this.chouldChoose) {
                         if (this.BANK_ID == BANK_ID) {
                             // 已经绑定过了
-                            this.manage(BANK_ID,BK_NM,true,"false",true);
+                            this.manage(BANK_ID,BK_NM,true,"false",true,this.BANK_ID);
                         } else {
                             // 未绑定
-                            this.manage(BANK_ID,BK_NM,true,"false",false);
+                            this.manage(BANK_ID,BK_NM,true,"false",false,this.BANK_ID);
                         }
                         this.chouldChoose = false;
                     }
