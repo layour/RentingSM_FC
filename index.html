@@ -163,6 +163,8 @@
 	</div>
 	<script>
 		summerready = function() {
+            var userinfo = summer.getStorage("userinfo");
+			fistPage.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			if (isLogin()) {
 				getMissionData(); //获取代办任务个数
 			}
@@ -194,7 +196,8 @@
 		var fistPage = new Vue({
 			el: '#win',
 			data: {
-				missionNum: ''
+                missionNum: '',
+                ORG_ID: ''
 			},
 			methods: {
 				getMissionData:function() {
@@ -202,7 +205,9 @@
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/bpmtask/myTaskCount',
-						param: {}
+						param: {
+                            "ORG_ID": self.ORG_ID
+                        }
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {

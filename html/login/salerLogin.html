@@ -83,8 +83,6 @@
 					"Content-Type": "application/json"
 				}
 			}, function (response) {
-				console.log(response);
-				summer.hideProgress();
 				var Data;
 				if (Object.prototype.toString.call(response.data) === '[object String]') {
 					Data = JSON.parse(response.data);
@@ -92,39 +90,66 @@
 					Data = response.data;
 				}
 				switch (Data.flag) {
-					case 1:
-						summer.toast({
-							msg: "登录成功"
-						});
-						var userData = Data.datas;
-						var userId = userData.EMPLOYEE_CODE;
-						var userName = userData.EMPLOYEE_NAME;
-						var JOB_NAME = userData.JOB_NAME;
-						var ORG_NAME = userData.ORG_NAME;
-						var EMPLOYEE_ID = userData.EMPLOYEE_ID;
-						var userinfo = {
-							userId: userId,
-							userName: userName,
-							JOB_NAME: JOB_NAME,
-							ORG_NAME: ORG_NAME,
-							EMPLOYEE_ID: EMPLOYEE_ID
-						};
-						summer.setStorage("userinfo", userinfo);
-						// 调用首页获取代办任务数量
-						summer.execScript({
-							winId: 'homePage',
-							script: "getMissionData()"
-						});
-						summer.closeToWin({
-							id: "homePage"
-						});
-						break;
-					case 0:
+                    case 1:
+                        var userData = Data.datas;
+                        var userId = userData.EMPLOYEE_CODE;
+                        var userName = userData.EMPLOYEE_NAME;
+                        var JOB_NAME = userData.JOB_NAME;
+                        var ORG_NAME = userData.ORG_NAME;
+                        var EMPLOYEE_ID = userData.EMPLOYEE_ID;
+                        var userinfo = {
+                            userId: userId,
+                            userName: userName,
+                            JOB_NAME: JOB_NAME,
+                            ORG_NAME: ORG_NAME,
+                            EMPLOYEE_ID: EMPLOYEE_ID
+                        };
+                        // 获取ORG_ID
+                        summer.ajax({
+                            type: "post",
+                            url: G_COMMON_URL + "appservice/login/chgOrgId",
+                            param: {
+                                "EMPLOYEE_ID": userinfo.EMPLOYEE_ID
+                            },
+                            header: {
+                                "Content-Type": "application/json"
+                            }
+                        }, function (response) {
+                            summer.hideProgress();
+                            var Data;
+                            if (Object.prototype.toString.call(response.data) === '[object String]') {
+                                Data = JSON.parse(response.data);
+                            } else {
+                                Data = response.data;
+                            }
+                            userinfo.ORG_ID = Data.datas.datas[0].ORG_ID;
+                            summer.setStorage("userinfo", userinfo);
+                            summer.toast({
+                                msg: "登录成功"
+                            });
+                            // 调用首页获取代办任务数量
+                            summer.execScript({
+                                winId: 'homePage',
+                                script: "getMissionData()"
+                            });
+                            summer.closeToWin({
+                                id: "homePage"
+                            });
+                        }, function (err) {
+                            summer.hideProgress();
+                            summer.toast({
+                                msg: "登录失败"
+                            });
+                        });
+                        break;
+                    case 0:
+                        summer.hideProgress();
 						summer.toast({
 							msg: "用户名或密码错误"
-						});
-						break;
-					default:
+                        });
+                        break;
+                    default:
+                        summer.hideProgress();
 						summer.toast({
 							msg: "登录失败"
 						});

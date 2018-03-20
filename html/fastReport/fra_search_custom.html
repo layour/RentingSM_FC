@@ -57,6 +57,8 @@
 	<script>
 		var _endNum = 1;
 		summerready = function() {
+            var userinfo = summer.getStorage("userinfo");
+			fra_total.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			//getData(1);
 			summer.setRefreshHeaderInfo({
 				visible: true,
@@ -95,7 +97,8 @@
 			data:function() {
 				return {
 					dataList: '',
-					searchValue: ''
+                    searchValue: '',
+                    ORG_ID: ''
 				}
 			},
 			methods: {
@@ -108,7 +111,8 @@
 							"pageNo":end,
 							"pageSize":10,
 							"SYSUSERFLAG":1,
-							"CLIENT_NAME": searchValue ? searchValue : ""
+                            "CLIENT_NAME": searchValue ? searchValue : "",
+                            "ORG_ID": self.ORG_ID
 						}
 					}, function(res) {
 						//alert(res);

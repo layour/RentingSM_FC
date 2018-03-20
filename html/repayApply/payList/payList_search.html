@@ -172,6 +172,8 @@
 		}
 	});
     function getData(pageNum,searchValue,bool) {
+        var userinfo = summer.getStorage("userinfo");
+		var ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
         if (bool) {
             all.resetData = true;
         }
@@ -185,7 +187,8 @@
                     "pageNo": pageNum,
                     "pageSize": 10,
                     "PSTATUS":"",
-                    "CR_BECR_NAME":searchValue ? searchValue : ""
+                    "CR_BECR_NAME":searchValue ? searchValue : "",
+                    "ORG_ID": ORG_ID
                 }
             }, function(res) {
                 summer.hideProgress();

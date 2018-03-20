@@ -1,217 +1,243 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
-		<link rel="stylesheet" href="../../css/mint.css">
-		<link rel="stylesheet" href="./index.min.css">
-	</head>
-	<body>
-		<div class="um-win" id="riskTrackContent" v-cloak>
-			<div class="riskTrackContent">
-				<ul v-if="stateVal=='repayment'">
-					<li v-for="(item,index) in payList" :key="index" @click="goDetail(item)">
-            <span class="ps">
-              <table>
-								<tr>
-									<td class="first">
-										<p class="first-child">{{item.NAME}}</p>
-									</td>
-									<td>
-										<span>{{item.BEGINNING_RECEIVE_DATA}}</span>
-									</td>
-									<td rowspan="2">  <i class="icon iconfont icon-enter"></i></td>
-	                </tr>
-									<tr>
-											<td class="first"><p>{{item.BEGINNING_NUM}}</p></td>
-											<td><p class="money">&yen;{{item.BEGINNING_MONEY}}</p></td>
-									</tr>
-              </table>
-            </span>
-					</li>
-				</ul>
-				<ul v-if="stateVal=='expected'">
-					<li v-for="(item,index) in expectedList" :key="index" @click="goMoney(item.PAYLIST_CODE)">
-            <span class="ps">
-              <table>
-                <tr>
-									<td class="first">
-										<p>{{item.CUST_NAME}}</p>
-									</td>
-									<td>
-										<span style="opacity:0;">金额</span>
-									</td>
-									<td rowspan="2">  <i class="icon iconfont icon-enter"></i></td>
-	                </tr>
-									<tr>
-											<td class="first"><p>逾期天数：{{item.PENALTY_DAY}}</p></td>
-											<td><p class="money">&yen;{{item.RENT_RECE_ALL}}</p></td>
-									</tr>
-              </table>
-            </span>
-					</li>
-				</ul>
-			</div>
-		</div>
-    <script src="../../js/summer.js" ></script>
-    <script src="../../js/jquery.min.js" ></script>
-    <script src="../../js/font.js" ></script>
-    <script src="../../js/vue.js" ></script>
-		<script src="../../js/common.js" ></script>
-    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
-		<script>
-				var riskTrackContentVue=new Vue({
-					el:'#riskTrackContent',
-					data:function(){
-						return{
-              expectedList:[],
-              payList:[],
-							stateVal:'repayment',
-							currentPage:1
 
-						}
-					},
-					methods:{
-						getData:function(){
-							var _this=this
-							console.log(JSON.stringify({
-								pageSize:5,
-								pageNo:_this.currentPage
-							}),this.currentPage);
-							summer.showProgress();
-							if(this.stateVal=="repayment"){
-								ajaxRequest({
-									type:"POST",
-									url:'appservice/risk/returnmoney',
-									param:{
-										pageSize:10,
-										pageNo:_this.currentPage
-									}
-								},function (res) {
-									console.log(JSON.stringify(res));
-									summer.hideProgress();
-									_this.payList=_this.payList.concat(res.data.datas.list)
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/mint.css">
+    <link rel="stylesheet" href="./index.min.css">
+</head>
 
-									if(!res.data.datas.hasNextPage){
-										summer.toast({msg:'没有更多了'})
-									}
-									_this.$nextTick(function(){
-		 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
-		 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
-		 			        })
-								},function(err){
-									summer.hideProgress();
-									console.log(err);
-								})
-              }else if (this.stateVal=="expected") {
-								ajaxRequest({
-									type:"POST",
-									url:'appservice/risk/overduerush',
-									param:{
-										pageSize:10,
-										pageNo:_this.currentPage
-									}
-								},function (res) {
-									console.log(JSON.stringify(res));
-									summer.hideProgress();
-									// if(_this.currentPage==1){
-										_this.expectedList=_this.expectedList.concat(res.data.datas.overduelist)
-									// }else{
-									// 	summer.toast({msg:'没有更多了'})
-									// }
-									_this.$nextTick(function(){
-		 						 	 summer.refreshHeaderLoadDone()//加载完成后调用方法恢复组件到默认状态
-		 			         summer.refreshFooterLoadDone();//加载完成后调用方法恢复组件到默认状态
-		 			        })
-								},function(err){
-									summer.hideProgress();
-									console.log(err);
-								})
-              }
+<body>
+    <div class="um-win" id="riskTrackContent" v-cloak>
+        <div class="riskTrackContent">
+            <ul v-if="stateVal=='repayment'">
+                <li v-for="(item,index) in payList" :key="index" @click="goDetail(item)">
+                    <span class="ps">
+                        <table>
+                            <tr>
+                                <td class="first">
+                                    <p class="first-child">{{item.NAME}}</p>
+                                </td>
+                                <td>
+                                    <span>{{item.BEGINNING_RECEIVE_DATA}}</span>
+                                </td>
+                                <td rowspan="2">
+                                    <i class="icon iconfont icon-enter"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="first">
+                                    <p>{{item.BEGINNING_NUM}}</p>
+                                </td>
+                                <td>
+                                    <p class="money">&yen;{{item.BEGINNING_MONEY}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </span>
+                </li>
+            </ul>
+            <ul v-if="stateVal=='expected'">
+                <li v-for="(item,index) in expectedList" :key="index" @click="goMoney(item.PAYLIST_CODE)">
+                    <span class="ps">
+                        <table>
+                            <tr>
+                                <td class="first">
+                                    <p>{{item.CUST_NAME}}</p>
+                                </td>
+                                <td>
+                                    <span style="opacity:0;">金额</span>
+                                </td>
+                                <td rowspan="2">
+                                    <i class="icon iconfont icon-enter"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="first">
+                                    <p>逾期天数：{{item.PENALTY_DAY}}</p>
+                                </td>
+                                <td>
+                                    <p class="money">&yen;{{item.RENT_RECE_ALL}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/font.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script>
+        var riskTrackContentVue = new Vue({
+            el: '#riskTrackContent',
+            data: function () {
+                return {
+                    expectedList: [],
+                    payList: [],
+                    stateVal: 'repayment',
+                    currentPage: 1,
+                    ORG_ID: ""
 
-						},
-            goDetail:function(data){
-              summer.openWin({
-                id:'payTableDetail',
-                url:'html/riskTracking/riskTrackingMsg.html',
-                create:false,
-                type:'actionBar',
-                pageParam:{data:JSON.stringify(data)},
-                actionBar: {
-                  title: "还款提醒",
-                  titleColor: "#ffffff",
-                  backgroundColor: "#039BE5",
-                  leftItem:{
-                      image: "img/back.png",
-                      method:'',
-                      text:"返回",
-                      textColor:"#ffffff"
-                  }
                 }
-              })
             },
-						goMoney:function(id){
-              summer.openWin({
-                id:'payTableDetail',
-                url:'html/riskTracking/riskTrackingMoney.html',
-                create:false,
-                type:'actionBar',
-                pageParam:{PAYLIST_CODE:id},
-                actionBar: {
-                  title: "逾期催收",
-                  titleColor: "#ffffff",
-                  backgroundColor: "#039BE5",
-                  leftItem:{
-                      image: "img/back.png",
-                      method:'',
-                      text:"返回",
-                      textColor:"#ffffff"
-                  }
-                }
-              })
-            }
-					}
-				});
-				function getData(val){
-					riskTrackContentVue.stateVal=val
-          riskTrackContentVue.currentPage=1
-					riskTrackContentVue.getData();
-				}
+            methods: {
+                getData: function () {
+                    var _this = this
+                    console.log(JSON.stringify({
+                        pageSize: 5,
+                        pageNo: _this.currentPage
+                    }), this.currentPage);
+                    summer.showProgress();
+                    if (this.stateVal == "repayment") {
+                        ajaxRequest({
+                            type: "POST",
+                            url: 'appservice/risk/returnmoney',
+                            param: {
+                                pageSize: 10,
+                                pageNo: _this.currentPage,
+                                ORG_ID: _this.ORG_ID
+                            }
+                        }, function (res) {
+                            console.log(JSON.stringify(res));
+                            summer.hideProgress();
+                            _this.payList = _this.payList.concat(res.data.datas.list)
 
-				summerready=function(){
-					getData('repayment');
-					summer.setRefreshHeaderInfo({
-						visible: true,
-						loadingImg: 'img/refresh.png',
-						bgColor: '#ffffff',
-						textColor: '#aaaaaa',
-						textDown: '下拉刷新...',
-						textUp: '松开刷新...',
-						showTime: true
-					}, function(ret, err) {
-						//通常在这里从服务器加载数据，t
-						riskTrackContentVue.currentPage=1;
-						riskTrackContentVue.payList=[]
-						riskTrackContentVue.expectedList=[]
-						riskTrackContentVue.getData();
-					});
-					summer.setRefreshFooterInfo({
-						visible: true,
-						loadingImg: 'img/refresh.png',
-						bgColor: '#ffffff',
-						textColor: '#aaaaaa',
-						textDown: '上拉刷新...',
-						textUp: '松开刷新...',
-						showTime: true
-					}, function(ret, err) {
-						//通常在这里从服务器加载数据，
-						riskTrackContentVue.currentPage+=1;
-						riskTrackContentVue.getData();
-					});
-				}
-		</script>
-	</body>
+                            if (!res.data.datas.hasNextPage) {
+                                summer.toast({
+                                    msg: '没有更多了'
+                                })
+                            }
+                            _this.$nextTick(function () {
+                                summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
+                                summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+                            })
+                        }, function (err) {
+                            summer.hideProgress();
+                            console.log(err);
+                        })
+                    } else if (this.stateVal == "expected") {
+                        ajaxRequest({
+                            type: "POST",
+                            url: 'appservice/risk/overduerush',
+                            param: {
+                                pageSize: 10,
+                                pageNo: _this.currentPage
+                            }
+                        }, function (res) {
+                            console.log(JSON.stringify(res));
+                            summer.hideProgress();
+                            // if(_this.currentPage==1){
+                            _this.expectedList = _this.expectedList.concat(res.data.datas.overduelist)
+                            // }else{
+                            // 	summer.toast({msg:'没有更多了'})
+                            // }
+                            _this.$nextTick(function () {
+                                summer.refreshHeaderLoadDone() //加载完成后调用方法恢复组件到默认状态
+                                summer.refreshFooterLoadDone(); //加载完成后调用方法恢复组件到默认状态
+                            })
+                        }, function (err) {
+                            summer.hideProgress();
+                            console.log(err);
+                        })
+                    }
+
+                },
+                goDetail: function (data) {
+                    summer.openWin({
+                        id: 'payTableDetail',
+                        url: 'html/riskTracking/riskTrackingMsg.html',
+                        create: false,
+                        type: 'actionBar',
+                        pageParam: {
+                            data: JSON.stringify(data)
+                        },
+                        actionBar: {
+                            title: "还款提醒",
+                            titleColor: "#ffffff",
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: '',
+                                text: "返回",
+                                textColor: "#ffffff"
+                            }
+                        }
+                    })
+                },
+                goMoney: function (id) {
+                    summer.openWin({
+                        id: 'payTableDetail',
+                        url: 'html/riskTracking/riskTrackingMoney.html',
+                        create: false,
+                        type: 'actionBar',
+                        pageParam: {
+                            PAYLIST_CODE: id
+                        },
+                        actionBar: {
+                            title: "逾期催收",
+                            titleColor: "#ffffff",
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: '',
+                                text: "返回",
+                                textColor: "#ffffff"
+                            }
+                        }
+                    })
+                }
+            }
+        });
+
+        function getData(val) {
+            riskTrackContentVue.stateVal = val
+            riskTrackContentVue.currentPage = 1
+            riskTrackContentVue.getData();
+        }
+
+        summerready = function () {
+            var userinfo = summer.getStorage("userinfo");
+            riskTrackContentVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+            getData('repayment');
+            summer.setRefreshHeaderInfo({
+                visible: true,
+                loadingImg: 'img/refresh.png',
+                bgColor: '#ffffff',
+                textColor: '#aaaaaa',
+                textDown: '下拉刷新...',
+                textUp: '松开刷新...',
+                showTime: true
+            }, function (ret, err) {
+                //通常在这里从服务器加载数据，t
+                riskTrackContentVue.currentPage = 1;
+                riskTrackContentVue.payList = []
+                riskTrackContentVue.expectedList = []
+                riskTrackContentVue.getData();
+            });
+            summer.setRefreshFooterInfo({
+                visible: true,
+                loadingImg: 'img/refresh.png',
+                bgColor: '#ffffff',
+                textColor: '#aaaaaa',
+                textDown: '上拉刷新...',
+                textUp: '松开刷新...',
+                showTime: true
+            }, function (ret, err) {
+                //通常在这里从服务器加载数据，
+                riskTrackContentVue.currentPage += 1;
+                riskTrackContentVue.getData();
+            });
+        }
+    </script>
+</body>
+
 </html>

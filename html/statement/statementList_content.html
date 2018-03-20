@@ -37,7 +37,8 @@
 						return{
 							list:[],
 							searchVal:'',
-							currentPage:1
+                            currentPage:1,
+                            ORG_ID: ""
 
 						}
 					},
@@ -59,7 +60,8 @@
 								param:{
 									pageNo:_this.currentPage,
 									pageSize:10,
-									content:_this.searchVal
+                                    content:_this.searchVal,
+                                    ORG_ID: _this.ORG_ID
 								}
 							},function(res){
 								console.log(JSON.stringify(res));
@@ -111,6 +113,8 @@
 					statementListVue.getData();
 				}
 				summerready=function(){
+                    var userinfo = summer.getStorage("userinfo");
+			        statementListVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 					statementListVue.getData();
 
 					summer.setRefreshHeaderInfo({

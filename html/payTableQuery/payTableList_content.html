@@ -41,13 +41,13 @@
 						return{
 							list:[],
 							searchVal:'',
-							currentPage:1
-
+							currentPage:1,
+                            ORG_ID: ""
 						}
 					},
 					methods:{
 						getData:function(){
-							var _this=this
+							var _this=this;
 							summer.showProgress();
 							ajaxRequest({
 								type:"POST",
@@ -55,7 +55,8 @@
 								param:{
 									pageNo:_this.currentPage,
 									pageSize:10,
-									RENTER_NAME:_this.searchVal
+                                    RENTER_NAME:_this.searchVal,
+                                    ORG_ID: _this.ORG_ID
 								}
 							},function(res){
 								console.log(JSON.stringify(res));
@@ -103,6 +104,8 @@
 					payTableListVue.getData();
 				}
 				summerready=function(){
+                    var userinfo = summer.getStorage("userinfo");
+			        payTableListVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 					payTableListVue.getData();
 					summer.setRefreshHeaderInfo({
 						visible: true,

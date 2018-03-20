@@ -76,6 +76,8 @@
 		}
 		var _endNum = 1;
 		summerready = function() {
+            var userinfo = summer.getStorage("userinfo");
+            fra_total.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			//getData(1);
 			summer.setRefreshHeaderInfo({
 				visible: true,
@@ -114,7 +116,8 @@
 			data:function() {
 				return {
 					dataList: '',
-					searchValue: ''
+                    searchValue: '',
+                    ORG_ID: ""
 				}
 			},
 			methods: {
@@ -128,7 +131,8 @@
 								"pageNo": end,
 								"pageSize": 10,
 								"STATUS": "",
-								"CR_BECR_NAME": searchValue ? searchValue : ""
+                                "CR_BECR_NAME": searchValue ? searchValue : "",
+                                "ORG_ID": self.ORG_ID
 							}
 						}, function(res) {
 							//alert(res);

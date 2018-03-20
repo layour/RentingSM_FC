@@ -120,6 +120,8 @@
 	<script>
 		var _endNum = 10;
 		summerready = function () {
+            var userinfo = summer.getStorage("userinfo");
+            fra_visitRecord.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			//getData(10)
 			fra_visitRecord.dataList = [{
 				name: "张三",
@@ -189,17 +191,20 @@
 			el: '#fra_visitRecord',
 			data:function() {
 				return {
-					dataList: ''
+                    dataList: '',
+                    ORG_ID: ''
 				}
 			},
 			methods: {
 				getData:function(end) {
+                    var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/promc/projectList',
 						param: {
 							"PAGE_BEGIN": "1",
-							"PAGE_END": end,
+                            "PAGE_END": end,
+                            "ORG_ID": self.ORG_ID
 						}
 					}, function (res) {
 						//alert(res);

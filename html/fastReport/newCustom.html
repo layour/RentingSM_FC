@@ -105,6 +105,8 @@
 	<script>
 		var _endNum=1;
 		summerready=function(){
+            var userinfo = summer.getStorage("userinfo");
+			newCustom.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			var pageSource=summer.pageParam.pageSource;
 			newCustom.pageSource=pageSource;
 			summer.showProgress();
@@ -152,7 +154,8 @@
 				return{
 					dataSource:"",
 					totalPage:'',
-					pageSource:''
+                    pageSource:'',
+                    ORG_ID: ''
 				}
 			},
 			methods:{
@@ -164,7 +167,8 @@
 					        param: {
 								    "pageNo":end,
 								    "pageSize":10,
-								    "SYSUSERFLAG":1
+                                    "SYSUSERFLAG":1,
+                                    "ORG_ID": self.ORG_ID
 					        }
 					    }, function (res) {
 					    	 summer.hideProgress();

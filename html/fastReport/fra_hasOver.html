@@ -69,6 +69,8 @@
 		}
 		var _endNum = 1;
 		summerready = function() {
+            var userinfo = summer.getStorage("userinfo");
+            fra_hasOver.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			getData(1, true)
 			summer.setRefreshHeaderInfo({
 				visible: true,
@@ -113,7 +115,8 @@
 				return {
 					dataList: '',
 					totalPage: "",
-					marginTop0:"marginTop0" 
+                    marginTop0:"marginTop0",
+                    ORG_ID: ""
 				}
 			},
 			methods: {
@@ -125,7 +128,8 @@
 						param: {
 							"pageNo": pageNum,
 							"pageSize": 10,
-							"STATUS": "4"
+                            "STATUS": "4",
+                            "ORG_ID": self.ORG_ID
 						}
 					}, function(res) {
 					//	summer.hideProgress();

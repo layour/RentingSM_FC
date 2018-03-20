@@ -173,6 +173,8 @@
 			}
 		});
 		summerready = function() {
+            var userinfo = summer.getStorage("userinfo");
+		    var ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			function getData(pageNum) {
 				summer.showProgress();
 				ajaxRequest({
@@ -181,7 +183,8 @@
 					param: {
 						"pageNo": pageNum,
 						"pageSize": 10,
-						"PSTATUS":"1"
+                        "PSTATUS":"1",
+                        "ORG_ID": ORG_ID
 					}
 				}, function(res) {
 					summer.hideProgress();

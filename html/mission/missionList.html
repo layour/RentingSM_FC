@@ -48,6 +48,8 @@
         var _endNum = 1;
         summerready = function() {
             summer.showProgress();
+            var userinfo = summer.getStorage("userinfo");
+			missionList.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
             getData(1, true)
             summer.setRefreshHeaderInfo({
                 visible: true,
@@ -92,6 +94,7 @@
             el: '#index',
             data: {
                 dataList: '',
+                ORG_ID: ''
             },
             methods: {
                 getData:function (pageNum, flag) {
@@ -102,6 +105,7 @@
                         param: {
                             "pageNo": pageNum,
                             "pageSize": 10,
+                            "ORG_ID": self.ORG_ID
                         }
                     }, function(res) {
                         //alert(res);
