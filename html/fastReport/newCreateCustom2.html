@@ -443,7 +443,10 @@
 			newCreateCustom.savePerson();
 		}
 		summerready = function() {
-			var personMessage = summer.pageParam.personMessage;
+            var userinfo = summer.getStorage("userinfo");
+            var ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+            var personMessage = summer.pageParam.personMessage;
+            personMessage.ORG_ID = ORG_ID;
 			var spoustObjMes=summer.pageParam.spoustObjMes;
 			var sourceFrom=summer.pageParam.sourceFrom;
 			newCreateCustom.sourceFrom=sourceFrom;

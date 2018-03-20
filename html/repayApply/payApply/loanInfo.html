@@ -96,6 +96,7 @@
         var loanInfo = new Vue({
             el: '#index',
             data: {
+                ORG_ID:"",
                 pledge:"",
                 gps:"",
                 collection:"",
@@ -300,7 +301,8 @@
                             PAYMONEY_TYPE: PAYMONEY_TYPE,
                             DEKOU_SQ: this.collection,
                             LAST_MONEY: this.LAST_MONEY,
-                            PAYMENT_ID: this.PAYMENT_ID
+                            PAYMENT_ID: this.PAYMENT_ID,
+                            ORG_ID: this.ORG_ID
 						}
 					}, function(res) {
 						summer.hideProgress();
@@ -346,6 +348,8 @@
             }
         });
         summerready = function() {
+            var userinfo = summer.getStorage("userinfo");
+            loanInfo.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
             var PAYMENT_ID = summer.pageParam.PAYMENT_ID;
             var PAYLIST_CODE = summer.pageParam.PAYLIST_CODE;
             loanInfo.PAYMENT_ID = PAYMENT_ID;

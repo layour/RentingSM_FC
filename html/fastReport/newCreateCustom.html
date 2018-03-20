@@ -206,6 +206,7 @@
 			el: '#app',
 			data:function() {
 				return {
+                    ORG_ID: "",
 					cardShow: false,
 					cardUrl: "",
 					pickerVisible: "",
@@ -685,7 +686,8 @@
 						HOME_XZ: self.message.HOME_XZ,
 						HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
 						HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,
-						spoustObj: {}
+                        spoustObj: {},
+                        ORG_ID: self.ORG_ID
 					};
 					if(self.clintId){
 						paramData.CLIENT_ID=self.clintId;
@@ -840,6 +842,8 @@
 			//newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_NAME
 		}
 		summerready = function() {
+            var userinfo = summer.getStorage("userinfo");
+            newCreateCustom.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			var projectId = summer.pageParam.projectId;
 			var clintId = summer.pageParam.clintId;
 			var sourceFrom=summer.pageParam.sourceFrom;

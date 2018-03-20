@@ -197,6 +197,8 @@
     </div>
     <script>
 			summerready=function(){
+                var userinfo = summer.getStorage("userinfo");
+                quotedVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 				if(summer.pageParam.id){
 					quotedVue.PROJECT_ID=summer.pageParam.id;
 				}
@@ -256,7 +258,8 @@
 								term:''
 							},
 							testData:{},
-							isTest:false
+                            isTest:false,
+                            ORG_ID: ""
             }
           },
 					computed:{
@@ -508,7 +511,8 @@
 								BAIL_PERCENT:String(_this.quoted.sureBailRate),
 								// '':_this.quoted.sureBailType, 保证金方式
 								POUNDAGE_PRICE:_this.quoted.consultingFee,
-								RenewalMargin_MONEY:_this.quoted.feeOn
+                                RenewalMargin_MONEY:_this.quoted.feeOn,
+                                ORG_ID:_this.ORG_ID
 								// LEASE_SUBFIRENT:_this.quoted.sureBail, 保险保证金
 							};
 							console.log(JSON.stringify(param));

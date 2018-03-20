@@ -141,6 +141,8 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
         summerready=function(){
+            var userinfo = summer.getStorage("userinfo");
+            vueTemplate.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 					console.log(summer.pageParam);
 					vueTemplate.PROJECT_ID=summer.pageParam.id
 					vueTemplate.CLIENT_ID=summer.pageParam.CLIENT_ID
@@ -151,7 +153,8 @@
           data:function(){
 			  var This = this;
             return {
-							// addCarList:[{ACTUAL_PRICE:1},{ACTUAL_PRICE:1}],
+                            // addCarList:[{ACTUAL_PRICE:1},{ACTUAL_PRICE:1}],
+                            ORG_ID: "",
 							addCarList:[],
 							PROJECT_ID:'',
 							CLIENT_ID:'',
@@ -302,7 +305,8 @@
 								param:{
 									PROJECT_ID:_this.PROJECT_ID,
 									CLIENT_ID:_this.CLIENT_ID,
-									EquipObj:_this.addCarList
+                                    EquipObj:_this.addCarList,
+                                    ORG_ID: _this.ORG_ID
 								}
 							},function(res){
 								console.log("res",res);
