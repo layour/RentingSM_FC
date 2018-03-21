@@ -31,6 +31,13 @@
 					<div class="companyInfo">
 						<span class="iconfont icon-enter"></span>
 					</div>
+                </li>
+                <li onclick="changeQX()">
+					<span class="iconfont icon-manager"></span>
+					<i>权限切换</i>
+					<div class="companyInfo">
+						<span class="iconfont icon-enter"></span>
+					</div>
 				</li>
 				<li onclick="help()">
 					<span class="iconfont icon-discern"></span>
@@ -236,6 +243,32 @@
 				});
 			}
 		};
+
+        function changeQX() {
+            if (isLogin()) {
+				summer.openWin({
+					id: 'changeQX',
+					url: 'html/changeQX/index.html',
+					create: false,
+					type: 'actionBar',
+					actionBar: {
+						title: "权限切换",
+						titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						backgroundColor: "#039be5",
+						leftItem: {
+							image: "img/back.png",
+							method: "", //返回按钮自定义事件
+							text: "返回",
+							textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+						}
+					}
+				});
+			} else {
+				summer.toast({
+					msg: "请先登录"
+				});
+			}
+        };
 
 		function toLog() {
 			if (!isLogin()) {

@@ -1,0 +1,64 @@
+.clearfix:after{
+    content: ".";
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    display: block;
+}
+.list{
+    width: 100%;
+ }
+ .list li{
+    width: 100%;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 0 0.56rem;
+    background-color: #fff;
+ }
+.list li div{
+    float: right;
+    min-height: 0.9rem;
+    display: flex;
+    align-items: center;
+ }
+ .list li span{
+    float: left;
+    line-height: 0.9rem;
+    font-size: 0.28rem;
+    color: #333;
+    width: 5rem;
+ }
+ .list li .divs{
+     min-height: 0.9rem;
+     float: right;
+     display: block;
+ }
+ .list li .divs>span,.list li .divs>i{
+     float: right;
+     text-align: left;
+     line-height: 0.9rem;
+     height: 0.9rem;
+     width: auto;
+ }
+ .list li div>i{
+     font-size: 0.28rem;
+     color: #424242;
+     display: block;
+     line-height: 0.4rem;
+     text-align: right;
+     width: 100%;
+ }
+ .list li .first>i{
+    color: #000;
+ }
+ .list li div i,.list li div span{
+    float: right;
+    font-style: normal;
+ }
+ .list li div .color{
+    color: #039be5;
+ }
+ .list li div span{
+    margin-left: 0.2rem;
+    color: #dbdbdb;
+ }

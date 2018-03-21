@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../js/font.js" charset="utf-8"></script>
+    <script src="../../js/common.js" charset="utf-8"></script>
+    <script src="../../js/base64.js" charset="utf-8"></script>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="um-win" id="index">
+        <div class="um-content">
+            <ul class="list">
+                <li v-for="k in items" class="change clearfix">
+					<span>{{k.platForm}}-{{k.NAME}}</span>
+					<div class="divs" @click="toChange(k.ORG_ID)">
+						<span class="iconfont icon-enter"></span>
+						<i class="color">切换</i>
+					</div>
+				</li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var changeQX = new Vue({
+			el: '#index',
+			data: {
+				items: []
+			},
+            methods: {
+                toChange: function (ORG_ID) {
+                    var userinfo = summer.getStorage("userinfo");
+                    userinfo.ORG_ID = ORG_ID;
+                    summer.setStorage("userinfo", userinfo);
+                    summer.toast({
+                        msg: "切换成功"
+                    });
+                    summer.closeWin();
+                }
+            }
+		});
+		summerready = function () {
+            var userinfo = summer.getStorage("userinfo");
+            var EMPLOYEE_ID = userinfo.EMPLOYEE_ID ? userinfo.EMPLOYEE_ID : "";
+            summer.showProgress();
+            ajaxRequest({
+                type: 'post',
+                url: 'appservice/login/chgOrgId',
+                param: {
+                    "EMPLOYEE_ID": EMPLOYEE_ID
+                }
+            }, function(res) {
+                summer.hideProgress();
+                var Data;
+                if (Object.prototype.toString.call(res.data) === '[object String]') {
+                    Data = JSON.parse(res.data);
+                } else {
+                    Data = res.data;
+                }
+                if (Data.flag == 1) {
+                    changeQX.items = Data.datas.datas;
+                } else {
+                    summer.toast({msg:Data.msg});
+                }
+            }, function(err) {
+                summer.hideProgress();
+                summer.toast({msg:"列表获取失败"});
+                console.log(err);
+            });
+        };
+    </script>
+</body>
+
+</html>
