@@ -33,7 +33,7 @@
                         <span>关系：</span>
                     </dt>
                     <dd>
-                        <input class="new" type="text" placeholder="请输入" v-model="RALATION_TYPE">
+                        <input class="new" type="text" placeholder="母亲、父亲、子女" v-model="RALATION_TYPE">
                     </dd>
                 </dl>
                 <dl>
@@ -80,37 +80,63 @@
                 // 保存
                 addComplete: function () {
                     var self = this;
-                    summer.showProgress();
-                    ajaxRequest({
-                        type: 'post',
-                        url: 'appservice/customer/toAddFamilyMemberSave',
-                        param: {
-                            "MEMBER_ID": self.MEMBER_ID,
-                            "NAME": self.NAME,
-                            "RALATION_TYPE": self.RALATION_TYPE,
-                            "WORK_UNIT": self.WORK_UNIT,
-                            "REMARK": self.REMARK,
-                            "CLIENT_ID": self.CLIENT_ID
-                        }
-                    }, function (res) {
-                        summer.hideProgress();
-                        if (res.data.flag == 1) {
-                            summer.execScript({
-                                winId: 'family',
-                                script: "getFamilyList()"
-                            });
-                            summer.toast({
-                                msg: '保存成功'
-                            });
-                            summer.closeWin();
-                        }
-                    }, function (err) {
-                        summer.hideProgress();
-                        console.log(err);
+                    if (!self.NAME) {
                         summer.toast({
-                            msg: '保存失败'
-                        })
-                    });
+                            msg: '请输入姓名'
+                        });
+                    } else if (!self.RALATION_TYPE) {
+                        summer.toast({
+                            msg: '请输入关系'
+                        });
+                    } else if (self.RALATION_TYPE != "母亲" && self.RALATION_TYPE != "父亲" && self.RALATION_TYPE != "子女") {
+                        summer.toast({
+                            msg: '请填写正确的关系'
+                        });
+                    } else if (!self.WORK_UNIT) {
+                        summer.toast({
+                            msg: '请输入工作单位'
+                        });
+                    } else {
+                        var RALATION_CODE;
+                        if (self.RALATION_TYPE == "母亲") {
+                            RALATION_CODE = "2";
+                        } else if (self.RALATION_TYPE == "父亲") {
+                            RALATION_CODE = "1";
+                        } else {
+                            RALATION_CODE = "3";
+                        }
+                        summer.showProgress();
+                        ajaxRequest({
+                            type: 'post',
+                            url: 'appservice/customer/toAddFamilyMemberSave',
+                            param: {
+                                "MEMBER_ID": self.MEMBER_ID,
+                                "NAME": self.NAME,
+                                "RALATION_TYPE": RALATION_CODE,
+                                "WORK_UNIT": self.WORK_UNIT,
+                                "REMARK": self.REMARK,
+                                "CLIENT_ID": self.CLIENT_ID
+                            }
+                        }, function (res) {
+                            summer.hideProgress();
+                            if (res.data.flag == 1) {
+                                summer.execScript({
+                                    winId: 'family',
+                                    script: "getFamilyList()"
+                                });
+                                summer.toast({
+                                    msg: '保存成功'
+                                });
+                                summer.closeWin();
+                            }
+                        }, function (err) {
+                            summer.hideProgress();
+                            console.log(err);
+                            summer.toast({
+                                msg: '保存失败'
+                            })
+                        });
+                    }
                 }
             }
         });
