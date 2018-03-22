@@ -86,17 +86,27 @@
 			$('.logout').text('立即登录');
 		}
 		summerready = function () {
-			if (isLogin()) {
-				var userinfo = summer.getStorage("userinfo");
-				var name = userinfo.userName ? userinfo.userName : "张帅经理";
-				$('.box').find('p').text(name);
-			} else {
-				$('.box').find('p').text("请登录");
-			}
+			showLocalInfo();
 			var appVersion = JSON.parse(summer.getAppVersion()).versionName;
 			$('strong').eq(0).text(appVersion);
 		};
-
+        // 判断是否为客户经理，展示内容
+        function showLocalInfo () {
+            if (isLogin()) {
+				var userinfo = summer.getStorage("userinfo");
+                var name = userinfo.userName ? userinfo.userName : "张帅经理";
+                var localInfo = userinfo.proName ? userinfo.proName : "";
+                var nameShowText;
+                if (name == "客户经理") {
+                    nameShowText = localInfo + ' ' + name;
+                } else {
+                    nameShowText = name;
+                }
+				$('.box').find('p').text(nameShowText);
+			} else {
+				$('.box').find('p').text("请登录");
+			}
+        };
 		function logout() {
 			if (isLogin()) {
 				var os = $summer.os;

@@ -115,6 +115,12 @@
 						<span class="frp"> <i class="emergencyContract icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div>
 				</a>
+				<a href="javascript:void(0);" id="version" onclick="addCheckReport()">
+						<div class="um-list-item-bodys">
+							考察报告
+							<span class="frp"> <i class="checkReport icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+						</div>
+					</a>
 				<a href="javascript:void(0);" id="version"  onclick="openSponsor('sponsorList')"  >
 					<div class="um-list-item-bodys">
 						担保人
@@ -511,7 +517,66 @@
 				}
 			})
 		}
-
+		function addCheckReport() {
+			summer.openWin({
+				id: 'checkReport',
+				url: "html/fastReport/checkReport.html",
+				create: false,
+				type: 'actionBar',
+				pageParam: {
+					id: setProgect.project_Id,
+					CLIENT_ID: setProgect.customId
+					//id: setProgect.customId
+				},
+				actionBar: {
+					title: '添加考察报告',
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039BE5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems: [{
+						type: "text",
+						text: "保存",
+						textColor: "#ffffff",
+						method: "saveAll()"
+					}]
+				}
+			})
+		}
+		
+		function addCheckReport() {
+			summer.openWin({
+				id: 'checkReport',
+				url: "html/fastReport/checkReport.html",
+				create: false,
+				type: 'actionBar',
+				pageParam: {
+					id: setProgect.customId
+				},
+				actionBar: {
+					title: '添加紧急联系人',
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039BE5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					// rightItems: [{
+					// 	type: "text",
+					// 	text: "保存",
+					// 	textColor: "#ffffff",
+					// 	method: "save()"
+					// }]
+				}
+			})
+		}
+		
 		function openSponsor(id) {
 			var projectId = setProgect.project_Id;
 			var clientId = setProgect.customId

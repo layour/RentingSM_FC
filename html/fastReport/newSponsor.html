@@ -421,6 +421,8 @@
 						return;
 					};
 					var paramData;
+					var userinfo = summer.getStorage("userinfo");
+					var ORG_ID=userinfo.ORG_ID;
 					if(self.isSelect){
 						paramData={
 							NAME: self.message.NAME,
@@ -450,6 +452,7 @@
 							HOUSE_ADDRESS_PROVINCE:  self.message.HOUSE_ADDRESS_PROVINCE,
 							HOUSE_ADDRESS_CITY:  self.message.HOUSE_ADDRESS_CITY,
 							PROJECT_ID: self.message.projectId,
+							ORG_ID:ORG_ID
 						}
 					}
 					ajaxRequest({

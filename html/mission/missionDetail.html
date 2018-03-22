@@ -116,6 +116,7 @@
                     }
                 },
                 submitMission:function (nodeName_, toNode_) {
+                    summer.showProgress();
                     var self = this;
                     ajaxRequest({
                         type: 'post',
@@ -137,7 +138,8 @@
                                 msg: "处理成功"
                             });
                             summer.execScript({
-                                winId: "missionList",
+                                winId: "missionIndex",
+                                frameId: 'missionList',
                                 script: " getData('1', 'true');"
                             });
                             summer.execScript({
@@ -152,8 +154,8 @@
                             });
                         }
                     }, function (err) {
-                        console.log(err);
                         summer.hideProgress();
+                        console.log(err);
                     });
                 }
             }
