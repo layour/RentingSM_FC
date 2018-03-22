@@ -351,6 +351,8 @@
 						return;
 					};*/
 					var paramData;
+					var userinfo = summer.getStorage("userinfo");
+					var ORG_ID=userinfo.ORG_ID;
 					if(self.isSelect){
 							self.message.GID=self.GID
 							self.message.CLIENT_ID=self.CLIENT_ID
@@ -358,6 +360,7 @@
 							paramData=JSON.parse(JSON.stringify(paramData));
 					}else{
 						// self.message.CLIENT_ID='';
+						self.message.ORG_ID=ORG_ID
 						paramData=self.message;
 						paramData=JSON.parse(JSON.stringify(paramData));
 					}
