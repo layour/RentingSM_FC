@@ -93,13 +93,11 @@
                     case 1:
                         var userData = Data.datas;
                         var userId = userData.EMPLOYEE_CODE;
-                        var userName = userData.EMPLOYEE_NAME;
                         var JOB_NAME = userData.JOB_NAME;
                         var ORG_NAME = userData.ORG_NAME;
                         var EMPLOYEE_ID = userData.EMPLOYEE_ID;
                         var userinfo = {
                             userId: userId,
-                            userName: userName,
                             JOB_NAME: JOB_NAME,
                             ORG_NAME: ORG_NAME,
                             EMPLOYEE_ID: EMPLOYEE_ID
@@ -123,6 +121,8 @@
                                 Data = response.data;
                             }
                             userinfo.ORG_ID = Data.datas.datas[0].ORG_ID;
+                            userinfo.userName = Data.datas.datas[0].NAME;
+                            userinfo.proName = Data.datas.datas[0].proName;
                             summer.setStorage("userinfo", userinfo);
                             summer.toast({
                                 msg: "登录成功"
