@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/font-icons.css">
+    <link rel="stylesheet" href="../../css/mint.css">
+    <link rel="stylesheet" href="css/family.css">
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/font.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+</head>
+
+<body>
+    <div class="um-win" id="family" v-cloak>
+        <div class="um-content">
+            <div id="content"></div>
+            <div 
+                class="list customList um-bgc-white" 
+                @click='changeInfo(item.MEMBER_ID, item.MEMBER_NAME, item.RALATION_TYPE_FLAG, item.MEMBER_WORK_UNIT, item.REMARK)' 
+                v-for="(item,index) in items"
+            >
+                <mt-cell-swipe :title="item.MEMBER_NAME" :right="[{content: '&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;',style: {lineHeight:'1.8rem', background: '#f44336', color: '#fff' },handler: function(){deleteItem(item.MEMBER_ID)}}]">
+                    <div class="center">
+                        <p class="type ">
+                            <span>关系：</span>
+                            <span>{{item.RALATION_TYPE_FLAG}}</span>
+                        </p>
+                        <p class="time  pr10">
+                            <span>工作单位：
+                                <span>{{item.MEMBER_WORK_UNIT}}</span>
+                            </span>
+                        </p>
+                    </div>
+                </mt-cell-swipe>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/mint.js"></script>
+    <script>
+        summerready = function () {
+            family.CLIENT_ID = summer.pageParam.CLIENT_ID;
+            getFamilyList();
+        }
+        function getFamilyList() {
+            family.getFamilyList();
+        }
+        var family = new Vue({
+            el: '#family',
+            data: function () {
+                return {
+                    CLIENT_ID: "",
+                    items: [],
+                    dictionary: []
+                }
+            },
+            methods: {
+                getFamilyList: function () {
+                    var self = this;
+                    summer.showProgress();
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/customer/toShowFamilyMemberDataList',
+                        param: {
+                            "CLIENT_ID": self.CLIENT_ID
+                        }
+                    }, function (res) {
+                        summer.hideProgress();
+                        if (res.data.flag == 1) {
+                            if (res.data.datas.fmList.length > 0) {
+                                $("#content").css('display', 'none');
+                                self.items = res.data.datas.fmList;
+                                self.dictionary = res.data.datas.familyList;
+                            } else {
+                                self.items = [];
+                                self.dictionary = res.data.datas.familyList;
+                                $("#content").css('display', 'block');
+                                createNull("content", "../../img/empty.png","暂无家庭成员信息");
+                            }
+                        }
+                    }, function (err) {
+                        summer.hideProgress();
+                        console.log(err);
+                        summer.toast({
+                            msg: '获取列表失败'
+                        })
+                    });
+                },
+                deleteItem: function (MEMBER_ID) {
+                    summer.showProgress();
+                    var This = this;
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/customer/delFamilyMemberInfoById',
+                        param: {
+                            "MEMBER_ID": MEMBER_ID
+                        }
+                    }, function (res) {
+                        summer.hideProgress();
+                        if (res.data.flag == 1) {
+                            This.getFamilyList();
+                            summer.toast({
+                                msg: '删除成功'
+                            })
+                        }
+                    }, function (err) {
+                        console.log(err);
+                        summer.hideProgress();
+                        summer.toast({
+                            msg: '删除失败'
+                        });
+                    });
+                },
+                addFamilyMem: function () {
+                    var This = this;
+                    summer.openWin({
+                        id: "addFamilyMem",
+                        url: 'html/fastReport/addFamilyMem.html',
+                        create: false,
+                        type: 'actionBar',
+                        actionBar: {
+                            title: "新增家庭成员",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            },
+                            rightItems: [{
+                                type: "text",
+                                text: "保存",
+                                textColor: "#ffffff",
+                                method: "addFamilyMem.addComplete()"
+                            }]
+                        },
+                        pageParam: {
+                            CLIENT_ID: This.CLIENT_ID,
+                            MEMBER_ID: "",
+                            NAME: "",
+                            RALATION_TYPE: "",
+                            WORK_UNIT: "",
+                            REMARK: ""
+                        }
+                    });
+                },
+                changeInfo: function (MEMBER_ID, NAME, RALATION_TYPE, WORK_UNIT, REMARK) {
+                    var This = this;
+                    summer.openWin({
+                        id: "addFamilyMem",
+                        url: 'html/fastReport/addFamilyMem.html',
+                        create: false,
+                        type: 'actionBar',
+                        actionBar: {
+                            title: "新增家庭成员",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            },
+                            rightItems: [{
+                                type: "text",
+                                text: "保存",
+                                textColor: "#ffffff",
+                                method: "addFamilyMem.addComplete()"
+                            }]
+                        },
+                        pageParam: {
+                            CLIENT_ID: This.CLIENT_ID,
+                            MEMBER_ID: MEMBER_ID,
+                            NAME: NAME,
+                            RALATION_TYPE: RALATION_TYPE,
+                            WORK_UNIT: WORK_UNIT,
+                            REMARK: REMARK
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
