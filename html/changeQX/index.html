@@ -22,8 +22,8 @@
         <div class="um-content">
             <ul class="list">
                 <li v-for="k in items" class="change clearfix">
-					<span>{{k.platForm}}-{{k.NAME}}</span>
-					<div class="divs" @click="toChange(k.ORG_ID)">
+					<span>{{k.proName}}-{{k.NAME}}</span>
+					<div class="divs" @click="toChange(k.ORG_ID, k.NAME, k.proName)">
 						<span class="iconfont icon-enter"></span>
 						<i class="color">切换</i>
 					</div>
@@ -38,10 +38,16 @@
 				items: []
 			},
             methods: {
-                toChange: function (ORG_ID) {
+                toChange: function (ORG_ID, NAME, proName) {
                     var userinfo = summer.getStorage("userinfo");
                     userinfo.ORG_ID = ORG_ID;
+                    userinfo.Name = NAME;
+                    userinfo.proName = proName;
                     summer.setStorage("userinfo", userinfo);
+                    summer.execScript({
+                        winId: 'mine',
+                        script: "showLocalInfo()"
+                    });
                     summer.toast({
                         msg: "切换成功"
                     });
@@ -70,7 +76,7 @@
                 if (Data.flag == 1) {
                     changeQX.items = Data.datas.datas;
                 } else {
-                    summer.toast({msg:Data.msg});
+                    summer.toast({msg:Data.msg ? Data.msg : "列表获取失败"});
                 }
             }, function(err) {
                 summer.hideProgress();
