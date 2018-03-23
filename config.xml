@@ -23,7 +23,7 @@
   <import id="cordova-plugin-http" type="web" ref="cordova"/>  
   <import id="cordova-plugin-camera" type="web" ref="cordova"/>  
   <import id="cordova-plugin-file" type="web" ref="cordova"/>  
-  <!--import id="cordova-plugin-finance" type="web" ref="cordova"/-->  
+  <import id="cordova-plugin-finance" type="web" ref="cordova"/>  
   <import id="cordova-plugin-amap" type="web" ref="cordova"> 
     <parameter>AMAP_KEY=509c705cf6786d61f4a62913efb94029</parameter> 
   </import>  
