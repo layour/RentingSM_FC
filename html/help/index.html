@@ -145,7 +145,7 @@
             feedback(question);
         }
 
-        function manyfileupload(appFeedBack_id) { //多图文上传方法
+        function manyfileupload(FEEDBACKID) { //多图文上传方法
             if (!summer.netAvailable()) {
                 summer.toast({
                     "msg": "网络连接失败，请检查网络"
@@ -162,14 +162,14 @@
                     var photoPath = {
                         "fileURL": "",
                         "type": "image/png",
-                        "name": "file"
+                        "name": "file" + i
                     };
                     photoPath.fileURL = g_pathArr[i];
                     photoList.push(photoPath);
                 }
             }
             var params = {
-                "appFeedBack_id": appFeedBack_id,
+                "FEEDBACKID": FEEDBACKID,
             };
             summer.multiUpload({
                 fileArray: photoList,
@@ -218,8 +218,8 @@
 				}
 				switch (Data.flag) {
                     case 1:
-                        var appFeedBack_id = Data.datas.FEEDBACKID; 
-                        manyfileupload(appFeedBack_id);
+                        var FEEDBACKID = Data.datas.FEEDBACKID; 
+                        manyfileupload(FEEDBACKID);
 						break;
                     case 0:
                         summer.hideProgress();
