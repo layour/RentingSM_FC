@@ -65,6 +65,7 @@
             methods: {
                 getDriverList: function () {
                     var self = this;
+                    
                     summer.showProgress();
                     ajaxRequest({
                         type: 'post',
@@ -112,8 +113,9 @@
                                 msg: '删除成功'
                             })
                         }
+                        summer.hideProgress();
                     }, function (err) {
-                        console.log(err);
+                        //console.log(err);
                         summer.hideProgress();
                         summer.toast({
                             msg: '删除失败'
