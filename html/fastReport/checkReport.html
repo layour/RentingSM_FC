@@ -59,21 +59,21 @@
 <body>
     <div class="um-win" id="projectImgList" v-cloak>
         <div class="um-content addCar">
-            <div class="um-list-item-bodys" @click="openContWin('family','家庭成员','承租人自然人','立项')">
+            <div class="um-list-item-bodys" @click="openFamily('family')">
                 家庭成员
                 <span class="frp">
                     <i class="uId icon iconfont icon-right"></i>&nbsp;
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
-            <div class="um-list-item-bodys" @click="openContWin('driver','机动车驾驶证','承租人自然人','立项')">
+            <div class="um-list-item-bodys" @click="openDriver('driver')">
                 司机信息
                 <span class="frp">
                     <i class="carId icon iconfont icon-right"></i>&nbsp;
                     <i class="icon iconfont icon-enter"></i>
                 </span>
             </div>
-            <div class="um-list-item-bodys" @click="openContWin('checkPeople','现场照片','承租人自然人','立项')">
+            <div class="um-list-item-bodys" @click="opencheckPeople('checkPeople')">
                 调查人员综合评价
                 <span class="frp">
                     <i class="imgId icon iconfont icon-right"></i>&nbsp;
@@ -96,7 +96,7 @@
                 }
             },
             methods: {
-                openContWin: function (val, title, customerType, type) {
+                openFamily: function (val) {
                     var _this = this;
                     summer.openWin({
                         id: val,
@@ -104,15 +104,10 @@
                         create: false,
                         type: 'actionBar',
                         pageParam: {
-                            PROJECT_ID: _this.projectId,
-                            TPM_TYPE: title,
-                            TPM_CUSTOMER_TYPE: customerType,
-                            TPM_BUSINESS_PLATE: type,
-                            CLASS_NAME: val,
                             CLIENT_ID: _this.CLIENT_ID
                         },
                         actionBar: {
-                            title: title,
+                            title: "家庭成员",
                             titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
                             backgroundColor: "#039BE5",
                             leftItem: {
@@ -129,7 +124,66 @@
                             }]
                         }
                     })
-                }
+                },
+                openDriver: function (val) {
+                    var _this = this;
+                    summer.openWin({
+                        id: val,
+                        url: "html/fastReport/driver.html",
+                        create: false,
+                        type: 'actionBar',
+                        pageParam: {
+                            CLIENT_ID: _this.CLIENT_ID,
+                            PROJECT_ID:_this.projectId
+                        },
+                        actionBar: {
+                            title: "司机信息",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            },
+                            rightItems: [{
+                                type: "text",
+                                text: "新增",
+                                textColor: "#ffffff",
+                                method: "driver.addDriver()"
+                            }]
+                        }
+                    })
+                },
+                opencheckPeople: function (val) {
+                    var _this = this;
+                    summer.openWin({
+                        id: val,
+                        url: "html/fastReport/checkPeople.html",
+                        create: false,
+                        type: 'actionBar',
+                        pageParam: {
+                            PROJECT_ID:_this.projectId
+                        },
+                        actionBar: {
+                            title: "调查人员评价",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            },
+                            rightItems: [{
+                                type: "text",
+                                text: "保存",
+                                textColor: "#ffffff",
+                                method: "checkPeople.addCheckPeople()"
+                            }]
+                        }
+                    })
+                },
             }
         });
 
@@ -137,7 +191,7 @@
             $("." + param).addClass('active').siblings('i').addClass("active");
         }
 
-        function saveAll() {
+        function save() {
             summer.closeWin()
         }
     </script>

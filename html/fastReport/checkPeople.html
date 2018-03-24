@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/mint.css">
+    <script src="../../js/font.js"></script>
+    <style>
+        input::-webkit-input-placeholder {
+            color: #DEDEDE;
+            font-size: 0.28rem;
+        }
+
+        .mint-field-core {
+            text-align: right;
+        }
+
+        .mint-cell-wrapper {
+            color: #333;
+            font-size: 0.28rem;
+        }
+
+        .mint-cell {
+            min-height: 40px;
+            height: 44px;
+            ;
+            color: #333;
+            font-size: 0.28rem;
+        }
+
+        div.item {
+            line-height: 44px;
+            background: #ffffff;
+            border-bottom: 1px solid #f7f7f7;
+            font-size: 0.28rem;
+
+        }
+
+        div.item span {
+            color: #333;
+        }
+
+        div.item span i {
+            color: #dbdbdb;
+        }
+
+        .pickerColor {
+            width: 100%;
+            z-index: 10;
+            background: #ffffff;
+        }
+
+        .pickerColor>p {
+            line-height: .88rem;
+            padding: 0 .56rem;
+            color: #039BE5;
+            border-top: 1px solid #E0E0E0;
+            overflow: hidden;
+        }
+
+        .pickerColor>p span {
+            color: #34aadc;
+        }
+
+        .mint-cell-wrapper {
+            background-size: 100% 0px;
+            border-bottom: 1px solid #f7f7f7;
+        }
+
+        .pickerColor>p span:last-child {
+            float: right;
+        }
+
+        .pickerColor>p span:first-child {
+            float: left;
+        }
+
+        .item .first {
+
+            color: #333;
+        }
+
+        .item .second {
+            color: #9e9e9e;
+        }
+
+        .um-footer {
+            min-height: 0px;
+        }
+
+        #question {
+            word-break: break-all;
+            display: block;
+            width: 100%;
+            height: 1.6rem;
+            line-height: 0.4rem;
+            text-indent: 1em;
+            resize: none;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            text-align: justify;
+            outline: none;
+            border: none;
+            border-color: #fff;
+            font-size: 0.28rem;
+        }
+
+        #question::-webkit-input-placeholder {
+            text-indent: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="um-win" id="checkPeople" v-cloak>
+        <div class="um-content">
+
+            <div @click="surePickerSex" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">申请人对车辆信息的熟悉程度</span>
+                    <span class="">
+                        <span v-if='message.CAR_FAMILY_DEGREE_NM' class="first">{{message.CAR_FAMILY_DEGREE_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div @click="surePickerIsshares" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">申请人对运营项目的熟悉程度</span>
+                    <span class="">
+                        <span v-if='message.PRO_FAMILY_DEGREE_NM' class="first">{{message.PRO_FAMILY_DEGREE_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+            <div @click="surePickerIslocal" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">项目操作意见</span>
+                    <span class="">
+                        <span v-if='message.PRO_OPTION_OPINION_NM' class="first">{{message.PRO_OPTION_OPINION_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+            <div class="box border teamDescript um-bgc-white">
+                    <div  class="item">
+                            <p class="pl10 pr10 tr">
+                                <span class="fl">评价:</span>
+                            </p>
+                     </div>
+                    <textarea id="question" v-model="message.PRO_EVALUATE" placeholder="身份真实性评价 意愿真实性评价 偿债能力真实性评价" maxlength="200"></textarea>
+            </div>
+        </div>
+        
+        <div class="um-footer">
+            <mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerSex">取消</span>
+                    <span class="" @click="surePickerSex('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerIssharesStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots4" @change="onValuesChange4"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerIsshares">取消</span>
+                    <span class="" @click="surePickerIsshares('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerIslocalStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots5" @change="onValuesChange5"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerIslocal">取消</span>
+                    <span class="" @click="surePickerIslocal('confirm')">确定</span>
+                </p>
+            </mt-popup>
+        </div>
+    </div>
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/mint.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script>
+        summerready = function () {
+            checkPeople.PROJECT_ID = summer.pageParam.PROJECT_ID;
+            checkPeople.message.PROJECT_ID = summer.pageParam.PROJECT_ID;
+             
+            checkPeople.getCheckPeople();
+        }
+        var checkPeople = new Vue({
+            el: '#checkPeople',
+            data: function () {
+                return {
+                    detailItem: '', //保存司机详情信息
+                    cardShow: false,
+                    cardUrl: "",
+                    CLIENT_ID: "",
+                    PROJECT_ID: "",
+                    pickerSexStatus: false,
+                    pickerIssharesStatus: false,
+                    pickerIslocalStatus: false,
+                    RelationItem: [],
+                    DriverItem: [],
+                    slots1: [{
+                        flex: 1,
+                        values: ['熟悉', '不熟悉'],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    slots4: [{
+                        flex: 1,
+                        values: ['熟悉', '不熟悉'],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    slots5: [{
+                        flex: 1,
+                        values: ['同意', '有条件同意', '不同意'],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    message: {
+                        CAR_FAMILY_DEGREE_NM: '',
+                        CAR_FAMILY_DEGREE: '',
+                        PRO_FAMILY_DEGREE: '',
+                        PRO_FAMILY_DEGREE_NM: '',
+                        PRO_OPTION_OPINION: '',
+                        PRO_OPTION_OPINION_NM: '',
+                        PRO_EVALUATE:'',
+                        PROJECT_ID: ''
+                    }
+                }
+            },
+            methods: {
+                getCheckPeople: function () {
+                    var self = this;
+                    summer.showProgress();
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/foundproject/toShowInvesteCustInfo',
+                        param: {
+                            "PROJECT_ID": self.PROJECT_ID
+                        }
+                    }, function (res) {
+                        summer.hideProgress();
+                        if (res.data.flag == 1) {
+                            var detailMessage=res.data.datas.investeList[0];
+                            self.CAR_FAMILY_DEGREE=detailMessage.CAR_FAMILY_DEGREE;
+                            detailMessage.CAR_FAMILY_DEGREE==1?self.message.CAR_FAMILY_DEGREE_NM="熟悉":self.message.CAR_FAMILY_DEGREE_NM="不熟悉";
+                            self.PRO_FAMILY_DEGREE=detailMessage.PRO_FAMILY_DEGREE;
+                            detailMessage.PRO_FAMILY_DEGREE==1?self.message.PRO_FAMILY_DEGREE_NM="熟悉":self.message.PRO_FAMILY_DEGREE_NM="不熟悉";
+                            self.PRO_OPTION_OPINION=detailMessage.PRO_OPTION_OPINION;
+                            if(detailMessage.PRO_OPTION_OPINION==0){
+                                self.message.PRO_OPTION_OPINION_NM="同意"
+                            }else if(detailMessage.PRO_OPTION_OPINION==1){
+                                self.message.PRO_OPTION_OPINION_NM="有条件同意"
+                            }else{
+                                self.message.PRO_OPTION_OPINION_NM="不同意"
+                            }
+                            self.message.PRO_EVALUATE=detailMessage.PRO_EVALUATE
+                        }
+                    }, function (err) {
+                        summer.hideProgress();
+                        console.log(err);
+                        summer.toast({
+                            msg: '获取信息失败'
+                        })
+                    });
+                },
+                onValuesChange1: function (picker, values) {
+                    this.pickerSex = values[0];
+                },
+                surePickerSex: function (param) {
+                    this.pickerSexStatus = !this.pickerSexStatus;
+                    if (param == 'confirm') {
+                        this.message.CAR_FAMILY_DEGREE_NM = this.pickerSex;
+                        if (this.pickerSex == "熟悉") {
+                            this.message.CAR_FAMILY_DEGREE = 1
+                        } else {
+                            this.message.CAR_FAMILY_DEGREE = 0
+                        }
+                    }
+                },
+                onValuesChange4: function (picker, values) {
+                    this.pickerIsshares = values[0];
+                },
+                surePickerIsshares: function (param) {
+                    this.pickerIssharesStatus = !this.pickerIssharesStatus;
+                    if (param == 'confirm') {
+                        this.message.PRO_FAMILY_DEGREE_NM = this.pickerIsshares;
+                        if (this.pickerIsshares == "熟悉") {
+                            this.message.PRO_FAMILY_DEGREE = 1
+                        } else {
+                            this.message.PRO_FAMILY_DEGREE = 0
+                        }
+                    }
+                },
+                onValuesChange5: function (picker, values) {
+                    this.pickerIslocal = values[0];
+                },
+                surePickerIslocal: function (param) {
+                    this.pickerIslocalStatus = !this.pickerIslocalStatus;
+                    if (param == 'confirm') {
+                        this.message.PRO_OPTION_OPINION_NM = this.pickerIslocal;
+                        if (this.pickerIslocal == "同意") {
+                            this.message.PRO_OPTION_OPINION = 0
+                        } else if (this.pickerIslocal == "有条件同意") {
+                            this.message.PRO_OPTION_OPINION = 1
+                        } else {
+                            this.message.PRO_OPTION_OPINION = 2
+                        }
+                    }
+                },
+                // 保存
+                addCheckPeople: function () {
+                    var self = this;
+                    if (!self.message.CAR_FAMILY_DEGREE_NM) {
+                        summer.toast({
+                            msg: '请选择申请人对车辆信息的熟悉程度'
+                        });
+                    } else if (!self.message.PRO_FAMILY_DEGREE_NM) {
+                        summer.toast({
+                            msg: '请选择申请人对运营项目的熟悉程度'
+                        });
+                    }  else if (!self.message.PRO_OPTION_OPINION_NM) {
+                        summer.toast({
+                            msg: '请选择项目操作意见'
+                        });
+                    }  else if (!self.message.PRO_EVALUATE) {
+                        summer.toast({
+                            msg: '请输入评价信息'
+                        });
+                    } else {
+                        summer.showProgress();
+                        var finalMessage = JSON.parse(JSON.stringify(self.message));
+                        ajaxRequest({
+                            type: 'post',
+                            url: 'appservice/foundproject/saveInvesteCustInfo',
+                            param: finalMessage
+                        }, function (res) {
+                            summer.hideProgress();
+                            if (res.data.flag == 1) {
+                                summer.toast({
+                                    msg: '保存成功'
+                                });
+                                 
+                                summer.closeWin();
+                            }
+                        }, function (err) {
+                            summer.hideProgress();
+                            console.log(err);
+                            summer.toast({
+                                msg: '保存失败'
+                            })
+                        });
+                    }
+                }
+            }
+        });
+        $(function () {
+            $('body').height($('body')[0].clientHeight);
+        });
+    </script>
+</body>
+
+</html>
