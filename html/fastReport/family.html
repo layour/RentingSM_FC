@@ -82,6 +82,7 @@
                                 self.dictionary = res.data.datas.familyList;
                                 $("#content").css('display', 'block');
                                 createNull("content", "../../img/empty.png","暂无家庭成员信息");
+                                summer.hideProgress();
                             }
                         }
                     }, function (err) {

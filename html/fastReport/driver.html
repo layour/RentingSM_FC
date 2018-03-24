@@ -33,7 +33,7 @@
                             <span>{{item.LICENSE_TYPE_FLAG}}</span>
                         </p>
                         <p class="time  pr10">
-                            <span>与申请人关系
+                            <span>与申请人关系:
                                 <span>{{item.RALATION_TYPE_FLAG}}</span>
                             </span>
                         </p>
@@ -86,6 +86,7 @@
                                 //self.dictionary = res.data.datas.familyList;
                                 $("#content").css('display', 'block');
                                 createNull("content", "../../img/empty.png","暂无司机信息");
+                                summer.hideProgress();
                             }
                         }
                     }, function (err) {
