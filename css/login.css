@@ -1,110 +1,129 @@
-body,.um-frame,.um-win,html{
-   background-color: #fff;
+body,
+.um-frame,
+.um-win,
+html {
+    background-color: #fff;
 }
-#bot{
-   height: 0.9rem;
-   background-color: #fff;
-   width: 100%;
+
+#bot {
+    height: 0.9rem;
+    background-color: #fff;
+    width: 100%;
 }
-#bot span{
-   float: left;
-   width: 50%;
-   height: 0.9rem;
-   box-sizing: border-box;
-   line-height: 0.9rem;
-   text-align: center;
-   font-size: 0.32rem;
-   color: #333;
-   border-bottom: 0.04rem solid #d4d4d4;
+
+#bot span {
+    float: left;
+    width: 50%;
+    height: 0.9rem;
+    box-sizing: border-box;
+    line-height: 0.9rem;
+    text-align: center;
+    font-size: 0.32rem;
+    color: #333;
+    border-bottom: 0.04rem solid #d4d4d4;
 }
-form{
-   width: 6.4rem;
-   position: absolute;
-   left: 50%;
-   margin-left: -3.2rem;
-   top: 3rem;
-   height: 6rem;
+
+form {
+    width: 6.4rem;
+    position: absolute;
+    left: 50%;
+    margin-left: -3.2rem;
+    top: 3rem;
+    height: 6rem;
 }
-dl{
-   height: 0.8rem;
-   margin-bottom: 0.4rem;
-   border-bottom: 1px solid #e0e0e0;
+
+dl {
+    height: 0.8rem;
+    margin-bottom: 0.4rem;
+    border-bottom: 1px solid #e0e0e0;
 }
-dl dd,dl dt{
-   float: left;
-   height: 0.8rem;
+
+dl dd,
+dl dt {
+    float: left;
+    height: 0.8rem;
 }
-dl dt{
-   margin-right: 0.5rem;
-   font-size: 0.28rem;
-   height: 0.8rem;
-   line-height: 0.8rem;
-   color: #0277bd;
+
+dl dt {
+    margin-right: 0.5rem;
+    font-size: 0.38rem !important;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    color: #0277bd;
 }
-dl dd{
-   width: 4.6rem;
-   height: 0.8rem;
+
+dl dd {
+    width: 4.6rem;
+    height: 0.8rem;
 }
-dl dd input{
-   border: 0;
-   outline: none;
-   height: 0.34rem;
-   width: 4.6rem;
-   background: none;
-   color: #424242;
-   font-size: 0.28rem;
-   line-height: 0.34rem;
-   margin-top: 0.2rem;
+
+dl dd input {
+    border: 0;
+    outline: none;
+    height: 0.38rem;
+    width: 4.6rem;
+    background: none;
+    color: #424242;
+    font-size: 0.32rem;
+    line-height: 0.34rem;
+    margin-top: 0.2rem;
 }
+
 *::-webkit-input-placeholder {
     color: #e0e0e0;
 }
+
 *:-moz-placeholder {
     color: #e0e0e0;
 }
+
 *:-ms-input-placeholder {
     color: #e0e0e0;
 }
-.forget{
-   position: absolute;
-   right: 0;
-   color: #999;
-   font-size: 0.28rem;
-   height: 0.28rem;
-   line-height: 0.28rem;
+
+.forget {
+    position: absolute;
+    right: 0;
+    color: #999;
+    font-size: 0.28rem;
+    height: 0.28rem;
+    line-height: 0.28rem;
 }
-.getcode{
-   position: absolute;
-   right: 0;
-   bottom: 4.26rem;
-   width: 2.5rem;
-   height: 0.68rem;
-   background-color: #fff;
-   border-radius: 0.1rem;
-   border: 1px solid #039be5;
-   color: #039be5;
-   line-height: 0.68rem;
-   text-align: center;
-   font-size: 0.28rem;
+
+.getcode {
+    position: absolute;
+    right: 0;
+    bottom: 4.26rem;
+    width: 2.5rem;
+    height: 0.68rem;
+    background-color: #fff;
+    border-radius: 0.1rem;
+    border: 1px solid #039be5;
+    color: #039be5;
+    line-height: 0.68rem;
+    text-align: center;
+    font-size: 0.28rem;
 }
-.getcodeUnClick{
+
+.getcodeUnClick {
     border: 1px solid #999;
     color: #999;
 }
-.loginBtn{
-   width: 6.34rem;
-   height: 0.9rem;
-   background-color: #fff;
-   color: #1287de;
-   position: absolute;
-   left: 50%;
-   margin-left: -3.17rem;
-   bottom: 1.8rem;
-   border: 1px solid #039be5;
-   outline: none;
-   border-radius: 0.08rem;
-   font-size: 0.32rem;
-   letter-spacing: 0.05rem;
-   line-height: 0.9rem;
-   text-align: center;
+
+.loginBtn {
+    width: 6.34rem;
+    height: 0.9rem;
+    background-color: #fff;
+    color: #1287de;
+    position: absolute;
+    left: 50%;
+    margin-left: -3.17rem;
+    bottom: 1.8rem;
+    border: 1px solid #039be5;
+    outline: none;
+    border-radius: 0.08rem;
+    font-size: 0.32rem;
+    letter-spacing: 0.05rem;
+    line-height: 0.9rem;
+    text-align: center;
 }
