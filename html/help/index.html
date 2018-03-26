@@ -47,7 +47,6 @@
         var g_pathArr = [];
         summerready = function () {
             bindEvents()
-            setTimeout(function () {}, 400)
         }
 
         function bindEvents() {
@@ -143,18 +142,16 @@
                 })
                 return false;
             }
-            // manyfileupload();
             feedback(question);
         }
 
-        function manyfileupload() { //多图文上传方法
+        function manyfileupload(FEEDBACKID) { //多图文上传方法
             if (!summer.netAvailable()) {
                 summer.toast({
                     "msg": "网络连接失败，请检查网络"
                 })
                 return;
             }
-            summer.showProgress();
             // 判断变量
             var photoPath;
             var photoList = [];
@@ -165,25 +162,19 @@
                     var photoPath = {
                         "fileURL": "",
                         "type": "image/png",
-                        "name": "file"
+                        "name": "file" + i
                     };
                     photoPath.fileURL = g_pathArr[i];
                     photoList.push(photoPath);
                 }
             }
             var params = {
-                "EMPLOYEE_ID": "11350",
-                "EMPLOYEE_NAME": "张仁忠",
-                "FEEDBACKTYPE": "出错",
-                "FEEDTYPECONTENT": $.trim($("#question").val())
+                "FEEDBACKID": FEEDBACKID,
             };
             summer.multiUpload({
                 fileArray: photoList,
                 params: params,
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                SERVER: window.G_COMMON_URL + "appservice/appsys/getAppfeeback"
+                SERVER: window.G_COMMON_URL + "appservice/appsys/uploadloadFiles"
             }, "successCallback()", "errorCallback()");
         };
 
@@ -191,7 +182,7 @@
             console.log(args);
             summer.hideProgress();
             summer.toast({
-                "msg": "感谢您的反馈"
+                "msg": "提交成功，感谢您的反馈"
             });
             summer.closeWin();
         }
@@ -200,7 +191,7 @@
             console.log(args);
             summer.hideProgress();
             summer.toast({
-                "msg": "上传失败"
+                "msg": "提交失败"
             })
         }
 
@@ -219,7 +210,6 @@
                 	"FEEDTYPECONTENT": txt
 				}
             }, function (response) {
-                summer.hideProgress();
                 var Data;
 				if (Object.prototype.toString.call(response.data) === '[object String]') {
 					Data = JSON.parse(response.data);
@@ -227,16 +217,16 @@
 					Data = response.data;
 				}
 				switch (Data.flag) {
-					case 1:
-						summer.toast({msg:"提交成功"});
-                        summer.closeToWin({
-            		        id: 'mine'
-            			});
+                    case 1:
+                        var FEEDBACKID = Data.datas.FEEDBACKID; 
+                        manyfileupload(FEEDBACKID);
 						break;
-					case 0:
+                    case 0:
+                        summer.hideProgress();
 						summer.toast({msg:"提交失败"});
 						break;
-					default:
+                    default:
+                        summer.hideProgress();
 						summer.toast({msg:"提交失败"});
 				}
             }, function (err) {

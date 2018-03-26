@@ -139,7 +139,7 @@
 				</h2>
 			<div class="xmgl_con">
 				<ul class="xmgl_list clearfix">
-					<li onclick="unfinished()">
+					<li onclick="openETCService()">
 						<dl>
 							<dt class="iconfont icon-submit" style="color:#c79644"></dt>
 							<dd>ETC业务</dd>
@@ -601,6 +601,17 @@
 				}
 			});
 		}
+		
+		// ETC业务
+		function openETCService(){
+			var sendId = "1"; // 0.为快速通; 1.好运达。
+			var partnerId = "sqhy"; // 合作商ID(必填)
+			var partnerKey = "123456"; // 合作商key(必填)
+			var mobile = "15552866436"; // 用户手机号(选填)
+			var egsToken = null; // 通过对接方token获取用户手机号(选填，与手机号只可传一个)
+			var isRel = false; // false.测试环境; true.正式环境。
+			window.finance.present(sendId, partnerId, partnerKey, mobile, egsToken, isRel);
+		};
 
 		// 敬请期待
 		function unfinished(){

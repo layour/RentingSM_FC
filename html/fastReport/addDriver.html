@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/mint.css">
+    <script src="../../js/font.js"></script>
+    <style>
+        input::-webkit-input-placeholder {
+            color: #DEDEDE;
+            font-size: 0.28rem;
+        }
+
+        .topheader {
+            position: relative;
+            height: 180px;
+            background-image: url("img/cardBgc.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .topheader img {
+            margin-top: 0.8rem;
+            width: 2.8rem;
+            height: 1.8rem;
+        }
+
+        .mint-field-core {
+            text-align: right;
+        }
+
+        .mint-cell-wrapper {
+            color: #333;
+            font-size: 0.28rem;
+        }
+
+        .mint-cell {
+            min-height: 40px;
+            height: 44px;
+            ;
+            color: #333;
+            font-size: 0.28rem;
+        }
+
+        div.item {
+            line-height: 44px;
+            background: #ffffff;
+            border-bottom: 1px solid #f7f7f7;
+            font-size: 0.28rem;
+
+        }
+
+        div.item span {
+            color: #333;
+        }
+
+        div.item span i {
+            color: #dbdbdb;
+        }
+
+        .pickerColor {
+            width: 100%;
+            z-index: 10;
+            background: #ffffff;
+        }
+
+        .pickerColor>p {
+            line-height: .88rem;
+            padding: 0 .56rem;
+            color: #039BE5;
+            border-top: 1px solid #E0E0E0;
+            overflow: hidden;
+        }
+
+        .pickerColor>p span {
+            color: #34aadc;
+        }
+
+        .mint-cell-wrapper {
+            background-size: 100% 0px;
+            border-bottom: 1px solid #f7f7f7;
+        }
+
+        .pickerColor>p span:last-child {
+            float: right;
+        }
+
+        .pickerColor>p span:first-child {
+            float: left;
+        }
+
+        .item .first {
+
+            color: #333;
+        }
+
+        .item .second {
+            color: #9e9e9e;
+        }
+
+        .um-footer {
+            min-height: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="um-win" id="addDriver" v-cloak>
+        <div class="um-content">
+            <div class="topheader tc um-header-light" @click="cardIdentify">
+                <img v-bind:src="cardUrl" v-show="cardShow" alt="" />
+            </div>
+            <mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.NAME"> </mt-field>
+            <div @click="surePickerSex" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">性别</span>
+                    <span class="">
+                        <span v-if='message.SEX_NM' class="first">{{message.SEX_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+            <mt-field label="年龄" placeholder="请输入您的年龄" v-model="message.AGE"></mt-field>
+            <mt-field label="身份证" placeholder="请输入您的身份证号码" v-model="message.ID_CARD_NO"></mt-field>
+            <mt-field label="手机号" placeholder="请输入您的手机号码" v-model="message.TEL_PHONE"></mt-field>
+            <div @click="surePickerLicensetype" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">驾照类型</span>
+                    <span class="">
+                        <span v-if='message.LICENSE_TYPE_NM' class="first">{{message.LICENSE_TYPE_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div @click="surePickerRelation" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">与申请人关系</span>
+                    <span class="">
+                        <span v-if='message.RALATION_TYPE_NM' class="first">{{message.RALATION_TYPE_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+            <div @click="surePickerIsshares" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">是否参股</span>
+                    <span class="">
+                        <span v-if='message.IS_SHARES_NM' class="first">{{message.IS_SHARES_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+            <div @click="surePickerIslocal" class="item">
+                <p class="pl10 pr10 tr">
+                    <span class="fl">是否本地人</span>
+                    <span class="">
+                        <span v-if='message.IS_LOCAL_NM' class="first">{{message.IS_LOCAL_NM}}</span>
+                        <span v-else class="second">请选择</span>
+                        <i class="icon iconfont icon-enter"></i>
+                    </span>
+                </p>
+            </div>
+            <mt-field label="通讯地址" placeholder="请输入您的通讯地址" v-model="message.POSTAL_ADDRESS"></mt-field>
+        </div>
+        <div class="um-footer">
+            <mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerSex">取消</span>
+                    <span class="" @click="surePickerSex('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerLicensetypeStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerLicensetype">取消</span>
+                    <span class="" @click="surePickerLicensetype('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerRelationStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerRelation">取消</span>
+                    <span class="" @click="surePickerRelation('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerIssharesStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots4" @change="onValuesChange4"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerIsshares">取消</span>
+                    <span class="" @click="surePickerIsshares('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerIslocalStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots5" @change="onValuesChange5"></mt-picker>
+                <p>
+                    <span class="" @click="surePickerIslocal">取消</span>
+                    <span class="" @click="surePickerIslocal('confirm')">确定</span>
+                </p>
+            </mt-popup>
+        </div>
+    </div>
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/mint.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script>
+        summerready = function () {
+            addDriver.CLIENT_ID = summer.pageParam.CLIENT_ID;
+            addDriver.PROJECT_ID = summer.pageParam.PROJECT_ID;
+            addDriver.message.CLIENT_ID = summer.pageParam.CLIENT_ID;
+            addDriver.message.PROJECT_ID = summer.pageParam.PROJECT_ID;
+            if(summer.pageParam.item){
+                var detailItem=summer.pageParam.item;
+                addDriver.message.NAME = detailItem.DRIVER_NAME;
+                addDriver.message.AGE = detailItem.DRIVER_AGE;
+                addDriver.message.POSTAL_ADDRESS = detailItem.POSTAL_ADDRESS;
+                addDriver.message.ID_CARD_NO = detailItem.DRIVER_ID_CARD_NO;
+                addDriver.message.TEL_PHONE = detailItem.DRIVER_TEL_PHONE;
+                addDriver.message.SEX = detailItem.SEX;
+                addDriver.message.SEX_NM = detailItem.SEX_FLAG;
+                addDriver.message.LICENSE_TYPE = detailItem.LICENSE_TYPE;
+                addDriver.message.LICENSE_TYPE_NM = detailItem.LICENSE_TYPE_FLAG;
+                addDriver.message.RALATION_TYPE = detailItem.RALATION_TYPE;
+                addDriver.message.RALATION_TYPE_NM = detailItem.RALATION_TYPE_FLAG;
+                addDriver.message.IS_SHARES = detailItem.IS_SHARES;
+                if(detailItem.IS_SHARES==1){
+                    addDriver.message.IS_SHARES_NM="是"
+                }else{
+                    addDriver.message.IS_SHARES_NM="否"
+                }
+                addDriver.message.IS_LOCAL = detailItem.IS_LOCAL;
+                if(detailItem.IS_LOCAL==1){
+                    addDriver.message.IS_LOCAL_NM="是"
+                }else{
+                    addDriver.message.IS_LOCAL_NM="否"
+                }
+                addDriver.message.DRIVER_ID = detailItem.DRIVER_ID;
+            }
+            addDriver.getDriver();
+        }
+        var addDriver = new Vue({
+            el: '#addDriver',
+            data: function () {
+                return {
+                    detailItem:'',//保存司机详情信息
+                    cardShow: false,
+                    cardUrl: "",
+                    CLIENT_ID: "",
+                    PROJECT_ID: "",
+                    pickerSexStatus: false,
+                    pickerLicensetypeStatus: false,
+                    pickerRelationStatus: false,
+                    pickerIssharesStatus: false,
+                    pickerIslocalStatus: false,
+                    RelationItem: [],
+                    DriverItem: [],
+                    slots1: [{
+                        flex: 1,
+                        values: ['男', '女'],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    slots2: [{
+                        flex: 1,
+                        values: [],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    slots3: [{
+                        flex: 1,
+                        values: [],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    slots4: [{
+                        flex: 1,
+                        values: ['是', '否'],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    slots5: [{
+                        flex: 1,
+                        values: ['是', '否'],
+                        defaultIndex: 0,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }],
+                    message: {
+                        NAME: '',
+                        AGE: '',
+                        POSTAL_ADDRESS: '',
+                        ID_CARD_NO: '',
+                        TEL_PHONE: '',
+                        SEX: '',
+                        SEX_NM: '',
+                        LICENSE_TYPE: '',
+                        LICENSE_TYPE_NM: '',
+                        RALATION_TYPE: "",
+                        RALATION_TYPE_NM: '',
+                        IS_SHARES: "",
+                        IS_SHARES_NM: "",
+                        IS_LOCAL: "",
+                        IS_LOCAL_NM: "",
+                        DRIVER_ID: '',//司机ID新增为空，修改必填
+                        CLIENT_ID:'',
+                        PROJECT_ID:''
+                    }
+                }
+            },
+            methods: {
+                getDriver: function () {
+                    var self = this;
+                    summer.showProgress();
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/foundproject/toShowDriverDataList',
+                        param: {
+                            "PROJECT_ID": self.PROJECT_ID
+                        }
+                    }, function (res) {
+                        summer.hideProgress();
+                        if (res.data.flag == 1) {
+                            for (var i = 0; i < res.data.datas.driverCustRalaList.length; i++) {
+                                self.slots3[0].values.push(res.data.datas.driverCustRalaList[i].FLAG);
+                            }
+
+                             self.RelationItem=res.data.datas.driverCustRalaList;
+                            for (var i = 0; i < res.data.datas.driverTypeList.length; i++) {
+                                self.slots2[0].values.push(res.data.datas.driverTypeList[i].FLAG);
+                            }
+                           self.DriverItem=res.data.datas.driverTypeList;
+                            if (res.data.datas.driverList.length > 0) {
+                                $("#content").css('display', 'none');
+                                self.items = res.data.datas.driverList;
+                                //  self.diction ary = res.data.datas.familyList;
+                            } else {
+                                self.items = [];
+                                //self.dictionary = res.data.datas.familyList;
+                                $("#content").css('display', 'block');
+                                createNull("content", "../../img/empty.png", "暂无司机信息");
+                            }
+                        }
+                    }, function (err) {
+                        summer.hideProgress();
+                        console.log(err);
+                        summer.toast({
+                            msg: '获取列表失败'
+                        })
+                    });
+                },
+                ajaxCardMessage: function (args, path) {
+                    var _self = this;
+                    summer.showProgress();
+                    window.cordovaHTTP.settings = {
+                        timeout: 5000
+                    }; //设置5秒超时
+                    var bTemp = args.replace(/(\n)+|(\r\n)+/g, "");
+                    summer.ajax({
+                        type: "post",
+                        url: "https://api.tongdun.cn/identification/ocr/v1?partner_code=FCRZ&partner_key=17aa5172c3084c64b8b4d86a71432970",
+                        param: {
+                            image: bTemp
+                        },
+                    }, function (response) {
+                        console.log(response);
+                        var cardMessage = JSON.parse(response.data).display;
+                        _self.message.NAME = cardMessage.name;
+                        _self.message.ID_CARD_NO = cardMessage.id_number;
+                        _self.message.SEX_NM = cardMessage.gender;
+                        if(cardMessage.gender=="男"){
+                            _self.message.SEX=0
+                        }else{
+                            _self.message.SEX=1
+                        }
+                        var date = new Date();
+                        var year = date.getFullYear();
+                        var birthday_year = parseInt(_self.message.ID_CARD_NO.substr(6, 4));
+                        _self.message.AGE = year - birthday_year;
+                        _self.cardUrl = path;
+                        _self.cardShow = true;
+                        summer.hideProgress();
+                    }, function (err) {
+                        //alert("失败"+JSON.stringify(err));
+                        summer.toast({
+                            msg: "识别失败"
+                        });
+                    });
+                },
+                cardIdentify: function () {
+                    var _self = this;
+                    summer.openCamera({
+                        "callback": function (args) {
+                            summer.compressImage({
+                                "src": args.imgPath, //待压缩图片的路径
+                                "path": "", //压缩完图片保存的路径，该参数可选
+                                "compressWidth": "1000", //图片压缩的宽度
+                                "compressHeight": "1000", //图片压缩的高度
+                                "quality": "0.2", //图片压缩的清晰度，取值范围：0~1
+                                "callback": function (arg) {
+                                    summer.fileToBase64({
+                                        "filePath": arg.savepath, //文件路径
+                                        "callback": function (ret) {
+                                            //alert("file转base64成功");
+                                            //alert(ret.result);
+                                            console.log(ret);
+                                            _self.ajaxCardMessage(ret.result,
+                                                arg.savepath);
+                                        }
+                                    })
+                                } //压缩完成之后的回调函数
+                            })
+                        }
+                    });
+                },
+                onValuesChange1: function (picker, values) {
+                    this.pickerSex = values[0];
+                },
+                surePickerSex: function (param) {
+                    this.pickerSexStatus = !this.pickerSexStatus;
+                    if (param == 'confirm') {
+                        this.message.SEX_NM = this.pickerSex;
+                        if (this.pickerSex == "男") {
+                            this.message.SEX = 0
+                        } else {
+                            this.message.SEX = 1
+                        }
+                    }
+                },
+                onValuesChange2: function (picker, values) {
+                    this.pickerLicensetype = values[0];
+                },
+                surePickerLicensetype: function (param) {
+                    this.pickerLicensetypeStatus = !this.pickerLicensetypeStatus;
+                    if (param == 'confirm') {
+                        this.message.LICENSE_TYPE_NM = this.pickerLicensetype;
+                        var self=this;
+                        this.DriverItem.map(function (e, i) {
+                        if (e.FLAG == self.message.LICENSE_TYPE_NM) {
+                            self.message.LICENSE_TYPE = self.RelationItem[i].CODE;
+                        }
+                    });
+                    }
+                    
+                },
+                onValuesChange3: function (picker, values) {
+                    this.pickerRelation = values[0];
+                },
+                surePickerRelation: function (param) {
+                    this.pickerRelationStatus = !this.pickerRelationStatus;
+                    if (param == 'confirm') {
+                        this.message.RALATION_TYPE_NM = this.pickerRelation;
+                        var self=this;
+                        this.RelationItem.map(function (e, i) {
+                        if (e.FLAG == self.message.RALATION_TYPE_NM) {
+                            self.message.RALATION_TYPE = self.RelationItem[i].CODE;
+                        }
+                    });
+                    }
+                    
+                },
+                onValuesChange4: function (picker, values) {
+                    this.pickerIsshares = values[0];
+                },
+                surePickerIsshares: function (param) {
+                    this.pickerIssharesStatus = !this.pickerIssharesStatus;
+                    if (param == 'confirm') {
+                        this.message.IS_SHARES_NM = this.pickerIsshares;
+                        if (this.pickerIsshares == "是") {
+                            this.message.IS_SHARES = 1
+                        } else {
+                            this.message.IS_SHARES = 0
+                        }
+                    }
+                },
+                onValuesChange5: function (picker, values) {
+                    this.pickerIslocal = values[0];
+                },
+                surePickerIslocal: function (param) {
+                    this.pickerIslocalStatus = !this.pickerIslocalStatus;
+                    if (param == 'confirm') {
+                        this.message.IS_LOCAL_NM = this.pickerIslocal;
+                        if (this.pickerIslocal == "是") {
+                            this.message.IS_LOCAL = 1
+                        } else {
+                            this.message.IS_LOCAL = 0
+                        }
+                    }
+                },
+                // 保存
+                addComplete: function () {
+                    var self = this;
+                    if (!self.message.NAME) {
+                        summer.toast({
+                            msg: '请输入姓名'
+                        });
+                    } else if (!self.message.SEX_NM) {
+                        summer.toast({
+                            msg: '请选择性别'
+                        });
+                    } else if (!self.message.AGE) {
+                        summer.toast({
+                            msg: '请输入年龄'
+                        });
+                    } else if (!/^[0-9]{1,2}$/.test(self.message.AGE)) {
+                        summer.toast({
+                            msg: '请输入正确的年龄'
+                        });
+                    } else if (!self.message.ID_CARD_NO) {
+                        summer.toast({
+                            msg: '请输入身份证号'
+                        });
+                    } else if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(self.message.ID_CARD_NO)) {
+                        summer.toast({
+                            msg: '请输入正确的身份证号'
+                        });
+                    } else if (!self.message.TEL_PHONE) {
+                        summer.toast({
+                            msg: '请输入手机号'
+                        });
+                    } else if (!/^[1][3,4,5,6,7,8][0-9]{9}$/.test(self.message.TEL_PHONE)) {
+                        summer.toast({
+                            msg: '请输入正确的手机号'
+                        });
+                    } else if (!self.message.LICENSE_TYPE_NM) {
+                        summer.toast({
+                            msg: '请选择驾照类型'
+                        });
+                    } else if (!self.message.RALATION_TYPE_NM) {
+                        summer.toast({
+                            msg: '请选择与申请人关系'
+                        });
+                    } else if (!self.message.IS_SHARES_NM) {
+                        summer.toast({
+                            msg: '请选择是否参股'
+                        });
+                    } else if (!self.message.IS_LOCAL_NM) {
+                        summer.toast({
+                            msg: '请选择是否本地人'
+                        });
+                    } else if (!self.message.POSTAL_ADDRESS) {
+                        summer.toast({
+                            msg: '请输入通讯地址'
+                        });
+                    } else {
+                        summer.showProgress();
+                        var finalMessage=JSON.parse(JSON.stringify(self.message));
+                        ajaxRequest({
+                            type: 'post',
+                            url: 'appservice/foundproject/toAddDriverSave',
+                            param: finalMessage
+                        }, function (res) {
+                            summer.hideProgress();
+                            if (res.data.flag == 1) {
+                                summer.execScript({
+                                    winId: 'driver',
+                                    script: "getDriverList()"
+                                });
+                                summer.toast({
+                                    msg: '保存成功'
+                                });
+                                summer.execScript({
+                                winId: "setProject",
+                                script: "addRight('checkReport')"
+                            });
+                                summer.closeWin();
+                            }
+                        }, function (err) {
+                            summer.hideProgress();
+                            console.log(err);
+                            summer.toast({
+                                msg: '保存失败'
+                            })
+                        });
+                    }
+                }
+            }
+        });
+        $(function () {
+            $('body').height($('body')[0].clientHeight);
+        });
+    </script>
+</body>
+
+</html>

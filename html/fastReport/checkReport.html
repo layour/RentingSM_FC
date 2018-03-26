@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/iuapmobile.um.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/mint.css">
+    <script src="../../js/summer.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/font.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/mint.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <style>
+        .um-list-item-bodys {
+            align-self: center;
+            line-height: .88rem;
+            height: .88rem;
+            padding: 0;
+            font-size: 0.32rem;
+            color: #333;
+            padding-left: 0.56rem;
+            padding-right: .44rem;
+            border-bottom: 1px solid #EFEFEF;
+            background: #fff;
+            position: relative;
+        }
+
+        .frp {
+            position: absolute;
+            right: .6rem;
+            top: 0;
+        }
+
+        .iconfont.icon-right {
+            font-size: 20px;
+            color: #039BE5;
+            display: none;
+        }
+
+        .iconfont.icon-right.active {
+            display: inline-block;
+        }
+
+        .iconfont.icon-enter.active {
+            display: none;
+        }
+
+        i {
+            color: #DBDBDB;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="um-win" id="projectImgList" v-cloak>
+        <div class="um-content addCar">
+            <div class="um-list-item-bodys" @click="openFamily('family')">
+                家庭成员
+                <span class="frp">
+                    <i class="uId icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
+            <div class="um-list-item-bodys" @click="openDriver('driver')">
+                司机信息
+                <span class="frp">
+                    <i class="carId icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
+            <div class="um-list-item-bodys" @click="opencheckPeople('checkPeople')">
+                调查人员综合评价
+                <span class="frp">
+                    <i class="imgId icon iconfont icon-right"></i>&nbsp;
+                    <i class="icon iconfont icon-enter"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script>
+        summerready = function () {
+            projectImgList.projectId = summer.pageParam.id;
+            projectImgList.CLIENT_ID = summer.pageParam.CLIENT_ID;
+        }
+        var projectImgList = new Vue({
+            el: '#projectImgList',
+            data: function () {
+                return {
+                    projectId: '',
+                    CLIENT_ID: ""
+                }
+            },
+            methods: {
+                openFamily: function (val) {
+                    var _this = this;
+                    summer.openWin({
+                        id: val,
+                        url: "html/fastReport/family.html",
+                        create: false,
+                        type: 'actionBar',
+                        pageParam: {
+                            CLIENT_ID: _this.CLIENT_ID
+                        },
+                        actionBar: {
+                            title: "家庭成员",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            },
+                            rightItems: [{
+                                type: "text",
+                                text: "新增",
+                                textColor: "#ffffff",
+                                method: "family.addFamilyMem()"
+                            }]
+                        }
+                    })
+                },
+                openDriver: function (val) {
+                    var _this = this;
+                    summer.openWin({
+                        id: val,
+                        url: "html/fastReport/driver.html",
+                        create: false,
+                        type: 'actionBar',
+                        pageParam: {
+                            CLIENT_ID: _this.CLIENT_ID,
+                            PROJECT_ID:_this.projectId
+                        },
+                        actionBar: {
+                            title: "司机信息",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            },
+                            rightItems: [{
+                                type: "text",
+                                text: "新增",
+                                textColor: "#ffffff",
+                                method: "driver.addDriver()"
+                            }]
+                        }
+                    })
+                },
+                opencheckPeople: function (val) {
+                    var _this = this;
+                    summer.openWin({
+                        id: val,
+                        url: "html/fastReport/checkPeople.html",
+                        create: false,
+                        type: 'actionBar',
+                        pageParam: {
+                            PROJECT_ID:_this.projectId
+                        },
+                        actionBar: {
+                            title: "调查人员评价",
+                            titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            backgroundColor: "#039BE5",
+                            leftItem: {
+                                image: "img/back.png",
+                                method: "", //返回按钮自定义事件
+                                text: "返回",
+                                textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                            },
+                            rightItems: [{
+                                type: "text",
+                                text: "保存",
+                                textColor: "#ffffff",
+                                method: "checkPeople.addCheckPeople()"
+                            }]
+                        }
+                    })
+                },
+            }
+        });
+
+        function addRight(param) {
+            $("." + param).addClass('active').siblings('i').addClass("active");
+        }
+
+        function save() {
+            summer.closeWin()
+        }
+    </script>
+</body>
+
+</html>
