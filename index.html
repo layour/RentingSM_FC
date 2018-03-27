@@ -604,13 +604,23 @@
 		
 		// ETC业务
 		function openETCService(){
-			var sendId = "1"; // 0.为快速通; 1.好运达。
-			var partnerId = "sqhy"; // 合作商ID(必填)
-			var partnerKey = "123456"; // 合作商key(必填)
-			var mobile = "15552866436"; // 用户手机号(选填)
-			var egsToken = null; // 通过对接方token获取用户手机号(选填，与手机号只可传一个)
-			var isRel = false; // false.测试环境; true.正式环境。
-			window.finance.present(sendId, partnerId, partnerKey, mobile, egsToken, isRel);
+            if (isLogin()) {
+                var MOBILE = "";
+                if (summer.getStorage("userinfo")) {
+                    if (summer.getStorage("userinfo").MOBILE) {
+                        MOBILE = summer.getStorage("userinfo").MOBILE;
+                    }
+                };
+                var sendId = "1"; // 0.为快速通; 1.好运达。
+                var partnerId = "100015850015"; // 合作商ID(必填)
+                var partnerKey = "3846549E9EAED6100D07AEFB04C12C7FC7E54F580B731451"; // 合作商key(必填)
+                var mobile = MOBILE; // 用户手机号(选填)
+                var egsToken = null; // 通过对接方token获取用户手机号(选填，与手机号只可传一个)
+                var isRel = true; // false.测试环境; true.正式环境。
+                window.finance.present(sendId, partnerId, partnerKey, mobile, egsToken, isRel);
+            } else {
+                toLog();
+            }
 		};
 
 		// 敬请期待
