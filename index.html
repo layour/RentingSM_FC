@@ -164,8 +164,8 @@
 	<script>
 		summerready = function() {
             var userinfo = summer.getStorage("userinfo");
-			fistPage.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			if (isLogin()) {
+				fistPage.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 				getMissionData(); //获取代办任务个数
 			}
 			summer.setRefreshHeaderInfo({
