@@ -60,7 +60,7 @@
 					<input v-model="pledge" @input="pledgeInps" type="number" placeholder="请输入" />
                 </li>
                 <li>
-                    <span>GPS费用</span>
+                    <span>杂费(放款扣除)</span>
                     <strong>元</strong>
                     <input v-model="gps" @input="GPSinps" type="number" placeholder="请输入" />
                 </li>
@@ -262,7 +262,7 @@
                         return;
                     } else if (this.gps == "") {
                         summer.toast({
-                            msg: "请填写GPS费用"
+                            msg: "请填写杂费(放款扣除)"
                         });
                         return;
                     } 
