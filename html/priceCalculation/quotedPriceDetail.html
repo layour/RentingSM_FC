@@ -116,7 +116,7 @@
 							<input type="text" @input="checkVal('feeOn')" placeholder="请输入续保保证金" name="feeOn" v-model="quoted.feeOn">&nbsp;元
 						</span>
 					</li>
-					<li class="input">
+					<li class="spec input">
 						<b>咨询费</b>
 						<span>
 							<input type="text" @input="checkVal('fee')" placeholder="请输入咨询费" name="consultingFee" v-model="quoted.consultingFee">&nbsp;元
@@ -129,10 +129,11 @@
 						</span>
 
 					</li> -->
-					<li class='spec input'>
-						<b>租赁收利率</b>
+					<li>
+						<b>租赁收益率</b>
 						<span>
-							<input type="text" @input="checkVal('gps')" placeholder="租赁收利率" name="gps" v-model="quoted.gps">&nbsp;%
+							<!-- <input type="text" @input="checkVal('gps')" placeholder="租赁收益率" name="gps" v-model="quoted.gps">&nbsp;% -->
+							{{quoted.gps}}&nbsp;%
 						</span>
 					</li>
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
@@ -582,7 +583,7 @@
 
 						},
 						quotedTest:function(){
-							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn||!this.quoted.gps){
+							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn){
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}
@@ -597,8 +598,7 @@
  								POUNDAGE_PRICE:_this.quoted.consultingFee,
  								BAIL_PERCENT:_this.quoted.sureBailRate,
  								FIRST_MONEY:_this.quoted.sureFirstPay,
-								RenewalMargin_MONEY:_this.quoted.feeOn,
-								INTERNAL_RATE:_this.quoted.gps
+								RenewalMargin_MONEY:_this.quoted.feeOn
 							};
 							console.log(JSON.stringify(params));
 							ajaxRequest({
@@ -612,6 +612,7 @@
 								_this.testData=res.data.datas
 								_this.resultData.firstPrice=res.data.datas.FIRST_MONEY
 								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
+								_this.quoted.gps=res.data.datas.irrrate
 								_this.resultData.term=_this.quoted.contractTerm
 							},function(err){
 								console.log("err",err);
