@@ -17,6 +17,24 @@
             <ul>
                 <li v-if='hasProjectId'>
                     <p class="pl10 pr10 tr">
+                        <span class="fl">业务类型</span>
+                        <span class="right">
+                            <span class="first">{{taskStyle}}</span>
+                        </span>
+                    </p>
+                </li>
+                <li @click="surePickerTask" v-else>
+                    <p class="pl10 pr10 tr">
+                        <span class="fl">业务类型</span>
+                        <span class="right">
+                            <span v-if='taskStyle' class="first">{{taskStyle}}</span>
+                            <span v-else class="second">请选择</span>
+                            <i class="icon iconfont icon-enter"></i>
+                        </span>
+                    </p>
+                </li>
+                <li v-if='hasProjectId'>
+                    <p class="pl10 pr10 tr">
                         <span class="fl">项目类型</span>
                         <span class="right">
                             <span class="first">{{programStyle}}</span>
@@ -33,7 +51,24 @@
                         </span>
                     </p>
                 </li>
-
+                <li v-if='hasProjectId'>
+                    <p class="pl10 pr10 tr">
+                        <span class="fl">是否团单</span>
+                        <span class="right">
+                            <span class="first">{{isGroup}}</span>
+                        </span>
+                    </p>
+                </li>
+                <li @click="surePickerIsgroup" v-else>
+                    <p class="pl10 pr10 tr">
+                        <span class="fl">是否团单</span>
+                        <span class="right">
+                            <span v-if='isGroup' class="first">{{isGroup}}</span>
+                            <span v-else class="second">请选择</span>
+                            <i class="icon iconfont icon-enter"></i>
+                        </span>
+                    </p>
+                </li>
                 <li v-if='hasProjectId'>
                     <p class="pl10 pr10 tr">
                         <span class="fl">省市</span>
@@ -69,42 +104,44 @@
                     </p>
                 </li>
                 <li v-else></li>
-                <!--		<li>
-						<p class="pl10 pr10 tr" style="line-height:0.88rem;">
-							<span class="fl">合同签署方式</span>
-							<span class="isGroup">
-								<span @click="changContractStatus($event,'electron')" class='active'>
-									电子
-								</span>
-								<span @click="changContractStatus($event,'paper')" class="">
-									纸质
-								</span></span>
-						</p>
-					</li>
-					<li>
-						<p class="pl10 pr10 tr" style="line-height:0.88rem;">
-								 <span class="fl">是否团单</span>
-							<span class="isGroup">
-									<span @click="changGroupStatus($event,'no')" class='active'>
-										否
-									</span>
-									<span @click="changGroupStatus($event,'yes')" class="">
-										是
-									</span>
-							</span>
-						</p>
-					</li>-->
+
+                <li class="item um-box pl10 pr10" v-if="hasProjectId">
+                    <p class="pl10 pr10 tr">
+                        <span class="fl">项目推荐人</span>
+                        <span class="">
+                            <span class="first">{{SALE_NAME}} </span>
+                        </span>
+                    </p>
+                </li>
+                <li class="item um-box pl10 pr10" v-else>
+                    <span class="um-bf1">项目推荐人</span>
+                    <input placeholder="请输入您的项目推荐人" v-model="SALE_NAME" type="text">
+                </li>
             </ul>
 
 
         </div>
 
         <div class="um-footer">
-            <mt-popup v-model="pickerProgramStatus" position='bottom' class="pickerColor">
+            <mt-popup v-model="pickerTaskStatus" position='bottom' class="pickerColor">
                 <mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
+                <p>
+                    <span class="fl" @click="surePickerTask">取消</span>
+                    <span class="fr" @click="surePickerTask('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerProgramStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
                 <p>
                     <span class="fl" @click="surePickerProgram">取消</span>
                     <span class="fr" @click="surePickerProgram('confirm')">确定</span>
+                </p>
+            </mt-popup>
+            <mt-popup v-model="pickerIsgroupStatus" position='bottom' class="pickerColor">
+                <mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
+                <p>
+                    <span class="fl" @click="surePickerIsgroup">取消</span>
+                    <span class="fr" @click="surePickerIsgroup('confirm')">确定</span>
                 </p>
             </mt-popup>
         </div>
@@ -134,6 +171,12 @@
             baseData.business.map(function (e, i) {
                 baseMessage.slots1[0].values.push(e.FLAG);
             })
+            baseData.proTyps.map(function (e, i) {
+                baseMessage.slots2[0].values.push(e.FLAG);
+            })
+            baseData.IS_GROUP.map(function (e, i) {
+                baseMessage.slots3[0].values.push(e.FLAG);
+            })
         }
 
         function getAddr() {
@@ -152,10 +195,30 @@
                 contractStatus: 'electron',
                 GroupStatus: 'no',
                 programStyle: '',
+                taskStyle: '',
+                isGroup: '',
                 holdPrice: 100,
+                pickerTaskStatus: false,
+                pickerTask: '',
+                pickerIsgroupStatus: false,
+                pickerIsgroup: '',
                 pickerProgramStatus: false,
                 pickerProgram: '',
                 slots1: [{
+                    flex: 1,
+                    values: [],
+                    defaultIndex: 0,
+                    className: 'slot1',
+                    textAlign: 'center'
+                }],
+                slots2: [{
+                    flex: 1,
+                    values: [],
+                    defaultIndex: 0,
+                    className: 'slot1',
+                    textAlign: 'center'
+                }],
+                slots3: [{
                     flex: 1,
                     values: [],
                     defaultIndex: 0,
@@ -172,7 +235,10 @@
                 hasProjectId: false,
                 PROJECT_NAME: '',
                 PROJECT_ID: '',
-                ORG_ID: ''
+                ORG_ID: '',
+                PRO_TYPE: '', //项目类型
+                IS_GROUP: '', //是否团单
+                SALE_NAME: '', //项目推荐人
             },
             methods: {
                 getData: function (id) {
@@ -186,7 +252,7 @@
                     }, function (res) {
                         summer.hideProgress();
                         if (res.data.flag == 1) {
-                            self.programStyle = res.data.datas.ProjectObj.PLATFORM
+                            self.taskStyle = res.data.datas.ProjectObj.PLATFORM
                             self.AREA_ID_NM = res.data.datas.ProjectObj.AREA_NAME
                             self.CITY_ID_NM = res.data.datas.ProjectObj.CITY_NAME
                             self.PROJECT_NAME = res.data.datas.ProjectObj.PROJECT_NAME
@@ -230,6 +296,15 @@
                     this.GroupStatus = status;
                 },
                 onValuesChange1: function (picker, values) {
+                    this.pickerTask = values[0];
+                },
+                surePickerTask: function (param) {
+                    this.pickerTaskStatus = !this.pickerTaskStatus;
+                    if (param == 'confirm') {
+                        this.taskStyle = this.pickerTask;
+                    }
+                },
+                onValuesChange2: function (picker, values) {
                     this.pickerProgram = values[0];
                 },
                 surePickerProgram: function (param) {
@@ -238,11 +313,30 @@
                         this.programStyle = this.pickerProgram;
                     }
                 },
+                onValuesChange3: function (picker, values) {
+                    this.pickerIsgroup = values[0];
+                },
+                surePickerIsgroup: function (param) {
+                    this.pickerIsgroupStatus = !this.pickerIsgroupStatus;
+                    if (param == 'confirm') {
+                        this.isGroup = this.pickerIsgroup;
+                    }
+                },
                 save: function () {
                     var self = this;
-                    if (this.programStyle == "") {
+                    if (this.taskStyle == "") {
+                        summer.toast({
+                            msg: "请选择业务类型"
+                        });
+                        return;
+                    } else if (this.programStyle == "") {
                         summer.toast({
                             msg: "请选择项目类型"
+                        });
+                        return;
+                    } else if (this.isGroup == "") {
+                        summer.toast({
+                            msg: "请选择是否团单"
                         });
                         return;
                     } else if (this.CITY_ID == "") {
@@ -250,17 +344,45 @@
                             msg: "请选择省市"
                         });
                         return;
+                    } else if (this.SALE_NAME == "") {
+                        summer.toast({
+                            msg: "请选择项目推荐人"
+                        });
+                        return;
                     }
                     //此时需要调后端的ajax请求数据
                     var _programStyle = this.programStyle;
                     var _area_id = this.taskStyle;
-                    var PLATFORM_TYPE;
-                    var customId = this.customId;
-                    baseMessage.totalData.business.map(function (e, i) {
-                        if (e.FLAG == _programStyle) {
-                            PLATFORM_TYPE = baseMessage.totalData.business[i].CODE;
+                     for(var i=0;i<baseMessage.totalData.business.length;i++){
+                         if(baseMessage.totalData.business[i].FLAG== this.taskStyle){
+                            this.PLATFORM_TYPE = baseMessage.totalData.business[i].CODE;
+                         }
+                     }
+                     for(var i=0;i<baseMessage.totalData.proTyps.length;i++){
+                         if(baseMessage.totalData.proTyps[i].FLAG== this.programStyle){
+                            this.PRO_TYPE = baseMessage.totalData.proTyps[i].CODE;
+                         }
+                     }
+                     for(var i=0;i<baseMessage.totalData.IS_GROUP.length;i++){
+                         if(baseMessage.totalData.IS_GROUP[i].FLAG== this.isGroup){
+                            this.IS_GROUP = baseMessage.totalData.IS_GROUP[i].CODE;
+                         }
+                     }
+                   /*JSON.parse(JSON.stringify(baseMessage.totalData.business)) .map(function (e, i) {
+                        if (e.FLAG == this.taskStyle) {
+                            this.PLATFORM_TYPE = baseMessage.totalData.business[i].CODE;
                         }
                     });
+                    JSON.parse(JSON.stringify(baseMessage.totalData.proTyps)).map(function (e, i) {
+                        if (e.FLAG == this.programStyle) {
+                            this.PRO_TYPE = baseMessage.totalData.business[i].CODE;
+                        }
+                    });
+                    JSON.parse(JSON.stringify(baseMessage.totalData.IS_GROUP)).map(function (e, i) {
+                        if (e.FLAG == this.isGroup) {
+                            this.IS_GROUP = baseMessage.totalData.business[i].CODE;
+                        }
+                    });*/
 
                     summer.showProgress();
                     ajaxRequest({
@@ -268,10 +390,13 @@
                         url: 'appservice/foundproject/saveProject',
                         param: {
                             "AREA_ID": self.AREA_ID,
-                            "PLATFORM_TYPE": PLATFORM_TYPE,
-                            "CLIENT_ID": customId,
+                            "PLATFORM_TYPE": self.PLATFORM_TYPE, //业务类型
+                            "CLIENT_ID": self.customId,
                             "CITY_ID": self.CITY_ID,
-                            "ORG_ID": self.ORG_ID
+                            "ORG_ID": self.ORG_ID,
+                            "PRO_TYPE": self.PRO_TYPE, //项目类型
+                            "IS_GROUP": self.IS_GROUP, //是否团单
+                            "SALE_NAME": self.SALE_NAME, //项目推荐人
                         }
                     }, function (res) {
                         if (res.data.flag == 1) {

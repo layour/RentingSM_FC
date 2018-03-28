@@ -129,7 +129,7 @@
 					<span class=""><span v-if='message.BIRTHDAY' class="first">{{message.BIRTHDAY}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
-			<mt-field label="住址" placeholder="请输入您的住址" v-model="message.HOUSE_ADDRESS"></mt-field>
+			
 			<mt-field label="手机号" placeholder="请输入您的手机号码" v-model="message.TEL_PHONE"></mt-field>
 			<div class="item">
 				<p class="pl10 pr10 tr" @click="selectAddr">
@@ -137,6 +137,7 @@
 					<span class=""> <span  class="first">{{message.HOUSE_ADDRESS_PROVINCE_NM}} {{message.HOUSE_ADDRESS_CITY_NM}}</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
+			<mt-field label="居住住址" placeholder="请输入您的居住住址" v-model="message.HOUSE_ADDRESS"></mt-field>
 			<!-- <mt-field label="通讯地址" placeholder="请输入您的通讯地址" v-model="message.phoneAddress"></mt-field> -->
 			<div @click="surePickerMarrige" class="item">
 				<p class="pl10 pr10  um-box">
