@@ -582,7 +582,7 @@
 
 						},
 						quotedTest:function(){
-							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn){
+							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn||!this.quoted.gps){
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}
@@ -597,7 +597,8 @@
  								POUNDAGE_PRICE:_this.quoted.consultingFee,
  								BAIL_PERCENT:_this.quoted.sureBailRate,
  								FIRST_MONEY:_this.quoted.sureFirstPay,
-								RenewalMargin_MONEY:_this.quoted.feeOn
+								RenewalMargin_MONEY:_this.quoted.feeOn,
+								INTERNAL_RATE:_this.quoted.gps
 							};
 							console.log(JSON.stringify(params));
 							ajaxRequest({

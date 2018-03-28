@@ -90,7 +90,7 @@
 							<input type="text" @input="checkVal('feeOn')" placeholder="请输入续保保证金" name="feeOn" v-model="quoted.feeOn">&nbsp;元
 						</span>
 					</li>
-					<li class="input spec">
+					<li class="input">
 						<b>咨询费</b>
 						<span>
 							<input type="text" @input="checkVal('fee')" placeholder="请输入咨询费" name="consultingFee" v-model="quoted.consultingFee">&nbsp;元
@@ -103,12 +103,12 @@
 						</span>
 
 					</li> -->
-					<!-- <li class='spec input'>
-						<b>杂费(放款扣除)</b>
+					<li class='spec input'>
+						<b>租赁收利率</b>
 						<span>
-							<input type="text" @input="checkVal('gps')" placeholder="请输入杂费(放款扣除)" name="gps" v-model="quoted.gps">&nbsp;元
+							<input type="text" @input="checkVal('gps')" placeholder="租赁收利率" name="gps" v-model="quoted.gps">&nbsp;%
 						</span>
-					</li> -->
+					</li>
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
 					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
 					<li><b>期数</b><span>{{resultData.term}}&nbsp;期</span></li>
@@ -439,7 +439,7 @@
 								}
 							}else if (value=='gps') {
 								val=this.quoted.gps;
-								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
+								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=100){
 									this.quoted.gps=''
 								}
 							}else if(value=='feeOn'){
@@ -451,7 +451,7 @@
 
 						},
 						quotedTest:function(){
-							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn){
+							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn||!this.quoted.gps){
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}
@@ -466,7 +466,8 @@
 								POUNDAGE_PRICE: _this.quoted.consultingFee,
 								BAIL_PERCENT: _this.quoted.sureBailRate,
 								FIRST_MONEY: _this.quoted.sureFirstPay,
-								RenewalMargin_MONEY:_this.quoted.feeOn
+								RenewalMargin_MONEY:_this.quoted.feeOn,
+								INTERNAL_RATE:_this.quoted.gps
 							};
 							console.log(JSON.stringify(params));
 							ajaxRequest({
@@ -511,8 +512,9 @@
 								BAIL_PERCENT:String(_this.quoted.sureBailRate),
 								// '':_this.quoted.sureBailType, 保证金方式
 								POUNDAGE_PRICE:_this.quoted.consultingFee,
-                                RenewalMargin_MONEY:_this.quoted.feeOn,
-                                ORG_ID:_this.ORG_ID
+                RenewalMargin_MONEY:_this.quoted.feeOn,
+                ORG_ID:_this.ORG_ID,
+								INTERNAL_RATE:_this.quoted.gps
 								// LEASE_SUBFIRENT:_this.quoted.sureBail, 保险保证金
 							};
 							console.log(JSON.stringify(param));
