@@ -60,13 +60,13 @@ dl dd {
 dl dd input {
     border: 0;
     outline: none;
-    height: 0.38rem;
+    height: 0.42rem;
     width: 4.6rem;
     background: none;
     color: #424242;
     font-size: 0.32rem;
     line-height: 0.34rem;
-    margin-top: 0.2rem;
+    margin-top: 0.18rem;
 }
 
 *::-webkit-input-placeholder {
