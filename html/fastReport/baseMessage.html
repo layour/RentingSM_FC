@@ -105,8 +105,8 @@
                 </li>
                 <li v-else></li>
 
-                <li class="item um-box pl10 pr10" v-if="hasProjectId">
-                    <p class="pl10 pr10 tr">
+                <li class="item um-box" v-if="hasProjectId">
+                    <p class="pl10 pr10 tr" style="width:100%;">
                         <span class="fl">项目推荐人</span>
                         <span class="">
                             <span class="first">{{SALE_NAME}} </span>
@@ -253,6 +253,18 @@
                         summer.hideProgress();
                         if (res.data.flag == 1) {
                             self.taskStyle = res.data.datas.ProjectObj.PLATFORM
+                          if(res.data.datas.ProjectObj.IS_GROUP==1){
+                            self.isGroup="是"
+                          }else{
+                            self.isGroup="否"
+                          }
+                            self.SALE_NAME = res.data.datas.ProjectObj.SALE_NAME
+                          for(var i=0;i<baseMessage.totalData.proTyps.length;i++){
+                         if(baseMessage.totalData.proTyps[i].CODE== res.data.datas.ProjectObj.PRO_TYPE){
+                            self.programStyle = baseMessage.totalData.proTyps[i].FLAG;
+                         }
+                     }
+
                             self.AREA_ID_NM = res.data.datas.ProjectObj.AREA_NAME
                             self.CITY_ID_NM = res.data.datas.ProjectObj.CITY_NAME
                             self.PROJECT_NAME = res.data.datas.ProjectObj.PROJECT_NAME
@@ -368,21 +380,7 @@
                             this.IS_GROUP = baseMessage.totalData.IS_GROUP[i].CODE;
                          }
                      }
-                   /*JSON.parse(JSON.stringify(baseMessage.totalData.business)) .map(function (e, i) {
-                        if (e.FLAG == this.taskStyle) {
-                            this.PLATFORM_TYPE = baseMessage.totalData.business[i].CODE;
-                        }
-                    });
-                    JSON.parse(JSON.stringify(baseMessage.totalData.proTyps)).map(function (e, i) {
-                        if (e.FLAG == this.programStyle) {
-                            this.PRO_TYPE = baseMessage.totalData.business[i].CODE;
-                        }
-                    });
-                    JSON.parse(JSON.stringify(baseMessage.totalData.IS_GROUP)).map(function (e, i) {
-                        if (e.FLAG == this.isGroup) {
-                            this.IS_GROUP = baseMessage.totalData.business[i].CODE;
-                        }
-                    });*/
+                  
 
                     summer.showProgress();
                     ajaxRequest({
