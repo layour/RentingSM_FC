@@ -134,7 +134,7 @@
 			<div class="item">
 				<p class="pl10 pr10 tr" @click="selectAddr">
 					<span class="fl">省市</span>
-					<span class=""> <span  class="first">{{message.HOUSE_ADDRESS_PROVINCE_NM}} {{message.HOUSE_ADDRESS_CITY_NM}}</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class=""> <span  class="first">{{message.HOUSE_ADDRESS_PROVINCE_NM}} {{message.HOUSE_ADDRESS_CITY_NM}} {{message.HOUSE_ADDRESS_COUNTY_NM}}</span> <i class="icon iconfont icon-enter"></i></span>
 				</p>
 			</div>
 			<mt-field label="居住住址" placeholder="请输入您的居住住址" v-model="message.HOUSE_ADDRESS"></mt-field>
@@ -280,6 +280,8 @@
 						HOUSE_ADDRESS_PROVINCE_NM: '',
 						HOUSE_ADDRESS_CITY: '',
 						HOUSE_ADDRESS_CITY_NM: '',
+						HOUSE_ADDRESS_COUNTY_NM:'',
+						HOUSE_ADDRESS_COUNTY:''
 					},
 					spoustObjMes: "",
 					sourceFrom:'',
@@ -337,6 +339,8 @@
 								self.message.HOUSE_ADDRESS_PROVINCE_NM = holeData.HOUSE_ADDRESS_PROVINCE_NM;
 								self.message.HOUSE_ADDRESS_CITY = holeData.HOUSE_ADDRESS_CITY;
 								self.message.HOUSE_ADDRESS_CITY_NM = holeData.HOUSE_ADDRESS_CITY_NM;
+								self.message.HOUSE_ADDRESS_COUNTY = holeData.HOUSE_ADDRESS_COUNTY;
+								self.message.HOUSE_ADDRESS_COUNTY_NM = holeData.HOUSE_ADDRESS_COUNTY_NM;
 								if (self.message.IS_MARRY == "20") {
 									summer.setWinAttr({
 										actionBar: {
@@ -687,6 +691,7 @@
 						HOME_XZ: self.message.HOME_XZ,
 						HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
 						HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,
+						HOUSE_ADDRESS_COUNTY:self.message.HOUSE_ADDRESS_COUNTY,
                         spoustObj: {},
                         ORG_ID: self.ORG_ID
 					};
@@ -838,9 +843,11 @@
 		function getAddr() {
 			newCreateCustom.message.HOUSE_ADDRESS_PROVINCE_NM = JSON.parse(summer.getStorage('selectProvince')).AREA_NAME
 			newCreateCustom.message.HOUSE_ADDRESS_CITY_NM = JSON.parse(summer.getStorage('selectCity')).AREA_NAME
+			newCreateCustom.message.HOUSE_ADDRESS_COUNTY_NM = JSON.parse(summer.getStorage('selectArea')).AREA_NAME
 			newCreateCustom.message.HOUSE_ADDRESS_PROVINCE = JSON.parse(summer.getStorage('selectProvince')).AREA_ID
 			newCreateCustom.message.HOUSE_ADDRESS_CITY = JSON.parse(summer.getStorage('selectCity')).AREA_ID
-			//newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_NAME
+			newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_ID
+			
 		}
 		summerready = function() {
             var userinfo = summer.getStorage("userinfo");
