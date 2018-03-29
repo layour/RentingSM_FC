@@ -55,14 +55,35 @@
 						},
 						pickerModels:function(it){
               summer.setStorage('selectCity',JSON.stringify(it));
-				  var fromSelect=summer.getStorage("selectFrom");
-				  summer.execScript({
-						winId: fromSelect,
-						script: 'getAddr()'
-				  });
-				  summer.closeToWin({
-					  id:fromSelect
-				  })
+							var fromSelect=summer.getStorage("selectFrom");
+							if(fromSelect=="newCreateCustom"){
+										summer.openWin({
+												id:'selectArea',
+												url:'html/fastReport/selectArea.html',
+												create:false,
+												type:'actionBar',
+												pageParam:{id:it.AREA_ID},
+												actionBar: {
+													title: it.AREA_NAME,
+													titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+													backgroundColor: "#039BE5",
+													leftItem:{
+															image: "img/back.png",
+															method:'',//返回按钮自定义事件
+															text:"返回",
+															textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+													}
+												}
+									});
+									return;
+							}
+							summer.execScript({
+								winId: fromSelect,
+								script: 'getAddr()'
+							});
+							summer.closeToWin({
+								id:fromSelect
+							})
 							/*summer.openWin({
 								id:'selectArea',
 								url:'html/fastReport/selectArea.html',
