@@ -10,7 +10,8 @@
 	<link rel="stylesheet" href="stock.css">
 	<script src="../../js/summer.js"></script>
 	<script src="../../js/jquery.min.js"></script>
-	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+    <script src="../../js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
 	<script src="../../js/font.js" charset="utf-8"></script>
 	<script src="../../js/vue.js" charset="utf-8"></script>
 	<script src="../../js/common.js"></script>
@@ -89,7 +90,13 @@
 			<!-- 空图片展示 -->
 			<div id="content"></div>
             <div class="banner">
-                <img src="../../img/banner.png" alt="">
+                <div id='banner-inner' class='swiper-container'>
+                    <div class='swiper-wrapper'>
+                        <div class="swiper-slide" v-for="k in imgArr">
+                            <img v-bind:src="k.DOWN_PATH" alt="" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <ul class="repayList">
                 <li v-for = "(k, index) in items" @click="checkIt(index)">
@@ -129,6 +136,8 @@
         var stock = new Vue({
             el:'#index',
 			data:{
+                // 轮播图
+                imgArr:[],
 				// 账单列表
 				items:[],
 				// 银行列表
@@ -217,7 +226,32 @@
 				cancelBubble:function (ev) {
 					var ev = ev || window.event;
 					ev.cancelBubble = true;
-				},
+                },
+                // 请求轮播图
+                getSwiperImg: function () {
+                    var self = this;
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/login/getLoginPic',
+                        param: {
+                            "REG_SYS": "2"
+                        }
+                    }, function(res) {
+                        if (res.data.flag == 1) {
+                            if (res.data.datas.picList.length < 1) {
+                                self.imgArr = [
+                                    {DOWN_PATH: '../../img/banner1.jpg'},
+                                    {DOWN_PATH: '../../img/banner2.jpg'},
+                                    {DOWN_PATH: '../../img/banner3.jpg'}
+                                ];
+                            } else {
+                                self.imgArr = res.data.datas.picList;
+                            }
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+                },
 				// 选择账单项
 				checkIt:function (index){
 					var This = this;
@@ -651,6 +685,11 @@
 			});
 		};
 		summerready = function () {
+            stock.getSwiperImg();
+            var mySwiper = new Swiper('.swiper-container', {
+				autoplay: 5000,
+				loop: true
+			});
             // 真实
 			stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
 			stock.NAME = summer.pageParam.customerInfo.NAME;

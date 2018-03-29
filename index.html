@@ -26,14 +26,8 @@
 			<div class="container">
 				<div id='banner-inner' class='swiper-container'>
 					<div class='swiper-wrapper'>
-						<div class="swiper-slide">
-							<img src="img/banner1.jpg" alt="" />
-						</div>
-						<div class="swiper-slide">
-							<img src="img/banner2.jpg" alt="" />
-						</div>
-						<div class="swiper-slide">
-							<img src="img/banner3.jpg" alt="" />
+						<div class="swiper-slide" v-for="k in imgArr">
+							<img v-bind:src="k.DOWN_PATH" alt="" />
 						</div>
 					</div>
 				</div>
@@ -166,7 +160,9 @@
             var userinfo = summer.getStorage("userinfo");
 			if (isLogin()) {
 				fistPage.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
-				getMissionData(); //获取代办任务个数
+                getMissionData(); //获取代办任务个数
+                fistPage.getSwiperImg();
+                
 			}
 			summer.setRefreshHeaderInfo({
 				visible: true,
@@ -197,9 +193,34 @@
 			el: '#win',
 			data: {
                 missionNum: '',
-                ORG_ID: ''
-			},
+                ORG_ID: '',
+                imgArr: []
+            },
 			methods: {
+                getSwiperImg: function () {
+                    var self = this;
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/login/getLoginPic',
+                        param: {
+                            "REG_SYS": "1"
+                        }
+                    }, function(res) {
+                        if (res.data.flag == 1) {
+                            if (res.data.datas.picList.length < 1) {
+                                self.imgArr = [
+                                    {DOWN_PATH: 'img/banner1.jpg'},
+                                    {DOWN_PATH: 'img/banner2.jpg'},
+                                    {DOWN_PATH: 'img/banner3.jpg'}
+                                ];
+                            } else {
+                                self.imgArr = res.data.datas.picList;
+                            }
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+                },
 				getMissionData:function() {
 					var self = this;
 					ajaxRequest({
