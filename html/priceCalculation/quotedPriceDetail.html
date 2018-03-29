@@ -611,7 +611,7 @@
 								_this.testData=res.data.datas
 								_this.resultData.firstPrice=res.data.datas.FIRST_MONEY
 								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
-								_this.quoted.gps=res.data.datas.irrrate
+								_this.quoted.gps=res.data.datas.payrent[0].irrrate
 								_this.resultData.term=_this.quoted.contractTerm
 							},function(err){
 								console.log("err",err);
