@@ -752,6 +752,7 @@
 					}, function(err) {
 						//alert(err);
 						console.log(err);
+						summer.toast({msg:"保存失败，请检查身份证号是否正确或联系管理员"});
 						summer.hideProgress();
 					});
 					//此处ajax请求
