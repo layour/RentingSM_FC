@@ -747,12 +747,15 @@
 							if(res.data.code=="E02003"){
 								summer.toast({msg:"客户证件号重复,请重新录入"});
 								return
+							}else{
+								summer.toast({msg:"请输入正确的身份证号"});
+							return;
 							}
 						}
 					}, function(err) {
 						//alert(err);
 						console.log(err);
-						summer.toast({msg:"保存失败，请检查身份证号是否正确或联系管理员"});
+						summer.toast({msg:"保存失败，请联系管理员"});
 						summer.hideProgress();
 					});
 					//此处ajax请求
