@@ -747,7 +747,7 @@
 							if(res.data.code=="E02003"){
 								summer.toast({msg:"客户证件号重复,请重新录入"});
 								return
-							}else{
+							}else if(res.data.code=="E10004"){
 								summer.toast({msg:"请输入真实的身份证号"});
 							return;
 							}
