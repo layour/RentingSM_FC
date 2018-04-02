@@ -6,12 +6,13 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/swiper-3.4.2.min.css">
 	<link rel="stylesheet" href="stock.css">
 	<script src="../../js/summer.js"></script>
 	<script src="../../js/jquery.min.js"></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
-    <script src="../../js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
+    <script src="../../js/swiper-3.4.2.min.js" charset="utf-8"></script>
 	<script src="../../js/font.js" charset="utf-8"></script>
 	<script src="../../js/vue.js" charset="utf-8"></script>
 	<script src="../../js/common.js"></script>
@@ -247,6 +248,13 @@
                             } else {
                                 self.imgArr = res.data.datas.picList;
                             }
+                            setTimeout(function () {
+                                var mySwiper = new Swiper('.swiper-container', {
+                                    autoplay: 5000,
+                                    autoplayDisableOnInteraction: false,
+                                    loop: true
+                                });
+                            }, 0);
                         }
                     }, function(err) {
                         console.log(err);
@@ -686,10 +694,6 @@
 		};
 		summerready = function () {
             stock.getSwiperImg();
-            var mySwiper = new Swiper('.swiper-container', {
-				autoplay: 5000,
-				loop: true
-			});
             // 真实
 			stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
 			stock.NAME = summer.pageParam.customerInfo.NAME;

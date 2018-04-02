@@ -22,43 +22,6 @@ html{
     margin-bottom: 0.2rem;
 }
 
-.swiper-container{
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    backface-visibility: hidden;
-    width: 100%;
-    height: 100%;
-}
-.swiper-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.swiper-free-mode > .swiper-wrapper {
-    -webkit-transition-timing-function: ease-out;
-    -moz-transition-timing-function: ease-out;
-    -ms-transition-timing-function: ease-out;
-    -o-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-    margin: 0 auto;
-}
-.swiper-slide {
-    float: left;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    text-align: center;
-}
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
 .crm,.xmgl{
    height: 0.7rem;
    background-color: #fff;
@@ -141,6 +104,7 @@ html{
    background-color: #fe0000;
 
 }
-.swiper-wrapper {
-    width: 100% !important;
+.swiper-container,.swiper-wrapper,.swiper-slide, .swiper-slide>img{
+    width: 100%;
+    height: 100%;
 }
