@@ -141,3 +141,6 @@ html{
    background-color: #fe0000;
 
 }
+.swiper-wrapper {
+    width: 100% !important;
+}

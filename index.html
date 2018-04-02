@@ -161,9 +161,8 @@
 			if (isLogin()) {
 				fistPage.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
                 getMissionData(); //获取代办任务个数
-                fistPage.getSwiperImg();
-                
 			}
+            fistPage.getSwiperImg();
 			summer.setRefreshHeaderInfo({
 				visible: true,
 				loadingImg: 'img/refresh.png',
@@ -180,10 +179,6 @@
 			setTimeout(function() {
 				summer.hideLaunch();
 			}, 500);
-			var mySwiper = new Swiper('.swiper-container', {
-				autoplay: 5000,
-				loop: true
-			});
 		}
 
 		function getMissionData() {
@@ -194,7 +189,11 @@
 			data: {
                 missionNum: '',
                 ORG_ID: '',
-                imgArr: []
+                imgArr: [
+                    /* {DOWN_PATH: 'img/banner1.jpg'},
+                    {DOWN_PATH: 'img/banner2.jpg'},
+                    {DOWN_PATH: 'img/banner3.jpg'} */
+                ]
             },
 			methods: {
                 getSwiperImg: function () {
@@ -215,10 +214,17 @@
                                 ];
                             } else {
                                 self.imgArr = res.data.datas.picList;
+                                self.initSwiper();
                             }
                         }
                     }, function(err) {
                         console.log(err);
+                    });
+                },
+                initSwiper: function () {
+                    var mySwiper = new Swiper('.swiper-container', {
+                        autoplay: 5000,
+                        loop: true
                     });
                 },
 				getMissionData:function() {
