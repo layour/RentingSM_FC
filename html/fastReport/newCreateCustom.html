@@ -793,7 +793,7 @@
 								return
 							} else if (res.data.code == "E10004") {
 								summer.toast({
-									msg: "请输入正确的姓名,身份证号,手机号"
+									msg: res.data.msg
 								});
 								return;
 							}
