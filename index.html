@@ -178,7 +178,11 @@
 			// 关闭启动图
 			setTimeout(function() {
 				summer.hideLaunch();
-			}, 500);
+            }, 500);
+            // 判断版本升级
+            if ($summer.os == "android") {
+                fistPage.update();
+            }
 		}
 
 		function getMissionData() {
@@ -194,6 +198,36 @@
                 ]
             },
 			methods: {
+                update: function () {
+                    var appVersion = JSON.parse(summer.getAppVersion()).versionName;
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/appsys/getNewapp',
+                        param: {
+                            "NOW_VERSION": appVersion,
+                            "APP_TYPE": "Android",
+                            "SYS_NAME": "销售端"
+                        }
+                    }, function(res) {
+                        if (res.data.flag == 1) {
+                            var NEW_VERSION = res.data.datas.NEW_VERSION;
+                            if (NEW_VERSION > appVersion) {
+                                UM.confirm({
+                                    title: '检测到新版本，是否升级？',
+                                    btnText: ["取消", "确定"],
+                                    overlay: true,
+                                    ok: function () {
+                                        summer.openWebView({
+                                            url : res.data.datas.SYS_PATH
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+                },
                 getSwiperImg: function () {
                     var self = this;
                     ajaxRequest({
