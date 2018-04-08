@@ -193,9 +193,19 @@
                                 btnText: ["取消", "确定"],
                                 overlay: true,
                                 ok: function () {
-                                    summer.openWebView({
-                                        url : res.data.datas.SYS_PATH
-                                    });
+                                    summer.upgradeApp({
+                                        url: res.data.datas.SYS_PATH
+                                    },function (ret) {
+                                        if (ret.state == 1 || ret == "OK") {
+                                            summer.toast({
+                                                msg : '升级成功'
+                                            });
+                                        }
+                                    },function (err) {
+                                        summer.toast({
+                                            msg : '升级失败'
+                                        });
+                                    })
                                 }
                             });
                         }
