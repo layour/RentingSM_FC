@@ -455,40 +455,35 @@ html,body{
     font-style: normal;
     color: #039be5;
 }
-.swiper-container{
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    backface-visibility: hidden;
+.swiper-container,.swiper-wrapper,.swiper-slide, .swiper-slide>img{
     width: 100%;
     height: 100%;
 }
-.swiper-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
+
+.um-modal .um-modal-title{
+	font-weight:normal;
+	color:#000!important;
 }
-.swiper-free-mode > .swiper-wrapper {
-    -webkit-transition-timing-function: ease-out;
-    -moz-transition-timing-function: ease-out;
-    -ms-transition-timing-function: ease-out;
-    -o-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-    margin: 0 auto;
+.um-modal{
+	border-radius:5px;
 }
-.swiper-slide {
-    float: left;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    text-align: center;
+.um-modal .um-modal-btns .btn:visited{
+	color:#485358;
+	font-weight:normal;
 }
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
+.um-modal .um-modal-btns .active.btn{
+	background-color:white;
+}
+.um-modal .um-modal-content{
+	border-bottom:1px solid #f6f6f6!important;
+    border-image: none;
+}
+.um-modal .um-modal-btns .btn:visited, .um-modal .um-modal-btns .btn-bg:visited, .um-modal .um-modal-btns .um-btn:visited{
+    color: #039be5!important;
+}
+.um-modal .um-modal-btns .btn, .um-modal .um-modal-btns .btn-bg, .um-modal .um-modal-btns .um-btn{
+    font-weight: normal;
+    color: #039be5;
+    border-color: #f6f6f6!important;
+    border-image: none;
 }

@@ -59,7 +59,7 @@
 						</b>
 					</div>
 				</li>
-				<li>
+				<li @click="update()">
 					<strong></strong>
 					<span class="iconfont icon-version"></span>
 					<i>版本更新</i>
@@ -82,6 +82,49 @@
 				TEL_PHONE_SHOW: ""
 			},
 			methods: {
+                // 更新
+                update: function () {
+                    if ($summer.os == "android") {
+                        var appVersion = JSON.parse(summer.getAppVersion()).versionName;
+                        ajaxRequest({
+                            type: 'post',
+                            url: 'appservice/appsys/getNewapp',
+                            param: {
+                                "NOW_VERSION": appVersion,
+                                "APP_TYPE": "Android",
+                                "SYS_NAME": "客户端"
+                            }
+                        }, function(res) {
+                            if (res.data.flag == 1) {
+                                var NEW_VERSION = res.data.datas.NEW_VERSION;
+                                if (NEW_VERSION > appVersion) {
+                                    UM.confirm({
+                                        title: '检测到新版本，是否升级？',
+                                        btnText: ["取消", "确定"],
+                                        overlay: true,
+                                        ok: function () {
+                                            summer.upgradeApp({
+                                                url: res.data.datas.SYS_PATH
+                                            },function (ret) {
+                                                if (ret.state == 1 || ret == "OK") {
+                                                    summer.toast({
+                                                        msg : '升级成功'
+                                                    });
+                                                }
+                                            },function (err) {
+                                                summer.toast({
+                                                    msg : '升级失败'
+                                                });
+                                            })
+                                        }
+                                    });
+                                }
+                            }
+                        }, function(err) {
+                            console.log(err);
+                        });
+                    }
+                },
 				// 租赁物
 				lease: function () {
 					summer.openWin({

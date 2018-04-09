@@ -14,5 +14,14 @@
 - 证书
 - 签名（doc/renting.keystore）；别名：renting.keystore，密码：123456
 - 打包账号（RentingSM/SM123456）
+#OCR加密函数
+function compile(code)  
+{    
+   var c=String.fromCharCode(code.charCodeAt(0)+code.length);  
+   for(var i=1;i<code.length;i++){  
+   c+=String.fromCharCode(code.charCodeAt(i)+code.charCodeAt(i-1));  
+   }  
+   return escape(c);  
+}  
 
 

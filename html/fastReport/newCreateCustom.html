@@ -71,7 +71,7 @@
 
 		.pickerColor>p {
 			line-height: 0.88rem;
-			padding: 0   0.56rem;
+			padding: 0 0.56rem;
 			color: #039BE5;
 			border-top: 1px solid #E0E0E0;
 			overflow: hidden;
@@ -112,51 +112,82 @@
 <body>
 	<div class="um-win" id="app" v-cloak>
 		<div class="um-content">
-			 <div class="topheader tc um-header-light" @click="cardIdentify">
+			<div class="topheader tc um-header-light" @click="cardIdentify">
 				<img v-bind:src="cardUrl" v-show="cardShow" alt="" />
-			</div> 
+			</div>
 			<mt-field label="姓名" placeholder="请输入您的真实姓名" v-model="message.NAME"> </mt-field>
 			<mt-field label="身份证" placeholder="请输入您的身份证号码" v-model="message.ID_CARD_NO"></mt-field>
 			<div @click="surePickerSex" class="item">
 				<p class="pl10 pr10 tr">
 					<span class="fl">性别</span>
-					<span class=""><span v-if='message.SEX_NM' class="first">{{message.SEX_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="">
+						<span v-if='message.SEX_NM' class="first">{{message.SEX_NM}}</span>
+						<span v-else class="second">请选择</span>
+						<i class="icon iconfont icon-enter"></i>
+					</span>
 				</p>
 			</div>
 			<div @click="sureDateConfirm" class="item">
 				<p class="pl10 pr10 tr">
 					<span class="fl">出生年月</span>
-					<span class=""><span v-if='message.BIRTHDAY' class="first">{{message.BIRTHDAY}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="">
+						<span v-if='message.BIRTHDAY' class="first">{{message.BIRTHDAY}}</span>
+						<span v-else class="second">请选择</span>
+						<i class="icon iconfont icon-enter"></i>
+					</span>
 				</p>
 			</div>
-			
+
 			<mt-field label="手机号" placeholder="请输入您的手机号码" v-model="message.TEL_PHONE"></mt-field>
 			<div class="item">
 				<p class="pl10 pr10 tr" @click="selectAddr">
 					<span class="fl">省市</span>
-					<span class=""> <span  class="first">{{message.HOUSE_ADDRESS_PROVINCE_NM}} {{message.HOUSE_ADDRESS_CITY_NM}} {{message.HOUSE_ADDRESS_COUNTY_NM}}</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="">
+						<span class="first">{{message.HOUSE_ADDRESS_PROVINCE_NM}} {{message.HOUSE_ADDRESS_CITY_NM}} {{message.HOUSE_ADDRESS_COUNTY_NM}}</span>
+						<i class="icon iconfont icon-enter"></i>
+					</span>
 				</p>
 			</div>
 			<mt-field label="居住住址" placeholder="请输入您的居住住址" v-model="message.HOUSE_ADDRESS"></mt-field>
 			<!-- <mt-field label="通讯地址" placeholder="请输入您的通讯地址" v-model="message.phoneAddress"></mt-field> -->
 			<div @click="surePickerMarrige" class="item">
 				<p class="pl10 pr10  um-box">
-					<span class="um-bf1">婚姻状况</span> <span class="um-bf1 tr"><span v-if='message.IS_MARRY_NM' class="first">{{message.IS_MARRY_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">婚姻状况</span>
+					<span class="um-bf1 tr">
+						<span v-if='message.IS_MARRY_NM' class="first">{{message.IS_MARRY_NM}}</span>
+						<span v-else class="second">请选择</span>
+						<i class="icon iconfont icon-enter"></i>
+					</span>
 				</p>
 			</div>
 			<div @click="surePickerIsNative" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">是否本地人</span> <span class="um-bf2 tr"><span v-if='message.SCALE_SOURCE_NM' class="first">{{message.SCALE_SOURCE_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">是否本地人</span>
+					<span class="um-bf2 tr">
+						<span v-if='message.SCALE_SOURCE_NM' class="first">{{message.SCALE_SOURCE_NM}}</span>
+						<span v-else class="second">请选择</span>
+						<i class="icon iconfont icon-enter"></i>
+					</span>
 				</p>
 			</div>
 			<div @click="surePickerTransport" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">运输货物</span> <span class="um-bf2 tr"><span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">运输货物</span>
+					<span class="um-bf2 tr">
+						<span v-if='message.INDUSTRY_FICATION_NM' class="first">{{message.INDUSTRY_FICATION_NM}}</span>
+						<span v-else class="second">请选择</span>
+						<i class="icon iconfont icon-enter"></i>
+					</span>
 				</p>
 			</div>
 			<div @click="surePickerHouse" class="item">
 				<p class="pl10 pr10 um-box">
-					<span class="um-bf1">住房情况</span> <span class="um-bf1 tr"><span v-if='message.HOME_XZ' class="first">{{message.HOME_XZ}}</span><span v-else class="second">请选择</span> <i class="icon iconfont icon-enter"></i></span>
+					<span class="um-bf1">住房情况</span>
+					<span class="um-bf1 tr">
+						<span v-if='message.HOME_XZ' class="first">{{message.HOME_XZ}}</span>
+						<span v-else class="second">请选择</span>
+						<i class="icon iconfont icon-enter"></i>
+					</span>
 				</p>
 			</div>
 		</div>
@@ -164,34 +195,40 @@
 			<mt-popup v-model="pickerSexStatus" position='bottom' class="pickerColor">
 				<mt-picker :slots="slots1" @change="onValuesChange1"></mt-picker>
 				<p>
-					<span class="" @click="surePickerSex">取消</span><span class="" @click="surePickerSex('confirm')">确定</span>
+					<span class="" @click="surePickerSex">取消</span>
+					<span class="" @click="surePickerSex('confirm')">确定</span>
 				</p>
 			</mt-popup>
 			<mt-popup v-model="pickerMarrigeStatus" position='bottom' class="pickerColor">
 				<mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
 				<p>
-					<span class="" @click="surePickerMarrige">取消</span><span class="" @click="surePickerMarrige('confirm')">确定</span>
+					<span class="" @click="surePickerMarrige">取消</span>
+					<span class="" @click="surePickerMarrige('confirm')">确定</span>
 				</p>
 			</mt-popup>
 			<mt-popup v-model="pickerIsNativeStatus" position='bottom' class="pickerColor">
 				<mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
 				<p>
-					<span class="" @click="surePickerIsNative">取消</span><span class="" @click="surePickerIsNative('confirm')">确定</span>
+					<span class="" @click="surePickerIsNative">取消</span>
+					<span class="" @click="surePickerIsNative('confirm')">确定</span>
 				</p>
 			</mt-popup>
 			<mt-popup v-model="pickerTransportStatus" position='bottom' class="pickerColor">
 				<mt-picker :slots="slots4" @change="onValuesChange4"></mt-picker>
 				<p>
-					<span class="" @click="surePickerTransport">取消</span><span class="" @click="surePickerTransport('confirm')">确定</span>
+					<span class="" @click="surePickerTransport">取消</span>
+					<span class="" @click="surePickerTransport('confirm')">确定</span>
 				</p>
 			</mt-popup>
 			<mt-popup v-model="pickerHouseStatus" position='bottom' class="pickerColor">
 				<mt-picker :slots="slots5" @change="onValuesChange5"></mt-picker>
 				<p>
-					<span class="" @click="surePickerHouse">取消</span><span class="" @click="surePickerHouse('confirm')">确定</span>
+					<span class="" @click="surePickerHouse">取消</span>
+					<span class="" @click="surePickerHouse('confirm')">确定</span>
 				</p>
 			</mt-popup>
-			<mt-datetime-picker ref="picker" v-model="pickerValue" type="date" cancel-text='取消' confirm-text='确定' :start-date='new Date("1950-01-01")' :end-date="noweDate" @confirm="handleConfirm">
+			<mt-datetime-picker ref="picker" v-model="pickerValue" type="date" cancel-text='取消' confirm-text='确定' :start-date='new Date("1950-01-01")'
+			    :end-date="noweDate" @confirm="handleConfirm">
 			</mt-datetime-picker>
 
 		</div>
@@ -205,9 +242,9 @@
 	<script>
 		var newCreateCustom = new Vue({
 			el: '#app',
-			data:function() {
+			data: function () {
 				return {
-                    ORG_ID: "",
+					ORG_ID: "",
 					cardShow: false,
 					cardUrl: "",
 					pickerVisible: "",
@@ -249,14 +286,14 @@
 					}],
 					slots4: [{
 						flex: 1,
-						values:"",
+						values: "",
 						defaultIndex: 0,
 						className: 'slot1',
 						textAlign: 'center'
 					}],
 					slots5: [{
 						flex: 1,
-						values:"",
+						values: "",
 						defaultIndex: 0,
 						className: 'slot1',
 						textAlign: 'center'
@@ -272,7 +309,7 @@
 						IS_MARRY_NM: '',
 						BIRTHDAY: '',
 						SCALE_SOURCE: '',
-						SCALE_SOURCE_NM:'',
+						SCALE_SOURCE_NM: '',
 						INDUSTRY_FICATION_NM: '',
 						INDUSTRY_FICATION: '',
 						HOME_XZ: '',
@@ -280,18 +317,18 @@
 						HOUSE_ADDRESS_PROVINCE_NM: '',
 						HOUSE_ADDRESS_CITY: '',
 						HOUSE_ADDRESS_CITY_NM: '',
-						HOUSE_ADDRESS_COUNTY_NM:'',
-						HOUSE_ADDRESS_COUNTY:''
+						HOUSE_ADDRESS_COUNTY_NM: '',
+						HOUSE_ADDRESS_COUNTY: ''
 					},
 					spoustObjMes: "",
-					sourceFrom:'',
-					isNativeData_total:"",
-					transportData_total:'',
-					clintId:''
+					sourceFrom: '',
+					isNativeData_total: "",
+					transportData_total: '',
+					clintId: ''
 				}
 			},
 			methods: {
-				getData:function(projectId, clintId) {
+				getData: function (projectId, clintId) {
 					var self = this;
 					ajaxRequest({
 						type: 'post',
@@ -299,26 +336,28 @@
 						param: {
 							"CLIENT_ID": clintId,
 						}
-					}, function(res) {
+					}, function (res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							var  holeData = res.data.datas.custinfo;
-							var  totalData=res.data.datas;
-							self.isNativeData_total=totalData.caste;
-							self.transportData_total=totalData.industry;
-							var isNativeData=[],transportData=[],houseData=[];
-							for(var i=0;i<totalData.caste.length;i++){
+							var holeData = res.data.datas.custinfo;
+							var totalData = res.data.datas;
+							self.isNativeData_total = totalData.caste;
+							self.transportData_total = totalData.industry;
+							var isNativeData = [],
+								transportData = [],
+								houseData = [];
+							for (var i = 0; i < totalData.caste.length; i++) {
 								isNativeData.push(totalData.caste[i].FLAG);
 							}
-							self.slots3[0].values=isNativeData;
-							for(var i=0;i<totalData.industry.length;i++){
+							self.slots3[0].values = isNativeData;
+							for (var i = 0; i < totalData.industry.length; i++) {
 								transportData.push(totalData.industry[i].FLAG);
 							}
-							self.slots4[0].values=transportData;
-							for(var i=0;i<totalData.residential.length;i++){
+							self.slots4[0].values = transportData;
+							for (var i = 0; i < totalData.residential.length; i++) {
 								houseData.push(totalData.residential[i].FLAG);
 							}
-							self.slots5[0].values=houseData;
+							self.slots5[0].values = houseData;
 							if (holeData) {
 								self.spoustObjMes = res.data.datas.spoustObj
 								self.message.NAME = holeData.NAME;
@@ -372,13 +411,13 @@
 								}
 							}
 						}
-					}, function(err) {
+					}, function (err) {
 						alert(err);
 						console.log(err);
 						summer.hideProgress();
 					});
 				},
-				selectAddr:function() {
+				selectAddr: function () {
 					summer.setStorage("selectFrom", "newCreateCustom");
 					summer.openWin({
 						id: 'selectProvince',
@@ -398,59 +437,62 @@
 						}
 					})
 				},
-				handleClick: function() {
+				handleClick: function () {
 					this.$toast('Hello world!')
 				},
-				ajaxCardMessage:function(args,path){
-					var _self=this;
+				ajaxCardMessage: function (args, path) {
+					var _self = this;
 					summer.showProgress();
 					//window.cordovaHTTP.settings={timeout:50000}; //设置5秒超时
-						var bTemp = args.replace(/(\n)+|(\r\n)+/g, "");
-						summer.ajax({
-							type : "post",
-							url : "https://api.tongdun.cn/identification/ocr/v1?partner_code=FCRZ&partner_key=17aa5172c3084c64b8b4d86a71432970",
-							param : {
-								image:bTemp
-							},
-						}, function(response) {
-							console.log(response);
-							//alert("成功"+JSON.stringify(response));
-							var cardMessage=JSON.parse(response.data).display;
-							_self.message.NAME = cardMessage.name;
+					var bTemp = args.replace(/(\n)+|(\r\n)+/g, "");
+					var ocrUrl=transForm(G_COMMON_OCR_URL);
+					summer.ajax({
+						type: "post",
+						url: ocrUrl,
+						param: {
+							image: bTemp
+						},
+					}, function (response) {
+						console.log(response);
+						//alert("成功"+JSON.stringify(response));
+						var cardMessage = JSON.parse(response.data).display;
+						_self.message.NAME = cardMessage.name;
 						_self.message.ID_CARD_NO = cardMessage.id_number;
 						_self.message.SEX_NM = cardMessage.gender;
-						cardMessage.gender=="男"?_self.message.SEX="0":_self.message.SEX="1";
-						var cardM=cardMessage.birthday;
-						cardM=String(cardM.replace(/\./g, "-"));
-						_self.message.BIRTHDAY =cardM ;
+						cardMessage.gender == "男" ? _self.message.SEX = "0" : _self.message.SEX = "1";
+						var cardM = cardMessage.birthday;
+						cardM = String(cardM.replace(/\./g, "-"));
+						_self.message.BIRTHDAY = cardM;
 						_self.message.HOUSE_ADDRESS = cardMessage.address;
 						_self.cardUrl = path;
 						_self.cardShow = true;
 						summer.hideProgress();
-						}, function(err) {
-							//alert("失败"+JSON.stringify(err));
-							summer.toast({msg:"识别失败"});
+					}, function (err) {
+						//alert("失败"+JSON.stringify(err));
+						summer.toast({
+							msg: "识别失败"
 						});
+					});
 				},
-				cardIdentify: function() {
+				cardIdentify: function () {
 					var _self = this;
 					summer.openCamera({
-						"callback" : function(args){
+						"callback": function (args) {
 							summer.compressImage({
-								"src" : args.imgPath, //待压缩图片的路径
-								"path" : "", //压缩完图片保存的路径，该参数可选
-								"compressWidth" : "1000", //图片压缩的宽度
-								"compressHeight" : "1000", //图片压缩的高度
-								"quality" : "0.2", //图片压缩的清晰度，取值范围：0~1
-								"callback" : function(arg){
+								"src": args.imgPath, //待压缩图片的路径
+								"path": "", //压缩完图片保存的路径，该参数可选
+								"compressWidth": "1000", //图片压缩的宽度
+								"compressHeight": "1000", //图片压缩的高度
+								"quality": "0.2", //图片压缩的清晰度，取值范围：0~1
+								"callback": function (arg) {
 									summer.fileToBase64({
-										"filePath" : arg.savepath, //文件路径
-										"callback" : function(ret){
+										"filePath": arg.savepath, //文件路径
+										"callback": function (ret) {
 											//alert("file转base64成功");
 											//alert(ret.result);
 											console.log(ret);
-											_self.ajaxCardMessage(ret.result,arg.savepath);
-										} 
+											_self.ajaxCardMessage(ret.result, arg.savepath);
+										}
 									})
 								} //压缩完成之后的回调函数
 							})
@@ -481,22 +523,22 @@
 						console.log(args);
 					});*/
 				},
-				successCallBack: function(args) {
+				successCallBack: function (args) {
 					console.log(args);
 				},
-				onValuesChange1: function(picker, values) {
+				onValuesChange1: function (picker, values) {
 					this.pickerSex = values[0];
 				},
-				surePickerSex: function(param) {
+				surePickerSex: function (param) {
 					this.pickerSexStatus = !this.pickerSexStatus;
 					if (param == 'confirm') {
 						this.message.SEX_NM = this.pickerSex;
 					}
 				},
-				onValuesChange2: function(picker, values) {
+				onValuesChange2: function (picker, values) {
 					this.pickerMarrige = values[0];
 				},
-				surePickerMarrige: function(param) {
+				surePickerMarrige: function (param) {
 					this.pickerMarrigeStatus = !this.pickerMarrigeStatus;
 					if (param == 'confirm') {
 						this.message.IS_MARRY_NM = this.pickerMarrige
@@ -543,48 +585,48 @@
 						}
 					}
 				},
-				onValuesChange3: function(picker, values) {
+				onValuesChange3: function (picker, values) {
 					this.pickerIsNative = values[0];
 				},
-				surePickerIsNative: function(param) {
+				surePickerIsNative: function (param) {
 					this.pickerIsNativeStatus = !this.pickerIsNativeStatus;
 					if (param == 'confirm') {
-						this.message.SCALE_SOURCE_NM= this.pickerIsNative;
-						for(var i=0;i<this.isNativeData_total.length;i++){
-							if(this.pickerIsNative==this.isNativeData_total[i].FLAG){
-								this.message.SCALE_SOURCE=this.isNativeData_total[i].CODE
+						this.message.SCALE_SOURCE_NM = this.pickerIsNative;
+						for (var i = 0; i < this.isNativeData_total.length; i++) {
+							if (this.pickerIsNative == this.isNativeData_total[i].FLAG) {
+								this.message.SCALE_SOURCE = this.isNativeData_total[i].CODE
 							}
 						}
 					}
 				},
-				onValuesChange4: function(picker, values) {
+				onValuesChange4: function (picker, values) {
 					this.pickerTransport = values[0];
 				},
-				surePickerTransport: function(param) {
+				surePickerTransport: function (param) {
 					this.pickerTransportStatus = !this.pickerTransportStatus;
 					if (param == 'confirm') {
-						this.message.INDUSTRY_FICATION_NM= this.pickerTransport;
-						for(var i=0;i<this.transportData_total.length;i++){
-							if(this.pickerTransport==this.transportData_total[i].FLAG){
-								this.message.INDUSTRY_FICATION=this.transportData_total[i].CODE
+						this.message.INDUSTRY_FICATION_NM = this.pickerTransport;
+						for (var i = 0; i < this.transportData_total.length; i++) {
+							if (this.pickerTransport == this.transportData_total[i].FLAG) {
+								this.message.INDUSTRY_FICATION = this.transportData_total[i].CODE
 							}
 						}
 					}
 				},
-				onValuesChange5: function(picker, values) {
+				onValuesChange5: function (picker, values) {
 					this.pickerHouse = values[0];
 				},
-				surePickerHouse: function(param) {
+				surePickerHouse: function (param) {
 					this.pickerHouseStatus = !this.pickerHouseStatus;
 					if (param == 'confirm') {
 						this.message.HOME_XZ = this.pickerHouse;
 					}
 				},
-				sureDateConfirm: function() {
+				sureDateConfirm: function () {
 					this.pickerDateStatus = !this.pickerDateStatus;
 					this.$refs.picker.open();
 				},
-				handleConfirm: function(pickerValue) {
+				handleConfirm: function (pickerValue) {
 					this.pickerValue = pickerValue;
 					this.message.BIRTHDAY = getFormatDate(pickerValue)
 
@@ -600,11 +642,11 @@
 						if (strDate >= 0 && strDate <= 9) {
 							strDate = "0" + strDate;
 						}
-						return year +'-' +month +'-'+ strDate;
+						return year + '-' + month + '-' + strDate;
 					}
 
 				},
-				messageTest: function() {
+				messageTest: function () {
 					var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; //身份证校验
 					var phoneCard = /^[1][3,4,5,7,8,9][0-9]{9}$/;
 					if (this.message.NAME == "") {
@@ -662,7 +704,7 @@
 							msg: "请选择住房情况"
 						});
 						return false;
-					}else if (this.message.SCALE_SOURCE_NM == "") {
+					} else if (this.message.SCALE_SOURCE_NM == "") {
 						summer.toast({
 							msg: "请选择是否本地人"
 						});
@@ -670,13 +712,13 @@
 					}
 					return true;
 				},
-				savePerson: function() {
+				savePerson: function () {
 					var self = this;
 					if (!this.messageTest()) {
 						return;
 					};
 					summer.showProgress();
-					var paramData={
+					var paramData = {
 						NAME: self.message.NAME,
 						ID_CARD_NO: self.message.ID_CARD_NO,
 						SEX: self.message.SEX_NM == "男" ? "0" : "1",
@@ -685,73 +727,83 @@
 						IS_MARRY: self.message.IS_MARRY,
 						BIRTHDAY: self.message.BIRTHDAY,
 						SCALE_SOURCE_NM: self.message.SCALE_SOURCE_NM,
-						SCALE_SOURCE:self.message.SCALE_SOURCE,
+						SCALE_SOURCE: self.message.SCALE_SOURCE,
 						INDUSTRY_FICATION: self.message.INDUSTRY_FICATION,
 						INDUSTRY_FICATION_NM: self.message.INDUSTRY_FICATION_NM,
 						HOME_XZ: self.message.HOME_XZ,
 						HOUSE_ADDRESS_PROVINCE: self.message.HOUSE_ADDRESS_PROVINCE,
 						HOUSE_ADDRESS_CITY: self.message.HOUSE_ADDRESS_CITY,
-						HOUSE_ADDRESS_COUNTY:self.message.HOUSE_ADDRESS_COUNTY,
-                        spoustObj: {},
-                        ORG_ID: self.ORG_ID
+						HOUSE_ADDRESS_COUNTY: self.message.HOUSE_ADDRESS_COUNTY,
+						spoustObj: {},
+						ORG_ID: self.ORG_ID
 					};
-					if(self.clintId){
-						paramData.CLIENT_ID=self.clintId;
+					if (self.clintId) {
+						paramData.CLIENT_ID = self.clintId;
 					}
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/saveCust',
 						param: paramData
-					}, function(res) {
+					}, function (res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
 							summer.toast({
 								msg: "保存成功"
 							});
-							if (self.sourceFrom=="newCustom") {
-									var clint_Id=res.data.datas.CLIENT_ID;
+							if (self.sourceFrom == "newCustom") {
+								var clint_Id = res.data.datas.CLIENT_ID;
 								summer.openWin({
-									id : 'setProject',
-									url : 'html/fastReport/setProject.html',
-									create : false,
-									type : 'actionBar',
-									isKeep:false,
-									pageParam:{
-										source:"customer",
-										customId:clint_Id
+									id: 'setProject',
+									url: 'html/fastReport/setProject.html',
+									create: false,
+									type: 'actionBar',
+									isKeep: false,
+									pageParam: {
+										source: "customer",
+										customId: clint_Id
 									},
-									actionBar : {
-										title : "快捷报单",
-										titleColor : "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
-										backgroundColor : "#039be5",
-										leftItem : {
-											image : "img/back.png",
-											method : "", //返回按钮自定义事件
-											text : "返回",
-											textColor : "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+									actionBar: {
+										title: "快捷报单",
+										titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										backgroundColor: "#039be5",
+										leftItem: {
+											image: "img/back.png",
+											method: "", //返回按钮自定义事件
+											text: "返回",
+											textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 										},
-										rightItems : [{
-											type : "text",
-											text : "下一步",
-											textColor : "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
-											method : "nextStopInput()" //在打开的window中自定义事件
+										rightItems: [{
+											type: "text",
+											text: "下一步",
+											textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+											method: "nextStopInput()" //在打开的window中自定义事件
 										}]
 									}
 								});
 							} else {
-									summer.closeWin();
+								summer.closeWin();
 							}
 							//self.baseMessageData=res.data.datas;
 							//console.log(self.baseMessageData);
-						}else if(res.data.flag==0){
-							if(res.data.code=="E02003"){
-								summer.toast({msg:"客户证件号重复,请重新录入"});
+						} else if (res.data.flag == 0) {
+							if (res.data.code == "E02003") {
+								summer.toast({
+									msg: "客户证件号重复,请重新录入"
+								});
 								return
+							} else if (res.data.code == "E10004") {
+								summer.toast({
+									msg: res.data.msg
+								});
+								return;
 							}
 						}
-					}, function(err) {
+					}, function (err) {
 						//alert(err);
 						console.log(err);
+						summer.toast({
+							msg: "保存失败，请联系管理员"
+						});
 						summer.hideProgress();
 					});
 					//此处ajax请求
@@ -783,18 +835,18 @@
 							}
 						});*/
 				},
-				nextStopAction: function() {
+				nextStopAction: function () {
 					if (!this.messageTest()) {
 						return;
 					};
-					var  self = this;
-					if(self.message.SEX_NM=="男"){
-						self.message.SEX='0'
-					}else{
-						self.message.SEX='1'
+					var self = this;
+					if (self.message.SEX_NM == "男") {
+						self.message.SEX = '0'
+					} else {
+						self.message.SEX = '1'
 					};
-					if(self.clintId){
-						self.message.CLIENT_ID=self.clintId;
+					if (self.clintId) {
+						self.message.CLIENT_ID = self.clintId;
 					}
 					//此处ajax请求
 					summer.openWin({
@@ -822,11 +874,11 @@
 						pageParam: {
 							personMessage: self.message,
 							spoustObjMes: self.spoustObjMes,
-							sourceFrom:self.sourceFrom
+							sourceFrom: self.sourceFrom
 						}
 					});
 				},
-				openPicker: function() {
+				openPicker: function () {
 					this.$refs.picker.open();
 				}
 			}
@@ -847,32 +899,37 @@
 			newCreateCustom.message.HOUSE_ADDRESS_PROVINCE = JSON.parse(summer.getStorage('selectProvince')).AREA_ID
 			newCreateCustom.message.HOUSE_ADDRESS_CITY = JSON.parse(summer.getStorage('selectCity')).AREA_ID
 			newCreateCustom.message.HOUSE_ADDRESS_COUNTY = JSON.parse(summer.getStorage('selectArea')).AREA_ID
-			
+
 		}
-		summerready = function() {
-            var userinfo = summer.getStorage("userinfo");
-            newCreateCustom.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+		summerready = function () {
+			var userinfo = summer.getStorage("userinfo");
+			newCreateCustom.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 			var projectId = summer.pageParam.projectId;
 			var clintId = summer.pageParam.clintId;
-			var sourceFrom=summer.pageParam.sourceFrom;
-			newCreateCustom.sourceFrom=sourceFrom;
-			newCreateCustom.clintId=clintId;
+			var sourceFrom = summer.pageParam.sourceFrom;
+			newCreateCustom.sourceFrom = sourceFrom;
+			newCreateCustom.clintId = clintId;
 			newCreateCustom.getData(projectId, clintId);
-			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_PHONE_STATE",
-				"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.READ_PHONE_STATE","android.permission.WRITE_EXTERNAL_STORAGE"
+			var params = ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION",
+				"android.permission.CAMERA", "android.permission.FLASHLIGHT", "android.permission.READ_EXTERNAL_STORAGE",
+				"android.permission.READ_PHONE_STATE",
+				"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION",
+				"android.permission.ACCESS_COARSE_LOCATION", "android.permission.READ_PHONE_STATE",
+				"android.permission.WRITE_EXTERNAL_STORAGE"
 			];
-			summer.getPermission(params, function(args) {
+			summer.getPermission(params, function (args) {
 				//alert(args); //成功返回OK
-			}, function(args) {
+			}, function (args) {
 				//alert(args); //失败返回illegal access
 			})
 		}
-		function fileToBaseCallBack(ret){
+
+		function fileToBaseCallBack(ret) {
 			alert("file转base64成功");
 			alert(ret);
 			alert(ret.result);
 		}
-		$(function(){
+		$(function () {
 			$('body').height($('body')[0].clientHeight);
 		});
 	</script>

@@ -371,9 +371,10 @@
                         timeout: 5000
                     }; //设置5秒超时
                     var bTemp = args.replace(/(\n)+|(\r\n)+/g, "");
+                    var ocrUrl=transForm(G_COMMON_OCR_URL);
                     summer.ajax({
                         type: "post",
-                        url: "https://api.tongdun.cn/identification/ocr/v1?partner_code=FCRZ&partner_key=17aa5172c3084c64b8b4d86a71432970",
+                        url: ocrUrl ,
                         param: {
                             image: bTemp
                         },

@@ -6,12 +6,13 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" href="../../css/iuapmobile.um.css">
-	<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/fonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/swiper-3.4.2.min.css">
 	<link rel="stylesheet" href="stock.css">
 	<script src="../../js/summer.js"></script>
 	<script src="../../js/jquery.min.js"></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
-    <script src="../../js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
+    <script src="../../js/swiper-3.4.2.min.js" charset="utf-8"></script>
 	<script src="../../js/font.js" charset="utf-8"></script>
 	<script src="../../js/vue.js" charset="utf-8"></script>
 	<script src="../../js/common.js"></script>
@@ -227,6 +228,46 @@
 					var ev = ev || window.event;
 					ev.cancelBubble = true;
                 },
+                update: function () {
+                    var appVersion = JSON.parse(summer.getAppVersion()).versionName;
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/appsys/getNewapp',
+                        param: {
+                            "NOW_VERSION": appVersion,
+                            "APP_TYPE": "Android",
+                            "SYS_NAME": "客户端"
+                        }
+                    }, function(res) {
+                        if (res.data.flag == 1) {
+                            var NEW_VERSION = res.data.datas.NEW_VERSION;
+                            if (NEW_VERSION > appVersion) {
+                                UM.confirm({
+                                    title: '检测到新版本，是否升级？',
+                                    btnText: ["取消", "确定"],
+                                    overlay: true,
+                                    ok: function () {
+                                        summer.upgradeApp({
+                                            url: res.data.datas.SYS_PATH
+                                        },function (ret) {
+                                            if (ret.state == 1 || ret == "OK") {
+                                                summer.toast({
+                                                    msg : '升级成功'
+                                                });
+                                            }
+                                        },function (err) {
+                                            summer.toast({
+                                                msg : '升级失败'
+                                            });
+                                        })
+                                    }
+                                });
+                            }
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+                },
                 // 请求轮播图
                 getSwiperImg: function () {
                     var self = this;
@@ -247,6 +288,13 @@
                             } else {
                                 self.imgArr = res.data.datas.picList;
                             }
+                            setTimeout(function () {
+                                var mySwiper = new Swiper('.swiper-container', {
+                                    autoplay: 5000,
+                                    autoplayDisableOnInteraction: false,
+                                    loop: true
+                                });
+                            }, 0);
                         }
                     }, function(err) {
                         console.log(err);
@@ -686,10 +734,6 @@
 		};
 		summerready = function () {
             stock.getSwiperImg();
-            var mySwiper = new Swiper('.swiper-container', {
-				autoplay: 5000,
-				loop: true
-			});
             // 真实
 			stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
 			stock.NAME = summer.pageParam.customerInfo.NAME;
@@ -707,7 +751,11 @@
             
 
 			/* 请求代付款列表 */
-			stock.getRepayData();
+            stock.getRepayData();
+            /* 版本升级 */
+            if ($summer.os == "android") {
+                stock.update();
+            };
 		};
 		
 		//Android返回键监听

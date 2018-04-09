@@ -115,7 +115,7 @@
 					btnText: ["取消", "确定"],
 					overlay: true,
 					ok: function () {
-						summer.setStorage("userinfo", {});
+                        summer.setStorage("userinfo", {});
 						summer.openWin({
 							id: 'login',
 							url: 'login.html',
@@ -174,52 +174,46 @@
 		};
 
 		function update() {
-			if (isLogin()) {
-				summer.showProgress();
-				ajaxRequest({
-					type: 'post',
-					url: 'appservice/appsys/getNewapp',
-					param: {
-						"version": "1",
-						"appFlag": "1",
-						"sysCd": "11002"
-					}
-				}, function (response) {
-					summer.hideProgress();
-					var Data;
-					if (Object.prototype.toString.call(response.data) === '[object String]') {
-						Data = JSON.parse(response.data);
-					} else {
-						Data = response.data;
-					}
-					switch (Data.flag) {
-						case 1:
-							summer.toast({
-								msg: "成功"
-							});
-							break;
-						case 0:
-							summer.toast({
-								msg: "请求失败"
-							});
-							break;
-						default:
-							summer.toast({
-								msg: "请求失败"
-							});
-					}
-				}, function (err) {
-					summer.hideProgress();
-					console.log(err);
-					summer.toast({
-						msg: "系统内部异常"
-					});
-				});
-			} else {
-				summer.toast({
-					msg: "请先登录"
-				});
-			}
+            if ($summer.os == "android") {
+                var appVersion = JSON.parse(summer.getAppVersion()).versionName;
+                ajaxRequest({
+                    type: 'post',
+                    url: 'appservice/appsys/getNewapp',
+                    param: {
+                        "NOW_VERSION": appVersion,
+                        "APP_TYPE": "Android",
+                        "SYS_NAME": "销售端"
+                    }
+                }, function(res) {
+                    if (res.data.flag == 1) {
+                        var NEW_VERSION = res.data.datas.NEW_VERSION;
+                        if (NEW_VERSION > appVersion) {
+                            UM.confirm({
+                                title: '检测到新版本，是否升级？',
+                                btnText: ["取消", "确定"],
+                                overlay: true,
+                                ok: function () {
+                                    summer.upgradeApp({
+                                        url: res.data.datas.SYS_PATH
+                                    },function (ret) {
+                                        if (ret.state == 1 || ret == "OK") {
+                                            summer.toast({
+                                                msg : '升级成功'
+                                            });
+                                        }
+                                    },function (err) {
+                                        summer.toast({
+                                            msg : '升级失败'
+                                        });
+                                    })
+                                }
+                            });
+                        }
+                    }
+                }, function(err) {
+                    console.log(err);
+                });
+            }
 		};
 
 		function changePsw() {

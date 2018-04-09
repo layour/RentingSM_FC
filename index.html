@@ -7,14 +7,14 @@
 	<title></title>
 	<link rel="stylesheet" href="css/fonts/iconfont.css">
 	<link rel="stylesheet" href="css/iuapmobile.um.css">
-	<!-- <link rel="stylesheet" href="css/swiper-3.4.2.min.css"> -->
+	<link rel="stylesheet" href="css/swiper-3.4.2.min.css">
 	<link rel="stylesheet" href="css/index.css">
 	<script src="js/summer.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/Frameworks/iuapmobile.frameworks.ui.js"></script>
 	<script src="js/font.js" charset="utf-8"></script>
 	<script src="js/common.js" charset="utf-8"></script>
-	<script src="js/idangerous.swiper-2.0.min.js" charset="utf-8"></script>
+    <script src="js/swiper-3.4.2.min.js"></script>
 	<script src="js/common.js"></script>
 	<script src="js/vue.js"></script>
 	<!-- <script src="js/index.js" ></script> -->
@@ -24,12 +24,12 @@
 	<div id="win" class="um-frame">
 		<div id="content" class="um-content p15">
 			<div class="container">
-				<div id='banner-inner' class='swiper-container'>
-					<div class='swiper-wrapper'>
-						<div class="swiper-slide" v-for="k in imgArr">
-							<img v-bind:src="k.DOWN_PATH" alt="" />
-						</div>
-					</div>
+				<div id="banner-inner" class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" v-for="k in imgArr">
+                            <img :src="k.DOWN_PATH" alt="" />
+                        </div>
+                    </div>
 				</div>
 			</div>
 			<h2 class="xmgl">
@@ -161,9 +161,8 @@
 			if (isLogin()) {
 				fistPage.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
                 getMissionData(); //获取代办任务个数
-                fistPage.getSwiperImg();
-                
 			}
+            fistPage.getSwiperImg();
 			summer.setRefreshHeaderInfo({
 				visible: true,
 				loadingImg: 'img/refresh.png',
@@ -175,15 +174,15 @@
 			}, function(ret, err) {
 				//通常在这里从服务器加载数据，t
 				getMissionData();
-			});
+            });
 			// 关闭启动图
 			setTimeout(function() {
 				summer.hideLaunch();
-			}, 500);
-			var mySwiper = new Swiper('.swiper-container', {
-				autoplay: 5000,
-				loop: true
-			});
+            }, 500);
+            // 判断版本升级
+            if ($summer.os == "android") {
+                fistPage.update();
+            }
 		}
 
 		function getMissionData() {
@@ -194,9 +193,51 @@
 			data: {
                 missionNum: '',
                 ORG_ID: '',
-                imgArr: []
+                imgArr: [
+                    
+                ]
             },
 			methods: {
+                update: function () {
+                    var appVersion = JSON.parse(summer.getAppVersion()).versionName;
+                    ajaxRequest({
+                        type: 'post',
+                        url: 'appservice/appsys/getNewapp',
+                        param: {
+                            "NOW_VERSION": appVersion,
+                            "APP_TYPE": "Android",
+                            "SYS_NAME": "销售端"
+                        }
+                    }, function(res) {
+                        if (res.data.flag == 1) {
+                            var NEW_VERSION = res.data.datas.NEW_VERSION;
+                            if (NEW_VERSION > appVersion) {
+                                UM.confirm({
+                                    title: '检测到新版本，是否升级？',
+                                    btnText: ["取消", "确定"],
+                                    overlay: true,
+                                    ok: function () {
+                                        summer.upgradeApp({
+                                            url: res.data.datas.SYS_PATH
+                                        },function (ret) {
+                                            if (ret.state == 1 || ret == "OK") {
+                                                summer.toast({
+                                                    msg : '升级成功'
+                                                });
+                                            }
+                                        },function (err) {
+                                            summer.toast({
+                                                msg : '升级失败'
+                                            });
+                                        })
+                                    }
+                                });
+                            }
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+                },
                 getSwiperImg: function () {
                     var self = this;
                     ajaxRequest({
@@ -216,6 +257,13 @@
                             } else {
                                 self.imgArr = res.data.datas.picList;
                             }
+                            setTimeout(function () {
+                                var mySwiper = new Swiper('.swiper-container', {
+                                    autoplay: 5000,
+                                    autoplayDisableOnInteraction: false,
+                                    loop: true
+                                });
+                            },0);
                         }
                     }, function(err) {
                         console.log(err);
@@ -623,24 +671,55 @@
 			});
 		}
 		
-		// ETC业务
+        // ETC业务
+        function ETC(mobile){
+            var sendId = "1"; // 0.为快速通; 1.好运达。
+            var partnerId = "100015850015"; // 合作商ID(必填)
+            var partnerKey = "3846549E9EAED6100D07AEFB04C12C7FC7E54F580B731451"; // 合作商key(必填)
+            var mobile = mobile; // 用户手机号(选填)
+            var egsToken = null; // 通过对接方token获取用户手机号(选填，与手机号只可传一个)
+            var isRel = true; // false.测试环境; true.正式环境。
+            window.finance.present(sendId, partnerId, partnerKey, mobile, egsToken, isRel);
+        };
+        function ETCinput(){
+            summer.openWin({
+                id: 'ETCphone',
+                url: 'html/ETCphone/index.html',
+                create: false,
+                type: 'actionBar',
+                actionBar: {
+                    title: "绑定手机号",
+                    titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                    backgroundColor: "#039be5",
+                    leftItem: {
+                        image: "img/back.png",
+                        method: "", //返回按钮自定义事件
+                        text: "返回",
+                        textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+                    }
+                }
+            });
+        };
 		function openETCService(){
+            var MOBILE = "";
             if (isLogin()) {
-                var MOBILE = "";
                 if (summer.getStorage("userinfo")) {
                     if (summer.getStorage("userinfo").MOBILE) {
                         MOBILE = summer.getStorage("userinfo").MOBILE;
+                        ETC(MOBILE);
+                    } else {
+                        ETCinput();
                     }
                 };
-                var sendId = "1"; // 0.为快速通; 1.好运达。
-                var partnerId = "100015850015"; // 合作商ID(必填)
-                var partnerKey = "3846549E9EAED6100D07AEFB04C12C7FC7E54F580B731451"; // 合作商key(必填)
-                var mobile = MOBILE; // 用户手机号(选填)
-                var egsToken = null; // 通过对接方token获取用户手机号(选填，与手机号只可传一个)
-                var isRel = true; // false.测试环境; true.正式环境。
-                window.finance.present(sendId, partnerId, partnerKey, mobile, egsToken, isRel);
+            } else if (summer.getStorage("ETCphoneNum")){
+                if (summer.getStorage("ETCphoneNum").MOBILE) {
+                    MOBILE = summer.getStorage("ETCphoneNum").MOBILE;
+                    ETC(MOBILE);
+                } else {
+                    ETCinput();
+                }
             } else {
-                toLog();
+                ETCinput(); 
             }
 		};
 
