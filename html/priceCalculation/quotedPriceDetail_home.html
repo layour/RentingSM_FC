@@ -20,11 +20,11 @@
 		<div class="um-win" id="quotedPriceDetail" v-cloak>
 			<div class="um-content quotedPriceDetail">
 				<ul>
-					<li v-if="PROJECT_ID!=''" class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
+					<li v-if="PROJECT_ID!=''" class="spec"><b>实际成交价</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
 					<li v-else class="spec input">
-						<b>合同金额</b>
+						<b>实际成交价</b>
 						<span>
-							<input type="text" v-model="quoted.allPrice" @input="checkVal('allPrice')" placeholder="请输入合同金额" name="allPrice">&nbsp;元
+							<input type="text" v-model="quoted.allPrice" @input="checkVal('allPrice')" placeholder="请输入实际成交价" name="allPrice">&nbsp;元
 						</span>
 					</li>
 					<li @click="surePicker('term')">
@@ -36,23 +36,15 @@
 						</span>
 					</li>
 					<li class="liContr">
-						<b>合同周期</b>
+						<b>租赁周期</b>
 						<span class="fr">
 							{{quoted.contractTerm}}&nbsp;个月
 						</span>
 					</li>
-					<!-- <li @click="surePicker('termType')">
-						<b>期满处理方式</b>
-						<span>
-							<b v-if="quoted.termType">{{quoted.termType}}</b>
-							<b v-else class="default">请选择</b>
-							<i class="icon iconfont icon-enter"></i>
-						</span>
-					</li> -->
 					<li  class='input'>
-						<b>租赁年利率</b>
+						<b>租金利率</b>
 						<span>
-							<input type="text" v-model="quoted.rate" @input="rateCheck" name='rate' placeholder="请输入年利率">&nbsp;%
+							<input type="text" v-model="quoted.rate" @input="rateCheck" name='rate' placeholder="请输入租金利率">&nbsp;%
 						</span>
 					</li>
 					<li class='spec' @click="surePickerpayType('payType')">
@@ -64,7 +56,7 @@
 						</span>
 					</li>
 					<li @click="pickFirstRate">
-						<b>首付比例</b>
+						<b>首期租金</b>
 						<span>
 							<b v-if="quoted.sureFirstPay">{{quoted.sureFirstPayRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.sureFirstPay}}&nbsp;元</b>
 							<b v-else class="default">请选择</b>
@@ -72,7 +64,7 @@
 						</span>
 					</li>
 					<li @click="pickerBail">
-						<b>保证金</b>
+						<b>租赁保证金金额</b>
 						<span>
 							<b v-if="quoted.lastBail">{{quoted.sureBailRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.lastBail}}&nbsp;元</b>
 							<b v-else class="default">请选择</b>
@@ -85,11 +77,19 @@
 						</span>
 					</li>
 					<li class="input">
-						<b>续保保证金</b>
+						<b>续保保证金金额</b>
 						<span>
 							<input type="text" @input="checkVal('feeOn')" placeholder="请输入续保保证金" name="feeOn" v-model="quoted.feeOn">&nbsp;元
 						</span>
 					</li>
+					<!-- <li @click="sureTermType">
+						<b>保证金处理方式</b>
+						<span>
+							<b v-if="quoted.termType">{{quoted.termType}}</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
+						</span>
+					</li> -->
 					<li class="input spec">
 						<b>咨询费</b>
 						<span>
@@ -103,13 +103,12 @@
 						</span>
 
 					</li> -->
-					<li>
+					<!-- <li>
 						<b>租赁收益率</b>
 						<span>
-							<!-- <input type="text" @input="checkVal('gps')" placeholder="租赁收益率" name="gps" v-model="quoted.gps">&nbsp;% -->
 							{{quoted.gps}}&nbsp;%
 						</span>
-					</li>
+					</li> -->
 					<li><b>首期款</b><span>{{resultData.firstPrice}}&nbsp;元</span></li>
 					<li><b>每期租金</b><span>{{resultData.termPrice}}&nbsp;元</span></li>
 					<li><b>期数</b><span>{{resultData.term}}&nbsp;期</span></li>
@@ -124,6 +123,10 @@
 				<mt-popup v-model="pickerPayTypeStatus" class="pickerPrice" v-else-if="pickerPayTypeStatus" position='bottom' >
 					<mt-picker value-key="FLAG" :slots="payTypeSlots" @change="onPayTypeChange"></mt-picker>
 					<p><span class="fl" @click="surePickerpayType">取消</span><span class="fr" @click="surePickerpayType('confirm')">确定</span></p>
+				</mt-popup>
+				<mt-popup v-model="pickerTermTypeStatus" class="pickerPrice" v-else-if="pickerTermTypeStatus" position='bottom' >
+					<mt-picker value-key="FLAG" :slots="termTypeSlots" @change="onGkfsChange"></mt-picker>
+					<p><span class="fl" @click="sureTermType">取消</span><span class="fr" @click="sureTermType('confirm')">确定</span></p>
 				</mt-popup>
 				<mt-popup v-model="firstPayStatu" class="firstPayCont" v-else-if="firstPayStatu" position="bottom">
 					<ul v-if="moneyToRate">
@@ -165,7 +168,7 @@
 					</ul>
 					<ul v-if="bailToRate">
 						<li class="input">
-							<b>保证金金额</b>
+							<b>租赁保证金金额</b>
 							<span><input type="text" @input="changBailRate" placeholder="请输入您的金额" name="bail" v-model="quoted.bail">&nbsp;元</span>
 						</li>
 						<li class="alertLi">当前为金额计算，<button @click="bailToRateStatus">改为百分比计算</button></li>
@@ -182,7 +185,7 @@
 						</li>
 						<li class="alertLi">当前为百分百计算，<button @click="bailToRateStatus">改为金额计算</button></li>
 						<li class="input">
-							<b>保证金金额</b>
+							<b>租赁保证金金额</b>
 							<span>
 								<b v-if="quoted.bail">{{quoted.bail}}</b>
 								<b v-else class="default">自动计算</b>&nbsp;元
@@ -199,7 +202,7 @@
     <script>
 			summerready=function(){
                 var userinfo = summer.getStorage("userinfo");
-                quotedVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+                quotedVue.ORG_ID = userinfo&&userinfo.ORG_ID ? userinfo.ORG_ID : "";
 				if(summer.pageParam.id){
 					quotedVue.PROJECT_ID=summer.pageParam.id;
 				}
@@ -219,13 +222,21 @@
 								className: 'slot1',
 								textAlign: 'center'
 							}],
+							termTypeSlots:[{
+								flex: 1,
+								values: [],
+								defaultIndex:0,
+								className: 'slot3',
+								textAlign: 'center'
+							}],
 							payTypeList:[],
 							bailList:["融资额","首期款"],
-							termTypeList:['期满处','里方式'],
+							termTypeList:[],
 							pickerStatus:false,
 							pickerPayTypeStatus:false,
 							bailStatue:false,
 							firstPayStatu:false,
+							pickerTermTypeStatus:false,
 							moneyToRate:true,
 							bailToRate:true,
 							pickerType:'payType',
@@ -235,11 +246,12 @@
 								allPrice:'',
 								term:'', //租赁期数
 								termType:'',
+								termTypeCode:'',
 								contractTerm:'',
 								rate:'',
 								payType:'',
-								firstPayRate:'', //待定首付比例
-								sureFirstPayRate:'', //选择的首付比例
+								firstPayRate:'', //待定首期租金
+								sureFirstPayRate:'', //选择的首期租金
 								firstPay:'',
 								sureFirstPay:'',
 								bail:'', //保证金
@@ -300,7 +312,7 @@
 							},function(res){
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
-
+								_this.termTypeSlots[0].values=res.data.datas.PoundageWayList
 							},function(err){
 								console.log("err",err);
 							})
@@ -319,12 +331,24 @@
 							this.quoted.sureBailType=this.quoted.bailType
 							this.bailStatue=false
 						},
+						sureTermType:function(val){
+							this.pickerTermTypeStatus=!this.pickerTermTypeStatus
+							if(val=='confirm'){
+								this.quoted.termType=this.pickerVal
+								this.quoted.termTypeCode=this.pickerCode
+								console.log(this.quoted.termType)
+							}
+						},
+						onGkfsChange:function(picker,values){
+							this.pickerVal=values[0].FLAG;
+							this.pickerCode=values[0].CODE;
+						},
 						bailToRateStatus:function(){
 							this.bailToRate=!this.bailToRate
 						},
 						toggleClass:function(e,str){
 							if(str=="首期款"&&!this.quoted.sureFirstPay){
-								// summer.toast({msg:"请先选择首付比例"})
+								// summer.toast({msg:"请先选择首期租金"})
 								console.log("ss");
 								return
 							}
@@ -429,7 +453,7 @@
 							var val='';
 							if(value=='fee'){
 								val=this.quoted.consultingFee;
-								if(!this.quoted.allPrice){summer.toast({msg:'请先输入合同金额'});return}
+								if(!this.quoted.allPrice){summer.toast({msg:'请先输入实际成交价'});return}
 								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
 									this.quoted.consultingFee=''
 								}
@@ -468,6 +492,7 @@
 								BAIL_PERCENT: _this.quoted.sureBailRate,
 								FIRST_MONEY: _this.quoted.sureFirstPay,
 								RenewalMargin_MONEY:_this.quoted.feeOn
+								// POUNDAGE_WAY:_this.quoted.termTypeCode
 							};
 							console.log(JSON.stringify(params));
 							ajaxRequest({
@@ -515,7 +540,8 @@
 								POUNDAGE_PRICE:_this.quoted.consultingFee,
                 RenewalMargin_MONEY:_this.quoted.feeOn,
                 ORG_ID:_this.ORG_ID,
-								INTERNAL_RATE:_this.quoted.gps
+								INTERNAL_RATE:_this.quoted.gps,
+								POUNDAGE_WAY:_this.quoted.termTypeCode
 								// LEASE_SUBFIRENT:_this.quoted.sureBail, 保险保证金
 							};
 							console.log(JSON.stringify(param));

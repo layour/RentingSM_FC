@@ -23,11 +23,11 @@
 					<li><b>方案名称</b><span>{{SCHEME_NAME}}</span></li>
 					<!-- 不再显示方案编号了 -->
 					<!-- <li><b>方案编号</b><span>{{SCHEME_CODE}}</span></li> -->
-					<li v-if="PROJECT_ID!=''" class="spec"><b>合同金额</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
+					<li v-if="PROJECT_ID!=''" class="spec"><b>实际成交价</b><span>{{quoted.allPrice}}&nbsp;元</span></li>
 					<li v-else class="spec input">
-						<b>合同金额</b>
+						<b>实际成交价</b>
 						<span>
-							<input type="text" v-model="quoted.allPrice" @input="checkVal('allPrice')" placeholder="请输入合同金额" name="allPrice">&nbsp;元
+							<input type="text" v-model="quoted.allPrice" @input="checkVal('allPrice')" placeholder="请输入实际成交价" name="allPrice">&nbsp;元
 						</span>
 					</li>
 					<li @click="surePicker('term')">
@@ -44,14 +44,7 @@
 							{{quoted.contractTerm}}&nbsp;个月
 						</span>
 					</li>
-					<!-- <li @click="surePicker('termType')">
-						<b>期满处理方式</b>
-						<span>
-							<b v-if="quoted.termType">{{quoted.termType}}</b>
-							<b v-else class="default">请选择</b>
-							<i class="icon iconfont icon-enter"></i>
-						</span>
-					</li> -->
+
 					<li  class='input'>
 						<b>租赁年利率</b>
 						<span>
@@ -115,6 +108,14 @@
 							<input type="text" @input="checkVal('feeOn')" placeholder="请输入续保保证金" name="feeOn" v-model="quoted.feeOn">&nbsp;元
 						</span>
 					</li>
+					<li @click="sureTermType">
+						<b>保证金处理方式</b>
+						<span>
+							<b v-if="quoted.termType">{{quoted.termType}}</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
+						</span>
+					</li>
 					<li class="spec input">
 						<b>咨询费</b>
 						<span>
@@ -153,6 +154,10 @@
 				<mt-popup v-model="pickerGkfsStatus" class="pickerPrice" v-else-if="pickerGkfsStatus" position='bottom' >
 					<mt-picker value-key="FLAG" :slots="gkfsSlots" @change="onGkfsChange"></mt-picker>
 					<p><span class="fl" @click="sureGkfsType">取消</span><span class="fr" @click="sureGkfsType('confirm')">确定</span></p>
+				</mt-popup>
+				<mt-popup v-model="pickerTermTypeStatus" class="pickerPrice" v-else-if="pickerTermTypeStatus" position='bottom' >
+					<mt-picker value-key="FLAG" :slots="termTypeSlots" @change="onGkfsChange"></mt-picker>
+					<p><span class="fl" @click="sureTermType">取消</span><span class="fr" @click="sureTermType('confirm')">确定</span></p>
 				</mt-popup>
 				<mt-popup v-model="firstPayStatu" class="firstPayCont" v-else-if="firstPayStatu" position="bottom">
 					<ul v-if="moneyToRate">
@@ -228,7 +233,7 @@
     <script>
 			summerready=function(){
         var userinfo = summer.getStorage("userinfo");
-        quotedVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+        quotedVue.ORG_ID = userinfo&&userinfo.ORG_ID ? userinfo.ORG_ID : "";
 				if(summer.pageParam.projectId){
 					quotedVue.PROJECT_ID=summer.pageParam.projectId;
 				}
@@ -261,12 +266,20 @@
 								className: 'slot2',
 								textAlign: 'center'
 							}],
+							termTypeSlots:[{
+								flex: 1,
+								values: [],
+								defaultIndex:0,
+								className: 'slot3',
+								textAlign: 'center'
+							}],
 							payTypeList:[],
 							bailList:["融资额","首期款"],
-							termTypeList:['期满处','里方式'],
+							termTypeList:[],
 							pickerStatus:false,
 							pickerPayTypeStatus:false,
 							pickerGkfsStatus:false,
+							pickerTermTypeStatus:false,
 							bailStatue:false,
 							firstPayStatu:false,
 							moneyToRate:true,
@@ -286,6 +299,7 @@
 								allPrice:100000,
 								term:'', //租赁期数
 								termType:'',
+								termTypeCode:'',
 								contractTerm:'',
 								rate:'',
 								payType:'',
@@ -310,8 +324,8 @@
 								term:''
 							},
 							testData:{},
-                            isTest:false,
-                            ORG_ID: ""
+              isTest:false,
+              ORG_ID: ""
             }
           },
 					computed:{
@@ -386,6 +400,7 @@
 							},function(res){
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
+								_this.termTypeSlots[0].values=res.data.datas.PoundageWayList
 								_this.SUPPLIERS_ID=res.data.datas.prj.SUPPLIERS_ID
 								_this.SCHEME_ROW_NUM=res.data.datas.prj.SCHEME_ROW_NUM
 								_this.gkfsSlots[0].values=res.data.datas.GKFS
@@ -408,6 +423,8 @@
 									_this.quoted.feeOn=data.RENEWALMARGIN_MONEY
 									// _this.quoted.sureBail=data.DEPOSIT_MONEY
 									_this.quoted.gps=data.INTERNAL_RATE
+									_this.quoted.termType=data.POUNDAGE_WAY_NM
+									_this.quoted.termTypeCode=data.POUNDAGE_WAY
 									_this.resultData.firstPrice=data.FIRST_MONEY
 									_this.resultData.termPrice=data.MONTH_RENT
 									_this.resultData.term=data.LEASE_TERM
@@ -436,7 +453,14 @@
 								this.GKFS=this.pickerVal
 								this.gkfsCode=this.pickerCode
 								this.GKCD=''
-								console.log(this.quoted.payType)
+							}
+						},
+						sureTermType:function(val){
+							this.pickerTermTypeStatus=!this.pickerTermTypeStatus
+							if(val=='confirm'){
+								this.quoted.termType=this.pickerVal
+								this.quoted.termTypeCode=this.pickerCode
+								console.log(this.quoted.termType)
 							}
 						},
 						sureBail:function(){
@@ -559,7 +583,7 @@
 							var val='';
 							if(value=='fee'){
 								val=this.quoted.consultingFee;
-								if(!this.quoted.allPrice){summer.toast({msg:'请先输入合同金额'});return}
+								if(!this.quoted.allPrice){summer.toast({msg:'请先输入实际成交价'});return}
 								if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>=parseFloat(this.quoted.allPrice)){
 									this.quoted.consultingFee=''
 								}
@@ -582,7 +606,7 @@
 
 						},
 						quotedTest:function(){
-							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn){
+							if(!this.quoted.allPrice||!this.quoted.term||!this.quoted.rate||!this.quoted.payType||!this.GKCD||!this.quoted.sureFirstPayRate||!this.quoted.consultingFee||!this.quoted.feeOn||!this.quoted.termType){
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}
@@ -597,7 +621,8 @@
  								POUNDAGE_PRICE:_this.quoted.consultingFee,
  								BAIL_PERCENT:_this.quoted.sureBailRate,
  								FIRST_MONEY:_this.quoted.sureFirstPay,
-								RenewalMargin_MONEY:_this.quoted.feeOn
+								RenewalMargin_MONEY:_this.quoted.feeOn,
+								POUNDAGE_WAY:_this.quoted.termTypeCode
 							};
 							console.log(JSON.stringify(params));
 							ajaxRequest({
@@ -649,7 +674,8 @@
 								POUNDAGE_PRICE:_this.quoted.consultingFee,
                 RenewalMargin_MONEY:_this.quoted.feeOn,
                 ORG_ID:_this.ORG_ID,
-								INTERNAL_RATE:_this.quoted.gps
+								INTERNAL_RATE:_this.quoted.gps,
+								POUNDAGE_WAY:_this.quoted.termTypeCode
 								// LEASE_SUBFIRENT:_this.quoted.sureBail, 保险保证金
 							};
 							console.log(JSON.stringify(param));
