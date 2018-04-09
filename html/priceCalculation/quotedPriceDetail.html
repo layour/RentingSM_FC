@@ -227,8 +227,8 @@
     </div>
     <script>
 			summerready=function(){
-                var userinfo = summer.getStorage("userinfo");
-                quotedVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
+        var userinfo = summer.getStorage("userinfo");
+        quotedVue.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 				if(summer.pageParam.projectId){
 					quotedVue.PROJECT_ID=summer.pageParam.projectId;
 				}
@@ -283,7 +283,7 @@
 							gkfsCode:'2',
 							GKCD:'',//挂靠车队
 							quoted:{
-								allPrice:'',
+								allPrice:100000,
 								term:'', //租赁期数
 								termType:'',
 								contractTerm:'',
@@ -405,7 +405,7 @@
 									// _this.quoted.sureBailType=data.LEASE_SUBFIRENT
 									_this.quoted.sureBailRate=data.BAIL_PERCENT
 									_this.quoted.consultingFee=data.POUNDAGE_PRICE
-									_this.quoted.feeOn=data.RenewalMargin_MONEY
+									_this.quoted.feeOn=data.RENEWALMARGIN_MONEY
 									// _this.quoted.sureBail=data.DEPOSIT_MONEY
 									_this.quoted.gps=data.INTERNAL_RATE
 									_this.resultData.firstPrice=data.FIRST_MONEY
@@ -539,7 +539,7 @@
 						bailTypeReset:function(){
 							var number=0;
 							if(this.quoted.bailType=="融资额"){
-								number=parseFloat(his.quoted.allPrice-this.quoted.sureFirstPay).toFixed(2)
+								number=parseFloat(this.quoted.allPrice-this.quoted.sureFirstPay).toFixed(2)
 							}else if(this.quoted.bailType=="首期款"){
 								number=this.quoted.firstPay;
 							}

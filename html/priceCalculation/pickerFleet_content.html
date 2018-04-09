@@ -30,7 +30,7 @@
 		<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js" ></script>
     <script>
 			summerready=function(){
-				pickerFleetVue.SUP_ID=summer.getStorage("SUP_ID")
+				pickerFleetVue.SUP_ID= summer.pageParam.SUP_ID || summer.getStorage("SUP_ID")
 				pickerFleetVue.getData()
 			}
     	var pickerFleetVue=new Vue({
@@ -48,6 +48,10 @@
 					methods:{
 						getData:function(){
 							var _this=this
+							console.log(JSON.stringify({
+								SUP_ID:_this.SUP_ID,
+								FLAG:_this.searchVal
+							}))
 								ajaxRequest({
 									type:'POST',
 									url:'appservice/foundproject/toProSche',
