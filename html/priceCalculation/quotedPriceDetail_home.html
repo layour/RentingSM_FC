@@ -409,7 +409,7 @@
 						bailTypeReset:function(){
 							var number=0;
 							if(this.quoted.bailType=="融资额"){
-								number=this.quoted.allPrice;
+								number=parseFloat(his.quoted.allPrice-this.quoted.sureFirstPay).toFixed(2)
 							}else if(this.quoted.bailType=="首期款"){
 								number=this.quoted.firstPay;
 							}
