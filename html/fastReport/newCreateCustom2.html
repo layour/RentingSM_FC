@@ -373,6 +373,7 @@
 						self.personMes.spoustObj.SPOUST_SEX="1"
 					}
 					var finanlInput=JSON.parse(JSON.stringify(self.personMes));
+					summer.showProgress();
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/customer/saveCust',
@@ -380,8 +381,6 @@
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							//self.baseMessageData=res.data.datas;
-							//console.log(self.baseMessageData);
 							summer.toast({msg:"保存成功"});
 							var clint_Id=res.data.datas.CLIENT_ID;
 							if (self.sourceFrom=="newCustom") {
