@@ -381,7 +381,12 @@
 					}, function(res) {
 						summer.hideProgress();
 						if (res.data.flag == 1) {
-							summer.toast({msg:"保存成功"});
+							var toastMsg=res.data.msg;
+							var r = /\[(.+?)\]/g;
+							var b=toastMsg.match(r);
+							summer.toast({
+								msg:b[0].slice(1,b[0].length-1)
+							});
 							var clint_Id=res.data.datas.CLIENT_ID;
 							if (self.sourceFrom=="newCustom") {
 								summer.openWin({
