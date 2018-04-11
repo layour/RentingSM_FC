@@ -105,7 +105,8 @@
 					},
 					dataList:"",
 					dataSchemeList: "",
-					project_id: ""
+                    project_id: "",
+                    ORG_ID: ""
 				}
 			},
 			methods: {
@@ -158,7 +159,8 @@
 						type: 'post',
 						url: 'appservice/business/startRevJbpm',
 						param: {
-							"PROJECT_ID": _this.project_id,
+                            "PROJECT_ID": _this.project_id,
+                            "ORG_ID": _this.ORG_ID
 						}
 					},function(res){
 						console.log("res",JSON.stringify(res));
@@ -202,7 +204,9 @@
 		summerready = function() {
 			var project_Id = summer.pageParam.project_Id;
 			submitSure.project_id = project_Id;
-			submitSure.getData(project_Id);
+            submitSure.getData(project_Id);
+            var userinfo = summer.getStorage("userinfo");
+            submitSure.ORG_ID = userinfo.ORG_ID ? userinfo.ORG_ID : "";
 		};
 	</script>
 </body>
