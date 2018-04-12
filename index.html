@@ -26,8 +26,9 @@
 			<div class="container">
 				<div id="banner-inner" class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="k in imgArr">
-                            <img :src="k.DOWN_PATH" alt="" />
+                        <div class="swiper-slide" v-for="(k,index) in imgArr">
+                            <img :src="k.DOWN_PATH" alt="" v-if="index==1" onclick="openETCService()" />
+                            <img :src="k.DOWN_PATH" alt="" v-else />
                         </div>
                     </div>
 				</div>
