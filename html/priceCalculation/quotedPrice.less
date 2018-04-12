@@ -75,7 +75,7 @@ ul{
   overflow: hidden;
   li{
     background: @white;
-    padding:.12rem .56rem;
+    padding:0 .56rem;
     height: 1.12rem;
     line-height: 1.12rem;
     border-bottom:1px solid @borderColor;
@@ -86,6 +86,10 @@ ul{
       position: absolute;
       right: .56rem;
       top:0;
+      max-width: 4rem;
+      overflow: hidden;
+         white-space: nowrap;
+         text-overflow: ellipsis;
     }
     // &.liContr{
     //
