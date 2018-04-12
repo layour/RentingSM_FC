@@ -453,7 +453,7 @@
                         var self=this;
                         this.DriverItem.map(function (e, i) {
                         if (e.FLAG == self.message.LICENSE_TYPE_NM) {
-                            self.message.LICENSE_TYPE = self.RelationItem[i].CODE;
+                            self.message.LICENSE_TYPE = self.DriverItem[i].CODE;
                         }
                     });
                     }
