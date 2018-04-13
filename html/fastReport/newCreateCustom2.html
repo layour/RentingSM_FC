@@ -423,15 +423,18 @@
 							if(res.data.code=="E02003"){
 								summer.toast({msg:"客户证件号重复,请重新录入"});
 								return
-							}else if (res.data.code == "E10004") {
+							}else {
 								summer.toast({
 									msg: res.data.msg
 								});
 								return;
-							}
+							} 
 						}
 					}, function(err) {
-						alert(err);
+						summer.toast({
+							msg:"保存失败"
+						});
+						//alert(err);
 						console.log(err);
 						summer.hideProgress();
 					});
