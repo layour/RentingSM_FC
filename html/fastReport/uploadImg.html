@@ -250,6 +250,7 @@
 							msg: '删除成功'
 						})
 					}, function (err) {
+						summer.hideProgress()
 						alert(JSON.stringify(err));
 					})
 				},
@@ -474,6 +475,7 @@
 		}
 
 		function multiUploadErrCallback(err) {
+			summer.hideProgress();
 			console.log("失败" + JSON.stringify(err));
 			alert(JSON.stringify(err));
 		}

@@ -288,7 +288,7 @@
 							PROJECT_ID:'',
 							SUPPLIERS_ID:'',
 							SCHEME_CODE:'',//报价方案code
-							SCHEME_NAME:'hahh你好的方式公司的割发额问我代首',
+							SCHEME_NAME:'',
 							SCHEME_ROW_NUM:'',
 							GKFS:'',
 							pickerCode:'',
@@ -635,7 +635,7 @@
 								_this.testData=res.data.datas
 								_this.resultData.firstPrice=res.data.datas.FIRST_MONEY
 								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
-								_this.quoted.gps=(res.data.datas.payrent[0].irrrate).toFixed(2)
+								_this.quoted.gps=(res.data.datas.INTERNAL_RATE).toFixed(2)
 								_this.resultData.term=_this.quoted.contractTerm
 							},function(err){
 								console.log("err",err);
