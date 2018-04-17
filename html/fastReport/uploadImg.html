@@ -296,9 +296,9 @@
 								return
 							}
 							console.log("开始添加水印,图片个数" + length);
-							summer.showProgress();
-							that.imgList.push(res.target);
-							// that.compressImg(0, args, length);
+							for(var i=0;i<args.imgPaths.length;i++){
+								that.imgList.push(args.imgPaths[i].imgPath);
+							}
 						}
 					});
 				},
