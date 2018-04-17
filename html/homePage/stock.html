@@ -124,7 +124,8 @@
         <div class="um-footer">
             <div class="footer-l">
                 <span>还款金额： </span>
-                <i>￥{{total}}</i>
+                <i>￥</i>
+                <input type="number" v-model="total" @input="inputTotal" />
             </div>
             <div
 				class="footer-r"
@@ -174,7 +175,8 @@
 					car:"",
 					num:"",
 					periods:"",
-					money:"",
+                    money:"",
+                    // 罚息
 					interest:"",
 					PAYLIST_CODE:""
 				},
@@ -190,6 +192,10 @@
 				bankId:""
 			},
 			computed: {
+                inputTotal: function () {
+                    this.TOTAL = Number(this.total);
+                    console.log(this.TOTAL,this.total)
+                },
 				botMaskStyle:function () {
 					return {
 						botMask: true,
@@ -311,9 +317,12 @@
                         this.total = (Number(this.total) + Number(this.items[index].BEGINNING_TATAL_MONEY)).toFixed(2);
                         this.TOTAL = this.TOTAL + Number(this.items[index].BEGINNING_TATAL_MONEY);
 					} else {
-                        this.total = (Number(this.total) - Number(this.items[index].BEGINNING_TATAL_MONEY)).toFixed(2);
-                        this.TOTAL = this.TOTAL - Number(this.items[index].BEGINNING_TATAL_MONEY);
+                        var result = Number(this.total) - Number(this.items[index].BEGINNING_TATAL_MONEY) <= 0 ? 0 : Number(this.total) - Number(this.items[index].BEGINNING_TATAL_MONEY);
+                        this.total = result.toFixed(2);
+                        this.TOTAL = this.TOTAL - Number(this.items[index].BEGINNING_TATAL_MONEY) <= 0 ? 0 : 
+                        this.TOTAL - Number(this.items[index].BEGINNING_TATAL_MONEY);
 					}
+                    console.log(this.TOTAL,this.total);
 				},
 				// 查看详情
 				checkInfo:function (ev,index) {
@@ -735,9 +744,9 @@
 		summerready = function () {
             stock.getSwiperImg();
             // 真实
-			stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
+			/* stock.EMPLOYEE_ID = summer.pageParam.customerInfo.ID;
 			stock.NAME = summer.pageParam.customerInfo.NAME;
-            stock.TEL_PHONE = summer.pageParam.customerInfo.TEL_PHONE;
+            stock.TEL_PHONE = summer.pageParam.customerInfo.TEL_PHONE; */
             
             // 测试用
 			/* stock.EMPLOYEE_ID = 165176774;
@@ -745,9 +754,9 @@
             stock.TEL_PHONE = "13936778297"; */
 
             // 自己（方便测试）
-            /* stock.EMPLOYEE_ID = 165183301;
+            stock.EMPLOYEE_ID = 165183301;
 			stock.NAME = "张运银";
-            stock.TEL_PHONE = "15040570501"; */
+            stock.TEL_PHONE = "15040570501";
             
 
 			/* 请求代付款列表 */

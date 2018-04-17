@@ -116,6 +116,23 @@
                 // 查看协议
                 seeAgreement: function () {
                     console.log("查看协议");
+                    summer.openWin({
+						id:'seeAgreement',
+						url:'html/stock/seeAgreement.html',
+						create:false,
+						type:'actionBar',
+						actionBar: {
+							title: "自动还款用户协议",
+							titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							backgroundColor: "#039be5",
+							leftItem:{
+								image: "img/back.png",
+								method:"",//返回按钮自定义事件
+								text:"返回",
+								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+							}
+						}
+					});
                 },
                 // 点击按钮
                 btnClick: function () {
