@@ -123,6 +123,19 @@ html,body{
     float: left;
     padding-left: 0.26rem;
 }
+.footer-l input {
+    float: left;
+    height: 1rem;
+    line-height: 1rem;
+    font-size: 0.32rem;
+    color: #039be5;
+    font-style: normal;
+    width: 2.4rem;
+    border: 1px solid #dedede;
+    box-sizing: border-box;
+    outline: none;
+    padding-left: 0.1rem;
+}
 .footer-l span{
     float: left;
     height: 1rem;
