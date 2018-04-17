@@ -297,45 +297,29 @@
 							}
 							console.log("开始添加水印,图片个数" + length);
 							summer.showProgress();
-							that.compressImg(0, args, length);
-
-							function compressImg(i) {
-								CommonUtil.watermark({
-									srcImage: args.imgPaths[i].imgPath,
-									targetImage: args.imgPaths[i].imgPath,
-									name: that.param.TPM_TYPE,
-									callback: function (res) {
-										console.log(i + "水印后的" + res.target)
-										that.imgList.push(res.target);
-										if (i < length - 1) {
-											console.log("第" + i + "次回掉");
-											compressImg(i + 1)
-										} else {
-											summer.hideProgress();
-										}
-									}
-								});
-							}
+							that.imgList.push(res.target);
+							// that.compressImg(0, args, length);
 						}
 					});
 				},
 				compressImg:function(i, args, length) {
 					var that = this;
 					console.log("第" + i + "次添加水印")
-					CommonUtil.watermark({
-						srcImage: args.imgPaths[i].imgPath,
-						targetImage: args.imgPaths[i].imgPath,
-						name: that.param.TPM_TYPE,
+					summer.saveImageToAlbum({
+						override: true,
+						path: args.imgPaths[i].imgPath,
+						albumTitle: 'FC',
 						callback: function (res) {
 							console.log("第" + i + "次水印后的" + res.target)
-							that.imgList.push(res.target);
-							if (i < length - 1) {
-								that.compressImg(i + 1, args, length)
-							} else {
-								summer.hideProgress();
-							}
+
 						}
 					});
+					that.imgList.push(args.imgPaths[i].imgPath);
+					if (i < length - 1) {
+						that.compressImg(i + 1, args, length)
+					} else {
+						summer.hideProgress();
+					}
 					console.log("程序还在执行")
 				},
 				takeVideo:function() {
