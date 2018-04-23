@@ -39,7 +39,7 @@ var CommonUtil = {
 					"top" : "0",
 					"right" : "0",
 					"bottom" : "50",
-					"font-size" : "20"
+					"font-size" : "14"
 				}
 			}, {
 				text : args.address,
@@ -48,7 +48,7 @@ var CommonUtil = {
 					"top" : "0",
 					"right" : "0",
 					"bottom" : "20",
-					"font-size" : "20"
+					"font-size" : "14"
 				}
 			}];
 			var data = {
