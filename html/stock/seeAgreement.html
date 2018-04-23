@@ -7,7 +7,6 @@
     <title></title>
     <link rel="stylesheet" href="../../css/iuapmobile.um.css">
     <link rel="stylesheet" href="../../css/fonts/iconfont.css">
-    <link rel="stylesheet" href="seeAgreement.css">
     <script src="../../js/summer.js"></script>
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
@@ -16,7 +15,7 @@
     <script src="../../js/common.js"></script>
 </head>
 
-<body>
+<body style="background: #fff;">
     <div style="padding: 0.2rem">
         <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
             <span style="font-family:宋体; font-size:12pt; font-weight:bold">北京复昌代扣服务协议</span>
@@ -32,7 +31,7 @@
             <span style="font-family:宋体; font-size:10.5pt; font-weight:bold">第一条服务内容</span>
         </p>
         <p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:justify; text-indent:21pt; widows:0">
-            <span style="font-family:宋体; font-size:10.5pt">鉴于甲方与乙方签订的编号：<i id="bianhao" style="font-style: normal;color:#0000ff;"></i></span><br/>
+            <span style="font-family:宋体; font-size:10.5pt">鉴于甲方与乙方签订的编号：<i id="bianhao" style="font-style: normal;color:#0000ff;border-bottom: 1px solid #000"></i></span><br/>
             <span style="font-family:宋体; font-size:10.5pt; text-decoration:underline"> </span>
             <span style="font-family:宋体; font-size:10.5pt">《融资租赁合同》内容，乙方作为承租人应按照《融资租赁合同》的约定按时足额向甲方支付租金。现乙方同意并授权甲方，在到期还款日当日从乙方绑定银行账户中进行扣款，划扣金额包含租金和违约金。</span>
         </p>
@@ -93,33 +92,18 @@
     </div>
     <script>
         summerready = function () {
-            /* summer.showProgress();
-            ajaxRequest({
-                type: 'post',
-                url: 'appservice/customer/findAutocharge',
-                param: {
-                    "EMPLOYEE_ID": summer.pageParam.EMPLOYEE_ID
-                }
-            }, function (res) {
-                summer.hideProgress();
-                var Data;
-                if (Object.prototype.toString.call(res.data) === '[object String]') {
-                    Data = JSON.parse(res.data);
+            var code_list = summer.pageParam.code_list;
+            var name = code_list[0].NAME;
+            var codeNum = "";
+            code_list.forEach(function (e, i) {
+                if (i == code_list.length - 1) {
+                    codeNum += e.PRO_CODE;
                 } else {
-                    Data = res.data;
+                    codeNum += e.PRO_CODE + ', ';
                 }
-                if (Data.flag == 1) {
-                    
-                }
-            }, function (err) {
-                summer.hideProgress();
-                summer.toast({
-                    msg: "数据请求失败"
-                });
-                console.log(err);
-            }); */
-            $('#yifang').text('哈哈哈');
-            $('#bianhao').text('123456789');
+            });
+            $('#yifang').text(name);
+            $('#bianhao').text(codeNum);
         };
     </script>
 </body>
