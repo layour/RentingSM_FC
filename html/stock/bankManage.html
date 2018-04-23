@@ -70,7 +70,9 @@
                 // 客户电话
                 CLIENT_PHONE: "",
                 // 银行ID
-                BANK_ID: ""
+                BANK_ID: "",
+                // 乙方信息
+                code_list: []
             },
             computed: {
                 gouStyle: function () {
@@ -115,7 +117,6 @@
                 },
                 // 查看协议
                 seeAgreement: function () {
-                    console.log("查看协议");
                     summer.openWin({
 						id:'seeAgreement',
 						url:'html/stock/seeAgreement.html',
@@ -131,6 +132,9 @@
 								text:"返回",
 								textColor:"#ffffff"  //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
 							}
+                        },
+                        pageParam: {
+							code_list: this.code_list
 						}
 					});
                 },
@@ -242,30 +246,30 @@
                         Data = res.data;
                     }
                     if (Data.flag == 1) {
-                        if (Data.datas) {
-                            // 有绑定
-                            bankManage.bankCardDatas = Data.datas;
-                            bankManage.BANK_ID = Data.datas.BANK_ID;
-                            bankManage.bankText = Data.datas.BK_NM;
-                            bankManage.checkedAgreement = false;
-                            bankManage.btnShouldClick = true;
-                            bankManage.btnText = "关闭自动还款"
-                        } else {
-                            // 无绑定
-                            bankManage.bankCardDatas = {
-                                "CARD_TYPE": "",
-                                "BK_NM": "",
-                                "ACC_NO": "",
-                                "IS_AUTO": "",
-                                // 已经绑定的银行卡ID
-                                "BANK_ID": ""
-                            };
-                            bankManage.BANK_ID = "";
-                            bankManage.bankText = "选择扣款银行";
-                            bankManage.checkedAgreement = false;
-                            bankManage.btnShouldClick = false;
-                            bankManage.btnText = "确认自动还款"
-                        }
+                        // 有绑定
+                        bankManage.bankCardDatas = Data.datas;
+                        bankManage.BANK_ID = Data.datas.BANK_ID;
+                        bankManage.bankText = Data.datas.BK_NM;
+                        bankManage.checkedAgreement = false;
+                        bankManage.btnShouldClick = true;
+                        bankManage.btnText = "关闭自动还款";
+                        bankManage.code_list = Data.datas.code_list;
+                    } else if (Data.flag == 0) {
+                        // 无绑定
+                        bankManage.bankCardDatas = {
+                            "CARD_TYPE": "",
+                            "BK_NM": "",
+                            "ACC_NO": "",
+                            "IS_AUTO": "",
+                            // 已经绑定的银行卡ID
+                            "BANK_ID": ""
+                        };
+                        bankManage.BANK_ID = "";
+                        bankManage.bankText = "选择扣款银行";
+                        bankManage.checkedAgreement = false;
+                        bankManage.btnShouldClick = false;
+                        bankManage.btnText = "确认自动还款";
+                        bankManage.code_list = Data.datas.code_list;
                     }
                 }, function (err) {
                     summer.hideProgress();
