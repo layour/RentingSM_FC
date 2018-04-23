@@ -30,7 +30,7 @@ var CommonUtil = {
 					"top" : "0",
 					"right" : "0",
 					"bottom" : "80",
-					"font-size" : "20"
+					"font-size" : "16"
 				}
 			}, {
 				text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
