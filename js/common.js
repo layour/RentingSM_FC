@@ -26,62 +26,62 @@ var CommonUtil = {
 			var textgroup;
 			if($summer.os == "ios"){
 				textgroup = [{
-				text : params.name,
-				style : {
-					"left" : "8",
-					"top" : "0",
-					"right" : "0",
-					"bottom" : "48",
-					"font-size" : "12"
-				}
-			}, {
-				text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
-				style : {
-					"left" : "8",
-					"top" : "0",
-					"right" : "0",
-					"bottom" : "28",
-					"font-size" : "12"
-				}
-			}, {
-				text : args.address,
-				style : {
-					"left" : "8",
-					"top" : "0",
-					"right" : "0",
-					"bottom" : "8",
-					"font-size" : "12"
-				}
-			}];
+					text : params.name,
+					style : {
+						"left" : "8",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "48",
+						"font-size" : "12"
+					}
+				}, {
+					text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
+					style : {
+						"left" : "8",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "28",
+						"font-size" : "12"
+					}
+				}, {
+					text : args.address,
+					style : {
+						"left" : "8",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "8",
+						"font-size" : "12"
+					}
+				}];
 			} else {
 				textgroup = [{
-				text : params.name,
-				style : {
-					"left" : "2",
-					"top" : "0",
-					"right" : "0",
-					"bottom" : "12",
-					"font-size" : "10"
-				}
-			}, {
-				text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
-				style : {
-					"left" : "2",
-					"top" : "0",
-					"right" : "0",
-					"bottom" : "7",
-					"font-size" : "10"
-				}
-			}, {
-				text : args.address,
-				style : {
-					"left" : "2",
-					"top" : "0",
-					"right" : "0",
-					"bottom" : "2",
-					"font-size" : "10"
-				}
-			}];
+					text : params.name,
+					style : {
+						"left" : "2",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "12",
+						"font-size" : "10"
+					}
+				}, {
+					text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
+					style : {
+						"left" : "2",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "7",
+						"font-size" : "10"
+					}
+				}, {
+					text : args.address,
+					style : {
+						"left" : "2",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "2",
+						"font-size" : "10"
+					}
+				}];
 			}
 			
 			var data = {
