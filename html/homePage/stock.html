@@ -785,7 +785,10 @@
 				clearInterval(intervalID);
 				turn = 0;
 			}, 2000);
-		};
+        };
+        $(function () {
+            $('body').height($('body')[0].clientHeight);
+        });
 	</script>
 </body>
 
