@@ -266,12 +266,22 @@
 						callback: function (args) {
 							console.log(JSON.stringify(args));
 							// 水印
+							
 							CommonUtil.watermark({
 								srcImage: args.compressImgPath,
 								targetImage: args.compressImgPath,
 								name: that.param.TPM_TYPE,
 								callback: function (arg) {
 									console.log(JSON.stringify(arg));
+									summer.saveImageToAlbum({
+										override: true,
+										path: arg.target,
+										albumTitle: 'FC',
+										callback: function (res) {
+											console.log("保存成功" + res)
+
+										}
+									});
 									that.imgList.push(arg.target);
 								}
 							});
@@ -296,24 +306,15 @@
 								return
 							}
 							console.log("开始添加水印,图片个数" + length);
-							summer.showProgress();
-							that.imgList.push(res.target);
-							// that.compressImg(0, args, length);
+							for(var i=0;i<args.imgPaths.length;i++){
+								that.imgList.push(args.imgPaths[i].imgPath);
+							}
 						}
 					});
 				},
 				compressImg:function(i, args, length) {
 					var that = this;
 					console.log("第" + i + "次添加水印")
-					summer.saveImageToAlbum({
-						override: true,
-						path: args.imgPaths[i].imgPath,
-						albumTitle: 'FC',
-						callback: function (res) {
-							console.log("第" + i + "次水印后的" + res.target)
-
-						}
-					});
 					that.imgList.push(args.imgPaths[i].imgPath);
 					if (i < length - 1) {
 						that.compressImg(i + 1, args, length)
