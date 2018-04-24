@@ -266,7 +266,6 @@
 						callback: function (args) {
 							console.log(JSON.stringify(args));
 							// 水印
-							
 							CommonUtil.watermark({
 								srcImage: args.compressImgPath,
 								targetImage: args.compressImgPath,
@@ -276,7 +275,7 @@
 									summer.saveImageToAlbum({
 										override: true,
 										path: arg.target,
-										albumTitle: 'FC',
+										albumTitle: '北京复昌',
 										callback: function (res) {
 											console.log("保存成功" + res)
 
