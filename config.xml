@@ -19,6 +19,7 @@
   <openMDoctor>false</openMDoctor>  
   <autoHideLaunch>false</autoHideLaunch>  
   <openMDoctor>false</openMDoctor>
+  <urlScheme>bjfcsm</urlScheme>
   <import id="cordova-plugin-compat" type="web" ref="cordova"></import>  
   <import id="cordova-plugin-http" type="web" ref="cordova"/>  
   <import id="cordova-plugin-camera" type="web" ref="cordova"/>  
