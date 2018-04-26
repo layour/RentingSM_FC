@@ -28,40 +28,11 @@ var CommonUtil = {
 				textgroup = [{
 					text : params.name,
 					style : {
-						"left" : "8",
-						"top" : "0",
-						"right" : "0",
-						"bottom" : "48",
-						"font-size" : "12"
-					}
-				}, {
-					text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
-					style : {
-						"left" : "8",
-						"top" : "0",
-						"right" : "0",
-						"bottom" : "28",
-						"font-size" : "12"
-					}
-				}, {
-					text : args.address,
-					style : {
-						"left" : "8",
-						"top" : "0",
-						"right" : "0",
-						"bottom" : "8",
-						"font-size" : "12"
-					}
-				}];
-			} else {
-				textgroup = [{
-					text : params.name,
-					style : {
 						"left" : "2",
 						"top" : "0",
 						"right" : "0",
-						"bottom" : "12",
-						"font-size" : "10"
+						"bottom" : "32",
+						"font-size" : "8"
 					}
 				}, {
 					text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
@@ -69,8 +40,8 @@ var CommonUtil = {
 						"left" : "2",
 						"top" : "0",
 						"right" : "0",
-						"bottom" : "7",
-						"font-size" : "10"
+						"bottom" : "17",
+						"font-size" : "8"
 					}
 				}, {
 					text : args.address,
@@ -79,7 +50,36 @@ var CommonUtil = {
 						"top" : "0",
 						"right" : "0",
 						"bottom" : "2",
-						"font-size" : "10"
+						"font-size" : "8"
+					}
+				}];
+			} else {
+				textgroup = [{
+					text : params.name,
+					style : {
+						"left" : "1",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "7",
+						"font-size" : "6"
+					}
+				}, {
+					text : (new Date()).format("yyyy-MM-dd hh:mm:ss"),
+					style : {
+						"left" : "1",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "3",
+						"font-size" : "6"
+					}
+				}, {
+					text : args.address,
+					style : {
+						"left" : "1",
+						"top" : "0",
+						"right" : "0",
+						"bottom" : "1",
+						"font-size" : "6"
 					}
 				}];
 			}
