@@ -60,7 +60,7 @@ var CommonUtil = {
 						"left" : "1",
 						"top" : "0",
 						"right" : "0",
-						"bottom" : "7",
+						"bottom" : "5",
 						"font-size" : "6"
 					}
 				}, {
