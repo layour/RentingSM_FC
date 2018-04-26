@@ -258,13 +258,14 @@
                             } else {
                                 self.imgArr = res.data.datas.picList;
                             }
-                            setTimeout(function () {
+                            Vue.nextTick(function () {
+                                // DOM 更新了
                                 var mySwiper = new Swiper('.swiper-container', {
                                     autoplay: 5000,
                                     autoplayDisableOnInteraction: false,
                                     loop: true
                                 });
-                            },0);
+                            })
                         }
                     }, function(err) {
                         self.imgArr = [
@@ -272,13 +273,14 @@
                             {DOWN_PATH: 'img/banner2.jpg'},
                             {DOWN_PATH: 'img/banner3.jpg'}
                         ];
-                        setTimeout(function () {
+                        Vue.nextTick(function () {
+                            // DOM 更新了
                             var mySwiper = new Swiper('.swiper-container', {
                                 autoplay: 5000,
                                 autoplayDisableOnInteraction: false,
                                 loop: true
                             });
-                        },0);
+                        })
                     });
                 },
 				getMissionData:function() {
