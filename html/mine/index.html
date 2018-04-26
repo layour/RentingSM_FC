@@ -180,9 +180,7 @@
                     type: 'post',
                     url: 'appservice/appsys/getNewapp',
                     param: {
-                        "NOW_VERSION": appVersion,
-                        "APP_TYPE": "Android",
-                        "SYS_NAME": "销售端"
+                        "APP_TYPE": "Android"
                     }
                 }, function(res) {
                     if (res.data.flag == 1) {
