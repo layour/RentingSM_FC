@@ -31,7 +31,7 @@ var CommonUtil = {
 						"left" : "2",
 						"top" : "0",
 						"right" : "0",
-						"bottom" : "32",
+						"bottom" : "22",
 						"font-size" : "8"
 					}
 				}, {
@@ -40,7 +40,7 @@ var CommonUtil = {
 						"left" : "2",
 						"top" : "0",
 						"right" : "0",
-						"bottom" : "17",
+						"bottom" : "12",
 						"font-size" : "8"
 					}
 				}, {
