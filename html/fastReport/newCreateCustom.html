@@ -459,7 +459,7 @@
 						_self.message.NAME = cardMessage.name;
 						_self.message.ID_CARD_NO = cardMessage.id_number;
 						_self.message.SEX_NM = cardMessage.gender;
-						cardMessage.gender == "男" ? _self.message.SEX = "0" : _self.message.SEX = "1";
+						cardMessage.gender == "男" ? _self.message.SEX = "1" : _self.message.SEX = "2";
 						var cardM = cardMessage.birthday;
 						cardM = String(cardM.replace(/\./g, "-"));
 						_self.message.BIRTHDAY = cardM;
@@ -721,7 +721,7 @@
 					var paramData = {
 						NAME: self.message.NAME,
 						ID_CARD_NO: self.message.ID_CARD_NO,
-						SEX: self.message.SEX_NM == "男" ? "0" : "1",
+						SEX: self.message.SEX_NM == "男" ? "1" : "2",
 						HOUSE_ADDRESS: self.message.HOUSE_ADDRESS,
 						TEL_PHONE: self.message.TEL_PHONE,
 						IS_MARRY: self.message.IS_MARRY,
@@ -844,9 +844,9 @@
 					};
 					var self = this;
 					if (self.message.SEX_NM == "男") {
-						self.message.SEX = '0'
-					} else {
 						self.message.SEX = '1'
+					} else {
+						self.message.SEX = '2'
 					};
 					if (self.clintId) {
 						self.message.CLIENT_ID = self.clintId;

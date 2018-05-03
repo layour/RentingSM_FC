@@ -368,9 +368,9 @@
 					};
 					self.personMes.spoustObj=self.message.spoustObj;
 					if (self.personMes.spoustObj.SPOUST_SEX_NM=="男") {
-						self.personMes.spoustObj.SPOUST_SEX="0"
-					} else {
 						self.personMes.spoustObj.SPOUST_SEX="1"
+					} else {
+						self.personMes.spoustObj.SPOUST_SEX="2"
 					}
 					var finanlInput=JSON.parse(JSON.stringify(self.personMes));
 					summer.showProgress();
