@@ -228,7 +228,7 @@
                                 summer.closeWin();
                         	} else {
                         		summer.toast({
-                        			msg: "绑定失败"
+                        			msg: Data.msg ? Data.msg : "绑定失败"
                         		});
                         	}
                         }, function (err) {
