@@ -385,9 +385,9 @@
                         _self.message.ID_CARD_NO = cardMessage.id_number;
                         _self.message.SEX_NM = cardMessage.gender;
                         if(cardMessage.gender=="男"){
-                            _self.message.SEX=0
-                        }else{
                             _self.message.SEX=1
+                        }else{
+                            _self.message.SEX=2
                         }
                         var date = new Date();
                         var year = date.getFullYear();
@@ -437,9 +437,9 @@
                     if (param == 'confirm') {
                         this.message.SEX_NM = this.pickerSex;
                         if (this.pickerSex == "男") {
-                            this.message.SEX = 0
-                        } else {
                             this.message.SEX = 1
+                        } else {
+                            this.message.SEX = 2
                         }
                     }
                 },
