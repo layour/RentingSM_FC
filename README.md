@@ -24,4 +24,3 @@ function compile(code)
    return escape(c);  
 }  
 
-
