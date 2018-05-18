@@ -199,6 +199,12 @@
 									this.safePrice=''
 								}
 							}
+							if(param=='realityPrice'){
+								if(this.realityPrice>this.guidePrice){
+									summer.toast({msg:'实际价格不能高于指导价'})
+									this.realityPrice=''
+								}
+							}
 						},
 						pickerDealer:function(){
 							summer.openWin({
