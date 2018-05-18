@@ -620,7 +620,7 @@
  								DEPOSIT_MONEY:_this.quoted.lastBail,
  								POUNDAGE_PRICE:_this.quoted.consultingFee,
  								BAIL_PERCENT:_this.quoted.sureBailRate,
- 								FIRST_MONEY:_this.quoted.sureFirstPay,
+ 								FIRST_MONEY:String(_this.quoted.sureFirstPay),
 								RenewalMargin_MONEY:_this.quoted.feeOn,
 								POUNDAGE_WAY:_this.quoted.termTypeCode
 							};
@@ -666,7 +666,7 @@
 								YEAR_INTEREST:String(_this.quoted.rate),
 								PAY_WAY:_this.quoted.payType,
 								MONTH_RENT:String(_this.resultData.termPrice),
-								FIRST_MONEY:_this.resultData.firstPrice,
+								FIRST_MONEY:String(_this.resultData.firstPrice),
 								START_PERCENT:String(_this.quoted.sureFirstPayRate),
 								DEPOSIT_MONEY:_this.quoted.lastBail,
 								BAIL_PERCENT:String(_this.quoted.sureBailRate),
