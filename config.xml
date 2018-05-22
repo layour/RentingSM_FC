@@ -12,13 +12,11 @@
   <versionBuild>1.1.1</versionBuild>  
   <versionName>1.1.1</versionName>  
   <orientation>unspecified</orientation>  
-  <permission id="android.permission.INTERNET"></permission>  
   <statusBarStyle>light</statusBarStyle>  
   <fullScreen>true</fullScreen>  
   <windowSoftInputMode>stateHidden</windowSoftInputMode>  
   <openMDoctor>false</openMDoctor>  
   <autoHideLaunch>false</autoHideLaunch>  
-  <openMDoctor>false</openMDoctor>
   <urlScheme>bjfcsm</urlScheme>
   <import id="cordova-plugin-compat" type="web" ref="cordova"></import>  
   <import id="cordova-plugin-http" type="web" ref="cordova"/>  
