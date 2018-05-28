@@ -6,9 +6,9 @@
  * 4、兼容获取权限：getPermission(["android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"], successFn)
  */
 // 福昌测试地址
-window.G_COMMON_URL = "http://106.15.55.173:8080/";
+window.G_COMMON_URL = "http://54.153.4.80:8080/";
 // 福昌正式地址
-window.G_COMMON_URL = "http://47.93.60.139:80/";
+// window.G_COMMON_URL = "http://47.93.60.139:80/";
 // OCR地址
 window.G_COMMON_OCR_URL="%D3%DC%E8%E4%E3%ADi%5E%90%D1%D9%97%A2%E3%DD%D5%CB%D9%E3%9C%91%D1%9D%98%CD%C9%D3%E2%DD%CF%CF%CC%C4%D5%DD%D8%DD%9D%9E%D2%D5%A1%A5%A7p%AF%D1%D3%E6%E2%D3%D7%D1%C2%D2%D3%C9%A2%83%89%95%AC%80%96%D1%D3%E6%E2%D3%D7%D1%CA%D0%DE%B6nh%98%C2%96fhi%95%96chl%97%99j%96%9A%9A%96%98%9Cn%97%98hegekpg"
 
