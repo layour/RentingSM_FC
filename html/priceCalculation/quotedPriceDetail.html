@@ -81,13 +81,21 @@
 							<input type="text" style="min-width:4rem;" @input="checkGkcd" placeholder="请输入挂靠车队" name="gkcd" v-model="GKCD">&nbsp;&nbsp;
 						</span>
 					</li>
-					<li class='spec' @click="sureGuaranteType('guarantor')">
+					<li @click="sureGuaranteType('guarantor')">
 						<b>有无担保人</b>
 						<span>
 							<b v-if="quoted.guarantor">{{quoted.guarantor}}</b>
 							<b v-else class="default">请选择</b>
 							<i class="icon iconfont icon-enter"></i>
 						</span>
+					</li>
+					<li class="spec input">
+						<p class="pl pr tr">
+							<span class="fl">租赁物留购价格</span>
+							<span class="right">
+								<span class="first">{{quoted.leasePurchasePrice}}元</span>
+							</span>
+						</p>
 					</li>
 					<li @click="pickFirstRate">
 						<b>首付比例</b>
@@ -330,6 +338,7 @@
 								sureFirstPayRate:'', //选择的首付比例
 								firstPay:'',
 								sureFirstPay:'',
+								leasePurchasePrice:'',//租赁物留购价格
 								bail:'', //保证金
 								lastBail:'', //保证金
 								bailRate:'',  //保证金比例
@@ -440,6 +449,7 @@
 									_this.quoted.payType=data.PAY_WAY_NM
 									_this.quoted.guarantor=data.ISGUARANTOR
 									_this.quoted.guarantorCode=data.ISGUARANTORCODE
+									_this.quoted.leasePurchasePrice=data.LEASEPURCHASEPRICE
 									_this.quoted.sureFirstPayRate=data.START_PERCENT
 									_this.quoted.sureFirstPay=data.FIRST_MONEY
 									_this.quoted.lastBail=data.DEPOSIT_MONEY
