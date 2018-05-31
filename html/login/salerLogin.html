@@ -132,7 +132,7 @@
                             // 调用首页获取代办任务数量
                             summer.execScript({
                                 winId: 'homePage',
-                                script: "getMissionData()"
+                                script: "getMissionData("+ Data.datas.datas[0].ORG_ID +")"
                             });
                             summer.closeToWin({
                                 id: "homePage"

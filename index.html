@@ -146,9 +146,9 @@
             }
 		}
 
-		function getMissionData() {
-			fistPage.getMissionData();
-		}
+		function getMissionData(ORG_ID) {
+			fistPage.getMissionData(ORG_ID);
+        }
 		var fistPage = new Vue({
 			el: '#win',
 			data: {
@@ -243,13 +243,13 @@
                         })
                     });
                 },
-				getMissionData:function() {
+				getMissionData:function(ORG_ID) {
 					var self = this;
 					ajaxRequest({
 						type: 'post',
 						url: 'appservice/bpmtask/myTaskCount',
 						param: {
-                            "ORG_ID": self.ORG_ID
+                            "ORG_ID": ORG_ID ? ORG_ID : self.ORG_ID
                         }
 					}, function(res) {
 						summer.hideProgress();
