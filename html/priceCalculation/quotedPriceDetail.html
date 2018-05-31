@@ -67,7 +67,7 @@
 							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
-					<li class='spec' @click="selectFleet" v-if="gkfsCode=='2'||gkfsCode=='3'">
+					<li  @click="selectFleet" v-if="gkfsCode=='2'||gkfsCode=='3'">
 							<b>挂靠车队</b>
 							<span>
 								<b v-if="GKCD">{{GKCD}}</b>
@@ -75,10 +75,18 @@
 								<i class="icon iconfont icon-enter"></i>
 							</span>
 					</li>
-					<li class='spec input' v-else>
+					<li class='input' v-else>
 						<b>挂靠车队</b>
 						<span>
 							<input type="text" style="min-width:4rem;" @input="checkGkcd" placeholder="请输入挂靠车队" name="gkcd" v-model="GKCD">&nbsp;&nbsp;
+						</span>
+					</li>
+					<li class='spec' @click="sureGuaranteType('guarantor')">
+						<b>有无担保人</b>
+						<span>
+							<b v-if="quoted.guarantor">{{quoted.guarantor}}</b>
+							<b v-else class="default">请选择</b>
+							<i class="icon iconfont icon-enter"></i>
 						</span>
 					</li>
 					<li @click="pickFirstRate">
@@ -149,6 +157,10 @@
 				<mt-popup v-model="pickerPayTypeStatus" class="pickerPrice" v-else-if="pickerPayTypeStatus" position='bottom' >
 					<mt-picker value-key="FLAG" :slots="payTypeSlots" @change="onPayTypeChange"></mt-picker>
 					<p><span class="fl" @click="surePickerpayType">取消</span><span class="fr" @click="surePickerpayType('confirm')">确定</span></p>
+				</mt-popup>
+				<mt-popup v-model="pickerguarantorTypeStatus" class="pickerPrice" v-else-if="pickerguarantorTypeStatus" position='bottom' >
+					<mt-picker value-key="FLAG" :slots="guarantorTypeSlots" @change="onGuarantorTypeChange"></mt-picker>
+					<p><span class="fl" @click="sureGuaranteType">取消</span><span class="fr" @click="sureGuaranteType('confirm')">确定</span></p>
 				</mt-popup>
 				<mt-popup v-model="pickerGkfsStatus" class="pickerPrice" v-else-if="pickerGkfsStatus" position='bottom' >
 					<mt-picker value-key="FLAG" :slots="gkfsSlots" @change="onGkfsChange"></mt-picker>
@@ -258,6 +270,13 @@
 								className: 'slot1',
 								textAlign: 'center'
 							}],
+							guarantorTypeSlots:[{
+								flex: 1,
+								values: [],
+								defaultIndex:0,
+								className: 'slot4',
+								textAlign: 'center'
+							}],
 							gkfsSlots:[{
 								flex: 1,
 								values: [],
@@ -273,10 +292,12 @@
 								textAlign: 'center'
 							}],
 							payTypeList:[],
+							guarantorTypeList:[],
 							bailList:["融资额","首期款"],
 							termTypeList:[],
 							pickerStatus:false,
 							pickerPayTypeStatus:false,
+							pickerguarantorTypeStatus:false,
 							pickerGkfsStatus:false,
 							pickerTermTypeStatus:false,
 							bailStatue:false,
@@ -285,6 +306,7 @@
 							bailToRate:true,
 							pickerType:'payType',
 							pickerVal:'',
+							guarantorVal:'',
 							PROJECT_ID:'',
 							SUPPLIERS_ID:'',
 							SCHEME_CODE:'',//报价方案code
@@ -302,6 +324,8 @@
 								contractTerm:'',
 								rate:'',
 								payType:'',
+								guarantor:'',
+								guarantorCode:'',
 								firstPayRate:'', //待定首付比例
 								sureFirstPayRate:'', //选择的首付比例
 								firstPay:'',
@@ -400,6 +424,7 @@
 								console.log("res",res);
 								_this.payTypeSlots[0].values=res.data.datas.paywaylist
 								_this.termTypeSlots[0].values=res.data.datas.PoundageWayList
+								_this.guarantorTypeSlots[0].values=res.data.datas.ISGUARANTORList
 								_this.SUPPLIERS_ID=res.data.datas.prj.SUPPLIERS_ID
 								_this.SCHEME_ROW_NUM=res.data.datas.prj.SCHEME_ROW_NUM
 								_this.gkfsSlots[0].values=res.data.datas.GKFS
@@ -413,6 +438,8 @@
 									_this.quoted.contractTerm=data.LEASE_TERM
 									_this.quoted.rate=data.YEAR_INTEREST
 									_this.quoted.payType=data.PAY_WAY_NM
+									_this.quoted.guarantor=data.ISGUARANTOR
+									_this.quoted.guarantorCode=data.ISGUARANTORCODE
 									_this.quoted.sureFirstPayRate=data.START_PERCENT
 									_this.quoted.sureFirstPay=data.FIRST_MONEY
 									_this.quoted.lastBail=data.DEPOSIT_MONEY
@@ -444,6 +471,14 @@
 							if(val=='confirm'){
 								this.quoted.payType=this.pickerVal
 								console.log(this.quoted.payType)
+							}
+						},
+						sureGuaranteType:function(val){
+							this.pickerguarantorTypeStatus=!this.pickerguarantorTypeStatus
+							if(val=='confirm'){
+								this.quoted.guarantor=this.pickerVal
+								this.quoted.guarantorCode=this.pickerCode
+								
 							}
 						},
 						sureGkfsType:function(val){
@@ -502,6 +537,10 @@
 						onPayTypeChange:function(picker,values){
 							this.pickerVal=values[0].FLAG;
 						},
+						onGuarantorTypeChange:function(picker,values){
+							this.pickerVal=values[0].FLAG;
+							this.pickerCode=values[0].CODE;
+						},
 						onGkfsChange:function(picker,values){
 							this.pickerVal=values[0].FLAG;
 							this.pickerCode=values[0].CODE;
@@ -517,6 +556,8 @@
 									this.quoted.termType=this.pickerVal
 								}else if(this.pickerType=='payType'){
 									this.quoted.payType=this.pickerVal
+								}else if(this.pickerType=='guarantor'){
+									this.quoted.guarantor=this.pickerVal
 								}
 							}else if(item){
 								this.pickerType=item;
@@ -622,7 +663,9 @@
  								BAIL_PERCENT:_this.quoted.sureBailRate,
  								FIRST_MONEY:String(_this.quoted.sureFirstPay),
 								RenewalMargin_MONEY:_this.quoted.feeOn,
-								POUNDAGE_WAY:_this.quoted.termTypeCode
+								POUNDAGE_WAY:_this.quoted.termTypeCode,
+								ISGUARANTOR:_this.quoted.guarantorCode
+
 							};
 							console.log(JSON.stringify(params));
 							ajaxRequest({
@@ -649,8 +692,10 @@
 								summer.toast({msg:'请先测算报价'})
 								return
 							}
+							
 							summer.showProgress();
 							var _this=this
+							console.log("err",_this.quoted.guarantorCode);
 							var param={
 								SCHEME_CODE:_this.SCHEME_CODE,
 								GKCD:_this.GKCD,
@@ -665,6 +710,7 @@
 								LEASE_PERIOD:1,
 								YEAR_INTEREST:String(_this.quoted.rate),
 								PAY_WAY:_this.quoted.payType,
+								ISGUARANTOR:_this.quoted.guarantorCode,
 								MONTH_RENT:String(_this.resultData.termPrice),
 								FIRST_MONEY:String(_this.resultData.firstPrice),
 								START_PERCENT:String(_this.quoted.sureFirstPayRate),
