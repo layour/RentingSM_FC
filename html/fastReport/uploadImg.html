@@ -117,7 +117,7 @@
 						<img class="close" @click="deleteImg(index)" src="../../img/close.png" alt="">
 						<p>{{param.TPM_TYPE}}</p>
 					</li>
-					<li @click="openPopup" v-if="imgList.length<9">
+					<li @click="openPopup">
 						<div>
 							<i class="icon iconfont icon-add"></i>
 						</div>
@@ -298,12 +298,12 @@
 						callback: function (args) {
 							console.log(JSON.stringify(args));
 							var length = args.imgPaths.length;
-							if (that.imgList.length + length > 9) {
+							/* if (that.imgList.length + length > 9) {
 								summer.toast({
 									msg: "最多上传9张图片"
 								})
 								return
-							}
+							} */
 							console.log("开始添加水印,图片个数" + length);
 							for(var i=0;i<args.imgPaths.length;i++){
 								that.imgList.push(args.imgPaths[i].imgPath);
