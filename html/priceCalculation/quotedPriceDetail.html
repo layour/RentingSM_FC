@@ -600,7 +600,7 @@
 							}
 						},
 						changeBail:function(){
-							var val=parseFloat(String(this.quoted.bailRate).trim());
+							var val=String(this.quoted.bailRate).trim();
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,6})?)$/.test(val)||!val||val<0||val>100){
 								this.quoted.bailRate=''
 								this.quoted.bail=''
@@ -620,7 +620,7 @@
 							return parseFloat(number)
 						},
 						changBailRate:function(){
-							var val=parseFloat(String(this.quoted.bail).trim()),number=this.bailTypeReset();
+							var val=String(this.quoted.bail).trim(),number=this.bailTypeReset();
 							console.log(val,number);
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>number){
 								this.quoted.bail=''
