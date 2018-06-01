@@ -100,7 +100,7 @@
 					<li @click="pickFirstRate">
 						<b>首付比例</b>
 						<span>
-							<b v-if="quoted.sureFirstPay">{{quoted.sureFirstPayRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.sureFirstPay}}&nbsp;元</b>
+							<b v-if="quoted.sureFirstPay||quoted.sureFirstPay==0">{{quoted.sureFirstPayRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.sureFirstPay}}&nbsp;元</b>
 							<b v-else class="default">请选择</b>
 							<i class="icon iconfont icon-enter"></i>
 						</span>
@@ -108,7 +108,7 @@
 					<li @click="pickerBail">
 						<b>保证金</b>
 						<span>
-							<b v-if="quoted.lastBail">{{quoted.sureBailRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.lastBail}}&nbsp;元</b>
+							<b v-if="quoted.lastBail||quoted.lastBail==0">{{quoted.sureBailRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.lastBail}}&nbsp;元</b>
 							<b v-else class="default">请选择</b>
 							<i class="icon iconfont icon-enter"></i>
 							<!-- <button type="button" name="button" v-if="!quoted.bailType" @click="surePicker('bail')">点击选择基数</button>
@@ -455,6 +455,7 @@
 									_this.quoted.lastBail=data.DEPOSIT_MONEY
 									// _this.quoted.sureBailType=data.LEASE_SUBFIRENT
 									_this.quoted.sureBailRate=data.BAIL_PERCENT
+									console.log(_this.quoted.sureBailRate,_this.quoted.lastBail);
 									_this.quoted.consultingFee=data.POUNDAGE_PRICE
 									_this.quoted.feeOn=data.RENEWALMARGIN_MONEY
 									// _this.quoted.sureBail=data.DEPOSIT_MONEY
@@ -620,7 +621,7 @@
 							return parseFloat(number)
 						},
 						changBailRate:function(){
-							var val=String(this.quoted.bail).trim(),number=this.bailTypeReset();
+							var val=parseFloat(String(this.quoted.bail).trim()),number=this.bailTypeReset();
 							console.log(val,number);
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(val)||!val||val<0||val>number){
 								this.quoted.bail=''
