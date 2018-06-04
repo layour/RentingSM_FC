@@ -106,10 +106,10 @@
 						</span>
 					</li>
 					<li @click="pickerBail">
-						<b>保证金</b>
+						<b>租赁保证金</b>
 						<span>
 							<b v-if="quoted.lastBail||quoted.lastBail==0">{{quoted.sureBailRate}}&nbsp;% &nbsp;&nbsp;&nbsp;{{quoted.lastBail}}&nbsp;元</b>
-							<b v-else class="default">请选择</b>
+							<b v-else-if="quoted.lastBail" class="default">请选择</b>
 							<i class="icon iconfont icon-enter"></i>
 							<!-- <button type="button" name="button" v-if="!quoted.bailType" @click="surePicker('bail')">点击选择基数</button>
 							<button type="button" name="button" v-else @click="surePicker('bail')">{{quoted.bailType}}</button>
@@ -455,7 +455,7 @@
 									_this.quoted.lastBail=data.DEPOSIT_MONEY
 									// _this.quoted.sureBailType=data.LEASE_SUBFIRENT
 									_this.quoted.sureBailRate=data.BAIL_PERCENT
-									console.log(_this.quoted.sureBailRate,_this.quoted.lastBail);
+									console.log(_this.quoted.leasePurchasePrice,_this.quoted.lastBail);
 									_this.quoted.consultingFee=data.POUNDAGE_PRICE
 									_this.quoted.feeOn=data.RENEWALMARGIN_MONEY
 									// _this.quoted.sureBail=data.DEPOSIT_MONEY
@@ -675,7 +675,8 @@
  								FIRST_MONEY:String(_this.quoted.sureFirstPay),
 								RenewalMargin_MONEY:_this.quoted.feeOn,
 								POUNDAGE_WAY:_this.quoted.termTypeCode,
-								ISGUARANTOR:_this.quoted.guarantorCode
+								ISGUARANTOR:_this.quoted.guarantorCode,
+								PROJECT_ID:_this.PROJECT_ID
 
 							};
 							console.log(JSON.stringify(params));
@@ -690,6 +691,7 @@
 								_this.testData=res.data.datas
 								_this.resultData.firstPrice=res.data.datas.FIRST_MONEY
 								_this.resultData.termPrice=res.data.datas.MONTH_PRICE
+								_this.quoted.leasePurchasePrice=res.data.datas.LEASEPURCHASEPRICE
 								_this.quoted.gps=(res.data.datas.INTERNAL_RATE).toFixed(2)
 								_this.resultData.term=_this.quoted.contractTerm
 							},function(err){
@@ -719,6 +721,7 @@
 								LEASE_SUBFIRENT:parseFloat(_this.quoted.allPrice-_this.quoted.sureFirstPay).toFixed(2),
 								LEASE_TERM:_this.quoted.contractTerm,
 								LEASE_PERIOD:1,
+								LEASEPURCHASEPRICE:_this.quoted.leasePurchasePrice,
 								YEAR_INTEREST:String(_this.quoted.rate),
 								PAY_WAY:_this.quoted.payType,
 								ISGUARANTOR:_this.quoted.guarantorCode,
