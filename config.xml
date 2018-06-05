@@ -8,9 +8,9 @@
   <frame_name>summer-um</frame_name>  
   <theme>blue</theme>  
   <icon relativePath="css/themes/default/app">app</icon>  
-  <versionCode>111</versionCode>  
-  <versionBuild>1.1.1</versionBuild>  
-  <versionName>1.1.1</versionName>  
+  <versionCode>112</versionCode>  
+  <versionBuild>1.1.2</versionBuild>  
+  <versionName>1.1.2</versionName>  
   <orientation>unspecified</orientation>  
   <statusBarStyle>light</statusBarStyle>  
   <fullScreen>true</fullScreen>  
