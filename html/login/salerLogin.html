@@ -122,21 +122,27 @@
                             } else {
                                 Data = response.data;
                             }
-                            userinfo.ORG_ID = Data.datas.datas[0].ORG_ID;
-                            userinfo.userName = Data.datas.datas[0].NAME;
-                            userinfo.proName = Data.datas.datas[0].proName;
-                            summer.setStorage("userinfo", userinfo);
-                            summer.toast({
-                                msg: "登录成功"
-                            });
-                            // 调用首页获取代办任务数量
-                            summer.execScript({
-                                winId: 'homePage',
-                                script: "getMissionData("+ Data.datas.datas[0].ORG_ID +")"
-                            });
-                            summer.closeToWin({
-                                id: "homePage"
-                            });
+                            if (Data.flag == 1) {
+                                userinfo.ORG_ID = Data.datas.datas[0].ORG_ID;
+                                userinfo.userName = Data.datas.datas[0].NAME;
+                                userinfo.proName = Data.datas.datas[0].proName;
+                                summer.setStorage("userinfo", userinfo);
+                                summer.toast({
+                                    msg: "登录成功"
+                                });
+                                // 调用首页获取代办任务数量
+                                summer.execScript({
+                                    winId: 'homePage',
+                                    script: "getMissionData("+ Data.datas.datas[0].ORG_ID +")"
+                                });
+                                summer.closeToWin({
+                                    id: "homePage"
+                                });
+                            } else if (Data.flag == 0) {
+                                summer.toast({
+                                    msg: Data.msg
+                                });
+                            }
                         }, function (err) {
                             summer.hideProgress();
                             summer.toast({
