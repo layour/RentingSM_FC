@@ -34,14 +34,7 @@
 							<i class="icon iconfont icon-enter"></i>
 						</td>
           </tr>
-					<tr @click="surePickerColor">
-            <td>车辆种类</td>
-            <!-- <td>车辆颜色</td> -->
-            <td>
-							<span v-if='color'>{{color}}</span><span  class="grayColor" v-else>请选择</span>
-							<i class="icon iconfont icon-enter"></i>
-						</td>
-          </tr>
+			
 					<tr @click="pickerModels">
             <td>选择车型</td>
             <td>
@@ -138,9 +131,16 @@
 								var _this=this;
 								_this.dealer=data.SUPPLIERS_NAME;
 								_this.company=data.COMPANY_NAME;
-
-								_this.color=data.CAR_NAME;
-								_this.colorId=data.CAR_TYPE;
+				/*				<tr @click="surePickerColor">
+            <td>车辆种类</td>
+            <!-- <td>车辆颜色</td> -->
+            <td>
+							<span v-if='color'>{{color}}</span><span  class="grayColor" v-else>请选择</span>
+							<i class="icon iconfont icon-enter"></i>
+						</td>
+          </tr> */
+								//_this.color=data.CAR_NAME;
+								//_this.colorId=data.CAR_TYPE;
 
 								_this.carModels=data.PRODUCT_NAME+" "+data.CATENA_NAME+" "+data.SPEC_NAME;
 								_this.guidePrice=data.UNIT_PRICE;
@@ -290,19 +290,19 @@
 							}
 						},
 						save:function(){
-							if(!this.dealer||!this.company||!this.color||!this.carModels||!this.guidePrice||!this.holdPrice||this.onePrice==''||this.safePrice==''){
+							if(!this.dealer||!this.company||!this.carModels||!this.guidePrice||!this.holdPrice||this.onePrice==''||this.safePrice==''){
 								summer.toast({msg:'请填写车辆的所有信息'})
 								return
 							}
-							summer.setStorage('carType',this.color)
+							//summer.setStorage('carType',this.color)
 							var param={};
 							// summer.showProgress();
 							param.SUPPLIERS_NAME=JSON.parse(summer.getStorage('pickerDealer')).SUPPLIERS_NAME;
 							param.SUPPLIERS_ID=JSON.parse(summer.getStorage('pickerDealer')).SUPPLIERS_ID;
 							param.COMPANY_NAME=JSON.parse(summer.getStorage('pickerCompany')).COMPANY_NAME;
 							param.COMPANY_ID=JSON.parse(summer.getStorage('pickerCompany')).COMPANY_ID;
-							param.CAR_TYPE=this.colorId;
-							param.CAR_NAME=this.color;
+							//param.CAR_TYPE=this.colorId;
+							//param.CAR_NAME=this.color;
 							param.PRODUCT_NAME=JSON.parse(summer.getStorage('pickerModels1')).PRODUCT_NAME;
 							param.PRODUCT_ID=JSON.parse(summer.getStorage('pickerModels1')).PRODUCT_ID;
 							param.CATENA_NAME=JSON.parse(summer.getStorage('pickerModels2')).CATENA_NAME;
