@@ -647,11 +647,12 @@
 
 				},
 				messageTest: function () {
+				//swl
 					var regCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; //身份证校验
 					var phoneCard = /^[1][3,4,5,7,8,9][0-9]{9}$/;
 					if (this.message.NAME == "") {
 						summer.toast({
-							msg: "姓名不能为空"
+							msg: "姓名 不能为空"
 						});
 						return false;
 					} else if (this.message.ID_CARD_NO == "" || regCard.test(this.message.ID_CARD_NO) === false) {
