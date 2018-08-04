@@ -1,0 +1,422 @@
+﻿<!doctype html>
+<html lang="zh-cmn">
+	<head>
+	   <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	   <meta charset="UTF-8">
+		<title>E签宝</title>
+		<link rel="stylesheet" href="../../css/iuapmobile.um.css">
+		<link rel="stylesheet" href="../../css/fonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/mint.css">
+		<link rel="stylesheet" href="css/draw.css">
+		<script src="../../js/font.js"></script>
+		<style>
+				.um-footer {
+			padding: 0.56rem 0.56rem;
+			height: 80px;
+			background-color: #eaeaf5;
+		}
+
+		.um-footer button {
+			border: none;
+			outline: none;
+			color: #fff;
+			background: #039BE5;
+		}  
+		.teeaa{
+			color: white;
+			background-color: #039BE5; 
+			top: 8px;
+			left:8px;
+			height: 30px;
+			width: 120px;
+			padding:0.2rem;
+			line-height: 0px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="um-win" id="draw">
+				<div class="btn teeaa" 
+					 id="clear">
+					清除签名
+				</div>
+						<!--div class="top">
+								<div  id="clear"  style="
+										font-size: 0.25rem; color: white; background-color: #039BE5;" class="btn" @click="clear1()">清除签名</div>
+								<ul>
+									<li class="pl5">
+										<div  id="clear"  style="
+										font-size: 0.25rem; color: white; background-color: #039BE5" class="btn" onclick="clear1()">清除签名</div>
+									</li>
+									<li style="text-align: right" class="pr5 mr5">
+										<span>可选择颜色:</span>
+										<p class="color select" style="background-color: rgb(0, 0, 0);"></p>
+										<p class="color" style="background-color: rgb(44, 44, 231);"></p>
+										<p class="color" style="background-color: rgb(221, 24, 24);"></p>
+									</li>
+									 style="
+				    color: white;
+					background-color: #039BE5; 
+					height: 30px;
+					width: 120px;
+					line-height: 0px;
+					position:absolute;
+					padding:0.3rem;
+					top: 8px;
+					left:8px;"
+								</ul>
+						</div--> 
+					
+
+		  <div class="um-content">
+	 	 <div class="draw" id="draw">
+		        <div class="sig" id="sig">
+		    	<canvas id="canvas" >Your browser doesn't support signing</canvas>
+		       </div>
+		</div> 
+
+		<div class="draw1" id="draw1">
+		        <div class="sig" id="sig">
+		    	<canvas id="canvas1" >Your browser doesn't support signing11</canvas>
+		       </div>
+		</div> 
+
+		
+	</div>
+	
+	<div class="um-footer">
+			<button  id="data" class="btn" >确认签名</button>
+			<!--div class="btn-group">
+					<button  id="clear" class="btn" >清除签名</button>
+					<button  id="data" class="btn" >确认签名</button>
+				</div-->
+		   </div>
+</div>
+
+		<script src="../../js/signature_pad.min.js"></script>
+		<script src="../../js/jquery.ui.touch-punch.min.js"></script>
+		<script src="../../js/summer.js"></script>
+		<script src="../../js/jquery-2.1.1.js"></script>
+     	<script src="../../js/vue.js"></script>
+    	<script src="../../js/mint.js"></script>
+    	<script src="../../js/common.js"></script>
+    	<script src="../../js/Frameworks/iuapmobile.frameworks.ui.js"></script>
+		<script type="text/javascript">
+		       summerready=function(){
+				var userinfo = summer.getStorage("userinfo");
+				vueTemplate.EMPLOYEE_ID = userinfo.EMPLOYEE_ID;
+				vueTemplate.PROJECT_ID = summer.pageParam.id;
+				vueTemplate.CUSTOMER_ID = summer.pageParam.CLIENT_ID;
+                console.log("哈哈",vueTemplate.EMPLOYEE_ID)
+				console.log(vueTemplate.PROJECT_ID)
+				console.log(vueTemplate.CUSTOMER_ID)
+				}
+	    var vueTemplate=new Vue({
+            el:'#draw',
+            data:function(){
+                       return {
+							datas:{
+								ID:'',
+								EMPLOYEE_ID:'',
+								PROJECT_ID:'',
+								CUSTOMER_ID:'',
+								EMERGENCY_RELATIONSHIP:'',
+								ADDR_PROVINCE:'',
+								ADDR_PROVINCE_NM:'',
+								ADDR_CITY:'',
+								ADDR_CITY_NM:'',
+								FileList:[{TEMPFILE_PATH:"",TEMPFILE_NAME:""}]
+						
+							}
+            }
+          }
+		});
+			function changeSize(){
+			    if(window.innerHeight>window.innerWidth){
+			        $('#sig').css("min-height",((window.innerHeight)-window.innerHeight*0.3));
+			        $("#canvas").attr({"height":((window.innerHeight)-window.innerHeight*0.3),"width":window.innerWidth});
+			    }else{
+			        $('#sig').css("min-height",(200));
+			        $("#canvas").attr({"height":(window.innerHeight - 100),"width":window.innerWidth});
+			        $('html,body').animate({scrollTop:0},'slow');
+			    }
+			    var canvasX = $("#canvas")[0];
+			    signaturePad = new SignaturePad(canvasX,{
+			        dotSize : 0 ,
+			        velocityFilterWeight :1,
+			        minWidth: 2.0,
+			        maxWidth: 5.2,
+			        penColor: "rgb(0,0,0)",
+					backgroundColor:"rgb(255,255,255)"
+			    });
+
+				
+			}
+
+			function clear1() {
+			    signaturePad.clear();
+			}
+
+			   function submit() {
+		        	if(signaturePad.isEmpty()){
+		        		alert("画布为空，请先手绘签名再提交！");
+		        	}else{
+		            	var canvas = document.getElementById("canvas");
+						//获取图片的Base64，包含头信息data:image/png;base64,
+		                var canvasData = canvas.toDataURL("image/png");
+		                /* canvasData = encodeURIComponent(encodeURIComponent(canvasData));    */
+						//alert(canvasData);
+						//去掉图片Base64中的头信息data:image/png;base64,直接可作为sealData使用
+						var image_base64= canvasData.split(",")[1];
+						//alert(image_base64);
+						var canvas1 = document.getElementById("mycanvas");
+                        var context = canvas1.getContext('2d');
+						var cw = 640;
+						var ch = 450;
+						context.fillStyle = "#ff0000";
+						context.fillRect(0, 0, cw, ch);
+						var img=new Image();
+						img.src="images/12.jpeg";
+						context.drawImage(img,0,0, cw,ch);   
+						console.log("图片",canvas.toDataURL("image/png"))
+						// var imgData =canvas.toDataURL("image/png");  
+			
+						//此处提交您的手写签名数据canvasData
+		        	}
+					summer.closeWin();
+		        }
+		        
+			/*if(isWeiXin()){
+				  var p = document.getElementsByTagName('p');
+			        p[0].innerHTML = window.navigator.userAgent;
+			        $("#weixin").show();
+			        $("#text").hide();
+			    }else{
+			        $("#weixin").hide();
+			    }
+			        if(window.innerWidth>window.innerHeight){
+			        window.screen.lockOrientation = screen.lockOrientation ||screen.mozLockOrientation||screen.msLockOrientation||screen.webkitLockOrientation
+			        window.screen.lockOrientation(["landscape-primary","landscape-secondary"]);
+			    }*/
+			function isWeiXin(){
+			    var ua = window.navigator.userAgent.toLowerCase();
+			    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+			        return true;
+			    }else{
+			        return false;
+			    }
+			}
+			
+			//判断手机横竖屏状态：
+			/* function screen_position(){
+			    if(window.orientation==180||window.orientation==0){
+			        $("#text").show();
+			        $("#draw").hide();
+			    }
+			    if(window.orientation==90||window.orientation==-90){
+			        alert("请在白色区域进行手绘签名。");
+			        $("#text,#weixin").hide();
+			        $("#draw").show();
+			        $('#sig').css("min-height",(window.innerHeight-45)).signature({thickness: 10});
+			        $("#canvas").css("height",(window.innerHeight-45));
+			        data = $('#sig').signature('toDATA');
+			    }
+			}
+			window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", screen_position, false);
+			 */
+			function CloseWebPage(){
+			    if (navigator.userAgent.indexOf("MSIE") > 0) {
+			        if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
+			            window.opener = null;
+			            window.close();
+			        } else {
+			            window.open('', '_top');
+			            window.top.close();
+			        } 
+			    }
+			    else if (navigator.userAgent.indexOf("Firefox") > 0) {
+			        window.location.href = 'about:blank ';
+			    }else {
+			        window.opener = null;
+			        window.open('', '_self', '');
+			        window.close();
+			    }
+			}
+
+			function CloseSlide(){
+				document.documentElement.style.overflow='hidden';
+			}
+
+			function opensubmitFinanl() {
+
+			}
+
+		    $(function(){
+				CloseSlide();
+		        changeSize();
+		        $(window).resize(function(){
+		            changeSize();
+				});
+				
+		        $('#clear').click(function() {
+		            signaturePad.clear();
+				});
+				
+		        $('.color').click(function() {
+				    var canvasX = $("#canvas")[0];
+				    signaturePad = new SignaturePad(canvasX,{
+				    	dotSize : 0 ,
+				        velocityFilterWeight :1,
+				        minWidth: 2.0,
+				        maxWidth: 5.2,
+				        penColor: $(this).css("background-color"),
+				        backgroundColor:"rgb(255,255,255)"
+				    });
+				    $('.color').removeClass("select");
+				    $(this).addClass("select");
+		        });
+
+		        $('#data').click(function() {
+					summer.showProgress();
+					console.log("aaaaaa1111",vueTemplate.EMPLOYEE_ID)
+					console.log("aaaaaa1111",vueTemplate.PROJECT_ID)
+					console.log("aaaaaa1111",vueTemplate.CUSTOMER_ID)
+
+					if(signaturePad.isEmpty()){
+						summer.toast({
+							msg:"签名为空请重新填写"
+						})
+						summer.hideProgress();
+						return;
+					}
+
+					var canvas = document.getElementById("canvas");
+					
+
+
+					//获取图片的Base64，包含头信息data:image/png;base64,
+					var canvasData = canvas.toDataURL("image/png");
+					/* canvasData = encodeURIComponent(encodeURIComponent(canvasData));    */
+					console.log("canvasData",canvasData)
+					//alert(canvasData);
+					//去掉图片Base64中的头信息data:image/png;base64,直接可作为sealData使用
+					var image_base64= canvasData.split(",")[1];
+					//alert(image_base64);
+					//document.getElementById("sealData").value=image_base64;
+					//此处提交您的手写签名数据canvasData
+					// var canvas = document.getElementById("mycanvas");
+                    //     var context = canvas.getContext('2d');
+					// 	var cw = 640;
+					// 	var ch = 450;
+					// 	context.fillStyle = "#ff0000";
+					var canvas1 = document.getElementById("canvas1");
+					var context = canvas1.getContext('2d');
+					var img=new Image();
+					var cw = 300;
+					var ch = 300;
+					context.fillRect(0, 0, cw, ch);
+					img = canvasData
+					console.log("canvasData",canvasData)
+					// context.drawImage(img,0,0, cw,ch);  
+					// var canvasData1 = canvas1.toDataURL("image/png");
+
+					// 	context.fillRect(0, 0, cw, ch);
+					// 	var img=new Image();
+					// 	img.src="images/12.jpeg";
+					// 	context.drawImage(img,0,0, cw,ch);   
+					// 	console.log("图片",canvas.toDataURL("image/png"))
+					console.log("图片",image_base64)
+					ajaxRequest({
+					type: 'post',
+					url: 'appservice/business/busiSelecSign',
+					param: {
+						EMPLOYEE_ID: vueTemplate.EMPLOYEE_ID,
+						PROJECT_ID:vueTemplate.PROJECT_ID,
+						CUSTOMER_ID: vueTemplate.CUSTOMER_ID,
+						CUSTSIGN_IMAGE:canvasData
+					}
+	
+				}, function (res) {
+					
+					console.log("dd",res.data.flag)
+					console.log("ddddd",res.data.msg)
+					console.log("ddddd数组",res.data.datas)
+					
+					if(res.data.flag == 1){
+						summer.hideProgress();
+						summer.execScript({
+								winId: "drawPhoto",
+								script: "getData1()"
+							});
+						summer.execScript({
+									winId: "setProject",
+									script: "addRight('singCode')"
+							});
+						summer.toast({
+						msg:"签署成功"
+						});
+
+								summer.closeWin();
+
+					}else {
+						summer.hideProgress();
+						summer.toast({
+						msg:res.data.msg
+					});
+					}
+					
+					
+				}, function (err) {
+					alert(err);
+					console.log(err);
+					summer.hideProgress();
+				});
+					//summer.closeWin();
+				
+		        });
+		        
+		        $("#close").click(function(){
+					if(isWeiXin()){
+						WeixinJSBridge.call('closeWindow');
+					}else{
+						CloseWebPage();
+					}
+		        });
+
+
+		    })
+
+			function seeHeTongStopInput() {
+				summer.openWin({
+									id: 'drawPhotoChaKan',
+									url: 'html/fastReport/drawPhotoChaKan.html',
+									create: false,
+									type: 'actionBar',
+									isKeep: true,
+									pageParam: {
+										EMPLOYEE_ID:vueTemplate.EMPLOYEE_ID,
+										id: vueTemplate.PROJECT_ID,
+										CLIENT_ID:vueTemplate.CUSTOMER_ID
+									},
+									actionBar: {
+										title: "电子签章",
+										titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										backgroundColor: "#039be5",
+										leftItem: {
+											image: "img/back.png",
+											method: "", //返回按钮自定义事件
+											text: "返回",
+											textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+										},
+										rightItems: [{
+											type: "text",
+											text: "",
+											textColor: "#ffffff", //文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+											method: "" //在打开的window中自定义事件
+										}]
+									}
+								});
+			}
+		</script>
+	</body>
+</html>
