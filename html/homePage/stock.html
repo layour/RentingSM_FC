@@ -148,6 +148,11 @@
                 total:"0.00",
                 // 还款总额（计算）
                 TOTAL: 0,
+                // 判断是否大于0的
+				TOTAL1: 0,
+
+				//控制是否
+
 				// 是否可点击还款
 				submit:false,
 				// 遮罩层显隐
@@ -193,6 +198,11 @@
 			},
 			computed: {
                 inputTotal: function () {
+					 if(Number(this.total) > this.TOTAL1 ){
+                          summer.toast({msg:'不能大于选择的租赁物金额'})
+					 	  this.total = "";
+						  this.TOTAL = 0;
+					 }
                     this.TOTAL = Number(this.total);
                     console.log(this.TOTAL,this.total)
                 },
@@ -316,13 +326,15 @@
 					if (this.items[index].checked) {
                         this.total = (Number(this.total) + Number(this.items[index].BEGINNING_TATAL_MONEY)).toFixed(2);
                         this.TOTAL = this.TOTAL + Number(this.items[index].BEGINNING_TATAL_MONEY);
+						this.TOTAL1 = this.TOTAL
 					} else {
                         var result = Number(this.total) - Number(this.items[index].BEGINNING_TATAL_MONEY) <= 0 ? 0 : Number(this.total) - Number(this.items[index].BEGINNING_TATAL_MONEY);
                         this.total = result.toFixed(2);
                         this.TOTAL = this.TOTAL - Number(this.items[index].BEGINNING_TATAL_MONEY) <= 0 ? 0 : 
                         this.TOTAL - Number(this.items[index].BEGINNING_TATAL_MONEY);
+						this.TOTAL1 = this.TOTAL
 					}
-                    console.log(this.TOTAL,this.total);
+                    console.log(this.TOTAL,this.total,this.TOTAL1);
 				},
 				// 查看详情
 				checkInfo:function (ev,index) {
@@ -340,6 +352,10 @@
 				// 点击还款按钮
 				toSubmit:function (){
                     var This = this;
+					if( this.TOTAL <= 0){
+						summer.toast({msg:'请输入还款金额'})
+						return false;
+					}
 					if (this.submit) {
 						this.mask = true;
 						/* 重置状态 */
@@ -750,9 +766,9 @@
             stock.TEL_PHONE = summer.pageParam.customerInfo.TEL_PHONE;
             
             // 测试用
-			/* stock.EMPLOYEE_ID = 165176774;
-			stock.NAME = "冯志杰";
-            stock.TEL_PHONE = "13936778297"; */
+			//stock.EMPLOYEE_ID = 165176774;
+			//stock.NAME = "冯志杰";
+            //stock.TEL_PHONE = "13936778297";
 
             // 自己（方便测试）
             /* stock.EMPLOYEE_ID = 165183301;
