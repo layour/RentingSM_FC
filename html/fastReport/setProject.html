@@ -91,6 +91,12 @@
 						<span class="frp"> <i class="baseMessage icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div>
 				</a>
+				<a href="javascript:void(0);" id="version"  onclick="checkVersion('singCode')"  >
+						<div class="um-list-item-bodys">
+							 电子合同
+							 <span class="frp"> <i class="singCode icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
+						 </div>
+					 </a>
 				<a href="javascript:void(0);" onclick="checkVersion('addCarList')">
 					<div class="um-list-item-bodys">
 						添加车辆
@@ -127,7 +133,6 @@
 						<span class="frp"> <i class="sponsor icon iconfont icon-right"></i>&nbsp; <i class="icon iconfont icon-enter"></i> </span>
 					</div>
 				</a>
-
 				<!-- <a href="javascript:void(0);"  id="version" onclick="checkVersion('remark')">
 					<div class="um-list-item-bodys">
 						备注留言
@@ -138,6 +143,7 @@
 	</div>
 	<script src="../../js/summer.js"></script>
 	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/jquery-2.1.1"></script>
 	<script src="../../js/vue.js"></script>
 	<script src="../../js/mint.js"></script>
 	<script src="../../js/font.js"></script>
@@ -268,6 +274,10 @@
 							if (finanlData.fObj) {
 							 	addRight('uploadImg');
 							}
+							if (finanlData.contSign) {
+							 	addRight('singCode');
+							}
+
 						}
 					}, function(err) {
 						alert(err);
@@ -410,7 +420,51 @@
 					}
 				})
 				return
-			} else if (param == 'uploadImg') {
+			}else if (param == 'singCode') {
+				//url = "html/priceCalculation/quotedPriceList.html";
+				//title = "报价方案"
+				// if(!$(".price").hasClass('active')){
+				// 	summer.toast({
+				// 		msg: '请先添加报价信息'
+				// 	});
+				// 	return
+				// }
+				if (!setProgect.project_Id) {
+					summer.toast({
+						msg: '请先完善项目基础信息'
+					});
+					return
+				}
+				summer.openWin({
+				id: 'drawPhoto',
+				url: "html/fastReport/drawPhoto.html",
+				create: false,
+				type: 'actionBar',
+				pageParam: {
+						id: setProgect.project_Id,
+						CLIENT_ID: setProgect.customId
+					},
+				actionBar: {
+					title: '电子合同',
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039BE5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems: [{
+						type: "text",
+						text: "",
+						textColor: "#ffffff",
+						method: ""
+					}]
+				}
+			})
+				return
+			} 
+			else if (param == 'uploadImg') {
 				// var carType=setProgect.carName||summer.getStorage('carType');
 				// if(carType=="轻卡"){
 				// 	id="uploadImg"
@@ -487,6 +541,37 @@
 					}]
 				}
 			})
+		}
+
+		function openDrawPhoto() {
+			summer.openWin({
+				id: 'drawPhoto',
+				url: "html/fastReport/drawPhoto.html",
+				create: false,
+				type: 'actionBar',
+				pageParam: {
+						id: setProgect.project_Id,
+						CLIENT_ID: setProgect.customId
+					},
+				actionBar: {
+					title: '电子合同',
+					titleColor: "#ffffff", //注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					backgroundColor: "#039BE5",
+					leftItem: {
+						image: "img/back.png",
+						method: "", //返回按钮自定义事件
+						text: "返回",
+						textColor: "#ffffff" //返回文字颜色，注意必须是6位数的颜色值。（3位数颜色值会不正常）
+					},
+					rightItems: [{
+						type: "text",
+						text: "",
+						textColor: "#ffffff",
+						method: ""
+					}]
+				}
+			})
+
 		}
 
 		function addContact() {

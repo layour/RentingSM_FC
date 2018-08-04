@@ -81,14 +81,6 @@
 							<input type="text" style="min-width:4rem;" @input="checkGkcd" placeholder="请输入挂靠车队" name="gkcd" v-model="GKCD">&nbsp;&nbsp;
 						</span>
 					</li>
-					<li @click="sureGuaranteType('guarantor')">
-						<b>有无担保人</b>
-						<span>
-							<b v-if="quoted.guarantor">{{quoted.guarantor}}</b>
-							<b v-else class="default">请选择</b>
-							<i class="icon iconfont icon-enter"></i>
-						</span>
-					</li>
 					<li class="spec input">
 						<p class="pl pr tr">
 							<span class="fl">租赁物留购价格</span>
@@ -447,8 +439,8 @@
 									_this.quoted.contractTerm=data.LEASE_TERM
 									_this.quoted.rate=data.YEAR_INTEREST
 									_this.quoted.payType=data.PAY_WAY_NM
-									_this.quoted.guarantor=data.ISGUARANTOR
-									_this.quoted.guarantorCode=data.ISGUARANTORCODE
+									//_this.quoted.guarantor=data.ISGUARANTOR
+									//_this.quoted.guarantorCode=data.ISGUARANTORCODE
 									_this.quoted.leasePurchasePrice=data.LEASEPURCHASEPRICE
 									_this.quoted.sureFirstPayRate=data.START_PERCENT
 									_this.quoted.sureFirstPay=data.FIRST_MONEY
@@ -577,7 +569,7 @@
 						rateCheck:function(){
 							var val=String(this.quoted.rate).trim();
 							if(!/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,6})?)$/.test(val)||!val||val<0||val>100){
-								this.quoted.rate=''
+								this.quoted.rate='0'
 							}
 						},
 						changeFirstPay:function(){
@@ -614,7 +606,10 @@
 						bailTypeReset:function(){
 							var number=0;
 							if(this.quoted.bailType=="融资额"){
-								number=parseFloat(this.quoted.allPrice-this.quoted.sureFirstPay).toFixed(2)
+								//SWL
+								//number=parseFloat(this.quoted.allPrice-this.quoted.sureFirstPay).toFixed(2)
+								//车辆总价值
+								number=parseFloat(this.quoted.allPrice).toFixed(2)
 							}else if(this.quoted.bailType=="首期款"){
 								number=this.quoted.firstPay;
 							}
@@ -661,6 +656,8 @@
 								summer.toast({msg:'请先完善报价信息'})
 								return
 							}
+							
+							console.log("this.quoted.rate1",this.quoted.rate)
 							var _this=this;
 							var params={
 								SCHEME_CODE:_this.SCHEME_CODE,
@@ -675,7 +672,7 @@
  								FIRST_MONEY:String(_this.quoted.sureFirstPay),
 								RenewalMargin_MONEY:_this.quoted.feeOn,
 								POUNDAGE_WAY:_this.quoted.termTypeCode,
-								ISGUARANTOR:_this.quoted.guarantorCode,
+							//	ISGUARANTOR:_this.quoted.guarantorCode,
 								PROJECT_ID:_this.PROJECT_ID
 
 							};
@@ -705,6 +702,13 @@
 								summer.toast({msg:'请先测算报价'})
 								return
 							}
+							var actionBar1234 = "0";
+							console.log("actionBar1234",actionBar1234)
+							actionBar1234 = String(actionBar1234);
+							console.log("actionBar1234",actionBar1234)
+							
+							console.log("this.quoted.rate2",this.quoted.rate)
+							console.log("this.quoted.rate2",Number(this.quoted.rate))
 							
 							summer.showProgress();
 							var _this=this
@@ -722,7 +726,7 @@
 								LEASE_TERM:_this.quoted.contractTerm,
 								LEASE_PERIOD:1,
 								LEASEPURCHASEPRICE:_this.quoted.leasePurchasePrice,
-								YEAR_INTEREST:String(_this.quoted.rate),
+								YEAR_INTEREST:_this.quoted.rate,
 								PAY_WAY:_this.quoted.payType,
 								ISGUARANTOR:_this.quoted.guarantorCode,
 								MONTH_RENT:String(_this.resultData.termPrice),
