@@ -177,6 +177,9 @@
                                     title: '检测到新版本，是否升级？',
                                     btnText: ["取消", "确定"],
                                     overlay: true,
+                                    cancle: function () {
+                                        summer.exitApp();
+                                    },
                                     ok: function () {
                                         summer.upgradeApp({
                                             url: res.data.datas.SYS_PATH
